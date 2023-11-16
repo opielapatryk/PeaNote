@@ -39,5 +39,8 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 3,
     shadowColor: 'rgb(0, 0, 0)'
+  },
+  board:{
+    height: 1000
   }
 });

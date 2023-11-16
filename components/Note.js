@@ -5,19 +5,13 @@ import { useDispatch, useSelector} from 'react-redux';
 import { showInfo, hideInfo,removeNote } from '../store/noteSlice';
 
 export function Note(props){
-  const {info,isNote,text} = useSelector((state)=>state.note.text)
+  const {text,isNote,isInfo} = useSelector((state)=>state.note)
   const dispatch = useDispatch()
 
-  if (isNote && info) {
+  if (isNote && isInfo) {
     return (
-      <View>
-        <Pressable onPress={() => {  dispatch(hideInfo()) }} style={styles.button}>
-          <View>
-            <Text>Cancel</Text>
-          </View>
-        </Pressable>
         <Pressable style={styles.note} onPress={() => {
-          if (info) {
+          if (isInfo) {
             dispatch(removeNote())
           } else {
             dispatch(showInfo())
@@ -27,12 +21,11 @@ export function Note(props){
             <Text>{text}</Text>
           </View>
         </Pressable>
-      </View>
     );
-  } else if (isNote && !info) {
+  } else if (isNote && !isInfo) {
     return (
         <Pressable style={styles.note} onPress={() => {
-          if (info) {
+          if (isInfo) {
             dispatch(removeNote())
           } else {
             dispatch(showInfo())

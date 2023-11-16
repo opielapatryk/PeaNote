@@ -1,7 +1,7 @@
-import { View, TextInput,Button } from 'react-native'
+import { View, TextInput,Button} from 'react-native'
 import React, { useState} from 'react'
 import { useAuth} from '../context/AuthContext'
-import {Note} from '../../components/Note'
+import BoardScreen from '../../components/BoardScreen'
 
 
 export default function Login () {
@@ -15,23 +15,13 @@ export default function Login () {
             console.log(result);
         }
     }
-  
-
-    const handleComponentPress = (componentName:String) => {
-      // Check if the pressed component is not "Note"
-      if (componentName !== 'Note') {
-        // Revert the text state to the previous state
-        return true
-      }
-    };
 
     return (
         <View>
          <TextInput placeholder='email' onChangeText={(text)=>setEmail(text)} value={email}/>
          <TextInput placeholder='password' secureTextEntry={true} onChangeText={(text)=>setPassword(text)} value={password}/>
          <Button onPress={login} title='sing in'/>
-         <Button title='break' onPress={() => handleComponentPress('OtherComponent1')}/>
-         <Note text='hej' onPress={() => handleComponentPress('Note')}/>
+         <BoardScreen/>
         </View>
     )
 }

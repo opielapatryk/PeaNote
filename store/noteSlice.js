@@ -9,13 +9,13 @@ export const noteSlice = createSlice({
     initialState,
     reducers:{
         showInfo: (state)=>{
-            state.isInfo = true;
+            return {...state,isInfo: true,text:'Click againt to delete note'}
         },
         hideInfo: (state)=>{
-            state.isInfo = false;
+            return {...state,isInfo: false,text:initialState.text}
         },
         removeNote: (state)=>{
-            state.isNote = false;
+            return {...state,isNote: false}
         },
     }
 })
