@@ -21,10 +21,13 @@ export const styles = StyleSheet.create({
     shadowColor: 'rgb(0, 0, 0)',
     justifyContent: 'center',
     alignItems: 'center',
+    marginLeft:10,
   },
   button: {
+    marginLeft:10,
     backgroundColor: 'red',
     height: 30,
+    width: 100,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
