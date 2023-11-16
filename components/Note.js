@@ -1,10 +1,10 @@
 import { Text, View, Pressable } from 'react-native';
-import React, { useState } from 'react';
+import React from 'react';
 import { styles } from '../assets/styles';
 import { useDispatch, useSelector} from 'react-redux';
-import { showInfo, hideInfo,removeNote } from '../store/noteSlice';
+import { showInfo,removeNote } from '../store/noteSlice';
 
-export function Note(props){
+export function Note(){
   const {text,isNote,isInfo} = useSelector((state)=>state.note)
   const dispatch = useDispatch()
 
