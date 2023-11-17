@@ -2,23 +2,26 @@ import { Text, View, Pressable } from 'react-native';
 import React from 'react';
 import { styles } from '../assets/styles';
 import { useDispatch, useSelector} from 'react-redux';
-import { showInfo,removeNote } from '../store/noteSlice';
+// import { showInfo,removeNote} from '../store/noteSlice';
 
-export function Note(){
-  const {text,isNote,isInfo} = useSelector((state)=>state.note)
+// notatka przy tworzeniu powinna miec ID oraz treść
+
+export function Note({id,text,isNote,isInfo}){
+  // const {id,text,isNote,isInfo} = useSelector((state)=>state.note)
+  const {notes,isInput} = useSelector((state)=>state.board)
   const dispatch = useDispatch()
 
   if (isNote && isInfo) {
     return (
         <Pressable style={styles.note} onPress={() => {
           if (isInfo) {
-            dispatch(removeNote())
+            // dispatch(removeNote())
           } else {
-            dispatch(showInfo())
+            // dispatch(showInfo())
           }
         }}>
           <View>
-            <Text>{text}</Text>
+            <Text></Text>
           </View>
         </Pressable>
     );
@@ -26,13 +29,14 @@ export function Note(){
     return (
         <Pressable style={styles.note} onPress={() => {
           if (isInfo) {
-            dispatch(removeNote())
+            // dispatch(removeNote())
           } else {
-            dispatch(showInfo())
+            // dispatch(showInfo())
+
           }
         }}>
           <View>
-            <Text>{text}</Text>
+            <Text>{notes.find((item) => item.id === id)?.text}</Text>
           </View>
         </Pressable>
     );

@@ -18,9 +18,9 @@ export default function Login () {
 
     return (
         <View>
-         <TextInput placeholder='email' onChangeText={(text)=>setEmail(text)} value={email}/>
+         {/* <TextInput placeholder='email' onChangeText={(text)=>setEmail(text)} value={email}/>
          <TextInput placeholder='password' secureTextEntry={true} onChangeText={(text)=>setPassword(text)} value={password}/>
-         <Button onPress={login} title='sing in'/>
+         <Button onPress={login} title='sing in'/> */}
          <BoardScreen/>
         </View>
     )
