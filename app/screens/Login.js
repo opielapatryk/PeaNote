@@ -1,7 +1,7 @@
 import { View, TextInput,Button} from 'react-native'
 import React, { useState} from 'react'
 import { useAuth} from '../context/AuthContext'
-import BoardScreen from '../../components/BoardScreen'
+import BoardScreen from '../../screens/BoardScreen'
 
 
 export default function Login () {

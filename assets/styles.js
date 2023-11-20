@@ -42,5 +42,9 @@ export const styles = StyleSheet.create({
   },
   board:{
     height: 1000
+  },
+  menu:{
+    flexDirection: 'row',
+    justifyContent: 'center',
   }
 });

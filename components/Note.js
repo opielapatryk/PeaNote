@@ -9,6 +9,11 @@ export function Note({ id, text, isNote, isInfo }) {
   const dispatch = useDispatch();
 
   const handlePress = () => {
+    {notes.forEach(note => {
+      if(note.isInfo === true){
+        dispatch(changeInfo(note.id));
+      }
+    });}
     if (isInfo) {
       dispatch(changeInfo(id));
       dispatch(removeNote(id));
