@@ -1,7 +1,6 @@
 import { View, TextInput,Button} from 'react-native'
 import React, { useState} from 'react'
 import { useAuth} from '../context/AuthContext'
-import BoardScreen from '../../screens/BoardScreen'
 
 
 export default function Login () {
@@ -18,10 +17,9 @@ export default function Login () {
 
     return (
         <View>
-         {/* <TextInput placeholder='email' onChangeText={(text)=>setEmail(text)} value={email}/>
+         <TextInput placeholder='email' onChangeText={(text)=>setEmail(text)} value={email}/>
          <TextInput placeholder='password' secureTextEntry={true} onChangeText={(text)=>setPassword(text)} value={password}/>
-         <Button onPress={login} title='sing in'/> */}
-         <BoardScreen/>
+         <Button onPress={login} title='sing in'/>
         </View>
     )
 }
