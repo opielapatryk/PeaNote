@@ -1,7 +1,7 @@
-import {Text, ScrollView } from 'react-native'
+import {Text, ScrollView,View } from 'react-native'
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
-
+import BoardScreen from '../../screens/auth/BoardScreen'
 
 const Home = () => {
   const [users,setUsers] = useState([])
@@ -18,10 +18,14 @@ const Home = () => {
   },[])
   return (
     <ScrollView>
-      {users.map((user)=>(
-        <Text key={user.id}>{user.email}</Text>
-      ))}
+      <BoardScreen/>
+      <ScrollView>
+        {users.map((user)=>(
+          <Text key={user.id}>{user.email}</Text>
+        ))}
+      </ScrollView>
     </ScrollView>
+
   )
 }
 

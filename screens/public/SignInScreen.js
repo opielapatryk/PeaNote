@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import Note from '../components/Note'
+import Note from '../../components/Note'
 
 const SignInScreen = () => {
   return (

@@ -1,17 +1,36 @@
 import { View, TextInput,Button} from 'react-native'
-import React, { useState} from 'react'
+import React, { createContext,useContext,useState,useEffect } from "react";
 import { useAuth} from '../context/AuthContext'
-
+import axios from "axios";
+import * as SecureStore from 'expo-secure-store'
 
 export default function Login () {
+    const TOKEN = 'token';
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const {onLogin} = useAuth()
+    const [authState, setAuthState] = useState({
+        token:null,
+        authenticated:null
+    })
 
     const login = async()=>{
-        const result = await onLogin(email,password)
-        if(result&&result.error){
-            console.log(result);
+        try{
+            const response = await axios.post('http://127.0.0.1:8000/custom_login', {
+                username: email,
+                password: password
+            });
+
+            setAuthState(prevState => ({
+                ...prevState,
+                token: response.data.token,
+                authenticated: true
+            }));
+
+            await SecureStore.setItemAsync(TOKEN, response.data.token);
+            console.log(authState);
+            return response;
+        }catch(e){
+            console.error("Login error:", e);
         }
     }
 
