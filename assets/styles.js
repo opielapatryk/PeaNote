@@ -41,10 +41,10 @@ export const styles = StyleSheet.create({
     shadowColor: 'rgb(0, 0, 0)'
   },
   board:{
-    height: 100
+    height: 500
   },
   menu:{
     flexDirection: 'row',
     justifyContent: 'center',
-  }
+  },
 });

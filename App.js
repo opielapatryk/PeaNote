@@ -1,44 +1,18 @@
-import React, {useEffect, useMemo, useReducer,createContext,useContext} from 'react'
+import React, {useEffect, useMemo, useReducer} from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import {View,TextInput,Text,Button} from 'react-native';
 import axios from "axios";
 import store from './store/store'
 import { Provider } from 'react-redux';
 import * as SecureStore from 'expo-secure-store';
+import Home from './screens/auth/Home';
+import Login from './screens/public/Login'
+import { AuthContext, authReducer, initialState } from './context/AuthContext';
 
-const AuthContext = createContext();
 const Stack = createNativeStackNavigator();
 
 export default function App(){
-  const [state,dispatch] = useReducer((prevState,action) => {
-    switch (action.type) {
-      case 'RESTORE_TOKEN':
-        return {
-          ...prevState,
-          userToken: action.token,
-          isLoading: false
-        };
-      case 'SIGN_IN':
-        return {
-          ...prevState,
-          isSignout: false,
-          userToken: action.token
-        };
-      case 'SIGN_OUT':
-        return {
-          ...prevState,
-          isSignout: true,
-          userToken: null
-        };
-    }
-  },
-  {
-    isLoading:true,
-    isSignout:false,
-    userToken:null
-  }  
-  );
+  const [state, dispatch] = useReducer(authReducer, initialState);
 
   useEffect(()=>{
     const loadToken = async () => {
@@ -104,43 +78,4 @@ export default function App(){
       </AuthContext.Provider>
     </Provider>
   )
-}
-
-function Login() {
-  const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
-
-  const { singIn } = useContext(AuthContext);
-
-  return (
-    <View>
-      <TextInput placeholder='email' onChangeText={setUsername} value={username} />
-      <TextInput placeholder='password' secureTextEntry onChangeText={setPassword} value={password} />
-      <Button onPress={()=>singIn({username,password})} title='sign in' />
-    </View>
-  );
-}
-
-function Home() {
-  const logout = async () => {
-    try {
-      const response = await axios.post('http://127.0.0.1:8000/custom_logout',{
-        'Content-Type': 'application/json',
-        'Authorization': `Token ${SecureStore.getItemAsync('userToken')}`,
-      })
-
-      console.log("Logout successful ");
-      await SecureStore.deleteItemAsync('userToken');
-
-      return response
-    } catch (error) {
-        console.error("Logout error:", error);
-    }
-  };
-
-  return (
-    <View>
-      <Button onPress={()=>logout()} title='delete token' />
-    </View>
-  );
 }

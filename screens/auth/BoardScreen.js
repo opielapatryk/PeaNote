@@ -24,7 +24,7 @@ const BoardScreen = () => {
               }}
               style={styles.board}
             >
-
+              
             <ScrollView>
               {notes.map((note) => (
                   <Note key={note.id} id={note.id} text={note.text} isNote={note.isNote} isInfo={note.isInfo} />
