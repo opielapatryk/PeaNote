@@ -20,15 +20,15 @@ export default function App(){
         console.log("Attempting to load token...");
         try {
           userToken = await SecureStore.getItemAsync("userToken");
-            
         } catch (error) {
             console.error("Error loading token:", error);
         }
         dispatch({ type: 'RESTORE_TOKEN', token: userToken });
+        console.log('token: ' + state.userToken);
     };
     
     loadToken();
-  },[])
+  },[state.userToken])
 
   const authContext = useMemo(
     () => ({
@@ -42,6 +42,7 @@ export default function App(){
         userToken = await SecureStore.setItemAsync('userToken', response.data.Authorization);
         console.log('Token stored:', SecureStore.getItemAsync('userToken'));
         dispatch({ type: 'RESTORE_TOKEN', token: userToken });
+        console.log(state.userToken);
         return response;
 
     } catch (e) {
@@ -50,12 +51,25 @@ export default function App(){
       
       
     },
-    signOut: () => dispatch({ type: 'SIGN_OUT' }),
+    signOut: async () => {
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/custom_logout',{
+          'Content-Type': 'application/json',
+          'Authorization': `Token ${SecureStore.getItemAsync('userToken')}`,
+        })
+  
+        console.log("Logout successful ");
+        await SecureStore.deleteItemAsync('userToken');
+
+        dispatch({ type: 'SIGN_OUT' });
+        console.log('state: ' + state.userToken);
+
+        return response;
+      } catch (error) {
+          console.error("Logout error:", error);
+      }
+    },
     signUp: async (data) => {
-      // In a production app, we need to send user data to server and get a token
-      // We will also need to handle errors if sign up failed
-      // After getting token, we need to persist the token using `SecureStore`
-      // In the example, we'll use a dummy token
 
       dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
     },
