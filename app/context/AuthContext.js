@@ -3,14 +3,20 @@ import axios from "axios";
 import * as SecureStore from 'expo-secure-store';
 
 const TOKEN = 'my-jwt';
-export const API_URL = 'http://127.0.0.1:8000/custom_login';
+
 const AuthContext = createContext({});
+const AuthContextUpdate = createContext({});
 
 export const useAuth = () => {
     return useContext(AuthContext);
 };
 
+export const useAuthUpdate = () => {
+    return useContext(AuthContextUpdate);
+};
+
 export const AuthProvider = ({ children }) => {
+
     const [authState, setAuthState] = useState({
         token: null,
         authenticated: null,
@@ -23,7 +29,7 @@ export const AuthProvider = ({ children }) => {
                 const token = await SecureStore.getItemAsync(TOKEN);
                 console.log("Token loaded:", token);
                 if (token) {
-                    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                    axios.defaults.headers.common['Authentication: '] = `Token ${token}`;
 
                     setAuthState({
                         token: token,
@@ -35,42 +41,15 @@ export const AuthProvider = ({ children }) => {
             }
         };
         loadToken();
-    }, []);
+    }, [authState.authenticated]);
 
-    const login = async (email, password) => {
-        try {
-            const result = await axios.post(`${API_URL}`, { email, password });
+    console.log('Auth State:', authState);
 
-            const setCookieHeader = result.headers['set-cookie'];
-            const csrfTokenCookie = setCookieHeader.find((cookie) => cookie.startsWith('csrftoken='));
-            if (!csrfTokenCookie) {
-                throw new Error('CSRF token cookie not found in headers.');
-            }
+    return (
+        <AuthContext.Provider value={authState}>
 
-            const csrfToken = csrfTokenCookie.split(';')[0].split('=')[1];
+                {children}
 
-            axios.defaults.headers.common['X-CSRFToken'] = csrfToken;
-            console.log("CSRF token set in headers:", csrfToken);
-
-            setAuthState({
-                token: result.data.token,
-                authenticated: true,
-            });
-
-            await SecureStore.setItemAsync(TOKEN, result.data.token);
-            console.log("Token saved:", result.data.token);
-
-            return result;
-        } catch (e) {
-            console.error("Login error:", e);
-            return { error: true, msg: e.response.data.msg };
-        }
-    };
-
-    const value = {
-        onLogin: login,
-        authState,
-    };
-
-    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+        </AuthContext.Provider>
+    );
 };
