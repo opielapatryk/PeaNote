@@ -1,19 +1,20 @@
-import React from 'react';
-import {ScrollView,Pressable,View} from 'react-native';
-import {Note} from '../../components/Note'
+import { Text,ScrollView,Pressable } from 'react-native'
+import React from 'react'
+import NoteCreateInput from '../../components/NoteCreateInput';
+import { Note } from '../../components/Note';
 import { useDispatch, useSelector} from 'react-redux';
-import {styles} from '../../assets/styles';
+import { styles } from '../../assets/styles';
 import {changeInfo} from '../../store/boardSlice';
-import Menu from '../../components/Menu'
 
-const BoardScreen = ({navigation}) => {
+export default FriendsBoard = () => {
     const { notes } = useSelector((state)=>state.board)
     const dispatch = useDispatch()
-
-      return (
-        <View>
-          <Menu navigation={navigation}/>
-          <Pressable
+    return (
+      <ScrollView>
+        <Text>HELLOOOO FROM FRIEND</Text>
+        <NoteCreateInput/>
+        {/* if your board the pressable else just scrollview*/}
+        <Pressable
               onPress={() => {
                   notes.map((note) => {if(note.isInfo === true){
                       dispatch(changeInfo(note.id))
@@ -29,9 +30,6 @@ const BoardScreen = ({navigation}) => {
             </ScrollView>
 
           </Pressable>
-        </View>
-      );
-    };
-
-
-export default BoardScreen;
+      </ScrollView>
+    );
+}

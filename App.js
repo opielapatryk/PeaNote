@@ -1,13 +1,15 @@
-import React, {useEffect, useMemo, useReducer} from 'react'
+import React, {useEffect, useMemo, useReducer, useState} from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import axios from "axios";
 import store from './store/store'
 import { Provider } from 'react-redux';
 import * as SecureStore from 'expo-secure-store';
-import Home from './screens/auth/Home';
 import Login from './screens/public/Login'
 import { AuthContext, authReducer, initialState } from './context/AuthContext';
+import BoardScreen from './screens/auth/BoardScreen';
+import FriendsScreen from './screens/auth/FriendsScreen';
+import FriendsBoard from './screens/auth/FriendsBoard';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,14 +22,17 @@ export default function App(){
         console.log("Attempting to load token...");
         try {
           userToken = await SecureStore.getItemAsync("userToken");
+          userId = await SecureStore.getItemAsync("userId");
+          console.log('loadToken, userId: ' + userId);
         } catch (error) {
             console.error("Error loading token:", error);
         }
-        dispatch({ type: 'RESTORE_TOKEN', token: userToken });
-        console.log('token: ' + state.userToken);
+        dispatch({ type: 'RESTORE_TOKEN', token: userToken,userId:userId });
+
     };
     
     loadToken();
+    
   },[state.userToken])
 
   const authContext = useMemo(
@@ -40,9 +45,17 @@ export default function App(){
         });
 
         userToken = await SecureStore.setItemAsync('userToken', response.data.Authorization);
-        console.log('Token stored:', SecureStore.getItemAsync('userToken'));
-        dispatch({ type: 'RESTORE_TOKEN', token: userToken });
-        console.log(state.userToken);
+
+        console.log('response.data.user_id: ' + response.data.user_id);
+        console.log('String(response.data.user_id): ' + String(response.data.user_id));
+        userIdString = String(response.data.user_id)
+        await SecureStore.setItemAsync('userId', userIdString);
+        userId = await SecureStore.getItemAsync('userId');
+
+        console.log('userId = await SecureStore.setItemAsync(userId, String(response.data.user_id)): ' + userId);
+
+        dispatch({ type: 'SIGN_IN', token: userToken,userId:userId});
+        console.log("Signin successful ");
         return response;
 
     } catch (e) {
@@ -60,10 +73,9 @@ export default function App(){
   
         console.log("Logout successful ");
         await SecureStore.deleteItemAsync('userToken');
+        await SecureStore.deleteItemAsync('userId');
 
         dispatch({ type: 'SIGN_OUT' });
-        console.log('state: ' + state.userToken);
-
         return response;
       } catch (error) {
           console.error("Logout error:", error);
@@ -85,7 +97,11 @@ export default function App(){
             {state.userToken==null?(
               <Stack.Screen name="Login" component={Login}></Stack.Screen>
             ):(
-              <Stack.Screen name="Home" component={Home}></Stack.Screen>
+              <>
+                <Stack.Screen name="Board" component={BoardScreen}></Stack.Screen>
+                <Stack.Screen name="Friends" component={FriendsScreen}initialParams={{ userId:'12'}}></Stack.Screen>
+                <Stack.Screen name="FriendsBoard" component={FriendsBoard}></Stack.Screen>
+              </>
             )}
           </Stack.Navigator>
         </NavigationContainer>

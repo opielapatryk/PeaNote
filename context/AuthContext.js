@@ -1,10 +1,12 @@
 import { createContext } from 'react';
 
 export const AuthContext = createContext();
+
 export const initialState = {
     isLoading:true,
     isSignout:false,
-    userToken:null
+    userToken:null,
+    userId:null
   }  
 
 export const authReducer = (prevState,action) => {
@@ -13,19 +15,22 @@ export const authReducer = (prevState,action) => {
         return {
           ...prevState,
           userToken: action.token,
-          isLoading: false
+          isLoading: false,
+          userId:action.userId
         };
       case 'SIGN_IN':
         return {
           ...prevState,
           isSignout: false,
-          userToken: action.token
+          userToken: action.token,
+          userId:action.userId
         };
       case 'SIGN_OUT':
         return {
           ...prevState,
           isSignout: true,
-          userToken: null
+          userToken: null,
+          userId: null
         };
     }
   };

@@ -41,7 +41,7 @@ export const styles = StyleSheet.create({
     shadowColor: 'rgb(0, 0, 0)'
   },
   board:{
-    height: 500
+    height: 1000
   },
   menu:{
     flexDirection: 'row',
