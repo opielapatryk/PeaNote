@@ -22,30 +22,14 @@ export const FriendsScreen = ({ navigation }) => {
         );
         
         // Using Promise.all to wait for all requests to resolve
-        Promise.all(friendsRequests)
+          Promise.all(friendsRequests)
             .then(friendsData => {
-              friendsData.forEach(friend => console.log(JSON.stringify(friend)))
-                // console.log('friends: ' + JSON.stringify(friendsData));
                 setFriends(friendsData)
-                console.log('====================================================');
-                console.log('friends state: '+friends);
-                // You can set the friends data in your state or perform other actions here
             })
             .catch(error => {
                 console.error('Error fetching friends:', error);
             });
         
-
-          // Promise.all(friendPromises)
-          // .then(friendsData => {
-          //   friendsData.forEach(friend => {
-          //     console.log(`http://localhost:8000/api/users/${friend.id}`);
-          //   });
-          // })
-          // .catch(error => {
-          //   console.error('Error fetching friend data:', error);
-          // });
-
           
           return result
         }catch(e){
@@ -57,6 +41,7 @@ export const FriendsScreen = ({ navigation }) => {
   
     return (
       <ScrollView>
+        <Button title='ADD NEW FRIEND'/>
         <Text>Friends:</Text>
         <ScrollView>
           {friends.map((friend)=>(
