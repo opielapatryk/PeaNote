@@ -105,7 +105,7 @@ export const FriendsScreen = ({ navigation }) => {
         <Text>Friends:</Text>
         <ScrollView>
           {friends.map((friend)=>(
-            <Button key={friend.id} title={friend.email} onPress={() => navigation.navigate('FriendsBoard')}/>
+            <Button key={friend.id} title={friend.email} onPress={() => navigation.navigate('FriendsBoard', { friendId: friend.id, friendName: friend.first_name })}/>
           ))}
         </ScrollView>
       </ScrollView>

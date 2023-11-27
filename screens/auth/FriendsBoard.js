@@ -6,12 +6,13 @@ import { useDispatch, useSelector} from 'react-redux';
 import { styles } from '../../assets/styles';
 import {changeInfo} from '../../store/boardSlice';
 
-export default FriendsBoard = () => {
+export default FriendsBoard = ({ route }) => {
+    const { friendId, friendName } = route.params;
     const { notes } = useSelector((state)=>state.board)
     const dispatch = useDispatch()
     return (
       <ScrollView>
-        <Text>HELLOOOO FROM FRIEND</Text>
+        <Text>Welcome on {friendName?friendName:'your friend'} board</Text>
         <NoteCreateInput/>
         {/* if your board the pressable else just scrollview*/}
         <Pressable
