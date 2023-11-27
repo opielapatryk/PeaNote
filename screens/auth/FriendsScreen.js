@@ -9,7 +9,7 @@ export const FriendsScreen = ({ navigation }) => {
     const [newFriendEmail, setNewFriendEmail] = useState()
     const [buttonTitle,setButtonTitle] = useState('')
     const [newFriendID, setNewFriendID] = useState(0)
-    // const [currentUserId, setCurrentUserId] = useState(0)
+
     useEffect(()=>{
       const loadUser = async()=>{
         try{
@@ -17,15 +17,11 @@ export const FriendsScreen = ({ navigation }) => {
 
           const result = await axios.get(`http://localhost:8000/api/users/${currentUserId}`)
 
-          // console.log(result.data);
-          
-          // let friends = []
           const friendsRequests = result.data.friends.map(url =>
             axios.get(url)
             .then(response => response.data)
         );
         
-        // Using Promise.all to wait for all requests to resolve
           Promise.all(friendsRequests)
             .then(friendsData => {
                 setFriends(friendsData)
@@ -45,23 +41,27 @@ export const FriendsScreen = ({ navigation }) => {
   
     const searchNewFriend = async () => {
       try {
-        const result = await axios.get(`http://localhost:8000/api/users/`)
-
-        const data = result.data
-
         currentUserId = await SecureStore.getItemAsync('userId');
-        
-        data.forEach(element => {
-          if (element.email === newFriendEmail && element.id != currentUserId) {
-            setNewFriend(element.email);
-            setNewFriendID(element.id);
-            setButtonTitle('ADD')
-          }else{
-            setNewFriend('');
-            setNewFriendID(0);
-            setButtonTitle('')
-          }
-        });
+
+        const currentUserResult = await axios.get(`http://localhost:8000/api/users/${currentUserId}`)
+
+        const list = JSON.stringify(currentUserResult.data.friends)
+
+          const result = await axios.get(`http://localhost:8000/api/users/`)
+
+          const data = result.data
+
+          data.forEach(element => {
+            if (element.email === newFriendEmail && element.id != currentUserId && !list.includes(`http://localhost:8000/api/users/${element.id}`)) {
+              setNewFriend(element.email);
+              setNewFriendID(element.id);
+              setButtonTitle('ADD')
+            }else{
+              setNewFriend('');
+              setNewFriendID(0);
+              setButtonTitle('')
+            }
+          });
       } catch (error) {
         console.log(error.message);
       }
@@ -88,19 +88,6 @@ export const FriendsScreen = ({ navigation }) => {
             'friends':list
         })
 
-      //   axios.patch(`http://localhost:8000/api/users/${currentUserId}/`,{
-          
-      //     "friends": [
-      //         "http://localhost:8000/api/users/9/",
-      //         "http://localhost:8000/api/users/12/"
-      //     ],
-      // }).then((response) => {
-      //     console.log(response.data);
-      // }).catch((error) => {
-      //     console.log(error);
-      // })
-
-        // let list = result.data.friends
       } catch (error) {
         console.log(error.message);
       }
