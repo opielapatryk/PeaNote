@@ -6,6 +6,7 @@ import store from './store/store'
 import { Provider } from 'react-redux';
 import * as SecureStore from 'expo-secure-store';
 import Login from './screens/public/Login'
+import Register from './screens/public/Register'
 import { AuthContext, authReducer, initialState } from './context/AuthContext';
 import BoardScreen from './screens/auth/BoardScreen';
 import FriendsScreen from './screens/auth/FriendsScreen';
@@ -39,7 +40,7 @@ export default function App(){
     () => ({
     singIn: async (data) => {
       try {
-        const response = await axios.post('http://127.0.0.1:8000/custom_login', {
+        const response = await axios.post('http://localhost:8000/custom_login', {
             username: data.username,
             password: data.password
         });
@@ -95,7 +96,11 @@ export default function App(){
         <NavigationContainer>
           <Stack.Navigator>
             {state.userToken==null?(
-              <Stack.Screen name="Login" component={Login}></Stack.Screen>
+              <>
+                <Stack.Screen name="Login" component={Login}></Stack.Screen>
+                <Stack.Screen name="Register" component={Register}></Stack.Screen>
+              </>
+             
             ):(
               <>
                 <Stack.Screen name="Board" component={BoardScreen}></Stack.Screen>

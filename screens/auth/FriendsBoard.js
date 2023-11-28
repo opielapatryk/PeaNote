@@ -11,12 +11,6 @@ import * as SecureStore from 'expo-secure-store';
 export default FriendsBoard = ({ route }) => {
     const { friendId, friendName } = route.params;
     const [content,setContent] = useState('');
-    // const { notes } = useSelector((state)=>state.board)
-    // const dispatch = useDispatch()
-
-
-    // onPress post note to db,
-    // with content and creator url
 
     const createNote = async () => {
         try {
