@@ -51,15 +51,19 @@ export const FriendsScreen = ({ navigation }) => {
 
           const data = result.data
 
+          console.log('users: ', data.map(user=>user.email));
+
           data.forEach(element => {
             if (element.email === newFriendEmail && element.id != currentUserId && !list.includes(`http://localhost:8000/api/users/${element.id}`)) {
+              console.log(element.email === newFriendEmail);
+              console.log(element.id != currentUserId);
+              console.log(!list.includes(`http://localhost:8000/api/users/${element.id}`));
+              console.log('BEFORE setnewfriend: ', newFriend);
+              console.log('element.email:', element.email.trim());
               setNewFriend(element.email);
+              console.log('AFTER setnewfriend: ', newFriend);
               setNewFriendID(element.id);
               setButtonTitle('ADD')
-            }else{
-              setNewFriend('');
-              setNewFriendID(0);
-              setButtonTitle('')
             }
           });
       } catch (error) {
