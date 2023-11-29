@@ -45,8 +45,31 @@ export default FriendsBoard = ({ route }) => {
         }
     }
 
+    const removeFriend = async () => {
+        try {
+            currentUserId = await SecureStore.getItemAsync('userId');
+            const currentUserResult = await axios.get(`http://localhost:8000/api/users/${currentUserId}`)
+
+            let list = currentUserResult.data.friends
+
+            list = list.filter((element) => element !== `http://localhost:8000/api/users/${friendId}/`)
+
+            console.log(list);
+
+            const resp = await axios.patch(`http://localhost:8000/api/users/${currentUserId}/`,{
+                'friends':list
+            })
+
+            console.log(resp.status);
+            return resp
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+
     return (
       <View>
+        <Button title='remove friend' onPress={()=>removeFriend()}/>
         <Text>Welcome on {friendName?friendName:'your friend'} board</Text>
         <TextInput placeholder='note.....' value={content} onChangeText={(content)=>setContent(content)}/>
         <Button title='create note' onPress={()=>createNote()}/>
