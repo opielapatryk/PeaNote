@@ -3,12 +3,11 @@ import React, {useState} from 'react';
 import { styles } from '../assets/styles';
 import { useDispatch, useSelector} from 'react-redux';
 import {changeInfo,removeNote} from '../store/boardSlice'
-import axios from 'axios';
+import axios from 'axios'
 
 export function Note({ id, text, isNote, isInfo }) {
-  // const { notes } = useSelector((state) => state.board);
-  // const dispatch = useDispatch();
-  const [info,setInfo] = useState(isInfo)
+  const { notes } = useSelector((state) => state.board);
+  const dispatch = useDispatch();
 
   const deleteNote = async () => {
     try {
@@ -21,42 +20,33 @@ export function Note({ id, text, isNote, isInfo }) {
   }
 
   const handlePress = () => {
-    if(info){
-      //remove note
-      console.log(info);
-      deleteNote()
-    }else{
-      setInfo(!info)
-      console.log(info);
+    {notes.forEach(note => {
+      if(note.isInfo === true){
+        dispatch(changeInfo(note.id));
+      }
+    });}
+    if (isInfo) {
+      dispatch(changeInfo(id));
+      dispatch(removeNote(id));
+      deleteNote();
+    } else {
+      dispatch(changeInfo(id));
     }
-    // {notes.forEach(note => {
-    //   if(note.isInfo === true){
-    //     dispatch(changeInfo(note.id));
-    //   }
-    // });}
-    // if (isInfo) {
-    //   dispatch(changeInfo(id));
-    //   dispatch(removeNote(id));
-    // } else {
-    //   dispatch(changeInfo(id));
-    // }
   };
 
-  if (isNote && info) {
+  if (isNote && isInfo) {
     return (
       <Pressable style={styles.note} onPress={handlePress}>
         <View>
-          {/* <Text>{notes.find((item) => item.id === id)?.text}</Text> */}
-          <Text>Click again to delete note</Text>
+          <Text>{notes.find((item) => item.id === id)?.text}</Text>
         </View>
       </Pressable>
     );
-  } else if (isNote && !info) {
+  } else if (isNote && !isInfo) {
     return (
       <Pressable style={styles.note} onPress={handlePress}>
         <View>
-          {/* <Text>{notes.find((item) => item.id === id)?.text}</Text> */}
-          <Text>{text}</Text>
+          <Text>{notes.find((item) => item.id === id)?.text}</Text>
         </View>
       </Pressable>
     );

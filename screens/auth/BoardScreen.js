@@ -3,13 +3,12 @@ import {ScrollView,Pressable,View,Text} from 'react-native';
 import {Note} from '../../components/Note'
 import { useDispatch, useSelector} from 'react-redux';
 import {styles} from '../../assets/styles';
-import {changeInfo} from '../../store/boardSlice';
+import {changeInfo,addNote} from '../../store/boardSlice';
 import Menu from '../../components/Menu'
 import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
 
 const BoardScreen = ({navigation}) => {
-    const [notesFromDB, setNotes] = useState([])
     const { notes } = useSelector((state)=>state.board)
     const dispatch = useDispatch()
     
@@ -29,8 +28,7 @@ const BoardScreen = ({navigation}) => {
           Promise.all(stickersRequest)
           .then(stickersData=>{
             stickersData.forEach(sticker => console.log(JSON.stringify(sticker)))
-
-            setNotes(stickersData)
+            stickersData.forEach(sticker => dispatch(addNote({id: sticker.id, text: sticker.content, isNote:true, isInfo:false})))
           })
 
 
@@ -41,23 +39,24 @@ const BoardScreen = ({navigation}) => {
       }
       loadNotes()
     },[])
+
       return (
         <View>
           <Menu navigation={navigation}/>
           <Pressable
               onPress={() => {
-                  notes.map((note) => {if(note.isInfo === true){
-                      dispatch(changeInfo(note.id))
-                  }})
+                notes.map((note) => {
+                  if(note.isInfo === true)
+                  {
+                    dispatch(changeInfo(note.id))
+                  }
+                })
               }}
               style={styles.board}
             >
             <ScrollView>
-              {/* {notes.map((note) => (
+              {notes.map((note) => (
                   <Note key={note.id} id={note.id} text={note.text} isNote={note.isNote} isInfo={note.isInfo} />
-              ))} */}
-              {notesFromDB.map((note) => (
-                  <Note key={note.id} id={note.id} text={note.content} isNote={true} isInfo={false} />
               ))}
             </ScrollView>
 
