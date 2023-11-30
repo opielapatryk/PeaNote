@@ -8,8 +8,10 @@ export const FriendsScreen = ({ navigation }) => {
     const [newFriend,setNewFriend] = useState('')
     const [newFriendEmail, setNewFriendEmail] = useState()
     const [buttonTitle,setButtonTitle] = useState('')
-    const [newFriendID, setNewFriendID] = useState(0)
-
+    const [newFriendID, setNewFriendID] = useState(null)
+    const [message,setMessage] = useState('')
+    const [doesEmailExist, setdoesEmailExist] = useState(false)
+    const [list,setList] = useState([])
     useEffect(()=>{
       const loadUser = async()=>{
         try{
@@ -37,35 +39,136 @@ export const FriendsScreen = ({ navigation }) => {
         }
       }
       loadUser()
-    },[])
-  
-    const searchNewFriend = async () => {
-      try {
+    },[friends])
+
+    useEffect(() => {
+      const getUserId = async()=>{
         currentUserId = await SecureStore.getItemAsync('userId');
 
-        const currentUserResult = await axios.get(`http://localhost:8000/api/users/${currentUserId}`)
+        console.log('new friend id: ', newFriendID);
 
-        const list = JSON.stringify(currentUserResult.data.friends)
+
+
+        console.log(doesEmailExist);
+  
+        if(doesEmailExist === false){
+          // email does not exist
+          setMessage('This user does not exist!..')
+          setButtonTitle('')
+          // setNewFriendID(0);
+          setNewFriend('');
+          console.log('xd');
+        }else{
+          // email exists
+          // check if friend id is the same as mine
+          console.log('newFriendId: ', newFriendID);
+          console.log('currentUserId: ', currentUserId);
+          if(newFriendID == currentUserId){
+            // email exists but its you!
+            setMessage('You cannot add to friends yourself!..')
+            setButtonTitle('')
+            // setNewFriendID(0);
+            setNewFriend('');
+          }else{
+            // email exists and its not you
+            // check if is on your friends list 
+            if(list.includes(`http://localhost:8000/api/users/${newFriendID}`)){
+              // You are already friends
+              setMessage('You are friends already!..')
+              setButtonTitle('')
+              // setNewFriendID(0);
+              setNewFriend('');
+            }else{
+              // You are not friends, you can add him
+              setMessage(newFriendEmail)
+              setButtonTitle('ADD')
+              // setNewFriendID(0);
+              setNewFriend('');
+            }
+          }
+        }
+      }
+      getUserId()
+
+    }, [newFriendID]);
+
+    const searchNewFriend = async () => {
+      
+      try {
+          let currentUserId = await SecureStore.getItemAsync('userId');
+
+          const currentUserResult = await axios.get(`http://localhost:8000/api/users/${currentUserId}`)
+
+          setList(JSON.stringify(currentUserResult.data.friends))
 
           const result = await axios.get(`http://localhost:8000/api/users/`)
 
           const data = result.data
 
-          console.log('users: ', data.map(user=>user.email));
+          // console.log('users: ', data.map(user=>user.email));
 
-          data.forEach(element => {
-            if (element.email === newFriendEmail && element.id != currentUserId && !list.includes(`http://localhost:8000/api/users/${element.id}`)) {
-              console.log(element.email === newFriendEmail);
-              console.log(element.id != currentUserId);
-              console.log(!list.includes(`http://localhost:8000/api/users/${element.id}`));
-              console.log('BEFORE setnewfriend: ', newFriend);
-              console.log('element.email:', element.email.trim());
-              setNewFriend(element.email);
-              console.log('AFTER setnewfriend: ', newFriend);
-              setNewFriendID(element.id);
-              setButtonTitle('ADD')
+
+
+
+
+
+
+
+          // check if user exists
+
+
+          data.every(friend => {
+            if (friend.email === newFriendEmail) {
+              setdoesEmailExist(true);
+              setNewFriendID(friend.id);
+              return false; // Stop iteration if a match is found
+            } else {
+              setdoesEmailExist(false);
+              setNewFriendID(null);
+              return true; // Continue iteration if no match is found
             }
           });
+          
+
+
+
+          
+
+
+
+
+          // data.every(element => {
+          //   if(element.email === newFriendEmail){
+          //     if(element.id == currentUserId){
+          //       setMessage('You cannot add to friends yourself!..')
+          //       setButtonTitle('')
+          //       setNewFriendID(0);
+          //       setNewFriend('');
+          //       return false
+          //     }else{
+          //       if (!list.includes(`http://localhost:8000/api/users/${element.id}`)){
+          //         setMessage(newFriendEmail)
+          //         setNewFriend(element.email);
+          //         setNewFriendID(element.id);
+          //         setButtonTitle('ADD')
+          //         return false
+          //       }else{
+          //         setMessage('You are friends already!..')
+          //         setButtonTitle('')
+          //         setNewFriendID(0);
+          //         setNewFriend('');
+          //         return false
+          //       }
+          //     }
+          //   }else{
+          //     setMessage('This user does not exist!..')
+          //     setButtonTitle('')
+          //     setNewFriendID(0);
+          //     setNewFriend('');
+          //     return false
+          //   }
+          // });
+
       } catch (error) {
         console.log(error.message);
       }
@@ -104,7 +207,7 @@ export const FriendsScreen = ({ navigation }) => {
       <ScrollView>
         <TextInput placeholder='Insert friend email' onChangeText={(newFriendEmail) => setNewFriendEmail(newFriendEmail)} value={newFriendEmail}/>
         <Button title='SEARCH NEW FRIEND' onPress={()=>searchNewFriend()}/>
-        <Text>{newFriend}</Text>
+        <Text>{message}</Text>
         <Button title={buttonTitle} onPress={()=>{addNewFriend()}}/>
         <Text>Friends:</Text>
         <ScrollView>

@@ -8,7 +8,7 @@ import * as SecureStore from 'expo-secure-store';
 // import { styles } from '../../assets/styles';
 // import {changeInfo} from '../../store/boardSlice';
 
-export default FriendsBoard = ({ route }) => {
+export default FriendsBoard = ({ route,navigation }) => {
     const { friendId, friendName } = route.params;
     const [content,setContent] = useState('');
 
@@ -61,6 +61,10 @@ export default FriendsBoard = ({ route }) => {
             })
 
             console.log(resp.status);
+
+            if(resp.status === 200) {
+                navigation.navigate('Friends')
+            }
             return resp
         } catch (error) {
             console.log(error.message);
