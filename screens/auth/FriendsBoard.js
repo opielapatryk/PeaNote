@@ -6,16 +6,23 @@ import * as SecureStore from 'expo-secure-store';
 export default FriendsBoard = ({ route,navigation }) => {
     const { friendId, friendName } = route.params;
     const [content,setContent] = useState('');
+    const [message, setMessage] = useState('');
 
     const createNote = async () => {
         try {
             currentUserId = await SecureStore.getItemAsync('userId');
             const userURL = `http://localhost:8000/api/users/${currentUserId}/`
+            let result;
 
-            const result = await axios.post(`http://localhost:8000/api/stickers/`,{
-                'content':content,
-                'creator':userURL
-            })
+            if(content != ''){
+                result = await axios.post(`http://localhost:8000/api/stickers/`,{
+                    'content':content,
+                    'creator':userURL
+                })
+            }else{
+                setMessage('Note cannot be empty..')
+            }
+            
 
             const stickerID = result.data.id
 
@@ -30,6 +37,13 @@ export default FriendsBoard = ({ route,navigation }) => {
             await axios.patch(`http://localhost:8000/api/users/${friendId}/`,{
                 'stickersOnBoard': list
             })
+
+            if(result.status === 201){
+                setMessage('Note created successfully!')
+                setContent('')
+            }else{
+                setMessage('Cannot create note, something went wrong..')
+            }
         } catch (error) {
             console.log(error.message);
         }
@@ -63,6 +77,7 @@ export default FriendsBoard = ({ route,navigation }) => {
         <Text>Welcome on {friendName?friendName:'your friend'} board</Text>
         <TextInput placeholder='note.....' value={content} onChangeText={(content)=>setContent(content)}/>
         <Button title='create note' onPress={()=>createNote()}/>
+        <Text>{message}</Text>
       </View>
     );
 }
