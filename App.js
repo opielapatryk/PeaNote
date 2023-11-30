@@ -12,10 +12,12 @@ import BoardScreen from './screens/auth/BoardScreen';
 import FriendsScreen from './screens/auth/FriendsScreen';
 import FriendsBoard from './screens/auth/FriendsBoard';
 
+
 const Stack = createNativeStackNavigator();
 
 export default function App(){
   const [state, dispatch] = useReducer(authReducer, initialState);
+
 
   useEffect(()=>{
     const loadToken = async () => {
@@ -77,6 +79,7 @@ export default function App(){
         await SecureStore.deleteItemAsync('userId');
 
         dispatch({ type: 'SIGN_OUT' });
+
         return response;
       } catch (error) {
           console.error("Logout error:", error);
