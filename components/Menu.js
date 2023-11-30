@@ -8,21 +8,16 @@ import {removeNote} from '../store/boardSlice';
 export default function menu({ navigation }) {
 
   const { signOut } = useContext(AuthContext);
-  ////////////////////////////////////////////////////////////////
   const { notes } = useSelector((state)=>state.board)
   const dispatch_redux = useDispatch()
-  ////////////////////////////////////////////////////////////////
   return (
     <View style={styles.menu}>
       <Button title='BOARD' />
       <Button title='FRIENDS' onPress={() => navigation.navigate('Friends')}/>
-      <Button title='SETTINGS' />
+      <Button title='SETTINGS' onPress={() => navigation.navigate('Settings')}/>
       <Button onPress={()=>{
         signOut()
-        console.log('xd');
-        ///////////////////////////////////////////////////////////////
         notes.forEach(sticker => dispatch_redux(removeNote(sticker.id)))
-        ///////////////////////////////////////////////////////////////
         }} title='LOGOUT' />
     </View>
   );

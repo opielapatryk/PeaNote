@@ -24,6 +24,47 @@ const Register = ({navigation}) => {
       return passwordRegex.test(password);
     }
 
+    function hasSimilarSubstrings(email, password, minCommonChars) {
+      const emailSubstrings = getAllSubstrings(email);
+      const passwordSubstrings = getAllSubstrings(password);
+    
+      // Check if there are common substrings with at least minCommonChars characters in common
+      const commonSubstrings = emailSubstrings.some(emailSubstring =>
+        passwordSubstrings.some(passwordSubstring =>
+          hasConsecutiveCommonChars(emailSubstring, passwordSubstring, minCommonChars)
+        )
+      );
+    
+      return commonSubstrings;
+    }
+    
+    function getAllSubstrings(str) {
+      const substrings = [];
+      for (let i = 0; i < str.length; i++) {
+        for (let j = i + 1; j <= str.length; j++) {
+          substrings.push(str.slice(i, j));
+        }
+      }
+      return substrings;
+    }
+    
+    function hasConsecutiveCommonChars(str1, str2, minCommonChars) {
+      let consecutiveCount = 0;
+    
+      for (let i = 0; i < str1.length; i++) {
+        if (str2.includes(str1[i])) {
+          consecutiveCount++;
+          if (consecutiveCount >= minCommonChars) {
+            return true;
+          }
+        } else {
+          consecutiveCount = 0;
+        }
+      }
+    
+      return false;
+    }
+
     if(first_name === '' || last_name === '' || email === '' || password1 === '' || password2 === ''){
       setMessage('All fields must be provided!..')
     }else if(password1 != password2){
@@ -32,6 +73,8 @@ const Register = ({navigation}) => {
       setMessage('Email must correct!..')
     }else if(!isValidPassword(password1)){
       setMessage('Password must be at least 8 characters, contain at least one number and big character!..')
+    }else if(password1.toLowerCase().includes(first_name.toLowerCase()) || password1.toLowerCase().includes(last_name.toLowerCase()) || hasSimilarSubstrings(email, password1, 4)){
+      setMessage('Password is too similar to your credentials!..')
     }else{
       try {
         const result = await axios.post('http://localhost:8000/custom_register', {
