@@ -5,33 +5,35 @@ import * as SecureStore from 'expo-secure-store';
 
 export const FriendsScreen = ({ navigation }) => {
     const [friends,setFriends] = useState([])
-    const [newFriend,setNewFriend] = useState('')
     const [newFriendEmail, setNewFriendEmail] = useState()
     const [buttonTitle,setButtonTitle] = useState('')
     const [newFriendID, setNewFriendID] = useState(null)
     const [message,setMessage] = useState('')
     const [doesEmailExist, setdoesEmailExist] = useState(false)
     const [list,setList] = useState([])
+    const [firstRender, setFirstRender] = useState(true)
+
     useEffect(()=>{
       const loadUser = async()=>{
         try{
           currentUserId = await SecureStore.getItemAsync('userId');
 
-          const result = await axios.get(`http://localhost:8000/api/users/${currentUserId}`)
+          const result = await axios.get(`http://127.0.0.1:8000/api/users/${currentUserId}`)
 
           const friendsRequests = result.data.friends.map(url =>
             axios.get(url)
             .then(response => response.data)
-        );
+          );
         
           Promise.all(friendsRequests)
             .then(friendsData => {
-                setFriends(friendsData)
+              if (JSON.stringify(friends) !== JSON.stringify(friendsData)) {
+                setFriends(friendsData);
+              }
             })
             .catch(error => {
-                console.error('Error fetching friends:', error);
-            });
-        
+              console.error('Error fetching friends:', error);
+          });
           
           return result
         }catch(e){
@@ -45,77 +47,53 @@ export const FriendsScreen = ({ navigation }) => {
       const getUserId = async()=>{
         currentUserId = await SecureStore.getItemAsync('userId');
 
-        console.log('new friend id: ', newFriendID);
-
-
-
-        console.log(doesEmailExist);
-  
         if(doesEmailExist === false){
           // email does not exist
-          setMessage('This user does not exist!..')
-          setButtonTitle('')
-          // setNewFriendID(0);
-          setNewFriend('');
-          console.log('xd');
+          if(!firstRender){
+            setMessage('This user does not exist!..')
+            setButtonTitle('')
+            // setNewFriendID(0);
+          }
+          setFirstRender(false)
         }else{
           // email exists
           // check if friend id is the same as mine
-          console.log('newFriendId: ', newFriendID);
-          console.log('currentUserId: ', currentUserId);
           if(newFriendID == currentUserId){
             // email exists but its you!
             setMessage('You cannot add to friends yourself!..')
             setButtonTitle('')
             // setNewFriendID(0);
-            setNewFriend('');
           }else{
             // email exists and its not you
             // check if is on your friends list 
-            if(list.includes(`http://localhost:8000/api/users/${newFriendID}`)){
+            if(list.includes(`http://127.0.0.1:8000/api/users/${newFriendID}`)){
               // You are already friends
               setMessage('You are friends already!..')
               setButtonTitle('')
               // setNewFriendID(0);
-              setNewFriend('');
             }else{
               // You are not friends, you can add him
               setMessage(newFriendEmail)
               setButtonTitle('ADD')
               // setNewFriendID(0);
-              setNewFriend('');
             }
           }
         }
       }
       getUserId()
-
     }, [newFriendID]);
 
     const searchNewFriend = async () => {
-      
       try {
           let currentUserId = await SecureStore.getItemAsync('userId');
 
-          const currentUserResult = await axios.get(`http://localhost:8000/api/users/${currentUserId}`)
+          const currentUserResult = await axios.get(`http://127.0.0.1:8000/api/users/${currentUserId}`)
 
           setList(JSON.stringify(currentUserResult.data.friends))
 
-          const result = await axios.get(`http://localhost:8000/api/users/`)
+          const result = await axios.get(`http://127.0.0.1:8000/api/users/`)
 
           const data = result.data
-
-          // console.log('users: ', data.map(user=>user.email));
-
-
-
-
-
-
-
-
-          // check if user exists
-
 
           data.every(friend => {
             if (friend.email === newFriendEmail) {
@@ -128,78 +106,47 @@ export const FriendsScreen = ({ navigation }) => {
               return true; // Continue iteration if no match is found
             }
           });
-          
-
-
-
-          
-
-
-
-
-          // data.every(element => {
-          //   if(element.email === newFriendEmail){
-          //     if(element.id == currentUserId){
-          //       setMessage('You cannot add to friends yourself!..')
-          //       setButtonTitle('')
-          //       setNewFriendID(0);
-          //       setNewFriend('');
-          //       return false
-          //     }else{
-          //       if (!list.includes(`http://localhost:8000/api/users/${element.id}`)){
-          //         setMessage(newFriendEmail)
-          //         setNewFriend(element.email);
-          //         setNewFriendID(element.id);
-          //         setButtonTitle('ADD')
-          //         return false
-          //       }else{
-          //         setMessage('You are friends already!..')
-          //         setButtonTitle('')
-          //         setNewFriendID(0);
-          //         setNewFriend('');
-          //         return false
-          //       }
-          //     }
-          //   }else{
-          //     setMessage('This user does not exist!..')
-          //     setButtonTitle('')
-          //     setNewFriendID(0);
-          //     setNewFriend('');
-          //     return false
-          //   }
-          // });
-
       } catch (error) {
         console.log(error.message);
       }
-      
     }
 
     const addNewFriend = async () => {
       try {
-        const friendURL = `http://localhost:8000/api/users/${newFriendID}/`
-        const userURL = `http://localhost:8000/api/users/${currentUserId}/`
+        const friendURL = `http://127.0.0.1:8000/api/users/${newFriendID}/`
+        const userURL = `http://127.0.0.1:8000/api/users/${currentUserId}/`
         const result = await axios.get(userURL)
 
         let list = result.data.friends
 
-        console.log(list);
-
         if (!list.includes(friendURL)) {
           list.push(friendURL);
         }
-
-        console.log(list);
         
         await axios.patch(userURL,{
             'friends':list
         })
 
+        ////////////////////////////////////////////////////////////////
+
+        const friendsRequests = list.map(url =>
+          axios.get(url)
+          .then(response => response.data)
+        );
+      
+        Promise.all(friendsRequests)
+          .then(friendsData => {
+            if (JSON.stringify(friends) !== JSON.stringify(friendsData)) {
+              setFriends(friendsData);
+            }
+          })
+          .catch(error => {
+            console.error('Error fetching friends:', error);
+        });
+        ////////////////////////////////////////////////////////////////
       } catch (error) {
         console.log(error.message);
       }
-      
-      
     }
 
 
@@ -208,7 +155,7 @@ export const FriendsScreen = ({ navigation }) => {
         <TextInput placeholder='Insert friend email' onChangeText={(newFriendEmail) => setNewFriendEmail(newFriendEmail)} value={newFriendEmail}/>
         <Button title='SEARCH NEW FRIEND' onPress={()=>searchNewFriend()}/>
         <Text>{message}</Text>
-        <Button title={buttonTitle} onPress={()=>{addNewFriend()}}/>
+        <Button title={buttonTitle} onPress={()=>addNewFriend()}/>
         <Text>Friends:</Text>
         <ScrollView>
           {friends.map((friend)=>(
@@ -216,7 +163,6 @@ export const FriendsScreen = ({ navigation }) => {
           ))}
         </ScrollView>
       </ScrollView>
-  
     );
 }
 
