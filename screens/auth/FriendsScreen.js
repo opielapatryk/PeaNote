@@ -2,6 +2,7 @@ import { Text,ScrollView, Button, TextInput } from 'react-native'
 import React, {useState,useEffect} from 'react'
 import axios from 'axios'
 import * as SecureStore from 'expo-secure-store';
+import { useFocusEffect } from '@react-navigation/native';
 
 export const FriendsScreen = ({ navigation }) => {
     const [friends,setFriends] = useState([])
@@ -12,6 +13,39 @@ export const FriendsScreen = ({ navigation }) => {
     const [doesEmailExist, setdoesEmailExist] = useState(false)
     const [list,setList] = useState([])
     const [firstRender, setFirstRender] = useState(true)
+
+    useFocusEffect(
+      React.useCallback(() => {
+        const loadUser = async()=>{
+          try{
+            currentUserId = await SecureStore.getItemAsync('userId');
+  
+            const result = await axios.get(`http://127.0.0.1:8000/api/users/${currentUserId}`)
+  
+            const friendsRequests = result.data.friends.map(url =>
+              axios.get(url)
+              .then(response => response.data)
+            );
+          
+            Promise.all(friendsRequests)
+              .then(friendsData => {
+                if (JSON.stringify(friends) !== JSON.stringify(friendsData)) {
+                  setFriends(friendsData);
+                }
+              })
+              .catch(error => {
+                console.error('Error fetching friends:', error);
+            });
+            
+            return result
+          }catch(e){
+            console.log(e.message)
+          }
+        }
+        loadUser()
+
+      }, [])
+    );
 
     useEffect(()=>{
       const loadUser = async()=>{
