@@ -14,7 +14,7 @@ const Register = ({navigation}) => {
   const createAccount = async () => {
     function isValidEmail(email) {
       // Regular expression for basic email validation
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
       return emailRegex.test(email);
     }
 
