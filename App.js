@@ -40,7 +40,7 @@ export default function App(){
 
   const authContext = useMemo(
     () => ({
-    singIn: async (data) => {
+    signIn: async (data) => {
       try {
         const response = await axios.post('http://localhost:8000/custom_login', {
             username: data.username,
@@ -49,20 +49,19 @@ export default function App(){
 
         userToken = await SecureStore.setItemAsync('userToken', response.data.Authorization);
 
-        console.log('response.data.user_id: ' + response.data.user_id);
-        console.log('String(response.data.user_id): ' + String(response.data.user_id));
         userIdString = String(response.data.user_id)
         await SecureStore.setItemAsync('userId', userIdString);
         userId = await SecureStore.getItemAsync('userId');
 
-        console.log('userId = await SecureStore.setItemAsync(userId, String(response.data.user_id)): ' + userId);
-
         dispatch({ type: 'SIGN_IN', token: userToken,userId:userId});
-        console.log("Signin successful ");
+
+        console.log('resp: ',response);
+
         return response;
 
     } catch (e) {
         console.log("Login error: " + e);
+        return e
     }
       
       
