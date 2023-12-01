@@ -29,9 +29,7 @@ export const FriendsScreen = ({ navigation }) => {
           
             Promise.all(friendsRequests)
               .then(friendsData => {
-                if (JSON.stringify(friends) !== JSON.stringify(friendsData)) {
                   setFriends(friendsData);
-                }
               })
               .catch(error => {
                 console.error('Error fetching friends:', error);
