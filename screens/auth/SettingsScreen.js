@@ -15,6 +15,7 @@ export default SettingsScreen = () => {
   const [showInput,setShowInput] = useState(true)
   const [old_password,setOldPass] = useState('')
   const [new_password,setNewPass] = useState('')
+  const [confirmAccountDelete,setConfirmAccountDelete] = useState(false)
 
     async function deleteAccount(){
       try {
@@ -34,6 +35,7 @@ export default SettingsScreen = () => {
     }
 
     async function changePassword(){
+      setConfirmAccountDelete(false)
       try {
         const token = await SecureStore.getItemAsync('userToken')
 
@@ -64,26 +66,49 @@ export default SettingsScreen = () => {
     
     return (
       showInput?(
-      <View>
-        <Button title='ASK BEFORE STICKING NOTE'/>
-        <Button title='MAKE BOARD PRIVATE'/>
-        <Button title='CHANGE PASSWORD' onPress={()=>{
-          setShowInput(false)
-          setMessage('')
-          }}/>
-        <Button title='DELETE ACCOUNT' onPress={deleteAccount}/>
-        <Text>{message}</Text>
-      </View>
+        confirmAccountDelete?(
+          <View>
+            <Button title='ASK BEFORE STICKING NOTE'/>
+            <Button title='CHANGE PASSWORD' onPress={()=>{
+              setConfirmAccountDelete(false)
+              setShowInput(false)
+              setMessage('')
+              }}/>
+            <Button title='CONFIRM ACCOUNT DELETE' onPress={deleteAccount}/>
+            <Text>{message}</Text>
+          </View>
+        ):(
+          <View>
+            <Button title='ASK BEFORE STICKING NOTE'/>
+            <Button title='CHANGE PASSWORD' onPress={()=>{
+              setConfirmAccountDelete(false)
+              setShowInput(false)
+              setMessage('')
+              }}/>
+            <Button title='DELETE ACCOUNT' onPress={()=>setConfirmAccountDelete(true)}/>
+            <Text>{message}</Text>
+          </View>
+        )
       ):(
-      <View>
-        <Button title='ASK BEFORE STICKING NOTE'/>
-        <Button title='MAKE BOARD PRIVATE'/>
-        <TextInput placeholder='old password' onChangeText={setOldPass} secureTextEntry/>
-        <TextInput placeholder='new password' onChangeText={setNewPass} secureTextEntry/>
-        <Button title='CONFIRM NEW PASSWORD' onPress={changePassword}/>
-        <Button title='DELETE ACCOUNT' onPress={deleteAccount}/>
-        <Text>{message}</Text>
-      </View>
+        confirmAccountDelete?(
+          <View>
+            <Button title='ASK BEFORE STICKING NOTE'/>
+            <TextInput placeholder='old password' onChangeText={setOldPass} secureTextEntry/>
+            <TextInput placeholder='new password' onChangeText={setNewPass} secureTextEntry/>
+            <Button title='CONFIRM NEW PASSWORD' onPress={changePassword}/>
+            <Button title='CONFIRM ACCOUNT DELETE' onPress={deleteAccount}/>
+            <Text>{message}</Text>
+          </View>
+        ):(
+          <View>
+            <Button title='ASK BEFORE STICKING NOTE'/>
+            <TextInput placeholder='old password' onChangeText={setOldPass} secureTextEntry/>
+            <TextInput placeholder='new password' onChangeText={setNewPass} secureTextEntry/>
+            <Button title='CONFIRM NEW PASSWORD' onPress={changePassword}/>
+            <Button title='DELETE ACCOUNT' onPress={()=>setConfirmAccountDelete(true)}/>
+            <Text>{message}</Text>
+          </View>
+        )
       )
     )
 }
