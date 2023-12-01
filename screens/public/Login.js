@@ -24,7 +24,7 @@ export default Login = ({navigation}) => {
       
             // Check if the response has a 'response' property before accessing 'status'
             if (e.response && e.response.status === 400) {
-              setMessage('This user does not exist');
+              setMessage('Username or password is incorrect');
             }
           } catch (error) {
             // Handle other errors, or log the error for debugging purposes

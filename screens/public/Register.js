@@ -65,6 +65,27 @@ const Register = ({navigation}) => {
       return false;
     }
 
+    async function isEmailTaken(email) {
+      try {
+        const response = await axios.get('http://localhost:8000/api/users/');
+        const users = response.data;
+    
+        const foundUser = users.find(user => user.email === email);
+    
+        if (foundUser) {
+          console.log('Email is already in the database: ' + email);
+          return true;
+        } else {
+          console.log('Email not found in the database: ' + email);
+          return false;
+        }
+      } catch (error) {
+        console.error('Error checking email in the database:', error.message);
+        // Handle the error as needed, e.g., return false or throw an exception
+        return false;
+      }
+    }
+
     if(first_name === '' || last_name === '' || email === '' || password1 === '' || password2 === ''){
       setMessage('All fields must be provided!..')
     }else if(password1 != password2){
@@ -75,6 +96,8 @@ const Register = ({navigation}) => {
       setMessage('Password must be at least 8 characters, contain at least one number and big character!..')
     }else if(password1.toLowerCase().includes(first_name.toLowerCase()) || password1.toLowerCase().includes(last_name.toLowerCase()) || hasSimilarSubstrings(email, password1, 4)){
       setMessage('Password is too similar to your credentials!..')
+    }else if(await isEmailTaken(email)){
+      setMessage('This email already exists')
     }else{
       try {
         const result = await axios.post('http://localhost:8000/custom_register', {
