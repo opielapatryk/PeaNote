@@ -15,10 +15,15 @@ const BoardScreen = ({navigation}) => {
     useEffect(()=>{
       const loadNotes = async () =>{
         try {
+          const userToken = await SecureStore.getItemAsync('userToken');
           const currentUserId = await SecureStore.getItemAsync('userId');
           console.log(currentUserId);
 
-          const result = await axios.get(`http://localhost:8000/api/users/${currentUserId}`)
+          const result = await axios.get(`http://localhost:8000/api/users/${currentUserId}`,{
+            headers:{
+              Authorization: `Token ${userToken}`,
+            }
+          })
 
           const stickersRequest = result.data.stickersOnBoard.map(url =>
             axios.get(url)
