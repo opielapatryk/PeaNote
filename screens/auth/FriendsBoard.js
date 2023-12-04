@@ -29,6 +29,13 @@ export default FriendsBoard = ({ route,navigation }) => {
             const friendURL = `http://localhost:8000/api/users/${friendId}/`
 
             const resultStickers = await axios.get(friendURL)
+
+            // if someone has turned on asking before sticking note 
+            // push this to pending notes
+            if(resultStickers.data.askBeforeStick){
+                console.log(resultStickers.data.askBeforeStick);
+            }
+            ///////////////////////////////////////////////////////
     
             let list = resultStickers.data.stickersOnBoard
     

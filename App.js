@@ -12,6 +12,7 @@ import BoardScreen from './screens/auth/BoardScreen';
 import FriendsScreen from './screens/auth/FriendsScreen';
 import FriendsBoard from './screens/auth/FriendsBoard';
 import SettingsScreen from './screens/auth/SettingsScreen';
+import PendingScreen from './screens/auth/PendingScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -107,6 +108,7 @@ export default function App(){
             ):(
               <>
                 <Stack.Screen name="Board" component={BoardScreen}></Stack.Screen>
+                <Stack.Screen name="Pending" component={PendingScreen}></Stack.Screen>
                 <Stack.Screen name="Settings" component={SettingsScreen}></Stack.Screen>
                 <Stack.Screen name="Friends" component={FriendsScreen}initialParams={{ userId:'12'}}></Stack.Screen>
                 <Stack.Screen name="FriendsBoard" component={FriendsBoard}></Stack.Screen>

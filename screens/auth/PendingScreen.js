@@ -3,26 +3,13 @@ import {ScrollView,Pressable,View,Text} from 'react-native';
 import {Note} from '../../components/Note'
 import { useDispatch, useSelector} from 'react-redux';
 import {styles} from '../../assets/styles';
-import {changeInfo,addNote, removeNote} from '../../store/boardSlice';
-import Menu from '../../components/Menu'
+import {changeInfo,addNote} from '../../store/boardSlice';
 import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
-import { useFocusEffect } from '@react-navigation/native';
 
-const BoardScreen = ({navigation}) => {
+const PendingScreen = () => {
     const { notes } = useSelector((state)=>state.board)
     const dispatch = useDispatch()
-
-    const removeNotesFromReduxStore = async () => {
-      await Promise.all(notes.map((sticker) => dispatch(removeNote(sticker.id))));
-      console.log('Notes removed from ReduxStore');
-    };
-
-    useFocusEffect(
-      React.useCallback(() => {
-        removeNotesFromReduxStore();
-      }, [removeNotesFromReduxStore])
-    );
     
     useEffect(()=>{
       const loadNotes = async () =>{
@@ -37,7 +24,7 @@ const BoardScreen = ({navigation}) => {
             }
           })
 
-          const stickersRequest = result.data.stickersOnBoard.map(url =>
+          const stickersRequest = result.data.pending.map(url =>
             axios.get(url)
             .then(response => response.data)
           );
@@ -48,7 +35,7 @@ const BoardScreen = ({navigation}) => {
             stickersData.forEach(sticker => dispatch(addNote({id: sticker.id, text: sticker.content, isNote:true, isInfo:false})))
           })
 
-
+          console.log('notes: ', notes);
           return result
         } catch (error) {
           console.log(error.message);
@@ -59,7 +46,6 @@ const BoardScreen = ({navigation}) => {
 
       return (
         <View>
-          <Menu navigation={navigation}/>
           <Pressable
               onPress={() => {
                 notes.map((note) => {
@@ -83,4 +69,4 @@ const BoardScreen = ({navigation}) => {
     };
 
 
-export default BoardScreen;
+export default PendingScreen;
