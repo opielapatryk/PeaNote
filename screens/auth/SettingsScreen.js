@@ -1,11 +1,11 @@
-import { Text, View, Button, TextInput } from 'react-native'
-import React, {useContext,useState} from 'react'
+import { Text, View, Button, TextInput, Modal, Pressable } from 'react-native'
+import React, {useContext,useEffect,useState} from 'react'
 import axios from 'axios'
 import * as SecureStore from 'expo-secure-store';
 import { AuthContext } from '../../context/AuthContext';
 import { useDispatch, useSelector} from 'react-redux';
 import {removeNote} from '../../store/boardSlice';
-// import base64 from 'base-64';
+import {styles} from '../../assets/styles'
 
 export default SettingsScreen = () => {
   const { signOut } = useContext(AuthContext);
@@ -16,6 +16,31 @@ export default SettingsScreen = () => {
   const [old_password,setOldPass] = useState('')
   const [new_password,setNewPass] = useState('')
   const [confirmAccountDelete,setConfirmAccountDelete] = useState(false)
+  const [modalVisible, setModalVisibility] = useState(false)
+  const [askBeforeStickingNoteFlag, setaskBeforeStickingNoteFlag] = useState('OFF')
+
+    useEffect(() => {
+      async function checkIsAskBeforeStickingNoteFlagOff() {
+        try {
+          let userID = await SecureStore.getItemAsync('userId');
+
+          const resp = await axios.get(`http://localhost:8000/api/users/${userID}/`)
+  
+          const data = resp.data.askBeforeStick;
+
+          if(data){
+            setaskBeforeStickingNoteFlag('ON')
+          }else{
+            setaskBeforeStickingNoteFlag("OFF")
+          }
+
+          console.log(data);
+        } catch (error) {
+          console.log(error.message);
+        }
+      }
+      checkIsAskBeforeStickingNoteFlagOff()
+    },[])
 
     async function deleteAccount(){
       try {
@@ -63,12 +88,52 @@ export default SettingsScreen = () => {
         console.log(error.message);
       }
     }
+
+    async function askBeforeStick(){
+      try {
+        let userID = await SecureStore.getItemAsync('userId');
+
+        const resp = await axios.get(`http://localhost:8000/api/users/${userID}/`)
+
+        const data = resp.data.askBeforeStick;
+
+        const patchRequest = await axios.patch(`http://localhost:8000/api/users/${userID}/`,{
+          'askBeforeStick': !data
+        })
+
+        if(patchRequest.status && patchRequest.status === 200){
+          setModalVisibility(false)
+          if(data){
+            setaskBeforeStickingNoteFlag('OFF')
+          }else{
+            setaskBeforeStickingNoteFlag('ON')
+          }
+          
+        }
+
+      } catch (error) {
+        if(error){
+          setModalVisibility(false)
+          setMessage('Something went wrong! Try againt later..')
+        }
+        console.log(error.message);
+      }
+    }
     
     return (
       showInput?(
         confirmAccountDelete?(
           <View>
-            <Button title='ASK BEFORE STICKING NOTE'/>
+            <Button title={`ASK BEFORE STICKING NOTE | ${askBeforeStickingNoteFlag}`} onPress={()=>setModalVisibility(!modalVisible)}/>
+            <Modal animationType='slide' transparent={true} visible={modalVisible} onRequestClose={()=>{
+              Alert.alter('Modal has been closed.');
+              setModalVisibility(!modalVisible)
+            }}>
+              <View style={styles.modal}>
+                <Button onPress={askBeforeStick} title='Confirm'/>
+                <Button onPress={()=>setModalVisibility(!modalVisible)} title='hide'/>
+              </View>
+            </Modal>
             <Button title='CHANGE PASSWORD' onPress={()=>{
               setConfirmAccountDelete(false)
               setShowInput(false)
@@ -79,7 +144,16 @@ export default SettingsScreen = () => {
           </View>
         ):(
           <View>
-            <Button title='ASK BEFORE STICKING NOTE'/>
+            <Button title={`ASK BEFORE STICKING NOTE | ${askBeforeStickingNoteFlag}`} onPress={()=>setModalVisibility(!modalVisible)}/>
+            <Modal animationType='slide' transparent={true} visible={modalVisible} onRequestClose={()=>{
+              Alert.alter('Modal has been closed.');
+              setModalVisibility(!modalVisible)
+            }}>
+              <View style={styles.modal}>
+                <Button onPress={askBeforeStick} title='Confirm'/>
+                <Button onPress={()=>setModalVisibility(!modalVisible)} title='hide'/>
+              </View>
+            </Modal>
             <Button title='CHANGE PASSWORD' onPress={()=>{
               setConfirmAccountDelete(false)
               setShowInput(false)
@@ -92,7 +166,16 @@ export default SettingsScreen = () => {
       ):(
         confirmAccountDelete?(
           <View>
-            <Button title='ASK BEFORE STICKING NOTE'/>
+            <Button title={`ASK BEFORE STICKING NOTE | ${askBeforeStickingNoteFlag}`} onPress={()=>setModalVisibility(!modalVisible)}/>
+            <Modal animationType='slide' transparent={true} visible={modalVisible} onRequestClose={()=>{
+              Alert.alter('Modal has been closed.');
+              setModalVisibility(!modalVisible)
+            }}>
+              <View style={styles.modal}>
+                <Button onPress={askBeforeStick} title='Confirm'/>
+                <Button onPress={()=>setModalVisibility(!modalVisible)} title='hide'/>
+              </View>
+            </Modal>
             <TextInput placeholder='old password' onChangeText={setOldPass} secureTextEntry/>
             <TextInput placeholder='new password' onChangeText={setNewPass} secureTextEntry/>
             <Button title='CONFIRM NEW PASSWORD' onPress={changePassword}/>
@@ -101,7 +184,16 @@ export default SettingsScreen = () => {
           </View>
         ):(
           <View>
-            <Button title='ASK BEFORE STICKING NOTE'/>
+            <Button title={`ASK BEFORE STICKING NOTE | ${askBeforeStickingNoteFlag}`} onPress={()=>setModalVisibility(!modalVisible)}/>
+            <Modal animationType='slide' transparent={true} visible={modalVisible} onRequestClose={()=>{
+              Alert.alter('Modal has been closed.');
+              setModalVisibility(!modalVisible)
+            }}>
+              <View style={styles.modal}>
+                <Button onPress={askBeforeStick} title='Confirm'/>
+                <Button onPress={()=>setModalVisibility(!modalVisible)} title='hide'/>
+              </View>
+            </Modal>
             <TextInput placeholder='old password' onChangeText={setOldPass} secureTextEntry/>
             <TextInput placeholder='new password' onChangeText={setNewPass} secureTextEntry/>
             <Button title='CONFIRM NEW PASSWORD' onPress={changePassword}/>
