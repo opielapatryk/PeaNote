@@ -19,95 +19,6 @@ export const FriendsScreen = ({ navigation }) => {
     const [list,setList] = useState([])
     const [firstRender, setFirstRender] = useState(true)
 
-    useFocusEffect(
-      React.useCallback(() => {
-        const loadUser = async()=>{
-          try{
-            currentUserId = await SecureStore.getItemAsync('userId');
-  
-            const result = await axios.get(userLink(currentUserId))
-  
-            const friendsRequests = result.data.friends.map(url =>
-              axios.get(url)
-              .then(response => response.data)
-            );
-          
-            Promise.all(friendsRequests)
-              .then(friendsData => {
-                  setFriends(friendsData);
-              })
-              .catch(error => {
-                console.error('Error fetching friends:', error);
-            });
-            
-            return result
-          }catch(e){
-            console.log(e.message)
-          }
-        }
-        loadUser()
-
-      }, [])
-    );
-
-    useEffect(()=>{
-      const loadUser = async()=>{
-        try{
-          currentUserId = await SecureStore.getItemAsync('userId');
-
-          const result = await axios.get(userLink(currentUserId))
-
-          const friendsRequests = result.data.friends.map(url =>
-            axios.get(url)
-            .then(response => response.data)
-          );
-        
-          Promise.all(friendsRequests)
-            .then(friendsData => {
-              if (JSON.stringify(friends) !== JSON.stringify(friendsData)) {
-                setFriends(friendsData);
-              }
-            })
-            .catch(error => {
-              console.error('Error fetching friends:', error);
-          });
-          
-          return result
-        }catch(e){
-          console.log(e.message)
-        }
-      }
-      loadUser()
-    },[friends])
-
-    useEffect(() => {
-      const getUserId = async()=>{
-        currentUserId = await SecureStore.getItemAsync('userId');
-
-        if(doesEmailExist === false){
-          if(!firstRender){
-            setMessage('This user does not exist!..')
-            setButtonTitle('')
-          }
-          setFirstRender(false)
-        }else{
-          if(newFriendID == currentUserId){
-            setMessage('You cannot add to friends yourself!..')
-            setButtonTitle('')
-          }else{
-            if(list.includes(userLink(newFriendID))){
-              setMessage('You are friends already!..')
-              setButtonTitle('')
-            }else{
-              setMessage(newFriendEmail)
-              setButtonTitle('ADD')
-            }
-          }
-        }
-      }
-      getUserId()
-    }, [newFriendID]);
-
     const searchNewFriend = async () => {
       try {
           let currentUserId = await SecureStore.getItemAsync('userId');
@@ -171,6 +82,58 @@ export const FriendsScreen = ({ navigation }) => {
       }
     }
 
+    const loadUser = async()=>{
+      try{
+        currentUserId = await SecureStore.getItemAsync('userId');
+
+        const result = await axios.get(userLink(currentUserId))
+
+        const friendsRequests = result.data.friends.map(url =>
+          axios.get(url)
+          .then(response => response.data)
+        );
+      
+        Promise.all(friendsRequests)
+          .then(friendsData => {
+              setFriends(friendsData);
+          })
+          .catch(error => {
+            console.error('Error fetching friends:', error);
+        });
+        
+        return result
+      }catch(e){
+        console.log(e.message)
+      }
+    }
+
+    useEffect(() => {
+      const getUserId = async()=>{
+        currentUserId = await SecureStore.getItemAsync('userId');
+
+        if(doesEmailExist === false){
+          if(!firstRender){
+            setMessage('This user does not exist!..')
+            setButtonTitle('')
+          }
+          setFirstRender(false)
+        }else{
+          if(newFriendID == currentUserId){
+            setMessage('You cannot add to friends yourself!..')
+            setButtonTitle('')
+          }else{
+            if(list.includes(userLink(newFriendID))){
+              setMessage('You are friends already!..')
+              setButtonTitle('')
+            }else{
+              setMessage(newFriendEmail)
+              setButtonTitle('ADD')
+            }
+          }
+        }
+      }
+      getUserId()
+    }, [newFriendID]);
 
     useFocusEffect(
       React.useCallback(() => {
@@ -181,6 +144,12 @@ export const FriendsScreen = ({ navigation }) => {
           removeNotesFromReduxStore()
         };
       }, [notes])
+    );
+
+    useFocusEffect(
+      React.useCallback(() => {
+        loadUser()
+      }, [])
     );
 
     return (
