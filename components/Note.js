@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import { styles } from '../assets/styles';
 import { useDispatch, useSelector} from 'react-redux';
 import {changeInfo,removeNote} from '../store/boardSlice'
+import { stickerLink } from './Constants';
 import axios from 'axios'
 
 export function Note({ id, text, isNote, isInfo }) {
@@ -11,8 +12,7 @@ export function Note({ id, text, isNote, isInfo }) {
 
   const deleteNote = async () => {
     try {
-      const result = await axios.delete(`http://localhost:8000/api/stickers/${id}/`)
-      console.log(result.status);
+      const result = await axios.delete(stickerLink(id))
       return result
     } catch (error) {
       console.log(error.message);

@@ -1,6 +1,7 @@
 import { View, Text, Button,TextInput } from 'react-native'
-import React, {useState,useEffect} from 'react'
+import React, {useState} from 'react'
 import axios from 'axios'
+import { usersLink } from '../../components/Constants'
 
 const Register = ({navigation}) => {
 
@@ -67,7 +68,7 @@ const Register = ({navigation}) => {
 
     async function isEmailTaken(email) {
       try {
-        const response = await axios.get('http://localhost:8000/api/users/');
+        const response = await axios.get(usersLink);
         const users = response.data;
     
         const foundUser = users.find(user => user.email === email);
@@ -81,7 +82,6 @@ const Register = ({navigation}) => {
         }
       } catch (error) {
         console.error('Error checking email in the database:', error.message);
-        // Handle the error as needed, e.g., return false or throw an exception
         return false;
       }
     }
