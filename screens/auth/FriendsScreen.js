@@ -5,6 +5,7 @@ import * as SecureStore from 'expo-secure-store';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector} from 'react-redux';
 import {removeNote} from '../../store/boardSlice';
+import {userLink,usersLink} from '../../components/Constants'
 
 export const FriendsScreen = ({ navigation }) => {
     const { notes } = useSelector((state)=>state.board)
@@ -24,7 +25,7 @@ export const FriendsScreen = ({ navigation }) => {
           try{
             currentUserId = await SecureStore.getItemAsync('userId');
   
-            const result = await axios.get(`http://127.0.0.1:8000/api/users/${currentUserId}`)
+            const result = await axios.get(userLink(currentUserId))
   
             const friendsRequests = result.data.friends.map(url =>
               axios.get(url)
@@ -54,7 +55,7 @@ export const FriendsScreen = ({ navigation }) => {
         try{
           currentUserId = await SecureStore.getItemAsync('userId');
 
-          const result = await axios.get(`http://127.0.0.1:8000/api/users/${currentUserId}`)
+          const result = await axios.get(userLink(currentUserId))
 
           const friendsRequests = result.data.friends.map(url =>
             axios.get(url)
@@ -84,34 +85,22 @@ export const FriendsScreen = ({ navigation }) => {
         currentUserId = await SecureStore.getItemAsync('userId');
 
         if(doesEmailExist === false){
-          // email does not exist
           if(!firstRender){
             setMessage('This user does not exist!..')
             setButtonTitle('')
-            // setNewFriendID(0);
           }
           setFirstRender(false)
         }else{
-          // email exists
-          // check if friend id is the same as mine
           if(newFriendID == currentUserId){
-            // email exists but its you!
             setMessage('You cannot add to friends yourself!..')
             setButtonTitle('')
-            // setNewFriendID(0);
           }else{
-            // email exists and its not you
-            // check if is on your friends list 
-            if(list.includes(`http://127.0.0.1:8000/api/users/${newFriendID}`)){
-              // You are already friends
+            if(list.includes(userLink(newFriendID))){
               setMessage('You are friends already!..')
               setButtonTitle('')
-              // setNewFriendID(0);
             }else{
-              // You are not friends, you can add him
               setMessage(newFriendEmail)
               setButtonTitle('ADD')
-              // setNewFriendID(0);
             }
           }
         }
@@ -123,11 +112,11 @@ export const FriendsScreen = ({ navigation }) => {
       try {
           let currentUserId = await SecureStore.getItemAsync('userId');
 
-          const currentUserResult = await axios.get(`http://127.0.0.1:8000/api/users/${currentUserId}`)
+          const currentUserResult = await axios.get(userLink(currentUserId))
 
           setList(JSON.stringify(currentUserResult.data.friends))
 
-          const result = await axios.get(`http://127.0.0.1:8000/api/users/`)
+          const result = await axios.get(usersLink())
 
           const data = result.data
 
@@ -149,8 +138,8 @@ export const FriendsScreen = ({ navigation }) => {
 
     const addNewFriend = async () => {
       try {
-        const friendURL = `http://127.0.0.1:8000/api/users/${newFriendID}/`
-        const userURL = `http://127.0.0.1:8000/api/users/${currentUserId}/`
+        const friendURL = userLink(newFriendID)
+        const userURL = userLink(currentUserId)
         const result = await axios.get(userURL)
 
         let list = result.data.friends
@@ -162,8 +151,6 @@ export const FriendsScreen = ({ navigation }) => {
         await axios.patch(userURL,{
             'friends':list
         })
-
-        ////////////////////////////////////////////////////////////////
 
         const friendsRequests = list.map(url =>
           axios.get(url)
@@ -179,7 +166,6 @@ export const FriendsScreen = ({ navigation }) => {
           .catch(error => {
             console.error('Error fetching friends:', error);
         });
-        ////////////////////////////////////////////////////////////////
       } catch (error) {
         console.log(error.message);
       }
@@ -188,15 +174,10 @@ export const FriendsScreen = ({ navigation }) => {
 
     useFocusEffect(
       React.useCallback(() => {
-
         return () => {
-
-          console.log(notes);
           const removeNotesFromReduxStore = async () => {
             await Promise.all(notes.map((sticker) => dispatch(removeNote(sticker.id))));
-            console.log('notes cleared');
           };
-
           removeNotesFromReduxStore()
         };
       }, [notes])

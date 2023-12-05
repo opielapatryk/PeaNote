@@ -13,17 +13,16 @@ export default function menu({ navigation }) {
   return (
     <View style={styles.menu}>
       <Button title='BOARD' />
-      {/* if ask before stick is turned on */} 
       <Button title='PENDING' onPress={() => {
         notes.forEach(sticker => dispatch_redux(removeNote(sticker.id)))
-        navigation.navigate('Pending')}}/>
-      {/* if ask before stick is turned on */} 
+        navigation.navigate('Pending')
+      }}/>
       <Button title='FRIENDS' onPress={() => navigation.navigate('Friends')}/>
       <Button title='SETTINGS' onPress={() => navigation.navigate('Settings')}/>
       <Button onPress={()=>{
         signOut()
         notes.forEach(sticker => dispatch_redux(removeNote(sticker.id)))
-        }} title='LOGOUT' />
+      }} title='LOGOUT' />
     </View>
   );
 }

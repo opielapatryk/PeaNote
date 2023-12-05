@@ -2,6 +2,7 @@ import { Text,TextInput,View,Button } from 'react-native'
 import React,{useState} from 'react'
 import axios from 'axios'
 import * as SecureStore from 'expo-secure-store';
+import {userLink} from '../../components/Constants'
 
 export default FriendsBoard = ({ route,navigation }) => {
     const { friendId, friendName } = route.params;
@@ -11,7 +12,7 @@ export default FriendsBoard = ({ route,navigation }) => {
     const createNote = async () => {
         try {
             currentUserId = await SecureStore.getItemAsync('userId');
-            const userURL = `http://localhost:8000/api/users/${currentUserId}/`
+            const userURL = userLink(currentUserId)
             let result;
 
             if(content != ''){
@@ -26,27 +27,25 @@ export default FriendsBoard = ({ route,navigation }) => {
 
             const stickerID = result.data.id
 
-            const friendURL = `http://localhost:8000/api/users/${friendId}/`
+            const friendURL = userLink(friendId)
 
             const resultStickers = await axios.get(friendURL)
 
             if(resultStickers.data.askBeforeStick){
-                //push to pending notes
                 let list = resultStickers.data.pending
 
                 list.push(`http://localhost:8000/api/stickers/${stickerID}/`);
 
-                await axios.patch(`http://localhost:8000/api/users/${friendId}/`,{
+                await axios.patch(userLink(friendId),{
                 'pending': list
                 })
 
             }else{
-                // push notes to board
                 let list = resultStickers.data.stickersOnBoard
     
                 list.push(`http://localhost:8000/api/stickers/${stickerID}/`);
     
-                await axios.patch(`http://localhost:8000/api/users/${friendId}/`,{
+                await axios.patch(userLink(friendId),{
                     'stickersOnBoard': list
                 })
             }
@@ -64,13 +63,13 @@ export default FriendsBoard = ({ route,navigation }) => {
     const removeFriend = async () => {
         try {
             currentUserId = await SecureStore.getItemAsync('userId');
-            const currentUserResult = await axios.get(`http://localhost:8000/api/users/${currentUserId}`)
+            const currentUserResult = await axios.get(userLink(currentUserId))
 
             let list = currentUserResult.data.friends
 
-            list = list.filter((element) => element !== `http://localhost:8000/api/users/${friendId}/`)
+            list = list.filter((element) => element !== userLink(friendId))
 
-            const resp = await axios.patch(`http://localhost:8000/api/users/${currentUserId}/`,{
+            const resp = await axios.patch(userLink(currentUserId),{
                 'friends':list
             })
 

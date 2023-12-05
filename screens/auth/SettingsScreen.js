@@ -1,4 +1,4 @@
-import { Text, View, Button, TextInput, Modal, Pressable } from 'react-native'
+import { Text, View, Button, TextInput, Modal } from 'react-native'
 import React, {useContext,useEffect,useState} from 'react'
 import axios from 'axios'
 import * as SecureStore from 'expo-secure-store';
@@ -7,6 +7,7 @@ import { useDispatch, useSelector} from 'react-redux';
 import {removeNote} from '../../store/boardSlice';
 import {styles} from '../../assets/styles'
 import { useFocusEffect } from '@react-navigation/native';
+import {userLink} from '../../components/Constants'
 
 export default SettingsScreen = () => {
   const dispatch = useDispatch()
@@ -26,7 +27,7 @@ export default SettingsScreen = () => {
         try {
           let userID = await SecureStore.getItemAsync('userId');
 
-          const resp = await axios.get(`http://localhost:8000/api/users/${userID}/`)
+          const resp = await axios.get(userLink(userID))
   
           const data = resp.data.askBeforeStick;
 
@@ -35,8 +36,6 @@ export default SettingsScreen = () => {
           }else{
             setaskBeforeStickingNoteFlag("OFF")
           }
-
-          console.log(data);
         } catch (error) {
           console.log(error.message);
         }
@@ -48,9 +47,7 @@ export default SettingsScreen = () => {
       try {
         let userID = await SecureStore.getItemAsync('userId');
 
-        const resp = await axios.delete(`http://localhost:8000/api/users/${userID}/`)
-
-        console.log(resp.status);
+        const resp = await axios.delete(userLink(userID))
 
         if(resp.status === 204){
           signOut()
@@ -76,8 +73,6 @@ export default SettingsScreen = () => {
           }
         })
 
-        console.log(resp.status);
-
         if(resp.status && resp.status === 204){
           setMessage('Password updated!')
         }
@@ -95,11 +90,11 @@ export default SettingsScreen = () => {
       try {
         let userID = await SecureStore.getItemAsync('userId');
 
-        const resp = await axios.get(`http://localhost:8000/api/users/${userID}/`)
+        const resp = await axios.get(userLink(userID))
 
         const data = resp.data.askBeforeStick;
 
-        const patchRequest = await axios.patch(`http://localhost:8000/api/users/${userID}/`,{
+        const patchRequest = await axios.patch(userLink(userID),{
           'askBeforeStick': !data
         })
 
@@ -125,13 +120,10 @@ export default SettingsScreen = () => {
 
     useFocusEffect(
       React.useCallback(() => {
-
         return () => {
           const removeNotesFromReduxStore = async () => {
             await Promise.all(notes.map((sticker) => dispatch(removeNote(sticker.id))));
-            console.log('notes cleared');
           };
-
           removeNotesFromReduxStore()
         };
       }, [notes])

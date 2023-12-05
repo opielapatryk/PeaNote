@@ -1,4 +1,4 @@
-import React,{useEffect,useState,useRef} from 'react';
+import React,{useRef} from 'react';
 import {ScrollView,Pressable,View,Text} from 'react-native';
 import {Note} from '../../components/Note'
 import { useDispatch, useSelector} from 'react-redux';
@@ -8,57 +8,54 @@ import Menu from '../../components/Menu'
 import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
 import { useFocusEffect } from '@react-navigation/native';
+import {userLink} from '../../components/Constants'
 
 const BoardScreen = ({navigation}) => {
     const { notes } = useSelector((state)=>state.board)
     const dispatch = useDispatch()
     const isMounted = useRef(true)
 
+    const loadNotes = async () => {
+      await notes.map((sticker) => dispatch(removeNote(sticker.id)));
+      try {
+        const userToken = await SecureStore.getItemAsync('userToken');
+        const currentUserId = await SecureStore.getItemAsync('userId');
+
+        const result = await axios.get(userLink(currentUserId),{
+          headers:{
+            Authorization: userToken,
+          }
+        })
+
+        const stickersRequest = result.data.stickersOnBoard.map(url =>
+          axios.get(url)
+          .then(response => response.data)
+        );
+
+        Promise.all(stickersRequest)
+        .then(stickersData=>{
+          stickersData.forEach(sticker => dispatch(addNote({id: sticker.id, text: sticker.content, isNote:true, isInfo:false})))
+        })
+        
+        return result
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+
     useFocusEffect(
       React.useCallback(()=>{
         isMounted.current = true
-        console.log(isMounted.current);
       },[])
     )
 
     useFocusEffect(
       React.useCallback(()=>{
-
         if(isMounted.current){
-          const loadNotes = async () => {
-            console.log('notes:',notes);
-            await notes.map((sticker) => dispatch(removeNote(sticker.id)));
-  
-            try {
-              const userToken = await SecureStore.getItemAsync('userToken');
-              const currentUserId = await SecureStore.getItemAsync('userId');
-      
-              const result = await axios.get(`http://localhost:8000/api/users/${currentUserId}`,{
-                headers:{
-                  Authorization: userToken,
-                }
-              })
-      
-              const stickersRequest = result.data.stickersOnBoard.map(url =>
-                axios.get(url)
-                .then(response => response.data)
-              );
-      
-              Promise.all(stickersRequest)
-              .then(stickersData=>{
-                stickersData.forEach(sticker => dispatch(addNote({id: sticker.id, text: sticker.content, isNote:true, isInfo:false})))
-              })
-              
-              return result
-            } catch (error) {
-              console.log(error.message);
-            }
-          }
           loadNotes();
           isMounted.current = false
         }
-        
-      },[notes]) // should be notes
+      },[notes])
     );
 
       return (
@@ -66,7 +63,6 @@ const BoardScreen = ({navigation}) => {
           <Menu navigation={navigation}/>
           <Pressable
               onPress={() => {
-                console.log(notes);
                 notes.map((note) => {
                   if(note.isInfo === true)
                   {
