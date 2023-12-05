@@ -3,8 +3,12 @@ import React, {useState,useEffect} from 'react'
 import axios from 'axios'
 import * as SecureStore from 'expo-secure-store';
 import { useFocusEffect } from '@react-navigation/native';
+import { useDispatch, useSelector} from 'react-redux';
+import {removeNote} from '../../store/boardSlice';
 
 export const FriendsScreen = ({ navigation }) => {
+    const { notes } = useSelector((state)=>state.board)
+    const dispatch = useDispatch()
     const [friends,setFriends] = useState([])
     const [newFriendEmail, setNewFriendEmail] = useState()
     const [buttonTitle,setButtonTitle] = useState('')
@@ -181,6 +185,22 @@ export const FriendsScreen = ({ navigation }) => {
       }
     }
 
+
+    useFocusEffect(
+      React.useCallback(() => {
+
+        return () => {
+
+          console.log(notes);
+          const removeNotesFromReduxStore = async () => {
+            await Promise.all(notes.map((sticker) => dispatch(removeNote(sticker.id))));
+            console.log('notes cleared');
+          };
+
+          removeNotesFromReduxStore()
+        };
+      }, [notes])
+    );
 
     return (
       <ScrollView>

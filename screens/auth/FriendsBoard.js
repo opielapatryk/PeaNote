@@ -30,29 +30,34 @@ export default FriendsBoard = ({ route,navigation }) => {
 
             const resultStickers = await axios.get(friendURL)
 
-            // if someone has turned on asking before sticking note 
-            // push this to pending notes
             if(resultStickers.data.askBeforeStick){
-                console.log(resultStickers.data.askBeforeStick);
-            }
-            ///////////////////////////////////////////////////////
-    
-            let list = resultStickers.data.stickersOnBoard
-    
-            list.push(`http://localhost:8000/api/stickers/${stickerID}/`);
+                //push to pending notes
+                let list = resultStickers.data.pending
 
-            await axios.patch(`http://localhost:8000/api/users/${friendId}/`,{
-                'stickersOnBoard': list
-            })
+                list.push(`http://localhost:8000/api/stickers/${stickerID}/`);
+
+                await axios.patch(`http://localhost:8000/api/users/${friendId}/`,{
+                'pending': list
+                })
+
+            }else{
+                // push notes to board
+                let list = resultStickers.data.stickersOnBoard
+    
+                list.push(`http://localhost:8000/api/stickers/${stickerID}/`);
+    
+                await axios.patch(`http://localhost:8000/api/users/${friendId}/`,{
+                    'stickersOnBoard': list
+                })
+            }
 
             if(result.status === 201){
                 setMessage('Note created successfully!')
                 setContent('')
-            }else{
-                setMessage('Cannot create note, something went wrong..')
-            }
+            }   
         } catch (error) {
             console.log(error.message);
+            setMessage('Cannot create note, something went wrong..')
         }
     }
 

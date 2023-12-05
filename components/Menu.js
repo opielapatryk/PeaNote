@@ -14,7 +14,9 @@ export default function menu({ navigation }) {
     <View style={styles.menu}>
       <Button title='BOARD' />
       {/* if ask before stick is turned on */} 
-      <Button title='PENDING' onPress={() => navigation.navigate('Pending')}/>
+      <Button title='PENDING' onPress={() => {
+        notes.forEach(sticker => dispatch_redux(removeNote(sticker.id)))
+        navigation.navigate('Pending')}}/>
       {/* if ask before stick is turned on */} 
       <Button title='FRIENDS' onPress={() => navigation.navigate('Friends')}/>
       <Button title='SETTINGS' onPress={() => navigation.navigate('Settings')}/>

@@ -6,8 +6,10 @@ import { AuthContext } from '../../context/AuthContext';
 import { useDispatch, useSelector} from 'react-redux';
 import {removeNote} from '../../store/boardSlice';
 import {styles} from '../../assets/styles'
+import { useFocusEffect } from '@react-navigation/native';
 
 export default SettingsScreen = () => {
+  const dispatch = useDispatch()
   const { signOut } = useContext(AuthContext);
   const { notes } = useSelector((state)=>state.board)
   const dispatch_redux = useDispatch()
@@ -120,6 +122,21 @@ export default SettingsScreen = () => {
       }
     }
     
+
+    useFocusEffect(
+      React.useCallback(() => {
+
+        return () => {
+          const removeNotesFromReduxStore = async () => {
+            await Promise.all(notes.map((sticker) => dispatch(removeNote(sticker.id))));
+            console.log('notes cleared');
+          };
+
+          removeNotesFromReduxStore()
+        };
+      }, [notes])
+    );
+
     return (
       showInput?(
         confirmAccountDelete?(
