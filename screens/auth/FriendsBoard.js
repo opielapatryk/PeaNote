@@ -2,7 +2,7 @@ import { Text,TextInput,View,Button } from 'react-native'
 import React,{useState} from 'react'
 import axios from 'axios'
 import * as SecureStore from 'expo-secure-store';
-import {userLink} from '../../components/Constants'
+import {userLink,stickersLink,stickerLink} from '../../components/Constants'
 
 export default FriendsBoard = ({ route,navigation }) => {
     const { friendId, friendName } = route.params;
@@ -16,7 +16,7 @@ export default FriendsBoard = ({ route,navigation }) => {
             let result;
 
             if(content != ''){
-                result = await axios.post(`http://localhost:8000/api/stickers/`,{
+                result = await axios.post(stickersLink,{
                     'content':content,
                     'creator':userURL
                 })
@@ -34,7 +34,7 @@ export default FriendsBoard = ({ route,navigation }) => {
             if(resultStickers.data.askBeforeStick){
                 let list = resultStickers.data.pending
 
-                list.push(`http://localhost:8000/api/stickers/${stickerID}/`);
+                list.push(stickerLink(stickerID));
 
                 await axios.patch(userLink(friendId),{
                 'pending': list
@@ -43,7 +43,7 @@ export default FriendsBoard = ({ route,navigation }) => {
             }else{
                 let list = resultStickers.data.stickersOnBoard
     
-                list.push(`http://localhost:8000/api/stickers/${stickerID}/`);
+                list.push(stickerLink(stickerID));
     
                 await axios.patch(userLink(friendId),{
                     'stickersOnBoard': list

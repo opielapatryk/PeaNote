@@ -124,11 +124,11 @@ export const FriendsScreen = ({ navigation }) => {
             if (friend.email === newFriendEmail) {
               setdoesEmailExist(true);
               setNewFriendID(friend.id);
-              return false; // Stop iteration if a match is found
+              return false; 
             } else {
               setdoesEmailExist(false);
               setNewFriendID(null);
-              return true; // Continue iteration if no match is found
+              return true; 
             }
           });
       } catch (error) {

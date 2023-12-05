@@ -7,7 +7,7 @@ import {changeInfo,addNote,removeNote} from '../../store/boardSlice';
 import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
 import { useFocusEffect } from '@react-navigation/native';
-import {userLink} from '../../components/Constants'
+import {userLink,stickerLink} from '../../components/Constants'
 
 const PendingScreen = () => {
     const { notes } = useSelector((state)=>state.board)
@@ -64,9 +64,9 @@ const PendingScreen = () => {
             let stickersOnBoard = resp.data.stickersOnBoard;
             let pending = resp.data.pending;
 
-            stickersOnBoard.push(`http://localhost:8000/api/stickers/${stickerID}/`)
+            stickersOnBoard.push(stickerLink(stickerID))
 
-            let newPendingArr = await pending.filter(sticker => sticker != `http://localhost:8000/api/stickers/${stickerID}/`)
+            let newPendingArr = await pending.filter(sticker => sticker != stickerLink(stickerID))
 
             const patchStickersOnBoardResp = await axios.patch(userLink(userID),{
               'stickersOnBoard': stickersOnBoard
