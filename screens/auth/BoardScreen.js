@@ -1,5 +1,5 @@
 import React,{useRef} from 'react';
-import {ScrollView,Pressable,View,Text} from 'react-native';
+import {ScrollView,Pressable,View} from 'react-native';
 import {Note} from '../../components/Note'
 import { useDispatch, useSelector} from 'react-redux';
 import {styles} from '../../assets/styles';

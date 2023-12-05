@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useReducer, useState} from 'react'
+import React, {useEffect, useMemo, useReducer} from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import axios from "axios";
@@ -19,8 +19,6 @@ const Stack = createNativeStackNavigator();
 
 export default function App(){
   const [state, dispatch] = useReducer(authReducer, initialState);
-
-
   useEffect(()=>{
     const loadToken = async () => {
       let userToken;

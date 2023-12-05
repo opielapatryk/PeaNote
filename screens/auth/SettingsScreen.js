@@ -129,87 +129,79 @@ export default SettingsScreen = () => {
       }, [notes])
     );
 
+    const DeleteAccount_BeforeClickingChangePassword = () =>{
+      return (
+          <View>
+            <Button title={`ASK BEFORE STICKING NOTE | ${askBeforeStickingNoteFlag}`} onPress={()=>setModalVisibility(!modalVisible)}/>
+
+            <Modal animationType='slide' transparent={true} visible={modalVisible} onRequestClose={()=>{
+              Alert.alter('Modal has been closed.');
+              setModalVisibility(!modalVisible)
+            }}>
+              <View style={styles.modal}>
+                <Button onPress={askBeforeStick} title='Confirm'/>
+                <Button onPress={()=>setModalVisibility(!modalVisible)} title='hide'/>
+              </View>
+            </Modal>
+            
+            {confirmAccountDelete?
+            <>
+            <Button title='CHANGE PASSWORD' onPress={()=>{
+              setConfirmAccountDelete(false)
+              setShowInput(false)
+              setMessage('')
+              }}/>
+            <Button title='CONFIRM ACCOUNT DELETE' onPress={deleteAccount}/>
+            </>:
+            <>
+            <Button title='CHANGE PASSWORD' onPress={()=>{
+              setConfirmAccountDelete(false)
+              setShowInput(false)
+              setMessage('')
+              }}/>
+            <Button title='DELETE ACCOUNT' onPress={()=>setConfirmAccountDelete(true)}/>
+            </>
+            }
+            <Text>{message}</Text>
+          </View>
+      )
+    }
+
+    const DeleteAccount_AfterClickingChangePassword = () =>{
+      return(
+        <View>
+          <Button title={`ASK BEFORE STICKING NOTE | ${askBeforeStickingNoteFlag}`} onPress={()=>setModalVisibility(!modalVisible)}/>
+        
+          <Modal animationType='slide' transparent={true} visible={modalVisible} onRequestClose={()=>{
+            Alert.alter('Modal has been closed.');
+            setModalVisibility(!modalVisible)
+          }}>
+            <View style={styles.modal}>
+              <Button onPress={askBeforeStick} title='Confirm'/>
+              <Button onPress={()=>setModalVisibility(!modalVisible)} title='hide'/>
+            </View>
+          </Modal>
+          
+          <TextInput placeholder='old password' onChangeText={setOldPass} secureTextEntry/>
+          <TextInput placeholder='new password' onChangeText={setNewPass} secureTextEntry/>
+          <Button title='CONFIRM NEW PASSWORD' onPress={changePassword}/>
+
+          {
+            confirmAccountDelete?
+            <Button title='CONFIRM ACCOUNT DELETE' onPress={deleteAccount}/>:
+            <Button title='DELETE ACCOUNT' onPress={()=>setConfirmAccountDelete(true)}/>
+          }
+          
+          <Text>{message}</Text>
+        </View>
+      )
+    }
+
     return (
       showInput?(
-        confirmAccountDelete?(
-          <View>
-            <Button title={`ASK BEFORE STICKING NOTE | ${askBeforeStickingNoteFlag}`} onPress={()=>setModalVisibility(!modalVisible)}/>
-            <Modal animationType='slide' transparent={true} visible={modalVisible} onRequestClose={()=>{
-              Alert.alter('Modal has been closed.');
-              setModalVisibility(!modalVisible)
-            }}>
-              <View style={styles.modal}>
-                <Button onPress={askBeforeStick} title='Confirm'/>
-                <Button onPress={()=>setModalVisibility(!modalVisible)} title='hide'/>
-              </View>
-            </Modal>
-            <Button title='CHANGE PASSWORD' onPress={()=>{
-              setConfirmAccountDelete(false)
-              setShowInput(false)
-              setMessage('')
-              }}/>
-            <Button title='CONFIRM ACCOUNT DELETE' onPress={deleteAccount}/>
-            <Text>{message}</Text>
-          </View>
-        ):(
-          <View>
-            <Button title={`ASK BEFORE STICKING NOTE | ${askBeforeStickingNoteFlag}`} onPress={()=>setModalVisibility(!modalVisible)}/>
-            <Modal animationType='slide' transparent={true} visible={modalVisible} onRequestClose={()=>{
-              Alert.alter('Modal has been closed.');
-              setModalVisibility(!modalVisible)
-            }}>
-              <View style={styles.modal}>
-                <Button onPress={askBeforeStick} title='Confirm'/>
-                <Button onPress={()=>setModalVisibility(!modalVisible)} title='hide'/>
-              </View>
-            </Modal>
-            <Button title='CHANGE PASSWORD' onPress={()=>{
-              setConfirmAccountDelete(false)
-              setShowInput(false)
-              setMessage('')
-              }}/>
-            <Button title='DELETE ACCOUNT' onPress={()=>setConfirmAccountDelete(true)}/>
-            <Text>{message}</Text>
-          </View>
-        )
+        <DeleteAccount_BeforeClickingChangePassword/>
       ):(
-        confirmAccountDelete?(
-          <View>
-            <Button title={`ASK BEFORE STICKING NOTE | ${askBeforeStickingNoteFlag}`} onPress={()=>setModalVisibility(!modalVisible)}/>
-            <Modal animationType='slide' transparent={true} visible={modalVisible} onRequestClose={()=>{
-              Alert.alter('Modal has been closed.');
-              setModalVisibility(!modalVisible)
-            }}>
-              <View style={styles.modal}>
-                <Button onPress={askBeforeStick} title='Confirm'/>
-                <Button onPress={()=>setModalVisibility(!modalVisible)} title='hide'/>
-              </View>
-            </Modal>
-            <TextInput placeholder='old password' onChangeText={setOldPass} secureTextEntry/>
-            <TextInput placeholder='new password' onChangeText={setNewPass} secureTextEntry/>
-            <Button title='CONFIRM NEW PASSWORD' onPress={changePassword}/>
-            <Button title='CONFIRM ACCOUNT DELETE' onPress={deleteAccount}/>
-            <Text>{message}</Text>
-          </View>
-        ):(
-          <View>
-            <Button title={`ASK BEFORE STICKING NOTE | ${askBeforeStickingNoteFlag}`} onPress={()=>setModalVisibility(!modalVisible)}/>
-            <Modal animationType='slide' transparent={true} visible={modalVisible} onRequestClose={()=>{
-              Alert.alter('Modal has been closed.');
-              setModalVisibility(!modalVisible)
-            }}>
-              <View style={styles.modal}>
-                <Button onPress={askBeforeStick} title='Confirm'/>
-                <Button onPress={()=>setModalVisibility(!modalVisible)} title='hide'/>
-              </View>
-            </Modal>
-            <TextInput placeholder='old password' onChangeText={setOldPass} secureTextEntry/>
-            <TextInput placeholder='new password' onChangeText={setNewPass} secureTextEntry/>
-            <Button title='CONFIRM NEW PASSWORD' onPress={changePassword}/>
-            <Button title='DELETE ACCOUNT' onPress={()=>setConfirmAccountDelete(true)}/>
-            <Text>{message}</Text>
-          </View>
-        )
+        <DeleteAccount_AfterClickingChangePassword/>
       )
     )
 }

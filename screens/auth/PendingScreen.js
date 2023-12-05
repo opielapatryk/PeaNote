@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react';
+import React,{useState} from 'react';
 import {ScrollView,Pressable,View,Text,Button} from 'react-native';
 import {Note} from '../../components/Note'
 import {styles} from '../../assets/styles';

@@ -1,5 +1,5 @@
 import { Text, View, Pressable } from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import { styles } from '../assets/styles';
 import { useDispatch, useSelector} from 'react-redux';
 import {changeInfo,removeNote} from '../store/boardSlice'
