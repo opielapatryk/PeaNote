@@ -137,6 +137,7 @@ export const FriendsScreen = ({ navigation }) => {
 
     useFocusEffect(
       React.useCallback(() => {
+        loadUser()
         return () => {
           const removeNotesFromReduxStore = async () => {
             await Promise.all(notes.map((sticker) => dispatch(removeNote(sticker.id))));
@@ -144,12 +145,6 @@ export const FriendsScreen = ({ navigation }) => {
           removeNotesFromReduxStore()
         };
       }, [notes])
-    );
-
-    useFocusEffect(
-      React.useCallback(() => {
-        loadUser()
-      }, [])
     );
 
     return (
