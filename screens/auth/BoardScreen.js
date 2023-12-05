@@ -5,7 +5,7 @@ import { useDispatch, useSelector} from 'react-redux';
 import {styles} from '../../assets/styles';
 import Menu from '../../components/Menu'
 import { useFocusEffect } from '@react-navigation/native';
-import { fetchNotes, checkThenChangeInfo } from './logic/api';
+import { fetchNotes, checkThenChangeInfo } from './logic/apiBoardScreen';
 
 const BoardScreen = ({navigation}) => {
     const { notes } = useSelector((state)=>state.board)
