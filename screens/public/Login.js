@@ -1,6 +1,7 @@
 import { View,TextInput,Button,Text } from 'react-native'
 import React, {useContext, useState} from 'react'
 import { AuthContext } from '../../context/AuthContext';
+import { validateAndTrySignIn } from './logic/apiLogin';
 
 export default Login = ({navigation}) => {
   const [username, setUsername] = useState('');
@@ -13,26 +14,7 @@ export default Login = ({navigation}) => {
     <View>
       <TextInput placeholder='email' onChangeText={setUsername} value={username} />
       <TextInput placeholder='password' secureTextEntry onChangeText={setPassword} value={password} />
-      <Button onPress={async ()=>{
-        if(username == '' || password == ''){
-          setMessage('Username and password must be provided!')
-        }else{
-          setMessage('')
-
-          try {
-            const e = await signIn({ username, password });
-      
-            // Check if the response has a 'response' property before accessing 'status'
-            if (e.response && e.response.status === 400) {
-              setMessage('Username or password is incorrect');
-            }
-          } catch (error) {
-            // Handle other errors, or log the error for debugging purposes
-            console.error('Error during sign-in:', error);
-          }
-
-        }
-      }} title='sign in' />
+      <Button onPress={()=>validateAndTrySignIn(signIn,setMessage,username,password)} title='sign in' />
       <Button onPress={()=>navigation.navigate('Register')} title='Create Account' />
       <Text>{message}</Text>
     </View>
