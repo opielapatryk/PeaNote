@@ -2,7 +2,7 @@ import { Text, View, Pressable } from 'react-native';
 import React from 'react';
 import { styles } from '../assets/styles';
 import { useDispatch, useSelector} from 'react-redux';
-import { handlePress } from './logic/apiNote';
+import { handlePress } from './logic/funcNote';
 
 export function Note({ id, text, isNote, isInfo }) {
   const { notes } = useSelector((state) => state.board);
