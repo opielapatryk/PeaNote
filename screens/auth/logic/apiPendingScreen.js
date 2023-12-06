@@ -1,7 +1,7 @@
 import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
 import {userLink,stickerLink} from '../../../components/Constants'
-import {addNote,removeNote} from '../../../store/notes/boardSlice';
+import {addNote,removeNote,changeInfo} from '../../../store/notes/boardSlice';
 
 export const loadPendingNotes = async (dispatch) => {
     try {
@@ -61,4 +61,13 @@ export async function sendNoteToBoard(stickerID,setFetched,notes,dispatch,){
     } catch (error) {
         console.log(error.message);
     }
+}
+
+export const onClickChangeInfo = (notes,dispatch) => {
+  notes.map((note) => {
+    if(note.isInfo === true)
+    {
+      dispatch(changeInfo(note.id))
+    }
+  })
 }

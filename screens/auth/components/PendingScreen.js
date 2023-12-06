@@ -1,11 +1,10 @@
 import React,{useState} from 'react';
-import {ScrollView,Pressable,View,Text,Button} from 'react-native';
+import {Pressable,View,Text,Button,FlatList} from 'react-native';
 import {Note} from '../../../components/Note'
 import {styles} from '../../../assets/styles/styles';
 import { useDispatch, useSelector} from 'react-redux';
-import {changeInfo} from '../../../store/notes/boardSlice';
 import { useFocusEffect } from '@react-navigation/native';
-import {loadPendingNotes, removeNotesFromReduxStore,sendNoteToBoard} from '../logic/apiPendingScreen'
+import {loadPendingNotes, removeNotesFromReduxStore,sendNoteToBoard,onClickChangeInfo} from '../logic/apiPendingScreen'
 
 const PendingScreen = () => {
     const { notes } = useSelector((state)=>state.board)
@@ -21,33 +20,24 @@ const PendingScreen = () => {
       }, [])
     );
 
+    const renderNotes = ({item}) => {
+      return (
+        <View>
+          <Note id={item.id} text={item.text} isInfo={item.isInfo} />
+          <Button title='Approve note' onPress={()=>sendNoteToBoard(item.id,setFetched,notes,dispatch,)}/>
+        </View>
+      )
+    }
+
     return (
       <View>
-        <Pressable
-            onPress={() => {
-              notes.map((note) => {
-                if(note.isInfo === true)
-                {
-                  dispatch(changeInfo(note.id))
-                }
-              })
-            }}
-            style={styles.board}
-          >
-          <ScrollView>
+        <Pressable onPress={()=>onClickChangeInfo(notes,dispatch)} style={styles.board}>
           {fetched && (
               <View>
                 <Text>Note has been sent to the board successfully!</Text>
               </View>
             )}
-            {notes.map((note) => (
-              <View key={note.id}>
-                <Note id={note.id} text={note.text} isInfo={note.isInfo} />
-                <Button title='Approve note' onPress={()=>sendNoteToBoard(note.id,setFetched,notes,dispatch,)}/>
-              </View>
-            ))}
-          </ScrollView>
-
+          <FlatList data={notes} renderItem={renderNotes} keyExtractor={note => note.id}/>
         </Pressable>
       </View>
       );

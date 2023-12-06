@@ -1,5 +1,5 @@
 import React,{useRef} from 'react';
-import {ScrollView,Pressable,View} from 'react-native';
+import {Pressable,View,FlatList} from 'react-native';
 import {Note} from '../../../components/Note'
 import { useDispatch, useSelector} from 'react-redux';
 import {styles} from '../../../assets/styles/styles';
@@ -30,15 +30,9 @@ const BoardScreen = ({navigation}) => {
       return (
         <View>
           <Menu navigation={navigation}/>
-          <Pressable
-              onPress={() => checkThenChangeInfo(dispatch,notes)}
-              style={styles.board}
-            >
-            <ScrollView>
-              {notes.map((note) => (
-                  <Note key={note.id} id={note.id} text={note.text} isInfo={note.isInfo} />
-              ))}
-            </ScrollView>
+            <Pressable onPress={() => checkThenChangeInfo(dispatch,notes)} style={styles.board}>
+              
+            <FlatList data={notes} renderItem={({item}) => <Note id={item.id} text={item.text} isInfo={item.isInfo} />} keyExtractor={note => note.id}/>
 
           </Pressable>
         </View>

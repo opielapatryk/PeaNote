@@ -15,5 +15,4 @@ export function Note({ id, text, isInfo }) {
       </View>
     </Pressable>
   );
-
 }
