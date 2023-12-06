@@ -36,7 +36,7 @@ const BoardScreen = ({navigation}) => {
             >
             <ScrollView>
               {notes.map((note) => (
-                  <Note key={note.id} id={note.id} text={note.text} isNote={note.isNote} isInfo={note.isInfo} />
+                  <Note key={note.id} id={note.id} text={note.text} isInfo={note.isInfo} />
               ))}
             </ScrollView>
 

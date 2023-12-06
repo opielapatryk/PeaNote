@@ -22,7 +22,7 @@ export const fetchNotes = async (dispatch,notes) => {
 
     Promise.all(stickersRequest).then((stickersData) => {
       stickersData.forEach((sticker) =>
-        dispatch(addNote({ id: sticker.id, text: sticker.content, isNote: true, isInfo: false }))
+        dispatch(addNote({ id: sticker.id, text: sticker.content, isInfo: false }))
       );
     });
 

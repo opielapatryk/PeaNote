@@ -20,7 +20,7 @@ export const loadPendingNotes = async (dispatch) => {
       );
 
       const stickersData = await Promise.all(stickersRequest);
-      stickersData.forEach(sticker => dispatch(addNote({ id: sticker.id, text: sticker.content, isNote: true, isInfo: false })));
+      stickersData.forEach(sticker => dispatch(addNote({ id: sticker.id, text: sticker.content, isInfo: false })));
 
       return result;
     } catch (error) {

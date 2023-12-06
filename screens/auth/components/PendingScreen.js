@@ -42,7 +42,7 @@ const PendingScreen = () => {
             )}
             {notes.map((note) => (
               <View key={note.id}>
-                <Note id={note.id} text={note.text} isNote={note.isNote} isInfo={note.isInfo} />
+                <Note id={note.id} text={note.text} isInfo={note.isInfo} />
                 <Button title='Approve note' onPress={()=>sendNoteToBoard(note.id,setFetched,notes,dispatch,)}/>
               </View>
             ))}
