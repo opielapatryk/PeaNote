@@ -24,10 +24,9 @@ export default function App(){
 
   const authContext = useMemo(
     () => ({
-    signIn: (data)=>signInFunc(data,dispatch),
-    signOut: ()=>signOutFunc(dispatch)
-  }),
-  []
+      signIn: (data)=>signInFunc(data,dispatch),
+      signOut: ()=>signOutFunc(dispatch)
+    }),[]
   );
 
   return (

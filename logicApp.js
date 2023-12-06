@@ -3,11 +3,9 @@ import axios from 'axios';
 
 export const loadToken = async (dispatch) => {
     let userToken;
-    console.log("Attempting to load token...");
     try {
         userToken = await SecureStore.getItemAsync("userToken");
         userId = await SecureStore.getItemAsync("userId");
-        console.log('loadToken, userId: ' + userId);
     } catch (error) {
         console.error("Error loading token:", error);
     }
