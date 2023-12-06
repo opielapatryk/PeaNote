@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     notes:[],
-    isInput:true,   
     history:[]
 }
 
@@ -15,12 +14,12 @@ export const boardSlice = createSlice({
         },
         removeNote: (state, action) => {
             return {
-              ...state,
-              notes: state.notes.filter(note => note.id !== action.payload),
-              history: [...state.notes]
+                ...state,
+                notes: state.notes.filter(note => note.id !== action.payload),
+                history: [...state.notes]
             };
-          },
-          changeInfo: (state, action) => {
+        },
+        changeInfo: (state, action) => {
             const prevText = state.history.find((note) => note.id === action.payload)?.text || "";
             return {
                 ...state,
