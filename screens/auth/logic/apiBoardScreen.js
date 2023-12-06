@@ -20,14 +20,12 @@ export const fetchNotes = async (dispatch) => {
     });
 
     const stickersRequest = result.data.stickersOnBoard.map((url) =>
-      axios.get(url).then((response) => response.data)
+      axios.get(url)
+          .then((response) => response.data)
     );
 
-    Promise.all(stickersRequest).then((stickersData) => {
-      stickersData.forEach((sticker) =>
-        dispatch(addNote({ id: sticker.id, text: sticker.content, isInfo: false }))
-      );
-    });
+    const stickersData = await Promise.all(stickersRequest)
+    stickersData.forEach((sticker) => dispatch(addNote({ id: sticker.id, text: sticker.content, isInfo: false })));
 
     return result;
   } catch (error) {

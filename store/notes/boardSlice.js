@@ -10,12 +10,6 @@ export const boardSlice = createSlice({
     name:'board',
     initialState,
     reducers:{
-        showInput: (state) =>{
-            return {...state, isInput: true};
-        },
-        hideInput: (state) =>{
-            return {...state, isInput: false};
-        },
         addNote: (state, action) => {
             return {...state, notes:[...state.notes, action.payload],history: [...state.notes]}
         },
@@ -46,5 +40,5 @@ export const boardSlice = createSlice({
     }
 })
 
-export const {showInput, addNote, removeNote, hideInput,changeInfo} = boardSlice.actions
+export const {addNote, removeNote,changeInfo} = boardSlice.actions
 export default boardSlice.reducer
