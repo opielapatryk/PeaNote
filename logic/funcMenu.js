@@ -1,4 +1,4 @@
-import {removeNote} from '../../store/boardSlice';
+import {removeNote} from '../store/notes/boardSlice';
 
 export const clearReduxStore = (notes,dispatch_redux,navigation) => {
     notes.forEach(sticker => dispatch_redux(removeNote(sticker.id)));

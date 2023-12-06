@@ -1,7 +1,7 @@
 import { View,TextInput,Button,Text } from 'react-native'
 import React, {useContext, useState} from 'react'
-import { AuthContext } from '../../context/AuthContext';
-import { validateAndTrySignIn } from './logic/apiLogin';
+import { AuthContext } from '../../../context/AuthContext';
+import { validateAndTrySignIn } from '../logic/apiLogin';
 
 export default Login = ({navigation}) => {
   const [username, setUsername] = useState('');

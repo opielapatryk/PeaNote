@@ -2,7 +2,7 @@ import { Text,ScrollView, Button, TextInput } from 'react-native'
 import React, {useState,useEffect} from 'react'
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector} from 'react-redux';
-import {searchNewFriend,addNewFriend,loadUser,getUserId,removeNotesFromReduxStore} from './logic/apiFriendsScreen'
+import {searchNewFriend,addNewFriend,loadUser,getUserId,removeNotesFromReduxStore} from '../logic/apiFriendsScreen'
 
 export const FriendsScreen = ({ navigation }) => {
   const { notes } = useSelector((state)=>state.board)

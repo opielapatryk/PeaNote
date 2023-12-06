@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Text, View, Button, TextInput, Modal } from 'react-native';
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext } from '../../../context/AuthContext';
 import { useDispatch, useSelector } from 'react-redux';
-import { styles } from '../../assets/styles';
+import { styles } from '../../../assets/styles/styles';
 import { useFocusEffect } from '@react-navigation/native';
-import {checkIsAskBeforeStickingNoteFlagOff,deleteAccount,changePassword,askBeforeStick,removeNotesFromReduxStore} from './logic/apiSettingsScreen'
+import {checkIsAskBeforeStickingNoteFlagOff,deleteAccount,changePassword,askBeforeStick,removeNotesFromReduxStore} from '../logic/apiSettingsScreen'
 
 const SettingsScreen = () => {
   const { signOut } = useContext(AuthContext);

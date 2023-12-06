@@ -3,14 +3,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import store from './store/store'
 import { Provider } from 'react-redux';
-import Login from './screens/public/Login'
-import Register from './screens/public/Register'
+import Login from './screens/public/components/Login'
+import Register from './screens/public/components/Register'
 import { AuthContext, authReducer, initialState } from './context/AuthContext';
-import BoardScreen from './screens/auth/BoardScreen';
-import FriendsScreen from './screens/auth/FriendsScreen';
-import FriendsBoard from './screens/auth/FriendsBoard';
-import SettingsScreen from './screens/auth/SettingsScreen';
-import PendingScreen from './screens/auth/PendingScreen';
+import BoardScreen from './screens/auth/components/BoardScreen';
+import FriendsScreen from './screens/auth/components/FriendsScreen';
+import FriendsBoard from './screens/auth/components/FriendsBoard';
+import SettingsScreen from './screens/auth/components/SettingsScreen';
+import PendingScreen from './screens/auth/components/PendingScreen';
 import { loadToken,signOutFunc,signInFunc } from './logicApp';
 
 const Stack = createNativeStackNavigator();

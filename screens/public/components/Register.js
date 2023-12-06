@@ -1,6 +1,6 @@
 import { View, Text, Button,TextInput } from 'react-native'
 import React, {useState} from 'react'
-import { createAccount } from './logic/apiRegister'
+import { createAccount } from '../logic/apiRegister'
 
 const Register = ({navigation}) => {
   const [first_name, setFirstName] = useState('')

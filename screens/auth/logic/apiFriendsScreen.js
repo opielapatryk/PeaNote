@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {userLink,usersLink} from '../../../components/Constants'
 import * as SecureStore from 'expo-secure-store';
-import {removeNote} from '../../../store/boardSlice';
+import {removeNote} from '../../../store/notes/boardSlice';
 
 export const searchNewFriend = async (newFriendEmail,setNewFriendID,setdoesEmailExist,setList) => {
     try {

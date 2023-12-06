@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Text, TextInput, View, Button } from 'react-native';
-import {createNote,removeFriend} from './logic/apiFriendsBoard'
+import {createNote,removeFriend} from '../logic/apiFriendsBoard'
 
 const FriendsBoard = ({ route, navigation }) => {
   const { friendId, friendName } = route.params;

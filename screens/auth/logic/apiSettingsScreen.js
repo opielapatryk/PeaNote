@@ -1,7 +1,7 @@
 import { userLink } from '../../../components/Constants';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
-import { removeNote } from '../../../store/boardSlice';
+import { removeNote } from '../../../store/notes/boardSlice';
 
 export const checkIsAskBeforeStickingNoteFlagOff = async (setAskBeforeStickingNoteFlag) => {
     try {

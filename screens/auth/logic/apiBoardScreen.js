@@ -1,8 +1,8 @@
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import { userLink } from '../../../components/Constants';
-import {addNote,removeNote} from '../../../store/boardSlice';
-import {changeInfo} from '../../../store/boardSlice';
+import {addNote,removeNote} from '../../../store/notes/boardSlice';
+import {changeInfo} from '../../../store/notes/boardSlice';
 
 export const fetchNotes = async (dispatch,notes) => {
   await notes.map((sticker) => dispatch(removeNote(sticker.id)));

@@ -1,11 +1,11 @@
 import React,{useRef} from 'react';
 import {ScrollView,Pressable,View} from 'react-native';
-import {Note} from '../../components/Note'
+import {Note} from '../../../components/Note'
 import { useDispatch, useSelector} from 'react-redux';
-import {styles} from '../../assets/styles';
-import Menu from '../../components/Menu'
+import {styles} from '../../../assets/styles/styles';
+import Menu from '../../../components/Menu'
 import { useFocusEffect } from '@react-navigation/native';
-import { fetchNotes, checkThenChangeInfo } from './logic/apiBoardScreen';
+import { fetchNotes, checkThenChangeInfo } from '../logic/apiBoardScreen';
 
 const BoardScreen = ({navigation}) => {
     const { notes } = useSelector((state)=>state.board)

@@ -1,9 +1,9 @@
 import React, {useContext} from 'react';
 import { Button, View } from 'react-native';
-import { styles } from '../assets/styles';
+import { styles } from '../assets/styles/styles';
 import { AuthContext } from '../context/AuthContext';
 import { useDispatch, useSelector} from 'react-redux';
-import { clearReduxStore, signOutAndClearReduxStore } from './logic/funcMenu';
+import { clearReduxStore, signOutAndClearReduxStore } from '../logic/funcMenu';
 
 export default function menu({ navigation }) {
   const { signOut } = useContext(AuthContext);

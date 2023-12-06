@@ -1,11 +1,11 @@
 import React,{useState} from 'react';
 import {ScrollView,Pressable,View,Text,Button} from 'react-native';
-import {Note} from '../../components/Note'
-import {styles} from '../../assets/styles';
+import {Note} from '../../../components/Note'
+import {styles} from '../../../assets/styles/styles';
 import { useDispatch, useSelector} from 'react-redux';
-import {changeInfo} from '../../store/boardSlice';
+import {changeInfo} from '../../../store/notes/boardSlice';
 import { useFocusEffect } from '@react-navigation/native';
-import {loadPendingNotes, removeNotesFromReduxStore,sendNoteToBoard} from './logic/apiPendingScreen'
+import {loadPendingNotes, removeNotesFromReduxStore,sendNoteToBoard} from '../logic/apiPendingScreen'
 
 const PendingScreen = () => {
     const { notes } = useSelector((state)=>state.board)

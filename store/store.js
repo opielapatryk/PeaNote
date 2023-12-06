@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
-import noteReducer from "./noteSlice";
-import boardReducer from './boardSlice'
+import noteReducer from "./notes/noteSlice";
+import boardReducer from './notes/boardSlice'
 
 export default configureStore({
     reducer:{

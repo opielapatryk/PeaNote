@@ -1,6 +1,6 @@
 import axios from 'axios'
-import {changeInfo,removeNote} from '../../store/boardSlice'
-import { stickerLink } from '../Constants';
+import {changeInfo,removeNote} from '../store/notes/boardSlice'
+import { stickerLink } from '../components/Constants';
 
 export const handlePress = (notes,dispatch,isInfo,id) => {
     {notes.forEach(note => {
