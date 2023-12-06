@@ -4,8 +4,11 @@ import { userLink } from '../../../components/Constants';
 import {addNote,removeNote} from '../../../store/notes/boardSlice';
 import {changeInfo} from '../../../store/notes/boardSlice';
 
-export const fetchNotes = async (dispatch,notes) => {
+export const removeNotesFromReduxStore = async (notes,dispatch) => {
   await notes.map((sticker) => dispatch(removeNote(sticker.id)));
+};
+
+export const fetchNotes = async (dispatch) => {  
   try {
     const userToken = await SecureStore.getItemAsync('userToken');
     const currentUserId = await SecureStore.getItemAsync('userId');

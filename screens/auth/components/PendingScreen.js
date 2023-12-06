@@ -14,9 +14,6 @@ const PendingScreen = () => {
     useFocusEffect(
       React.useCallback(() => {
         loadPendingNotes(dispatch);
-        return () => {
-          removeNotesFromReduxStore(notes,dispatch);
-        };
       }, [])
     );
 
