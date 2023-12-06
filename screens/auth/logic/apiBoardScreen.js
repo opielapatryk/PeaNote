@@ -1,8 +1,7 @@
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import { userLink } from '../../../components/Constants';
-import {addNote,removeNote} from '../../../store/notes/boardSlice';
-import {changeInfo} from '../../../store/notes/boardSlice';
+import {addNote,removeNote,changeInfo} from '../../../store/notes/boardSlice';
 
 export const removeNotesFromReduxStore = async (notes,dispatch) => {
   await notes.map((sticker) => dispatch(removeNote(sticker.id)));
