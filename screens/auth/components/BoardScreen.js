@@ -27,12 +27,17 @@ const BoardScreen = ({navigation}) => {
       },[notes])
     );
 
+    const renderNotes = ({item}) => {
+      return (
+        <Note id={item.id} text={item.text} isInfo={item.isInfo} />
+      )
+    }
       return (
         <View>
           <Menu navigation={navigation}/>
             <Pressable onPress={() => checkThenChangeInfo(dispatch,notes)} style={styles.board}>
               
-            <FlatList data={notes} renderItem={({item}) => <Note id={item.id} text={item.text} isInfo={item.isInfo} />} keyExtractor={note => note.id}/>
+            <FlatList data={notes} renderItem={renderNotes} keyExtractor={note => note.id}/>
 
           </Pressable>
         </View>

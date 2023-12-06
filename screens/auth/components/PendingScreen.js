@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useMemo} from 'react';
 import {Pressable,View,Text,Button,FlatList} from 'react-native';
 import {Note} from '../../../components/Note'
 import {styles} from '../../../assets/styles/styles';
@@ -20,14 +20,14 @@ const PendingScreen = () => {
       }, [])
     );
 
-    const renderNotes = ({item}) => {
+    const renderNotes = useMemo(() => ({item}) => {
       return (
         <View>
           <Note id={item.id} text={item.text} isInfo={item.isInfo} />
           <Button title='Approve note' onPress={()=>sendNoteToBoard(item.id,setFetched,notes,dispatch,)}/>
         </View>
       )
-    }
+    },[notes, dispatch])
 
     return (
       <View>
