@@ -1,12 +1,9 @@
 import { Text,ScrollView, Button, TextInput } from 'react-native'
 import React, {useState,useEffect} from 'react'
 import { useFocusEffect } from '@react-navigation/native';
-import { useDispatch, useSelector} from 'react-redux';
-import {searchNewFriend,addNewFriend,loadUser,getUserId,removeNotesFromReduxStore} from '../logic/apiFriendsScreen'
+import {searchNewFriend,addNewFriend,loadUser,getUserId} from '../logic/apiFriendsScreen'
 
 export const FriendsScreen = ({ navigation }) => {
-  const { notes } = useSelector((state)=>state.board)
-  const dispatch = useDispatch()
   const [friends,setFriends] = useState([])
   const [newFriendEmail, setNewFriendEmail] = useState()
   const [buttonTitle,setButtonTitle] = useState('')
@@ -23,10 +20,7 @@ export const FriendsScreen = ({ navigation }) => {
   useFocusEffect(
     React.useCallback(() => {
       loadUser(setFriends)
-      return () => {
-        removeNotesFromReduxStore(notes,dispatch)
-      };
-    }, [notes])
+    }, [])
   );
 
   return (

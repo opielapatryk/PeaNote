@@ -1,7 +1,7 @@
 import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
 import {userLink,stickerLink} from '../../../components/Constants'
-import {addNote,removeNote,changeInfo} from '../../../store/notes/boardSlice';
+import {addPendingNote,removePendingNote,changePendingInfo} from '../../../store/notes/boardSlice';
 
 export const loadPendingNotes = async (dispatch) => {
     try {
@@ -20,7 +20,8 @@ export const loadPendingNotes = async (dispatch) => {
       );
 
       const stickersData = await Promise.all(stickersRequest);
-      stickersData.forEach(sticker => dispatch(addNote({ id: sticker.id, text: sticker.content, isInfo: false })));
+      stickersData.forEach(sticker => dispatch(addPendingNote({ id: sticker.id, text: sticker.content, isInfo: false })));
+      
 
       return result;
     } catch (error) {
@@ -28,11 +29,11 @@ export const loadPendingNotes = async (dispatch) => {
     }
   };
 
-export const removeNotesFromReduxStore = async (notes,dispatch) => {
-    await notes.map((sticker) => dispatch(removeNote(sticker.id)));
+export const removeNotesFromReduxStore = async (pendingNotes,dispatch) => {
+    await pendingNotes.map((sticker) => dispatch(removePendingNote(sticker.id)));
   };
 
-export async function sendNoteToBoard(stickerID,setFetched,notes,dispatch,){
+export async function sendNoteToBoard(stickerID,setFetched,pendingNotes,dispatch,){
     try {
         let userID = await SecureStore.getItemAsync('userId');
 
@@ -55,7 +56,7 @@ export async function sendNoteToBoard(stickerID,setFetched,notes,dispatch,){
 
         if(patchStickersOnBoardResp.status === 200 && patchPendingStickersResp.status === 200){
             setFetched(true)
-            removeNotesFromReduxStore(notes,dispatch);
+            removeNotesFromReduxStore(pendingNotes,dispatch);
             loadPendingNotes(dispatch);
         }
     } catch (error) {
@@ -63,11 +64,11 @@ export async function sendNoteToBoard(stickerID,setFetched,notes,dispatch,){
     }
 }
 
-export const onClickChangeInfo = (notes,dispatch) => {
-  notes.map((note) => {
+export const onClickChangeInfo = (dispatch,pendingNotes) => {
+  pendingNotes.map((note) => {
     if(note.isInfo === true)
     {
-      dispatch(changeInfo(note.id))
+      dispatch(changePendingInfo(note.id))
     }
   })
 }

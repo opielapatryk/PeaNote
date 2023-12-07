@@ -1,5 +1,6 @@
 import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
+import { fetchNotes } from './screens/auth/logic/apiBoardScreen';
 
 export const loadToken = async (dispatch) => {
     let userToken;
@@ -38,15 +39,13 @@ export const signOutFunc = async (dispatch) => {
         password: data.password
       });
 
-      userToken = await SecureStore.setItemAsync('userToken', response.data.Authorization);
+      let userToken = await SecureStore.setItemAsync('userToken', response.data.Authorization);
 
       userIdString = String(response.data.user_id);
       await SecureStore.setItemAsync('userId', userIdString);
       userId = await SecureStore.getItemAsync('userId');
 
       dispatch({ type: 'SIGN_IN', token: userToken, userId: userId });
-
-      console.log('resp: ', response);
 
       return response;
 

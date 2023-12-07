@@ -25,6 +25,7 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
-    }
+    },
+    "plugins": ["@logrocket/react-native"]
   }
 }

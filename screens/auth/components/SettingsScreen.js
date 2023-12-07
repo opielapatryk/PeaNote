@@ -22,13 +22,13 @@ const SettingsScreen = () => {
     checkIsAskBeforeStickingNoteFlagOff(setAskBeforeStickingNoteFlag);
   }, []);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      return () => {
-        removeNotesFromReduxStore(notes,dispatchRedux);
-      };
-    }, [notes])
-  );
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     return () => {
+  //       removeNotesFromReduxStore(notes,dispatchRedux);
+  //     };
+  //   }, [notes])
+  // );
 
   const renderChangePasswordButtons = () => (
     <>
