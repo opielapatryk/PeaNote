@@ -7,7 +7,7 @@ import { signOutAndClearReduxStore } from '../logic/funcMenu';
 
 export default function menu({ navigation }) {
   const { signOut } = useContext(AuthContext);
-  const { notes } = useSelector((state)=>state.board)
+  const { notes,pendingNotes } = useSelector((state)=>state.board)
   const dispatch_redux = useDispatch()
 
   return (
@@ -16,7 +16,7 @@ export default function menu({ navigation }) {
       <Button title='PENDING' onPress={()=>navigation.navigate('Pending')}/>
       <Button title='FRIENDS' onPress={() => navigation.navigate('Friends')}/>
       <Button title='SETTINGS' onPress={() => navigation.navigate('Settings')}/>
-      <Button onPress={()=>signOutAndClearReduxStore(notes,signOut,dispatch_redux)} title='LOGOUT' />
+      <Button onPress={()=>signOutAndClearReduxStore(notes,signOut,dispatch_redux,pendingNotes)} title='LOGOUT' />
     </View>
   );
 }

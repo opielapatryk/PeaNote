@@ -2,8 +2,27 @@ import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
 import {userLink,stickerLink} from '../../../components/Constants'
 import {removePendingNote,changePendingInfo, addNote} from '../../../store/notes/boardSlice';
+import { Animated, Easing } from 'react-native';
 
-export async function sendNoteToBoard(stickerID,stickerContent,setFetched,dispatch,){
+export async function sendNoteToBoard(stickerID,stickerContent,dispatch,index,animatedValues){
+  
+
+  const animate = (index,addNote,removeNote) => {
+    Animated.timing(animatedValues[index], {
+      toValue: 0,
+      duration: 1000,
+      easing: Easing.bounce,
+      useNativeDriver: false,
+    }).start(()=>{
+      if (addNote) {
+        addNote();
+      }
+      if (removeNote) {
+        removeNote();
+      }
+    });
+  };
+
   const currentUserId = await SecureStore.getItemAsync('userId');
     try {
         const resp = await axios.get(userLink(currentUserId))
@@ -15,6 +34,8 @@ export async function sendNoteToBoard(stickerID,stickerContent,setFetched,dispat
 
         let newPendingArr = await pending.filter(sticker => sticker != stickerLink(stickerID))
 
+        
+
         const patchStickersOnBoardResp = await axios.patch(userLink(currentUserId),{
           'stickersOnBoard': stickersOnBoard
         })
@@ -24,9 +45,7 @@ export async function sendNoteToBoard(stickerID,stickerContent,setFetched,dispat
         })
 
         if(patchStickersOnBoardResp.status === 200 && patchPendingStickersResp.status === 200){
-            setFetched(true) 
-            dispatch(addNote({ id: stickerID, text: stickerContent, isInfo: false }))
-            dispatch(removePendingNote(stickerID))
+            animate(index,()=>dispatch(addNote({ id: stickerID, text: stickerContent, isInfo: false })),()=>dispatch(removePendingNote(stickerID)));
         }
     } catch (error) {
         console.log(error.message);
