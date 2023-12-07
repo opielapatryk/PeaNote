@@ -14,7 +14,7 @@ const PendingScreen = () => {
       return (
         <View>
           <PendingNote id={item.id} text={item.text} isInfo={item.isInfo} />
-          <Button title='Approve note' onPress={()=>sendNoteToBoard(item.id,setFetched,pendingNotes,dispatch,)}/>
+          <Button title='Approve note' onPress={()=>sendNoteToBoard(item.id,item.text,setFetched,dispatch,)}/>
         </View>
       )
     }
