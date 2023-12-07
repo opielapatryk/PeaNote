@@ -54,7 +54,15 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 22,
   },
-  modalText:{
-    color:'blue',
+  switchRow:{
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent:'center',
+    marginTop:5
+  },
+  settingsActionText:{
+    color:'rgb(0,122,255)',
+    fontSize:18,
+    paddingRight:15,
   }
 });

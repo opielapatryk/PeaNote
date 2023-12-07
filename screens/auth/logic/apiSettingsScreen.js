@@ -8,7 +8,7 @@ export const checkIsAskBeforeStickingNoteFlagOff = async (setAskBeforeStickingNo
       let userID = await SecureStore.getItemAsync('userId');
       const resp = await axios.get(userLink(userID));
       const data = resp.data.askBeforeStick;
-      setAskBeforeStickingNoteFlag(data ? 'ON' : 'OFF');
+      setAskBeforeStickingNoteFlag(data ? true : false);
     } catch (error) {
       console.log(error.message);
     }
@@ -58,7 +58,7 @@ export const checkIsAskBeforeStickingNoteFlagOff = async (setAskBeforeStickingNo
     }
   };
 
-  export const askBeforeStick = async (setModalVisibility,setAskBeforeStickingNoteFlag,setMessage) => {
+  export const askBeforeStick = async (setAskBeforeStickingNoteFlag,setMessage) => {
     try {
       let userID = await SecureStore.getItemAsync('userId');
       const resp = await axios.get(userLink(userID));
@@ -68,11 +68,9 @@ export const checkIsAskBeforeStickingNoteFlagOff = async (setAskBeforeStickingNo
       });
 
       if (patchRequest.status && patchRequest.status === 200) {
-        setModalVisibility(false);
-        setAskBeforeStickingNoteFlag(data ? 'OFF' : 'ON');
+        setAskBeforeStickingNoteFlag(data ? false : true);
       }
     } catch (error) {
-      setModalVisibility(false);
       setMessage('Something went wrong! Try again later..');
       console.log(error.message);
     }

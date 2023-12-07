@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Text, View, Button, TextInput, Modal } from 'react-native';
+import { Text, View, Button, TextInput, Switch} from 'react-native';
 import { AuthContext } from '../../../context/AuthContext';
 import { useDispatch, useSelector } from 'react-redux';
+import {checkIsAskBeforeStickingNoteFlagOff,deleteAccount,changePassword,askBeforeStick} from '../logic/apiSettingsScreen'
 import { styles } from '../../../assets/styles/styles';
-import { useFocusEffect } from '@react-navigation/native';
-import {checkIsAskBeforeStickingNoteFlagOff,deleteAccount,changePassword,askBeforeStick,removeNotesFromReduxStore} from '../logic/apiSettingsScreen'
 
 const SettingsScreen = () => {
   const { signOut } = useContext(AuthContext);
@@ -15,20 +14,14 @@ const SettingsScreen = () => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmAccountDelete, setConfirmAccountDelete] = useState(false);
-  const [modalVisible, setModalVisibility] = useState(false);
-  const [askBeforeStickingNoteFlag, setAskBeforeStickingNoteFlag] = useState('OFF');
+  const [askBeforeStickingNoteFlag, setAskBeforeStickingNoteFlag] = useState(false);
+
+  const toggleSwitch = () => askBeforeStick(setAskBeforeStickingNoteFlag,setMessage)
 
   useEffect(() => {
     checkIsAskBeforeStickingNoteFlagOff(setAskBeforeStickingNoteFlag);
   }, []);
 
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     return () => {
-  //       removeNotesFromReduxStore(notes,dispatchRedux);
-  //     };
-  //   }, [notes])
-  // );
 
   const renderChangePasswordButtons = () => (
     <>
@@ -52,14 +45,13 @@ const SettingsScreen = () => {
 
   const renderDeleteAccountBeforeClickingChangePassword = () => (
     <View>
-      <Button title={`ASK BEFORE STICKING NOTE | ${askBeforeStickingNoteFlag}`} onPress={toggleModal} />
-
-      <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={toggleModal}>
-        <View style={styles.modal}>
-          <Button onPress={(()=>askBeforeStick(setModalVisibility,setAskBeforeStickingNoteFlag,setMessage))} title="Confirm" />
-          <Button onPress={toggleModal} title="Hide" />
-        </View>
-      </Modal>
+      <View style={styles.switchRow}>
+        <Text style={styles.settingsActionText}>ASK BEFORE STICKING NOTE</Text>
+        <Switch
+          onValueChange={toggleSwitch}
+          value={askBeforeStickingNoteFlag}
+        />
+      </View>
 
       {confirmAccountDelete ? renderChangePasswordButtons() : renderDeleteAccountButtons()}
 
@@ -69,14 +61,14 @@ const SettingsScreen = () => {
 
   const renderDeleteAccountAfterClickingChangePassword = () => (
     <View>
-      <Button title={`ASK BEFORE STICKING NOTE | ${askBeforeStickingNoteFlag}`} onPress={toggleModal} />
+      <View style={styles.switchRow}>
+        <Text style={styles.settingsActionText}>ASK BEFORE STICKING NOTE</Text>
+        <Switch
+          onValueChange={toggleSwitch}
+          value={askBeforeStickingNoteFlag}
+        />
+      </View>
 
-      <Modal animationType="slide" transparent={true} visible={modalVisible} onRequestClose={toggleModal}>
-        <View style={styles.modal}>
-          <Button onPress={()=>askBeforeStick(setModalVisibility,setAskBeforeStickingNoteFlag,setMessage)} title="Confirm" />
-          <Button onPress={toggleModal} title="Hide" />
-        </View>
-      </Modal>
 
       <TextInput placeholder="Old Password" onChangeText={setOldPassword} secureTextEntry />
       <TextInput placeholder="New Password" onChangeText={setNewPassword} secureTextEntry />
@@ -92,7 +84,7 @@ const SettingsScreen = () => {
     </View>
   );
 
-  const toggleModal = () => setModalVisibility(!modalVisible);
+  
 
   return showInput ? (
     renderDeleteAccountBeforeClickingChangePassword()
