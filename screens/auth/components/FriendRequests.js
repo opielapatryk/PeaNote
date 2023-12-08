@@ -1,4 +1,4 @@
-import { Text,ScrollView, Button, TextInput,View, Pressable } from 'react-native'
+import { Text,ScrollView, Button, TextInput,View, Pressable,  FlatList, Animated,Easing } from 'react-native'
 import {userLink,usersLink} from '../../../components/Constants'
 import React, {useState,useEffect} from 'react'
 import { useFocusEffect } from '@react-navigation/native';
@@ -9,7 +9,8 @@ import { styles } from '../../../assets/styles/styles';
 
 const FriendRequests = ({ navigation }) => {
     const [friends,setFriends] = useState([])
-    
+    const animatedValues = friends.map(() => new Animated.Value(200));
+
     const loadUser = async ()=>{
         try{
           currentUserId = await SecureStore.getItemAsync('userId');
@@ -41,7 +42,17 @@ const FriendRequests = ({ navigation }) => {
         }, [])
       );
 
-      const approveFriend = async (friendID) =>{
+      const approveFriend = async (friendID,index) =>{
+
+        const animate = (index) => {
+            Animated.timing(animatedValues[index], {
+              toValue: 0,
+              duration: 1000,
+              easing: Easing.bounce,
+              useNativeDriver: false,
+            }).start();
+          };
+
         const currentUserId = await SecureStore.getItemAsync('userId');
     try {
         const resp = await axios.get(userLink(currentUserId))
@@ -63,14 +74,25 @@ const FriendRequests = ({ navigation }) => {
 
         if(patchFriends.status === 200 && patchReqFriends.status === 200){
             console.log('friend accepted');
-            setFriends(newRequestsArr);
+            // loadUser()
+            animate(index)
         }
     } catch (error) {
         console.log(error.message);
     }
       }
 
-      const removeReq = async (friendID) =>{
+      const removeReq = async (friendID,index) =>{
+
+        const animate = (index) => {
+            Animated.timing(animatedValues[index], {
+              toValue: 0,
+              duration: 1000,
+              easing: Easing.bounce,
+              useNativeDriver: false,
+            }).start();
+          };
+
         const currentUserId = await SecureStore.getItemAsync('userId');
     try {
         const resp = await axios.get(userLink(currentUserId))
@@ -85,27 +107,26 @@ const FriendRequests = ({ navigation }) => {
 
         if(patchReqFriends.status === 200){
             console.log('friend req removed');
-            setFriends(newRequestsArr);
+            // loadUser()
+            animate(index)
         }
     } catch (error) {
         console.log(error.message);
     }
       }
-  return (
-    <ScrollView>
-      {friends.map((friend)=>{
-        console.log("Friend ID:", friend.id);
-        return(
-            <View key={friend.id} style={styles.switchRow}>
-            <Button title={String(friend.email)} onPress={()=>approveFriend(friend.id)}/>
-            <Pressable onPress={()=>removeReq(friend.id)}>
-              <FontAwesome5 name="trash-alt" size={24} color="black" />
-            </Pressable>
-          </View>
-        )
 
-})}
-    </ScrollView>
+      const renderFriends = ({item,index}) =>{
+        return (
+            <Animated.View style={{ overflow: 'hidden', maxHeight: animatedValues[index] }}>
+                <Button title={String(item.email)} onPress={()=>approveFriend(item.id,index)}/>
+                <Pressable onPress={()=>removeReq(item.id,index)}>
+                    <FontAwesome5 name="trash-alt" size={24} color="black" />
+                </Pressable>
+            </Animated.View>
+        )
+      }
+  return (
+    <FlatList data={friends} renderItem={renderFriends} keyExtractor={(friend) => friend.id}/>
   );
 }
 
