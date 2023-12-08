@@ -37,14 +37,14 @@ export const searchNewFriend = async (newFriendEmail,setNewFriendID,setdoesEmail
       const userURL = userLink(currentUserId)
       const result = await axios.get(userURL)
 
-      let list = result.data.friends
+      let list = result.data.friends_requests
 
-      if (!list.includes(friendURL)) {
-        list.push(friendURL);
+      if (!list.includes(userURL)) {
+        list.push(userURL);
       }
       
-      await axios.patch(userURL,{
-          'friends':list
+      await axios.patch(friendURL,{
+          'friends_requests':list
       })
 
       const friendsRequests = list.map(url =>
