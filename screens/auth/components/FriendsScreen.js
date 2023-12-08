@@ -25,6 +25,7 @@ export const FriendsScreen = ({ navigation }) => {
 
   return (
     <ScrollView>
+      <Button title='REQUESTS' onPress={()=>navigation.navigate('Requests')}/>
       <TextInput placeholder='Insert friend email' onChangeText={(newFriendEmail) => setNewFriendEmail(newFriendEmail)} value={newFriendEmail}/>
       <Button title='SEARCH NEW FRIEND' onPress={()=>searchNewFriend(newFriendEmail,setNewFriendID,setdoesEmailExist,setList)}/>
       <Text>{message}</Text>

@@ -11,6 +11,7 @@ import FriendsScreen from './screens/auth/components/FriendsScreen';
 import FriendsBoard from './screens/auth/components/FriendsBoard';
 import SettingsScreen from './screens/auth/components/SettingsScreen';
 import PendingScreen from './screens/auth/components/PendingScreen';
+import FriendRequests from './screens/auth/components/FriendRequests';
 import { loadToken,signOutFunc,signInFunc } from './logicApp';
 
 const Stack = createNativeStackNavigator();
@@ -47,6 +48,7 @@ export default function App(){
                 <Stack.Screen name="Settings" component={SettingsScreen}></Stack.Screen>
                 <Stack.Screen name="Friends" component={FriendsScreen}initialParams={{ userId:'12'}}></Stack.Screen>
                 <Stack.Screen name="FriendsBoard" component={FriendsBoard}></Stack.Screen>
+                <Stack.Screen name="Requests" component={FriendRequests}></Stack.Screen>
               </>
             )}
           </Stack.Navigator>
