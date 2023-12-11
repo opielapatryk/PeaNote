@@ -12,10 +12,16 @@ export const boardSlice = createSlice({
     initialState,
     reducers:{
         addNote: (state, action) => {
-            return {...state, notes:[...state.notes, action.payload],history: [...state.notes]}
+            const existingNote = state.notes.find(note => note.id === action.payload.id);
+            if(!existingNote){
+                return {...state, notes:[...state.notes, action.payload],history: [...state.notes]}
+            }
         },
         addPendingNote: (state, action) => {
-            return {...state, pendingNotes: [...state.pendingNotes, action.payload], pendingHistory: [...state.pendingNotes]}
+            const existingNote = state.pendingNotes.find(note => note.id === action.payload.id);
+            if (!existingNote) {
+                return {...state, pendingNotes: [...state.pendingNotes, action.payload], pendingHistory: [...state.pendingNotes]}
+            }
         },
         removeNote: (state, action) => {
             return {
