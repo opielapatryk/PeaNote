@@ -3,7 +3,7 @@ import React, {useContext, useState} from 'react'
 import { AuthContext } from '../../../context/AuthContext';
 import { validateAndTrySignIn } from '../logic/apiLogin';
 
-export default Login = ({navigation}) => {
+const Login = ({navigation}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -20,3 +20,5 @@ export default Login = ({navigation}) => {
     </View>
   );
 }
+
+export default Login;
