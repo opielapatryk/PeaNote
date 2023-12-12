@@ -19,8 +19,14 @@
     "axios": "^1.6.1",
     "base-64": "^1.0.0",
     "expo": "~49.0.15",
+    "expo-auth-session": "~5.0.2",
+    "expo-crypto": "~12.4.1",
+    "expo-firebase": "^0.0.0-alpha.0",
+    "expo-linking": "~5.0.2",
     "expo-secure-store": "~12.3.1",
     "expo-status-bar": "~1.6.0",
+    "expo-web-browser": "~12.3.2",
+    "firebase": "^10.7.1",
     "jest-expo": "~49.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -32,11 +38,7 @@
     "react-redux": "^8.1.3",
     "redux": "^4.2.1",
     "redux-mock-store": "^1.5.4",
-    "typescript": "^5.1.3",
-    "expo-auth-session": "~5.0.2",
-    "expo-web-browser": "~12.3.2",
-    "expo-crypto": "~12.4.1",
-    "expo-linking": "~5.0.2"
+    "typescript": "^5.1.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
