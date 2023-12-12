@@ -14,7 +14,6 @@ import PendingScreen from './screens/auth/components/PendingScreen';
 import FriendRequests from './screens/auth/components/FriendRequests';
 import { loadToken,signOutFunc,signInFunc } from './logicApp';
 
-//test
 const Stack = createNativeStackNavigator();
 
 export default function App(){
