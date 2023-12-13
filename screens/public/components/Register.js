@@ -1,7 +1,7 @@
 import { View, Text, Button,TextInput } from 'react-native'
 import React, {useState} from 'react'
 import { createAccount } from '../logic/apiRegister'
-import { db,auth,app } from '../../../src/firebase/config'
+// import { db,auth,app } from '../../../src/firebase/config'
 import { createUserWithEmailAndPassword, sendEmailVerification } from '@firebase/auth'
 import { async } from '@firebase/util'
 

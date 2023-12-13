@@ -1,43 +1,54 @@
-import React, {useEffect, useMemo, useReducer} from 'react'
+import React, {useEffect, useState} from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import store from './store/store'
 import { Provider } from 'react-redux';
-import Login from './screens/public/components/Login'
+// import Login from './screens/public/components/Login'
 import Register from './screens/public/components/Register'
-import { AuthContext, authReducer, initialState } from './context/AuthContext';
 import BoardScreen from './screens/auth/components/BoardScreen';
 import FriendsScreen from './screens/auth/components/FriendsScreen';
 import FriendsBoard from './screens/auth/components/FriendsBoard';
 import SettingsScreen from './screens/auth/components/SettingsScreen';
 import PendingScreen from './screens/auth/components/PendingScreen';
 import FriendRequests from './screens/auth/components/FriendRequests';
-import { loadToken,signOutFunc,signInFunc } from './logicApp';
+import LoginFB from './screens/public/LoginFB';
+import {User, onAuthStateChanged} from 'firebase/auth'
+import { FIREBASE_AUTH } from './FIrebaseConfig';
 
 const Stack = createNativeStackNavigator();
 
+const InsideStack = createNativeStackNavigator();
+
+// function InsideLayout(){
+//   return(
+//     <InsideStack.Navigator>
+//       <InsideStack.Screen name="Board" component={BoardScreen}/>
+//       <InsideStack.Screen name="Pending" component={PendingScreen}/>
+//       <InsideStack.Screen name="Settings" component={SettingsScreen}/>
+//       <InsideStack.Screen name="Friends" component={FriendsScreen}/>
+//       <InsideStack.Screen name="FriendsBoard" component={FriendsBoard}/>
+//       <InsideStack.Screen name="Requests" component={FriendRequests}/>
+//     </InsideStack.Navigator>
+//   )
+// }
+
 export default function App(){
-  const [state, dispatch] = useReducer(authReducer, initialState);
+  const [user,setUser] = useState(null)
 
   useEffect(()=>{
-    loadToken(dispatch);
-  },[state.userToken])
+    onAuthStateChanged(FIREBASE_AUTH,(user)=>{
+      setUser(user)
+    })
+  },[])
 
-  const authContext = useMemo(
-    () => ({
-      signIn: (data)=>signInFunc(data,dispatch),
-      signOut: ()=>signOutFunc(dispatch)
-    }),[]
-  );
 
   return (
     <Provider store={store}>
-      <AuthContext.Provider value={authContext}>
         <NavigationContainer>
-          <Stack.Navigator>
-            {state.userToken==null?(
+          <Stack.Navigator initialRouteName='LoginFB'>
+            {!user?(
               <>
-                <Stack.Screen name="Login" component={Login}></Stack.Screen>
+                <Stack.Screen name="LoginFB" component={LoginFB} options={{headerShown:false}}></Stack.Screen>
                 <Stack.Screen name="Register" component={Register}></Stack.Screen>
               </>
              
@@ -53,7 +64,6 @@ export default function App(){
             )}
           </Stack.Navigator>
         </NavigationContainer>
-      </AuthContext.Provider>
     </Provider>
   )
 }
