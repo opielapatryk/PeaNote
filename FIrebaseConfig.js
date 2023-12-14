@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
-import {getAuth} from 'firebase/auth';
+import {getAuth,initializeAuth, getReactNativePersistence} from 'firebase/auth';
 import {getFirestore,collection,getDocs} from 'firebase/firestore';
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDWOzBrX65RdbFdwCTwd-0PsrCfMbhxBmA',
@@ -12,9 +13,13 @@ const firebaseConfig = {
   appId: 'insert yours: 1:1088925346926:ios:aebdec6593dac4f561ca7f',
 };
 
-
 export const FIREBASE_APP = initializeApp(firebaseConfig);
-export const FIREBASE_AUTH = getAuth(FIREBASE_APP);
+
+export const FIREBASE_AUTH = initializeAuth(FIREBASE_APP, {
+  persistence: getReactNativePersistence(ReactNativeAsyncStorage)
+});
+
+// export const FIREBASE_AUTH = getAuth(FIREBASE_APP);
 export const FIREBASE_DB = getFirestore(FIREBASE_APP);
 
 // Get a list of cities from your database

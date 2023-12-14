@@ -12,7 +12,7 @@ import SettingsScreen from './screens/auth/components/SettingsScreen';
 import PendingScreen from './screens/auth/components/PendingScreen';
 import FriendRequests from './screens/auth/components/FriendRequests';
 import LoginFB from './screens/public/LoginFB';
-import {User, onAuthStateChanged} from 'firebase/auth'
+import {User, onAuthStateChanged,sendEmailVerification} from 'firebase/auth'
 import { FIREBASE_AUTH } from './FIrebaseConfig';
 
 const Stack = createNativeStackNavigator();
@@ -38,6 +38,9 @@ export default function App(){
   useEffect(()=>{
     onAuthStateChanged(FIREBASE_AUTH,(user)=>{
       setUser(user)
+      if(user != null && user.emailVerified === false){
+        sendEmailVerification(FIREBASE_AUTH.currentUser)
+      }
     })
   },[])
 

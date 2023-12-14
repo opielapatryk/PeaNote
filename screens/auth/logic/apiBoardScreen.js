@@ -19,7 +19,7 @@ export const fetchNotes = async (dispatch) => {
     
     return result;
   } catch (error) {
-    console.log(error.message);
+    console.log('Cannot fetch notes, check connection with database server');
   }
 };
 

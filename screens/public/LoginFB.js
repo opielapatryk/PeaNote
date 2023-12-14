@@ -13,8 +13,7 @@ const LoginFB = ({navigation}) => {
 
   const signIn = async () =>{
     try {
-        const resp = await signInWithEmailAndPassword(auth,email, password)
-        console.log(resp);
+        await signInWithEmailAndPassword(auth,email, password)
     } catch (error) {
         console.log(error);
     }
@@ -22,8 +21,7 @@ const LoginFB = ({navigation}) => {
 
   const signUp = async () =>{
     try {
-        const resp = await createUserWithEmailAndPassword(auth,email, password)
-        console.log(resp);
+        await createUserWithEmailAndPassword(auth,email, password)
     } catch (error) {
         console.log(error);
     }
