@@ -1,8 +1,10 @@
 import { View,TextInput,Button,Text } from 'react-native'
 import React, {useState} from 'react'
 import { styles } from '../../assets/styles/styles';
-import { FIREBASE_AUTH } from '../../FIrebaseConfig';
+import { FIREBASE_AUTH,FIREBASE_DB } from '../../FIrebaseConfig';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
+
 const LoginFB = ({navigation}) => {
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
@@ -21,7 +23,19 @@ const LoginFB = ({navigation}) => {
 
   const signUp = async () =>{
     try {
-        await createUserWithEmailAndPassword(auth,email, password)
+        const userCredential = await createUserWithEmailAndPassword(auth,email, password)
+        const user = userCredential.user;
+
+        await setDoc(doc(FIREBASE_DB, "users", user.uid), {
+          first_name: first_name,
+          last_name: last_name,
+          email: email,
+          friends: [],
+          friends_requests: [],
+          askBeforeStick: false,
+          stickersOnBoard: [],
+          pending: []
+        });
     } catch (error) {
         console.log(error);
     }

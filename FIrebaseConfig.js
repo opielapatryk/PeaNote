@@ -6,7 +6,7 @@ import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 const firebaseConfig = {
   apiKey: 'AIzaSyDWOzBrX65RdbFdwCTwd-0PsrCfMbhxBmA',
   authDomain: 'stickify-407810.firebaseapp.com',
-  databaseURL: 'https://stickify.firebaseio.com',
+  databaseURL: 'https://stickify-407810.firebaseio.com',
   projectId: 'stickify-407810',
   storageBucket: 'stickify-407810.appspot.com',
   messagingSenderId: 'noreply@stickify-407810.firebaseapp.com',
@@ -22,7 +22,7 @@ export const FIREBASE_AUTH = initializeAuth(FIREBASE_APP, {
 // export const FIREBASE_AUTH = getAuth(FIREBASE_APP);
 export const FIREBASE_DB = getFirestore(FIREBASE_APP);
 
-// Get a list of cities from your database
+// Get a list of users from your database
 // async function getUsers(db) {
 //     const usersCol = collection(db, 'users');
 //     const userSnapshot = await getDocs(usersCol);
