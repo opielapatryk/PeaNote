@@ -4,14 +4,9 @@ import { styles } from '../../assets/styles/styles';
 import { FIREBASE_AUTH,FIREBASE_DB } from '../../FIrebaseConfig';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
-import {
-  GoogleOneTapSignIn,
-  statusCodes,
-  OneTapUser,
-  GoogleSignin,
-} from '@react-native-google-signin/google-signin';
+import { GoogleSignin} from '@react-native-google-signin/google-signin';
 
-const LoginFB = ({navigation}) => {
+const LoginFB = ({route,promptAsync}) => {
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -20,7 +15,6 @@ const LoginFB = ({navigation}) => {
   const auth = FIREBASE_AUTH
   const [myuserInfo,setUserInfo] = useState('');
   const [userError,setUserError] = useState('');
-
 
 
   const signIn = async () =>{
@@ -66,7 +60,17 @@ const LoginFB = ({navigation}) => {
     try {
       await GoogleSignin.hasPlayServices()
       const userInfo = await GoogleSignin.signIn();
-      setUserInfo(userInfo);
+      // await setDoc(doc(FIREBASE_DB, "users", userInfo.user.id), {
+      //   first_name: userInfo.user.givenName,
+      //   last_name: userInfo.user.familyName,
+      //   email: userInfo.user.email,
+      //   friends: [],
+      //   friends_requests: [],
+      //   askBeforeStick: false,
+      //   stickersOnBoard: [],
+      //   pending: []
+      // });
+
     } catch (error) {
       setUserError(error);
     }
@@ -77,6 +81,7 @@ const LoginFB = ({navigation}) => {
     GoogleSignin.revokeAccess()
     GoogleSignin.signOut()
   }
+
   return (
     <View style={styles.container}>
       <TextInput placeholder='first_name' onChangeText={setFirstName} value={first_name}/>
@@ -89,6 +94,7 @@ const LoginFB = ({navigation}) => {
       <Text>{message}</Text>
       <Text>{JSON.stringify(myuserInfo.user)}</Text>
       <Text>{JSON.stringify(userError)}</Text>
+      <Button onPress={() => promptAsync()} title='sign in with google v2'/>
     </View>
   );
 }
