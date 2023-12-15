@@ -15,8 +15,10 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
+    "plugins": ["@react-native-google-signin/google-signin"],
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
@@ -25,7 +27,6 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
-    },
-    "plugins": ["@logrocket/react-native"]
+    }
   }
 }
