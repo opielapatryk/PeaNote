@@ -12,7 +12,7 @@ import SettingsScreen from './screens/auth/components/SettingsScreen';
 import PendingScreen from './screens/auth/components/PendingScreen';
 import FriendRequests from './screens/auth/components/FriendRequests';
 import LoginFB from './screens/public/LoginFB';
-import {onAuthStateChanged,GoogleAuthProvider,signInWithCredential} from 'firebase/auth'
+import {onAuthStateChanged,GoogleAuthProvider,signInWithCredential,sendEmailVerification} from 'firebase/auth'
 import { FIREBASE_AUTH } from './FIrebaseConfig';
 import * as Google from "expo-auth-session/providers/google";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -37,60 +37,99 @@ WebBrowser.maybeCompleteAuthSession();
 // }
 
 export default function App(){
-  // const [user,setUser] = useState(null)
-  const [userInfo, setUserInfo] = useState(null);
 
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    iosClientId: "1088925346926-3e883fbcli5qkc14vibgq3c2i3rl1735.apps.googleusercontent.com",
-  });
-
+  // const [userInfo,setUserInfo] = useState(null)
   // useEffect(()=>{
-  //   onAuthStateChanged(FIREBASE_AUTH,(user)=>{
-  //     setUser(user)
-  //     if(user != null && user.emailVerified === false){
-  //       sendEmailVerification(FIREBASE_AUTH.currentUser)
+  //   const getUser = async ()=>{
+  //     const userinfo = await AsyncStorage.getItem("@user")
+  //     setUserInfo(userinfo)
+  //   }
+  //   getUser()
+
+  //   onAuthStateChanged(FIREBASE_AUTH, async (user) => {
+  //     if (user) {
+  //       const uid = user.uid;
+  //       await AsyncStorage.setItem("@userId", uid)
+  //       const userId = await AsyncStorage.getItem("@userId")
+  //       console.log('FIREBASE userID: ' + userId);
+  //     } else {
+  //       await AsyncStorage.removeItem("@userId")
+  //       const userId = await AsyncStorage.getItem("@userId")
+  //       console.log('FIREBASE userID: ' + userId);
   //     }
-  //   })
+  //   });
   // },[])
+  const [user,setUser] = useState(null)
+  const [userId, setUserId] = useState(null)
 
   useEffect(()=>{
-    handlesigninwithgoogle()
-    console.log('use effect, response: ', response);
-  },[response])
-
-  async function handlesigninwithgoogle(){
-    console.log('handling signin with google');
-    const user = await AsyncStorage.getItem("@user")
-    console.log('user: ', user);
-    if(!user){
-      if(response?.type === 'success'){
-        console.log('resp.auth.token: ', response.authentication.accessToken);
-        await getUserInfo(response.authentication.accessToken, promptAsync)
-      }
-    }else{
-      setUserInfo(JSON.parse(user))
-      console.log('json.parse(user): ', JSON.parse(user));
-    }
-  }
-
-  const getUserInfo = async (token, promptAsync)=>{
-    console.log('get user info...');
-    if (!token) return
-    console.log('token: ', token);
-    try {
-      const response = await fetch(
-        "https://www.googleapis.com/userinfo/v2/me",{
-          headers:{Authorization: `Bearer ${token}`},
+    const getData = async()=>{
+      const userId = await AsyncStorage.getItem("@userId")
+      setUserId(userId)
+      onAuthStateChanged(FIREBASE_AUTH,(user)=>{
+        setUser(user)
+        if(user != null && user.emailVerified === false){
+          sendEmailVerification(FIREBASE_AUTH.currentUser)
         }
-      )
-      console.log('resp: ', response.json());
-      const user = await response.json()
-      await AsyncStorage.setItem("@user", JSON.stringify(user))
-      setUserInfo(user)
-    } catch (error) {
-      console.log('get user info error: ', error);
+      })
     }
-  }
+    getData()
+    console.log('userId: ', userId);
+  },[])
+  // const configureGoogleSignIn = () =>{
+  //   GoogleSignin.configure({
+  //     webClientId:"1088925346926-il03fpvr7b6q4qb5llrofkafd7c292dr.apps.googleusercontent.com",
+  //     iosClientId:"1088925346926-3e883fbcli5qkc14vibgq3c2i3rl1735.apps.googleusercontent.com"
+  //   })
+  // }
+
+  // useEffect(()=>{
+  //   configureGoogleSignIn()
+  // })
+  // const [userInfo, setUserInfo] = useState(null);
+
+  // const [request, response, promptAsync] = Google.useAuthRequest({
+  //   iosClientId: "1088925346926-3e883fbcli5qkc14vibgq3c2i3rl1735.apps.googleusercontent.com",
+  //   webClientId:"1088925346926-il03fpvr7b6q4qb5llrofkafd7c292dr.apps.googleusercontent.com",
+  // });
+  // useEffect(()=>{
+  //   handlesigninwithgoogle()
+  //   console.log('use effect, response: ', response);
+  // },[response])
+
+  // async function handlesigninwithgoogle(){
+  //   console.log('handling signin with google');
+  //   const user = await AsyncStorage.getItem("@user")
+  //   console.log('user: ', user);
+  //   if(!user){
+  //     if(response?.type === 'success'){
+  //       console.log('resp.auth.token: ', response.authentication.accessToken);
+  //       await getUserInfo(response.authentication.accessToken, promptAsync)
+  //     }
+  //   }else{
+  //     setUserInfo(JSON.parse(user))
+  //     console.log('json.parse(user): ', JSON.parse(user));
+  //   }
+  // }
+
+  // const getUserInfo = async (token, promptAsync)=>{
+  //   console.log('get user info...');
+  //   if (!token) return
+  //   console.log('token: ', token);
+  //   try {
+  //     const response = await fetch(
+  //       "https://www.googleapis.com/userinfo/v2/me",{
+  //         headers:{Authorization: `Bearer ${token}`},
+  //       }
+  //     )
+  //     console.log('resp: ', response.json());
+  //     const user = await response.json()
+  //     await AsyncStorage.setItem("@user", JSON.stringify(user))
+  //     setUserInfo(user)
+  //   } catch (error) {
+  //     console.log('get user info error: ', error);
+  //   }
+  // }
 
   // useEffect(() => {
   //   if (response?.type === "success") {
@@ -132,17 +171,11 @@ export default function App(){
     <Provider store={store}>
         <NavigationContainer>
           <Stack.Navigator initialRouteName='LoginFB'>
-            {!userInfo?(
+            {!userId?(
               <>
-                <Stack.Screen
-                name="LoginFB"
-                options={{ promptAsync: () => promptAsync() }}
-              >
-                {(props) => <LoginFB {...props} promptAsync={promptAsync}  />}
-              </Stack.Screen>
+                <Stack.Screen name="LoginFB" component={LoginFB}></Stack.Screen>
                 <Stack.Screen name="Register" component={Register}></Stack.Screen>
               </>
-             
             ):(
               <>
                 <Stack.Screen name="Board" component={BoardScreen}></Stack.Screen>

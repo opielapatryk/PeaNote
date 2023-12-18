@@ -17,7 +17,7 @@
     "ios": {
       "supportsTablet": true,
       "googleServicesFile": "./GoogleService-Info.plist",
-      "bundleIdentifier": "com.patrykopiela.StickyInReactNative"
+      "bundleIdentifier": "host.exp.exponent"
     },
     "plugins": [
       "@react-native-google-signin/google-signin"

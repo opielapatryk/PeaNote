@@ -5,6 +5,7 @@ import { FIREBASE_AUTH,FIREBASE_DB } from '../../FIrebaseConfig';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { GoogleSignin} from '@react-native-google-signin/google-signin';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginFB = ({route,promptAsync}) => {
   const [first_name, setFirstName] = useState('');
@@ -13,7 +14,7 @@ const LoginFB = ({route,promptAsync}) => {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const auth = FIREBASE_AUTH
-  const [myuserInfo,setUserInfo] = useState('');
+  const [myuserInfo,setUserInfo] = useState();
   const [userError,setUserError] = useState('');
 
 
@@ -60,21 +61,34 @@ const LoginFB = ({route,promptAsync}) => {
     try {
       await GoogleSignin.hasPlayServices()
       const userInfo = await GoogleSignin.signIn();
-      // await setDoc(doc(FIREBASE_DB, "users", userInfo.user.id), {
-      //   first_name: userInfo.user.givenName,
-      //   last_name: userInfo.user.familyName,
-      //   email: userInfo.user.email,
-      //   friends: [],
-      //   friends_requests: [],
-      //   askBeforeStick: false,
-      //   stickersOnBoard: [],
-      //   pending: []
-      // });
+      await AsyncStorage.setItem("@userEmail", JSON.stringify(userInfo.user.email))
+      await AsyncStorage.setItem("@userFamilyName", JSON.stringify(userInfo.user.familyName))
+      await AsyncStorage.setItem("@userGivenName", JSON.stringify(userInfo.user.givenName))
+      await AsyncStorage.setItem("@userId", JSON.stringify(userInfo.user.id))
+      await AsyncStorage.setItem("@userName", JSON.stringify(userInfo.user.name))
+      await AsyncStorage.setItem("@idToken", JSON.stringify(userInfo.idToken))
+      const userId = await AsyncStorage.getItem("@userId")
+      const givenName = await AsyncStorage.getItem("@userGivenName")
+      const familyName = await AsyncStorage.getItem("@userFamilyName")
+      const userEmail = await AsyncStorage.getItem("@userEmail")
 
+      await setDoc(doc(FIREBASE_DB, "users", userId), {
+        first_name: givenName,
+        last_name: familyName,
+        email: userEmail,
+        friends: [],
+        friends_requests: [],
+        askBeforeStick: false,
+        stickersOnBoard: [],
+        pending: []
+      });
+
+      console.log('DOC SET');
     } catch (error) {
       setUserError(error);
     }
   };
+
 
   const logoutGoogle = async () => {
     setUserInfo(undefined)
@@ -92,9 +106,6 @@ const LoginFB = ({route,promptAsync}) => {
       <Button onPress={signUp} title='Create Account' />
       <Button onPress={signInGoogle} title='signInGoogle'/>
       <Text>{message}</Text>
-      <Text>{JSON.stringify(myuserInfo.user)}</Text>
-      <Text>{JSON.stringify(userError)}</Text>
-      <Button onPress={() => promptAsync()} title='sign in with google v2'/>
     </View>
   );
 }
