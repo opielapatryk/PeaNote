@@ -1,81 +1,62 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState,useMemo, useReducer} from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import store from './store/store'
 import { Provider } from 'react-redux';
-// import Login from './screens/public/components/Login'
+import LoginFB from './screens/public/LoginFB'
 import Register from './screens/public/components/Register'
+import { AuthContext, authReducer, initialState } from './context/AuthContext';
 import BoardScreen from './screens/auth/components/BoardScreen';
 import FriendsScreen from './screens/auth/components/FriendsScreen';
 import FriendsBoard from './screens/auth/components/FriendsBoard';
 import SettingsScreen from './screens/auth/components/SettingsScreen';
 import PendingScreen from './screens/auth/components/PendingScreen';
 import FriendRequests from './screens/auth/components/FriendRequests';
-import LoginFB from './screens/public/LoginFB';
-import {onAuthStateChanged,GoogleAuthProvider,signInWithCredential,sendEmailVerification} from 'firebase/auth'
-import { FIREBASE_AUTH } from './FIrebaseConfig';
-import * as Google from "expo-auth-session/providers/google";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as WebBrowser from "expo-web-browser";
+import { loadToken,signOutFunc,signInFunc } from './logicApp';
 
 const Stack = createNativeStackNavigator();
 
-const InsideStack = createNativeStackNavigator();
-
-WebBrowser.maybeCompleteAuthSession();
-// function InsideLayout(){
-//   return(
-//     <InsideStack.Navigator>
-//       <InsideStack.Screen name="Board" component={BoardScreen}/>
-//       <InsideStack.Screen name="Pending" component={PendingScreen}/>
-//       <InsideStack.Screen name="Settings" component={SettingsScreen}/>
-//       <InsideStack.Screen name="Friends" component={FriendsScreen}/>
-//       <InsideStack.Screen name="FriendsBoard" component={FriendsBoard}/>
-//       <InsideStack.Screen name="Requests" component={FriendRequests}/>
-//     </InsideStack.Navigator>
-//   )
-// }
-
 export default function App(){
-
-  // const [userInfo,setUserInfo] = useState(null)
-  // useEffect(()=>{
-  //   const getUser = async ()=>{
-  //     const userinfo = await AsyncStorage.getItem("@user")
-  //     setUserInfo(userinfo)
-  //   }
-  //   getUser()
-
-  //   onAuthStateChanged(FIREBASE_AUTH, async (user) => {
-  //     if (user) {
-  //       const uid = user.uid;
-  //       await AsyncStorage.setItem("@userId", uid)
-  //       const userId = await AsyncStorage.getItem("@userId")
-  //       console.log('FIREBASE userID: ' + userId);
-  //     } else {
-  //       await AsyncStorage.removeItem("@userId")
-  //       const userId = await AsyncStorage.getItem("@userId")
-  //       console.log('FIREBASE userID: ' + userId);
-  //     }
-  //   });
-  // },[])
-  const [user,setUser] = useState(null)
-  const [userId, setUserId] = useState(null)
+  const [state, dispatch] = useReducer(authReducer, initialState);
 
   useEffect(()=>{
-    const getData = async()=>{
-      const userId = await AsyncStorage.getItem("@userId")
-      setUserId(userId)
-      onAuthStateChanged(FIREBASE_AUTH,(user)=>{
-        setUser(user)
-        if(user != null && user.emailVerified === false){
-          sendEmailVerification(FIREBASE_AUTH.currentUser)
-        }
-      })
-    }
-    getData()
-    console.log('userId: ', userId);
-  },[])
+    loadToken(dispatch);
+  },[state.userToken])
+
+  const authContext = useMemo(
+    () => ({
+      signIn: ()=>signInFunc(dispatch),
+      signOut: ()=>signOutFunc(dispatch)
+    }),[]
+  );
+
+  // const authContext = useMemo(
+  //   () => ({
+  //     signIn: (data)=>signInFunc(data,dispatch),
+  //     signOut: ()=>signOutFunc(dispatch)
+  //   }),[]
+  // );
+  /////////////////////////////////////////////////////////
+  
+  // const [user,setUser] = useState(null)
+  // const [userId, setUserId] = useState(null)
+
+  // useEffect(()=>{
+  //   console.log('userId before get item: ' + userId);
+  //   const getData = async()=>{
+  //     let userId = await AsyncStorage.getItem("@userId")
+  //     setUserId(userId)
+  //     // onAuthStateChanged(FIREBASE_AUTH,(user)=>{
+  //     //   setUser(user)
+  //     //   console.log('user: ',user)
+  //     //   if(user != null && user.emailVerified === false){
+  //     //     sendEmailVerification(FIREBASE_AUTH.currentUser)
+  //     //   }
+  //     // })
+  //   }
+  //   getData()
+  //   console.log('userId after get item: ' + userId);
+  // },[])
   // const configureGoogleSignIn = () =>{
   //   GoogleSignin.configure({
   //     webClientId:"1088925346926-il03fpvr7b6q4qb5llrofkafd7c292dr.apps.googleusercontent.com",
@@ -169,25 +150,28 @@ export default function App(){
 
   return (
     <Provider store={store}>
+      <AuthContext.Provider value={authContext}>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName='LoginFB'>
-            {!userId?(
+          <Stack.Navigator>
+            {state.userToken==null?(
               <>
                 <Stack.Screen name="LoginFB" component={LoginFB}></Stack.Screen>
                 <Stack.Screen name="Register" component={Register}></Stack.Screen>
               </>
+             
             ):(
               <>
                 <Stack.Screen name="Board" component={BoardScreen}></Stack.Screen>
                 <Stack.Screen name="Pending" component={PendingScreen}></Stack.Screen>
                 <Stack.Screen name="Settings" component={SettingsScreen}></Stack.Screen>
-                <Stack.Screen name="Friends" component={FriendsScreen} initialParams={{ userId:'12'}}></Stack.Screen>
+                <Stack.Screen name="Friends" component={FriendsScreen}initialParams={{ userId:'12'}}></Stack.Screen>
                 <Stack.Screen name="FriendsBoard" component={FriendsBoard}></Stack.Screen>
                 <Stack.Screen name="Requests" component={FriendRequests}></Stack.Screen>
               </>
             )}
           </Stack.Navigator>
         </NavigationContainer>
+      </AuthContext.Provider>
     </Provider>
   )
 }
