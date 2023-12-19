@@ -14,6 +14,7 @@ const LoginFB = () => {
   const [message, setMessage] = useState('');
   const auth = FIREBASE_AUTH
 
+  // SIGN IN WITH EMAIL AND PASSWORD
   const signInFirebase = async () =>{
     try {
         await signInWithEmailAndPassword(auth,email, password)

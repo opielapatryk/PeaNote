@@ -57,6 +57,11 @@ target 'StickyInReactNative' do
     :flipper_configuration => flipper_config
   )
 
+  pod 'Firebase', :modular_headers => true
+  pod 'FirebaseCoreInternal', :modular_headers => true
+  pod 'GoogleUtilities', :modular_headers => true
+  pod 'FirebaseCore', :modular_headers => true
+  
   post_install do |installer|
     react_native_post_install(
       installer,

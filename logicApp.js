@@ -1,7 +1,11 @@
 import * as SecureStore from 'expo-secure-store';
-import axios from 'axios';
 import { fetchNotes } from './screens/auth/logic/apiBoardScreen';
-import { GoogleSignin} from '@react-native-google-signin/google-signin';
+import { GoogleSignin,statusCodes} from '@react-native-google-signin/google-signin';
+import { FIREBASE_DB,FIREBASE_AUTH} from './FIrebaseConfig';
+import { doc, setDoc } from 'firebase/firestore';
+import { onAuthStateChanged,signInWithPopup ,GoogleAuthProvider} from "firebase/auth";
+import auth from '@react-native-firebase/auth';
+
 
 export const loadToken = async (dispatch) => {
     let userToken;
@@ -9,29 +13,21 @@ export const loadToken = async (dispatch) => {
         userToken = await SecureStore.getItemAsync("userToken");
         userId = await SecureStore.getItemAsync("userId");
     } catch (error) {
-        console.error("Error loading token:", error);
+        return error
     }
     dispatch({ type: 'RESTORE_TOKEN', token: userToken,userId:userId });
 };
 
 export const signOutFunc = async (dispatch) => {
     try {
-      // const response = await axios.post('http://127.0.0.1:8000/custom_logout', {
-      //   'Content-Type': 'application/json',
-      //   'Authorization': `Token ${SecureStore.getItemAsync('userToken')}`,
-      // });
-
-      console.log("Logout successful ");
       await SecureStore.deleteItemAsync('userToken');
       await SecureStore.deleteItemAsync('userId');
       GoogleSignin.revokeAccess()
       GoogleSignin.signOut()
 
       dispatch({ type: 'SIGN_OUT' });
-
-      // return response;
     } catch (error) {
-      console.error("Logout error:", error);
+      return error
     }
   };
 
@@ -43,16 +39,28 @@ export const signOutFunc = async (dispatch) => {
       })
       await GoogleSignin.hasPlayServices()
       const userInfo = await GoogleSignin.signIn();
-      let userToken = await SecureStore.setItemAsync("userToken", JSON.stringify(userInfo.idToken))
-      
-      userIdString = String(userInfo.user.id);
-      await SecureStore.setItemAsync('userId', userIdString);
-      userId = await SecureStore.getItemAsync('userId');
+      const googleCredential = auth.GoogleAuthProvider.credential(userInfo.idToken);
+      await SecureStore.setItemAsync("userToken", JSON.stringify(userInfo.idToken))
+      await SecureStore.setItemAsync('userId', JSON.stringify(userInfo.user.id));
+      await dispatch({ type: 'SIGN_IN', token: userInfo.idToken, userId: userInfo.user.id });
 
-      dispatch({ type: 'SIGN_IN', token: userToken, userId: userId });
-
+      try {
+        await setDoc(doc(FIREBASE_DB, "users", userInfo.idToken), {
+          first_name: 'JSON.stringify(userInfo.user.givenName)',
+          last_name: 'JSON.stringify(userInfo.user.familyName)',
+          email: 'JSON.stringify(userInfo.user.email)',
+          friends: [],
+          friends_requests: [],
+          askBeforeStick: false,
+          stickersOnBoard: [],
+          pending: []
+        });
+      } catch (error) {
+        console.error('Error writing to Firestore:', error);
+        throw error;
+      }
+      return auth().signInWithCredential(googleCredential);
     } catch (e) {
-      console.log("Login error: " + e);
       return e;
     }
   };
