@@ -24,6 +24,8 @@ export const signOutFunc = async (dispatch) => {
       console.log("Logout successful ");
       await SecureStore.deleteItemAsync('userToken');
       await SecureStore.deleteItemAsync('userId');
+      GoogleSignin.revokeAccess()
+      GoogleSignin.signOut()
 
       dispatch({ type: 'SIGN_OUT' });
 
