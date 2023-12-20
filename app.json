@@ -20,6 +20,7 @@
       "bundleIdentifier": "host.exp.exponent"
     },
     "plugins": [
+      "@react-native-firebase/app",
       "@react-native-google-signin/google-signin"
     ],
     "android": {
@@ -31,6 +32,11 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5b223591-2e6d-4a18-b069-7e46b1ec3db4"
+      }
     }
   }
 }
