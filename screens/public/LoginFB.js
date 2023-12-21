@@ -1,10 +1,11 @@
 import { View,TextInput,Button,Text } from 'react-native'
-import React, {useState,useContext} from 'react'
+import React, {useState} from 'react'
 import { styles } from '../../assets/styles/styles';
-import { FIREBASE_AUTH,FIREBASE_DB } from '../../FIrebaseConfig';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
-import { AuthContext } from '../../context/AuthContext';
+import { GoogleSignin,GoogleSigninButton} from '@react-native-google-signin/google-signin';
+import auth, { firebase } from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+
 
 const LoginFB = () => {
   const [first_name, setFirstName] = useState('');
@@ -12,12 +13,10 @@ const LoginFB = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const auth = FIREBASE_AUTH
 
-  // SIGN IN WITH EMAIL AND PASSWORD
-  const signInFirebase = async () =>{
+  const signInFirebase = () =>{
     try {
-        await signInWithEmailAndPassword(auth,email, password)
+        auth().signInWithEmailAndPassword(email,password)
     } catch (error) {
         console.log(error);
     }
@@ -25,9 +24,12 @@ const LoginFB = () => {
 
   const signUpFirebase = async () =>{
     try {
-        const userCredential = await createUserWithEmailAndPassword(auth,email, password)
-        const user = userCredential.user;
-        await setDoc(doc(FIREBASE_DB, "users", user.uid), {
+      const user = await auth().createUserWithEmailAndPassword(email, password);
+      await user.user.sendEmailVerification();
+      if(user.additionalUserInfo.isNewUser){
+        firestore()
+        .collection('users')
+        .add({
           first_name: first_name,
           last_name: last_name,
           email: email,
@@ -36,13 +38,43 @@ const LoginFB = () => {
           askBeforeStick: false,
           stickersOnBoard: [],
           pending: []
-        });
+        })
+        .then(() => {
+          console.log('User added!');
+        })
+      }
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
   }
 
-  const { signIn } = useContext(AuthContext);
+  const signIn = async ()=>{
+    const {idToken} = await GoogleSignin.signIn()
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken)
+    const user_sign_in = auth().signInWithCredential(googleCredential)
+    user_sign_in.then((user)=>{
+      if(user.additionalUserInfo.isNewUser){
+        firestore()
+        .collection('users')
+        .add({
+          first_name: user.additionalUserInfo.profile.given_name,
+          last_name: user.additionalUserInfo.profile.family_name,
+          email: user.user.email,
+          friends: [],
+          friends_requests: [],
+          askBeforeStick: false,
+          stickersOnBoard: [],
+          pending: []
+        })
+        .then(() => {
+          console.log('User added!');
+        })
+      }
+    })
+    .catch((error) => {
+      console.log('eror: ',error);
+    })
+  }
 
   return (
     <View style={styles.container}>
@@ -52,7 +84,7 @@ const LoginFB = () => {
       <TextInput placeholder='password' secureTextEntry onChangeText={setPassword} value={password}/>   
       <Button onPress={signInFirebase} title='sign in' />
       <Button onPress={signUpFirebase} title='Create Account' />
-      <Button onPress={signIn} title='signInGoogle'/>
+      <GoogleSigninButton onPress={signIn} style={{width:300,height:50}}/>
       <Text>{message}</Text>
     </View>
   );

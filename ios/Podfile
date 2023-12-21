@@ -41,6 +41,8 @@ target 'StickyInReactNative' do
   use_expo_modules!
   config = use_native_modules!
 
+  use_frameworks! :linkage => :static
+  $RNFirebaseAsStaticFramework = true
   use_frameworks! :linkage => podfile_properties['ios.useFrameworks'].to_sym if podfile_properties['ios.useFrameworks']
   use_frameworks! :linkage => ENV['USE_FRAMEWORKS'].to_sym if ENV['USE_FRAMEWORKS']
 
@@ -56,6 +58,7 @@ target 'StickyInReactNative' do
     # Note that if you have use_frameworks! enabled, Flipper will not work if enabled
     :flipper_configuration => flipper_config
   )
+
 
   pod 'Firebase', :modular_headers => true
   pod 'FirebaseCoreInternal', :modular_headers => true
