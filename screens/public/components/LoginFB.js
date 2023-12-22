@@ -1,9 +1,8 @@
 import { View,TextInput,Button,Text } from 'react-native'
 import React, {useState} from 'react'
-import { styles } from '../../assets/styles/styles';
-import { doc, setDoc } from 'firebase/firestore';
+import { styles } from '../../../assets/styles/styles';
 import { GoogleSignin,GoogleSigninButton} from '@react-native-google-signin/google-signin';
-import auth, { firebase } from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 
@@ -13,38 +12,47 @@ const LoginFB = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const [createAccount,setCreateAccount] = useState(false);
 
   const signInFirebase = () =>{
-    try {
+    if(createAccount){
+      setCreateAccount(false)
+    }else{
+      try {
         auth().signInWithEmailAndPassword(email,password)
-    } catch (error) {
-        console.log(error);
+      } catch (error) {
+          console.log(error);
+      }
     }
   }
 
   const signUpFirebase = async () =>{
-    try {
-      const user = await auth().createUserWithEmailAndPassword(email, password);
-      await user.user.sendEmailVerification();
-      if(user.additionalUserInfo.isNewUser){
-        firestore()
-        .collection('users')
-        .add({
-          first_name: first_name,
-          last_name: last_name,
-          email: email,
-          friends: [],
-          friends_requests: [],
-          askBeforeStick: false,
-          stickersOnBoard: [],
-          pending: []
-        })
-        .then(() => {
-          console.log('User added!');
-        })
+    if(createAccount){
+      try {
+        const user = await auth().createUserWithEmailAndPassword(email, password);
+        await user.user.sendEmailVerification();
+        if(user.additionalUserInfo.isNewUser){
+          firestore()
+          .collection('users')
+          .add({
+            first_name: first_name,
+            last_name: last_name,
+            email: email,
+            friends: [],
+            friends_requests: [],
+            askBeforeStick: false,
+            stickersOnBoard: [],
+            pending: []
+          })
+          .then(() => {
+            console.log('User added!');
+          })
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
+    }else{
+      setCreateAccount(true)
     }
   }
 
@@ -53,6 +61,7 @@ const LoginFB = () => {
     const googleCredential = auth.GoogleAuthProvider.credential(idToken)
     const user_sign_in = auth().signInWithCredential(googleCredential)
     user_sign_in.then((user)=>{
+      console.log(user);
       if(user.additionalUserInfo.isNewUser){
         firestore()
         .collection('users')
@@ -75,11 +84,12 @@ const LoginFB = () => {
       console.log('eror: ',error);
     })
   }
-
   return (
     <View style={styles.container}>
-      <TextInput placeholder='first_name' onChangeText={setFirstName} value={first_name}/>
-      <TextInput placeholder='last_name' onChangeText={setLastName} value={last_name}/>
+      {createAccount && <>
+        <TextInput placeholder='first_name' onChangeText={setFirstName} value={first_name}/>
+        <TextInput placeholder='last_name' onChangeText={setLastName} value={last_name}/>
+      </>}
       <TextInput placeholder='email' onChangeText={setEmail} value={email}/>
       <TextInput placeholder='password' secureTextEntry onChangeText={setPassword} value={password}/>   
       <Button onPress={signInFirebase} title='sign in' />

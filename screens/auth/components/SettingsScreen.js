@@ -6,7 +6,6 @@ import {checkIsAskBeforeStickingNoteFlagOff,deleteAccount,changePassword,askBefo
 import { styles } from '../../../assets/styles/styles';
 
 const SettingsScreen = () => {
-  const { signOut } = useContext(AuthContext);
   const { notes } = useSelector((state) => state.board);
   const dispatchRedux = useDispatch();
   const [message, setMessage] = useState('');

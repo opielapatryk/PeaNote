@@ -3,16 +3,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import store from './store/store'
 import { Provider } from 'react-redux';
-import LoginFB from './screens/public/LoginFB'
-import Register from './screens/public/components/Register'
+import LoginFB from './screens/public/components/LoginFB'
 import BoardScreen from './screens/auth/components/BoardScreen';
 import FriendsScreen from './screens/auth/components/FriendsScreen';
 import FriendsBoard from './screens/auth/components/FriendsBoard';
 import SettingsScreen from './screens/auth/components/SettingsScreen';
 import PendingScreen from './screens/auth/components/PendingScreen';
 import FriendRequests from './screens/auth/components/FriendRequests';
-import { onAuthStateChanged, sendEmailVerification} from "firebase/auth";
-import { FIREBASE_AUTH } from './FIrebaseConfig';
 import * as SecureStore from 'expo-secure-store';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin} from '@react-native-google-signin/google-signin';
@@ -48,8 +45,7 @@ export default function App(){
           <Stack.Navigator>
             {!user?(
               <>
-                <Stack.Screen name="LoginFB" component={LoginFB}></Stack.Screen>
-                <Stack.Screen name="Register" component={Register}></Stack.Screen>
+                <Stack.Screen name="LoginFB" component={LoginFB} screenOptions={{headerShown:false}}></Stack.Screen>
               </>
              
             ):(

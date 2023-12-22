@@ -5,6 +5,7 @@ import { useDispatch, useSelector} from 'react-redux';
 import {styles} from '../../../assets/styles/styles';
 import Menu from '../../../components/Menu'
 import { fetchNotes, checkThenChangeInfo} from '../logic/apiBoardScreen';
+
 const BoardScreen = ({navigation}) => {
     const {notes} = useSelector((state) => state.board);
     const dispatch = useDispatch()
