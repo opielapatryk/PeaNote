@@ -17,15 +17,16 @@ const FriendRequests = ({ navigation }) => {
       const renderFriends = ({item,index}) =>{
         return (
             <Animated.View style={{ overflow: 'hidden', maxHeight: animatedValues[index] }}>
-                <Button title={String(item.email)} onPress={()=>approveFriend(item.id,index,animatedValues)}/>
+                <Button title={String(item)} onPress={()=>approveFriend(item.id,index,animatedValues)}/>
                 <Pressable onPress={()=>removeReq(item.id,index,animatedValues)}>
                     <FontAwesome5 name="trash-alt" size={24} color="black" />
                 </Pressable>
             </Animated.View>
         )
       }
+      const keyExtractor = (friend, index) => friend.id || index.toString(); // Use friend.id if available, otherwise use index as a fallback
   return (
-    <FlatList data={friends} renderItem={renderFriends} keyExtractor={(friend) => friend.id}/>
+    <FlatList data={friends} renderItem={renderFriends} keyExtractor={keyExtractor}/>
   );
 }
 

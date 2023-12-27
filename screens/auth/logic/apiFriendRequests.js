@@ -2,27 +2,39 @@ import * as SecureStore from 'expo-secure-store';
 import axios from 'axios'
 import {Animated,Easing} from 'react-native'
 import { userLink } from '../../../components/Constants';
+import auth, { firebase } from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 export const loadUser = async (setFriends)=>{
     try{
-      currentUserId = await SecureStore.getItemAsync('userId');
-
-      const result = await axios.get(userLink(currentUserId))
-
-      const friendsRequests = result.data.friends_requests.map(url =>
-        axios.get(url)
-        .then(response => response.data)
-      );
-    
-      Promise.all(friendsRequests)
-        .then(friendsData => {
-            setFriends(friendsData);
+      // currentUserId = await SecureStore.getItemAsync('userId');
+      const MY_EMAIL = auth().currentUser.email
+      firestore()
+        .collection('users')
+        .where('email', '==', MY_EMAIL)
+        .get()
+        .then(querySnapshot =>{
+          if (!querySnapshot.empty) {
+            const friendRequests = querySnapshot.docs[0].data().friends_requests;
+            setFriends(friendRequests);
+          }
         })
-        .catch(error => {
-          console.error('Error fetching friends:', error);
-      });
+      // const result = await axios.get(userLink(currentUserId))
+
+      // const friendsRequests = result.data.friends_requests.map(url =>
+      //   axios.get(url)
+      //   .then(response => response.data)
+      // );
+    
+      // Promise.all(friendsRequests)
+      //   .then(friendsData => {
+      //       setFriends(friendsData);
+      //   })
+      //   .catch(error => {
+      //     console.error('Error fetching friends:', error);
+      // });
       
-      return result
+      // return result
     }catch(e){
       console.log(e.message)
     }
