@@ -46,7 +46,11 @@ export const styles = StyleSheet.create({
   },
   menu:{
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  button_two_text: {
+    color:'rgb(0,122,255)',
   },
   modal:{
     flex: 1,

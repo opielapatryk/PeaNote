@@ -24,7 +24,7 @@ const FriendRequests = ({ navigation }) => {
             </Animated.View>
         )
       }
-      const keyExtractor = (friend, index) => friend.id || index.toString(); // Use friend.id if available, otherwise use index as a fallback
+      const keyExtractor = (friend, index) => friend.id || index.toString();
   return (
     <FlatList data={friends} renderItem={renderFriends} keyExtractor={keyExtractor}/>
   );

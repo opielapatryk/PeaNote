@@ -6,8 +6,8 @@ export const signOutAndClearReduxStore = async (notes,dispatch_redux,pendingNote
     try {
         // notes.forEach(sticker => dispatch_redux(removeNote(sticker.id)));
         // pendingNotes.forEach(sticker => dispatch_redux(removePendingNote(sticker.id)));
-        await GoogleSignin.revokeAccess();
         await auth().signOut();
+        await GoogleSignin.revokeAccess();
     } catch (error) {
         console.error(error);
     }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, View } from 'react-native';
+import { Pressable, View,Text } from 'react-native';
 import { styles } from '../assets/styles/styles';
 import { useDispatch, useSelector} from 'react-redux';
 import { signOutAndClearReduxStore } from '../logic/funcMenu';
@@ -10,11 +10,29 @@ export default function menu({ navigation }) {
 
   return (
     <View style={styles.menu}>
-      <Button title='BOARD' />
-      <Button title='PENDING' onPress={()=>navigation.navigate('Pending')}/>
-      <Button title='FRIENDS' onPress={() => navigation.navigate('Friends')}/>
-      <Button title='SETTINGS' onPress={() => navigation.navigate('Settings')}/>
-      <Button onPress={()=>signOutAndClearReduxStore(notes,dispatch_redux,pendingNotes)} title='LOGOUT' />
+      <Pressable>
+        <Text style={styles.button_two_text}>BOARD</Text>
+      </Pressable>
+      <Pressable onPress={()=>navigation.navigate('Pending')}>
+        <Text style={styles.button_two_text}>
+          PENDING
+        </Text>
+      </Pressable>
+      <Pressable onPress={() => navigation.navigate('Friends')}>
+        <Text style={styles.button_two_text}>
+          FRIENDS
+        </Text>
+      </Pressable>
+      <Pressable onPress={() => navigation.navigate('Settings')}>
+        <Text style={styles.button_two_text}>
+          SETTINGS
+        </Text>
+      </Pressable>
+      <Pressable onPress={()=>signOutAndClearReduxStore(notes,dispatch_redux,pendingNotes)}>
+        <Text style={styles.button_two_text}>
+          LOGOUT
+        </Text>
+      </Pressable>
     </View>
   );
 }
