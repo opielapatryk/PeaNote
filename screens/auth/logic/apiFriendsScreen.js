@@ -7,57 +7,32 @@ import firestore from '@react-native-firebase/firestore';
 
 export const searchNewFriend = async (newFriendEmail,setNewFriendID,setdoesEmailExist,setList) => {
     try {
+      const MY_EMAIL = auth().currentUser.email
         // CHECK IS NEWFRIENDEMAIL IS IN YOU FRIENDS LIST
         // IF NOT =>
         // APPEND YOUR EMAIL TO HIS FRIEND REQUESTS LIST
 
-        // const userDocument = firestore().collection('users').doc('ABC');
-        // console.log(auth().currentUser.email)
+        firestore()
+        .collection('users')
+        .where('email', '==', MY_EMAIL)
+        .get()
+        .then(querySnapshot => {
+          if (!querySnapshot.empty) {
+            // User found
+            querySnapshot.forEach(doc => {
+              const user = doc.data();
+              console.log('User found:', user.friends);
+              // ADD TO USER.FRIEND_REUQESTS YOUR NEWFRIENDEMAIL
+            });
+          } else {
+            // User not found
+            console.log('User not found');
+          }
+        })
+        .catch(error => {
+          console.error('Error getting user:', error);
+        });
 
-  //       firestore()
-  // .collection('users')
-  // .where('email', '==', newFriendEmail)
-
-
-        
-  //       // let currentUserId = await SecureStore.getItemAsync('userId');
-  //       let currentUserEmail = auth().currentUser.email
-  //       // const currentUserResult = await axios.get(userLink(currentUserId))
-  //       // setList(JSON.stringify(currentUserResult.data.friends))
-  //       firestore()
-  //       .collection('users')
-  //       .where('email', '==', currentUserEmail)
-  //       .get()
-  //       .then(querySnapshot => {
-  //         if (!querySnapshot.empty) {
-  //           // User found
-  //           querySnapshot.forEach(doc => {
-  //             const user = doc.data();
-  //             console.log('User found:', user.friends);
-  //           });
-  //         } else {
-  //           // User not found
-  //           console.log('User not found');
-  //         }
-  //       })
-  //       .catch(error => {
-  //         console.error('Error getting user:', error);
-  //       });
-        // const result = await axios.get(usersLink())
-
-        // const data = result.data
-
-        // data.every(friend => {
-        //   if (friend.email === newFriendEmail) {
-        //     setdoesEmailExist(true);
-        //     setNewFriendID(friend.id);
-        //     return false; 
-        //   } else {
-        //     setdoesEmailExist(false);
-        //     setNewFriendID(null);
-        //     return true; 
-        //   }
-        // });
     } catch (error) {
       console.log(error.message);
     }
