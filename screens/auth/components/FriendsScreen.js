@@ -1,7 +1,7 @@
 import { Text,ScrollView, Button, TextInput } from 'react-native'
 import React, {useState,useEffect} from 'react'
 import { useFocusEffect } from '@react-navigation/native';
-import {searchNewFriend,addNewFriend,loadUser,getUserId} from '../logic/apiFriendsScreen'
+import {sendFriendRequest,addNewFriend,loadUser,getUserId} from '../logic/apiFriendsScreen'
 
 export const FriendsScreen = ({ navigation }) => {
   const [friends,setFriends] = useState([])
@@ -27,7 +27,7 @@ export const FriendsScreen = ({ navigation }) => {
     <ScrollView>
       <Button title='REQUESTS' onPress={()=>navigation.navigate('Requests')}/>
       <TextInput placeholder='Insert friend email' onChangeText={(newFriendEmail) => setNewFriendEmail(newFriendEmail)} value={newFriendEmail}/>
-      <Button title='SEARCH NEW FRIEND' onPress={()=>searchNewFriend(newFriendEmail,setNewFriendID,setdoesEmailExist,setList)}/>
+      <Button title='SEARCH NEW FRIEND' onPress={()=>sendFriendRequest(newFriendEmail,setNewFriendID,setdoesEmailExist,setList)}/>
       <Text>{message}</Text>
       <Button title={buttonTitle} onPress={()=>addNewFriend(setFriends,newFriendID,friends)}/>
       <Text>Friends:</Text>

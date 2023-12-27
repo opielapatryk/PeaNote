@@ -2,37 +2,56 @@ import axios from 'axios'
 import {userLink,usersLink} from '../../../components/Constants'
 import * as SecureStore from 'expo-secure-store';
 import {removeNote} from '../../../store/notes/boardSlice';
-import auth from '@react-native-firebase/auth';
+import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
-export const searchNewFriend = async (newFriendEmail,setNewFriendID,setdoesEmailExist,setList) => {
+export const sendFriendRequest = async (newFriendEmail,setNewFriendID,setdoesEmailExist,setList) => {
     try {
-      const MY_EMAIL = auth().currentUser.email
-        // CHECK IS NEWFRIENDEMAIL IS IN YOU FRIENDS LIST
-        // IF NOT =>
-        // APPEND YOUR EMAIL TO HIS FRIEND REQUESTS LIST
-
+        const MY_EMAIL = auth().currentUser.email
         firestore()
         .collection('users')
         .where('email', '==', MY_EMAIL)
         .get()
         .then(querySnapshot => {
           if (!querySnapshot.empty) {
-            // User found
             querySnapshot.forEach(doc => {
-              const user = doc.data();
-              console.log('User found:', user.friends);
-              // ADD TO USER.FRIEND_REUQESTS YOUR NEWFRIENDEMAIL
+              console.log(doc.data().friends);
+              if(doc.data().friends.includes(newFriendEmail)){
+                console.log('includes friend');
+              }else{
+                console.log('does not include friend');
+                firestore()
+                .collection('users')
+                .where('email', '==', newFriendEmail)
+                .get()
+                .then(querySnapshot => {
+                  if(!querySnapshot.empty){
+                    querySnapshot.forEach(doc=>{
+                      if(doc.data().friends_requests.includes(MY_EMAIL)){
+                        console.log('request already send')
+                      }else{
+                        firestore()
+                        .collection('users')
+                        .doc(doc.id)
+                        .update({
+                          friends_requests: firebase.firestore.FieldValue.arrayUnion(MY_EMAIL),
+                        })
+                        .then(() => {
+                          console.log('User updated!');
+                        });
+                      }
+                    })
+                  }else{
+                    console.log('error');
+                  }
+                })
+              }
             });
-          } else {
-            // User not found
-            console.log('User not found');
           }
         })
         .catch(error => {
           console.error('Error getting user:', error);
         });
-
     } catch (error) {
       console.log(error.message);
     }
