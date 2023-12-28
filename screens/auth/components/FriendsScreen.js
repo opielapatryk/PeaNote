@@ -11,9 +11,8 @@ export const FriendsScreen = ({ navigation }) => {
   const [doesEmailExist, setdoesEmailExist] = useState(false)
   const [list,setList] = useState([])
   const [firstRender, setFirstRender] = useState(true)
-
+  
   useEffect(() => {
-    console.log(newFriendEmail);
     getUserEmail(setdoesEmailExist,doesEmailExist,firstRender,setMessage,setButtonTitle,setFirstRender,list,newFriendEmail)
   }, [newFriendEmail]);
 

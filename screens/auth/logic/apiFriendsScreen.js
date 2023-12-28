@@ -129,39 +129,42 @@ export const sendFriendRequest = async (newFriendEmail,setNewFriendID,setdoesEma
   ) => {
     try {
       setdoesEmailExist(false);
-  
       const MY_EMAIL = auth().currentUser.email;
-      console.log(MY_EMAIL);
   
-      const querySnapshot = await firestore()
+      const myQuerySnapshot = await firestore()
+        .collection('users')
+        .where('email', '==', MY_EMAIL)
+        .get();
+
+        const querySnapshot = await firestore()
         .collection('users')
         .where('email', '==', newFriendEmail)
         .get();
-  
-      if (!querySnapshot.empty) {
-        setdoesEmailExist(true);
-        
-  
-        if (newFriendEmail === MY_EMAIL) {
-          setMessage('You cannot add yourself to friends!..');
-          setButtonTitle('');
-        } else if (list.includes(newFriendEmail)) {
-          setMessage('You are already friends!..');
-          setButtonTitle('');
-        } else {
-          setMessage('');
-          setButtonTitle('ADD');
-        }
-      } else {
-        if (!firstRender) {
-          setMessage('This user does not exist!..');
-          setButtonTitle('');
-        }
-        if (!firstRender && newFriendEmail === ''){
-          setMessage('');
-        } 
-        setFirstRender(false);
-      }
+
+        myQuerySnapshot.forEach(doc=>{
+          if(doc.data().friends.includes(newFriendEmail)){
+            setMessage('You are already friends!..');
+            setButtonTitle('');
+          }else if (!querySnapshot.empty) {
+            setdoesEmailExist(true);
+            if (newFriendEmail === MY_EMAIL) {
+              setMessage('You cannot add yourself to friends!..');
+              setButtonTitle('');
+            } else {
+              setMessage('');
+              setButtonTitle('ADD');
+            }
+          } else {
+            if (!firstRender) {
+              setMessage('This user does not exist!..');
+              setButtonTitle('');
+            }
+            if (!firstRender && newFriendEmail === ''){
+              setMessage('');
+            } 
+            setFirstRender(false);
+          }
+        })  
     } catch (error) {
       console.error('Error checking email existence:', error);
     }
