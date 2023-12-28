@@ -3,9 +3,11 @@ import axios from 'axios';
 import {userLink,stickerLink} from '../../../components/Constants'
 import {removePendingNote,changePendingInfo, addNote} from '../../../store/notes/boardSlice';
 import { Animated, Easing } from 'react-native';
+import auth, { firebase } from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 export async function sendNoteToBoard(stickerID,stickerContent,dispatch,index,animatedValues){
-  
+  const MY_EMAIL = auth().currentUser.email
 
   const animate = (index,addNote,removeNote) => {
     Animated.timing(animatedValues[index], {
@@ -23,32 +25,76 @@ export async function sendNoteToBoard(stickerID,stickerContent,dispatch,index,an
     });
   };
 
-  const currentUserId = await SecureStore.getItemAsync('userId');
     try {
-        const resp = await axios.get(userLink(currentUserId))
+      // TAKE STICKER CONTENT AND CREATOR 
+      let pending
 
-        let stickersOnBoard = resp.data.stickersOnBoard;
-        let pending = resp.data.pending;
+      const result = await firestore()
+      .collection('users')
+      .where('email', '==', MY_EMAIL)
+      .get();
+  
+      result.forEach(doc=>{
+        pending = doc.data().pending
+      })
 
-        stickersOnBoard.push(stickerLink(stickerID))
+      // ITERATE OVER PENDING NOTES 
 
-        let newPendingArr = await pending.filter(sticker => sticker != stickerLink(stickerID))
-
-        
-
-        const patchStickersOnBoardResp = await axios.patch(userLink(currentUserId),{
-          'stickersOnBoard': stickersOnBoard
-        })
-
-        const patchPendingStickersResp = await axios.patch(userLink(currentUserId),{
-          'pending': newPendingArr
-        })
-
-        if(patchStickersOnBoardResp.status === 200 && patchPendingStickersResp.status === 200){
-            animate(index,()=>dispatch(addNote({ id: stickerID, text: stickerContent, isInfo: false })),()=>dispatch(removePendingNote(stickerID)));
+      pending.forEach((sticker,index) => {
+        index = index + 1
+        if(index === stickerID){
+          creator = sticker.creator
+          content = sticker.content
         }
+      })
+
+      // ADD THIS NOTE TO NOTESONBOARD
+
+      firestore()
+      .collection('users')
+      .where('email', '==', MY_EMAIL)
+      .get()
+      .then((querySnapshot)=>{
+        querySnapshot.forEach(doc => {
+          firestore()
+          .collection('users')
+          .doc(doc.id)
+          .update({
+            stickersOnBoard: firebase.firestore.FieldValue.arrayUnion({
+              content: content,
+              creator: creator,
+            }),
+          })
+        })
+      })
+      
+      // REMOVE STICKER FROM PENDING 
+
+      firestore()
+      .collection('users')
+      .where('email', '==', MY_EMAIL)
+      .get()
+      .then((querySnapshot)=>{
+        querySnapshot.forEach(doc => {
+          firestore()
+          .collection('users')
+          .doc(doc.id)
+          .update({
+            pending: firebase.firestore.FieldValue.arrayRemove({
+              content: content,
+              creator: creator,
+            }),
+          })
+        })
+      })
+
+      
+
+
+      animate(index,()=>dispatch(addNote({ id: stickerID, text: content, isInfo: false })),()=>dispatch(removePendingNote(stickerID)));
+
     } catch (error) {
-        console.log(error.message);
+      console.log(error.message);
     }
 }
 

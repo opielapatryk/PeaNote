@@ -1,36 +1,33 @@
-import axios from 'axios';
-import * as SecureStore from 'expo-secure-store';
-import { userLink } from '../../../components/Constants';
 import {addNote,changeInfo,addPendingNote} from '../../../store/notes/boardSlice';
+import auth, { firebase } from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 export const fetchNotes = async (dispatch) => {  
   try {
-    const userToken = await SecureStore.getItemAsync('userToken');
-    const currentUserId = await SecureStore.getItemAsync('userId');
+    let stickersonboard 
+    let pending
 
-    const result = await axios.get(userLink(currentUserId), {
-      headers: {
-        Authorization: userToken,
-      },
-    });
+    const MY_EMAIL = auth().currentUser.email
 
-    await fetchAndDispatchStickers(result.data.stickersOnBoard, dispatch, addNote);
-    await fetchAndDispatchStickers(result.data.pending, dispatch, addPendingNote);
-    
-    return result;
+    const result = await firestore()
+    .collection('users')
+    .where('email', '==', MY_EMAIL)
+    .get();
+
+    result.forEach(doc=>{
+      stickersonboard = doc.data().stickersOnBoard
+      pending = doc.data().pending
+    })
+
+    await fetchAndDispatchStickers(stickersonboard, dispatch, addNote);
+    await fetchAndDispatchStickers(pending, dispatch, addPendingNote);
   } catch (error) {
     console.log('Cannot fetch notes, check connection with database server');
   }
 };
 
-const fetchAndDispatchStickers = async (urls, dispatch, addNoteAction) => {
-  const stickersRequest = urls.map(url =>
-    axios.get(url)
-      .then(response => response.data)
-  );
-
-  const stickersData = await Promise.all(stickersRequest);
-  stickersData.forEach(sticker => dispatch(addNoteAction({ id: sticker.id, text: sticker.content, isInfo: false })));
+const fetchAndDispatchStickers = async (stickers, dispatch, addNoteAction) => {
+  stickers.forEach((sticker,index) => dispatch(addNoteAction({ id: index + 1, text: sticker.content, isInfo: false })));
 };
 
 export const checkThenChangeInfo = (dispatch, notes) => {
