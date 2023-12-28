@@ -1,13 +1,9 @@
-import * as SecureStore from 'expo-secure-store';
-import axios from 'axios'
 import {Animated,Easing} from 'react-native'
-import { userLink } from '../../../components/Constants';
 import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 export const loadUser = async (setFriends)=>{
     try{
-      // currentUserId = await SecureStore.getItemAsync('userId');
       const MY_EMAIL = auth().currentUser.email
       firestore()
         .collection('users')
@@ -19,22 +15,6 @@ export const loadUser = async (setFriends)=>{
             setFriends(friendRequests);
           }
         })
-      // const result = await axios.get(userLink(currentUserId))
-
-      // const friendsRequests = result.data.friends_requests.map(url =>
-      //   axios.get(url)
-      //   .then(response => response.data)
-      // );
-    
-      // Promise.all(friendsRequests)
-      //   .then(friendsData => {
-      //       setFriends(friendsData);
-      //   })
-      //   .catch(error => {
-      //     console.error('Error fetching friends:', error);
-      // });
-      
-      // return result
     }catch(e){
       console.log(e.message)
     }
@@ -45,13 +25,6 @@ export const loadUser = async (setFriends)=>{
 export const approveFriend = async (friendEmail,index,animatedValues) =>{
     
     try {
-        // take list of my friends
-        // take list of my friend requests
-
-        // add to my friends list, new friend email
-        // remove from friend requests list, new friend email
-
-        // if BOTH changes were successful then animate(index,animatedValues)
         const MY_EMAIL = auth().currentUser.email
         firestore()
         .collection('users')
@@ -132,24 +105,33 @@ const animate = (index,animatedValues) => {
     }).start();
 };
 
-export const removeReq = async (friendID,index,animatedValues) =>{
-
-    const currentUserId = await SecureStore.getItemAsync('userId');
-try {
-    const resp = await axios.get(userLink(currentUserId))
-
-    let requests = resp.data.friends_requests;
-
-    let newRequestsArr = await requests.filter(user => user != userLink(friendID))
-
-    const patchReqFriends = await axios.patch(userLink(currentUserId),{
-      'friends_requests': newRequestsArr
+export const removeReq = async (friendEmail,index,animatedValues) =>{
+  const MY_EMAIL = auth().currentUser.email
+  try {
+    firestore()
+    .collection('users')
+    .where('email', '==', MY_EMAIL)
+    .get()
+    .then(querySnapshot => {
+      if(!querySnapshot.empty){
+        querySnapshot.forEach(doc=>{
+          if(doc.data().friends_requests.includes(friendEmail)){
+            firestore()
+            .collection('users')
+            .doc(doc.id)
+            .update({
+              friends_requests: firebase.firestore.FieldValue.arrayRemove(friendEmail),
+            })
+            .then(() => {
+              animate(index,animatedValues)
+            });
+          }
+        })
+      }else{
+        console.log('error');
+      }
     })
-
-    if(patchReqFriends.status === 200){
-        animate(index,animatedValues)
-    }
-} catch (error) {
+  } catch (error) {
     console.log(error.message);
-}
   }
+}
