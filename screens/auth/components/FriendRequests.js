@@ -17,8 +17,8 @@ const FriendRequests = ({ navigation }) => {
       const renderFriends = ({item,index}) =>{
         return (
             <Animated.View style={{ overflow: 'hidden', maxHeight: animatedValues[index] }}>
-                <Button title={String(item)} onPress={()=>approveFriend(item.id,index,animatedValues)}/>
-                <Pressable onPress={()=>removeReq(item.id,index,animatedValues)}>
+                <Button title={String(item)} onPress={()=>approveFriend(item,index,animatedValues)}/>
+                <Pressable onPress={()=>removeReq(item,index,animatedValues)}>
                     <FontAwesome5 name="trash-alt" size={24} color="black" />
                 </Pressable>
             </Animated.View>

@@ -42,33 +42,85 @@ export const loadUser = async (setFriends)=>{
 
 
 
-export const approveFriend = async (friendID,index,animatedValues) =>{
-    const currentUserId = await SecureStore.getItemAsync('userId');
-try {
-    const resp = await axios.get(userLink(currentUserId))
+export const approveFriend = async (friendEmail,index,animatedValues) =>{
+    
+    try {
+        // take list of my friends
+        // take list of my friend requests
 
-    let friends = resp.data.friends;
-    let requests = resp.data.friends_requests;
+        // add to my friends list, new friend email
+        // remove from friend requests list, new friend email
 
-    friends.push(userLink(friendID))
+        // if BOTH changes were successful then animate(index,animatedValues)
+        const MY_EMAIL = auth().currentUser.email
+        firestore()
+        .collection('users')
+        .where('email', '==', MY_EMAIL)
+        .get()
+        .then(querySnapshot => {
+          if (!querySnapshot.empty) {
+            querySnapshot.forEach(doc => {
+              if(doc.data().friends.includes(friendEmail)){
+                console.log('includes friend');
+              }else{
+                console.log('does not include friend');
+                firestore()
+                .collection('users')
+                .doc(doc.id)
+                .update({
+                  friends: firebase.firestore.FieldValue.arrayUnion(friendEmail),
+                })
+                .then(() => {
+                  firestore()
+                  .collection('users')
+                  .doc(doc.id)
+                  .update({
+                    friends_requests: firebase.firestore.FieldValue.arrayRemove(friendEmail),
+                  })
+                  .then(() => {
+                    animate(index,animatedValues)
+                  });
+                });
+                }
+              })
+            }
+          });
 
-    let newRequestsArr = await requests.filter(user => user != userLink(friendID))
-
-    const patchFriends = await axios.patch(userLink(currentUserId),{
-      'friends': friends
-    })
-
-    const patchReqFriends = await axios.patch(userLink(currentUserId),{
-      'friends_requests': newRequestsArr
-    })
-
-    if(patchFriends.status === 200 && patchReqFriends.status === 200){
-        console.log('friend accepted');
-        animate(index,animatedValues)
+          firestore()
+        .collection('users')
+        .where('email', '==', friendEmail)
+        .get()
+        .then(querySnapshot => {
+          if (!querySnapshot.empty) {
+            querySnapshot.forEach(doc => {
+              if(doc.data().friends.includes(MY_EMAIL)){
+                console.log('includes friend');
+              }else{
+                console.log('does not include friend');
+                firestore()
+                .collection('users')
+                .doc(doc.id)
+                .update({
+                  friends: firebase.firestore.FieldValue.arrayUnion(MY_EMAIL),
+                })
+                .then(() => {
+                  firestore()
+                  .collection('users')
+                  .doc(doc.id)
+                  .update({
+                    friends_requests: firebase.firestore.FieldValue.arrayRemove(MY_EMAIL),
+                  })
+                  .then(() => {
+                    animate(index,animatedValues)
+                  });
+                });
+                }
+              })
+            }
+          });
+    } catch (error) {
+        console.log(error.message);
     }
-} catch (error) {
-    console.log(error.message);
-}
   }
 
 const animate = (index,animatedValues) => {
