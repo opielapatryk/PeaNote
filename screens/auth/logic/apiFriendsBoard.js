@@ -40,19 +40,42 @@ export const createNote = async (content,setContent,setMessage,friendEmail) => {
 
 export const removeFriend = async (navigation,friendEmail) => {
     try {
-      const currentUserId = await SecureStore.getItemAsync('userId');
-      const currentUserResult = await axios.get(userLink(currentUserId));
+      const MY_EMAIL = auth().currentUser.email
+      firestore()
+          .collection('users')
+          .where('email', '==', MY_EMAIL)
+          .get()
+          .then((querySnapshot)=>{
+            querySnapshot.forEach(doc => {
+              firestore()
+              .collection('users')
+              .doc(doc.id)
+              .update({
+                friends: firebase.firestore.FieldValue.arrayRemove(friendEmail),
+              })
+              .then(()=>{
+                navigation.navigate('Friends');
+              })
+            })
+          })
 
-      const list = currentUserResult.data.friends.filter((element) => element !== userLink(friendId));
-
-      const resp = await axios.patch(userLink(currentUserId), {
-        friends: list,
-      });
-
-      if (resp.status === 200) {
-        navigation.navigate('Friends');
-      }
-      return resp;
+          firestore()
+          .collection('users')
+          .where('email', '==', friendEmail)
+          .get()
+          .then((querySnapshot)=>{
+            querySnapshot.forEach(doc => {
+              firestore()
+              .collection('users')
+              .doc(doc.id)
+              .update({
+                friends: firebase.firestore.FieldValue.arrayRemove(MY_EMAIL),
+              })
+              .then(()=>{
+                navigation.navigate('Friends');
+              })
+            })
+          })
     } catch (error) {
       console.log(error.message);
     }
