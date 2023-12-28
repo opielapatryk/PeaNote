@@ -5,7 +5,7 @@ import {removeNote} from '../../../store/notes/boardSlice';
 import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
-export const sendFriendRequest = async (newFriendEmail,setNewFriendID,setdoesEmailExist,setList,setMessage) => {
+export const sendFriendRequest = async (newFriendEmail,setNewFriendID,setdoesEmailExist,setList,setMessage,setNewFriendEmail,setButtonTitle,setFriendReqMessage) => {
     try {
         const MY_EMAIL = auth().currentUser.email
         firestore()
@@ -37,7 +37,9 @@ export const sendFriendRequest = async (newFriendEmail,setNewFriendID,setdoesEma
                           friends_requests: firebase.firestore.FieldValue.arrayUnion(MY_EMAIL),
                         })
                         .then(() => {
-                          setMessage('Request sent!');
+                          setNewFriendEmail('')
+                          setButtonTitle('')
+                          setFriendReqMessage(true)
                         });
                       }
                     })
@@ -118,9 +120,13 @@ export const sendFriendRequest = async (newFriendEmail,setNewFriendID,setdoesEma
     setButtonTitle,
     setFirstRender,
     list,
-    newFriendEmail
+    newFriendEmail,
+    setFriendReqMessage
   ) => {
     try {
+      if(newFriendEmail.length > 0){
+        setFriendReqMessage(false)
+      }
       setdoesEmailExist(false);
       const MY_EMAIL = auth().currentUser.email;
   

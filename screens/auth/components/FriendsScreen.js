@@ -11,9 +11,10 @@ export const FriendsScreen = ({ navigation }) => {
   const [doesEmailExist, setdoesEmailExist] = useState(false)
   const [list,setList] = useState([])
   const [firstRender, setFirstRender] = useState(true)
+  const [friendReqMessage, setFriendReqMessage] = useState(false)
   
   useEffect(() => {
-    getUserEmail(setdoesEmailExist,doesEmailExist,firstRender,setMessage,setButtonTitle,setFirstRender,list,newFriendEmail)
+    getUserEmail(setdoesEmailExist,doesEmailExist,firstRender,setMessage,setButtonTitle,setFirstRender,list,newFriendEmail,setFriendReqMessage)
   }, [newFriendEmail]);
 
   useFocusEffect(
@@ -26,13 +27,13 @@ export const FriendsScreen = ({ navigation }) => {
     <ScrollView>
       <Button title='REQUESTS' onPress={()=>navigation.navigate('Requests')}/>
       <TextInput placeholder='Insert friend email' onChangeText={(newFriendEmail) => setNewFriendEmail(newFriendEmail)} value={newFriendEmail}/>
-      {/* <Button title='SEARCH NEW FRIEND' onPress={()=>sendFriendRequest(newFriendEmail,setNewFriendEmail,setdoesEmailExist,setList)}/> */}
       <Text>{message}</Text>
-      <Button title={buttonTitle} onPress={()=>sendFriendRequest(newFriendEmail,setNewFriendEmail,setdoesEmailExist,setList,setMessage)}/>
+      {friendReqMessage&&<Text>Friend request sent!</Text>}
+      <Button title={buttonTitle} onPress={()=>sendFriendRequest(newFriendEmail,setNewFriendEmail,setdoesEmailExist,setList,setMessage,setNewFriendEmail,setButtonTitle,setFriendReqMessage)}/>
       <Text>Friends:</Text>
       <ScrollView>
         {friends.map((friend)=>(
-          <Button key={friend.id} title={friend} onPress={() => navigation.navigate('FriendsBoard', { friendId: friend.id, friendName: friend.first_name })}/>
+          <Button key={friend} title={friend} onPress={() => navigation.navigate('FriendsBoard', { friendId: friend.id, friendName: friend.first_name })}/>
         ))}
       </ScrollView>
     </ScrollView>
