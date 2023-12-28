@@ -92,26 +92,19 @@ export const sendFriendRequest = async (newFriendEmail,setNewFriendID,setdoesEma
     }
   }
 
-  export const loadUser = async(setFriends)=>{
+  export const loadUser = async (setFriends)=>{
     try{
-      currentUserId = await SecureStore.getItemAsync('userId');
-
-      const result = await axios.get(userLink(currentUserId))
-
-      const friendsRequests = result.data.friends.map(url =>
-        axios.get(url)
-        .then(response => response.data)
-      );
-    
-      Promise.all(friendsRequests)
-        .then(friendsData => {
-            setFriends(friendsData);
+      const MY_EMAIL = auth().currentUser.email
+      firestore()
+        .collection('users')
+        .where('email', '==', MY_EMAIL)
+        .get()
+        .then(querySnapshot =>{
+          if (!querySnapshot.empty) {
+            const friends = querySnapshot.docs[0].data().friends;
+            setFriends(friends);
+          }
         })
-        .catch(error => {
-          console.error('Error fetching friends:', error);
-      });
-      
-      return result
     }catch(e){
       console.log(e.message)
     }

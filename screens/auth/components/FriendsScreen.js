@@ -16,11 +16,11 @@ export const FriendsScreen = ({ navigation }) => {
     getUserEmail(setdoesEmailExist,doesEmailExist,firstRender,setMessage,setButtonTitle,setFirstRender,list,newFriendEmail)
   }, [newFriendEmail]);
 
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     loadUser(setFriends)
-  //   }, [])
-  // );
+  useFocusEffect(
+    React.useCallback(() => {
+      loadUser(setFriends)
+    }, [])
+  );
 
   return (
     <ScrollView>
@@ -32,7 +32,7 @@ export const FriendsScreen = ({ navigation }) => {
       <Text>Friends:</Text>
       <ScrollView>
         {friends.map((friend)=>(
-          <Button key={friend.id} title={friend.email} onPress={() => navigation.navigate('FriendsBoard', { friendId: friend.id, friendName: friend.first_name })}/>
+          <Button key={friend.id} title={friend} onPress={() => navigation.navigate('FriendsBoard', { friendId: friend.id, friendName: friend.first_name })}/>
         ))}
       </ScrollView>
     </ScrollView>
