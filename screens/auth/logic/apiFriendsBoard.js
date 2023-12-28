@@ -1,44 +1,44 @@
-import { userLink, stickersLink, stickerLink } from '../../../components/Constants';
-import axios from 'axios';
-import * as SecureStore from 'expo-secure-store';
+import auth, { firebase } from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
-export const createNote = async (content,setContent,setMessage,friendId) => {
+export const createNote = async (content,setContent,setMessage,friendEmail) => {
     try {
-      const currentUserId = await SecureStore.getItemAsync('userId');
-      const userURL = userLink(currentUserId);
-
+      const MY_EMAIL = auth().currentUser.email
+      
       if (content !== '') {
-        const result = await axios.post(stickersLink(), {
-          content: content,
-          creator: userURL,
-        });
+          firestore()
+          .collection('users')
+          .where('email', '==', friendEmail)
+          .get()
+          .then((querySnapshot)=>{
+            querySnapshot.forEach(doc => {
+              listKey = doc.data().askBeforeStick ? 'pending' : 'stickersOnBoard'
 
-        const stickerID = result.data.id;
-        const friendURL = userLink(friendId);
-        const resultStickers = await axios.get(friendURL);
-
-        const listKey = resultStickers.data.askBeforeStick ? 'pending' : 'stickersOnBoard';
-        let list = resultStickers.data[listKey];
-        list.push(stickerLink(stickerID));
-
-        await axios.patch(userLink(friendId), {
-          [listKey]: list,
-        });
-
-        if (result.status === 201) {
+              firestore()
+              .collection('users')
+              .doc(doc.id)
+              .update({
+                [listKey]: firebase.firestore.FieldValue.arrayUnion({
+                  content: content,
+                  creator: MY_EMAIL,
+                }),
+              })
+              
+            })
+          })
           setMessage('Note created successfully!');
           setContent('');
+        }else {
+          setMessage('Note cannot be empty..');
         }
-      } else {
-        setMessage('Note cannot be empty..');
-      }
-    } catch (error) {
-      console.log(error.message);
+        
+      } 
+     catch (error) {
       setMessage('Cannot create note, something went wrong..');
     }
   };
 
-export const removeFriend = async (navigation,friendId) => {
+export const removeFriend = async (navigation,friendEmail) => {
     try {
       const currentUserId = await SecureStore.getItemAsync('userId');
       const currentUserResult = await axios.get(userLink(currentUserId));
