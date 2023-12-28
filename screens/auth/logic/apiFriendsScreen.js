@@ -5,7 +5,7 @@ import {removeNote} from '../../../store/notes/boardSlice';
 import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
-export const sendFriendRequest = async (newFriendEmail,setNewFriendID,setdoesEmailExist,setList) => {
+export const sendFriendRequest = async (newFriendEmail,setNewFriendID,setdoesEmailExist,setList,setMessage) => {
     try {
         const MY_EMAIL = auth().currentUser.email
         firestore()
@@ -37,7 +37,7 @@ export const sendFriendRequest = async (newFriendEmail,setNewFriendID,setdoesEma
                           friends_requests: firebase.firestore.FieldValue.arrayUnion(MY_EMAIL),
                         })
                         .then(() => {
-                          console.log('User updated!');
+                          setMessage('Request sent!');
                         });
                       }
                     })
@@ -117,30 +117,55 @@ export const sendFriendRequest = async (newFriendEmail,setNewFriendID,setdoesEma
     }
   }
 
- export const getUserId = async(doesEmailExist,firstRender,setMessage,setButtonTitle,setFirstRender,newFriendID,list,newFriendEmail)=>{
-    currentUserId = await SecureStore.getItemAsync('userId');
-
-    if(doesEmailExist === false){
-      if(!firstRender){
-        setMessage('This user does not exist!..')
-        setButtonTitle('')
-      }
-      setFirstRender(false)
-    }else{
-      if(newFriendID == currentUserId){
-        setMessage('You cannot add to friends yourself!..')
-        setButtonTitle('')
-      }else{
-        if(list.includes(userLink(newFriendID))){
-          setMessage('You are friends already!..')
-          setButtonTitle('')
-        }else{
-          setMessage(newFriendEmail)
-          setButtonTitle('ADD')
+  export const getUserEmail = async (
+    setdoesEmailExist,
+    doesEmailExist,
+    firstRender,
+    setMessage,
+    setButtonTitle,
+    setFirstRender,
+    list,
+    newFriendEmail
+  ) => {
+    try {
+      setdoesEmailExist(false);
+  
+      const MY_EMAIL = auth().currentUser.email;
+      console.log(MY_EMAIL);
+  
+      const querySnapshot = await firestore()
+        .collection('users')
+        .where('email', '==', newFriendEmail)
+        .get();
+  
+      if (!querySnapshot.empty) {
+        setdoesEmailExist(true);
+        
+  
+        if (newFriendEmail === MY_EMAIL) {
+          setMessage('You cannot add yourself to friends!..');
+          setButtonTitle('');
+        } else if (list.includes(newFriendEmail)) {
+          setMessage('You are already friends!..');
+          setButtonTitle('');
+        } else {
+          setMessage('');
+          setButtonTitle('ADD');
         }
+      } else {
+        if (!firstRender) {
+          setMessage('This user does not exist!..');
+          setButtonTitle('');
+        }
+        if (!firstRender && newFriendEmail === ''){
+          setMessage('');
+        } 
+        setFirstRender(false);
       }
+    } catch (error) {
+      console.error('Error checking email existence:', error);
     }
-  }
+  };
 
 export const removeNotesFromReduxStore = async (notes,dispatch) => {
   await Promise.all(notes.map((sticker) => dispatch(removeNote(sticker.id))));
