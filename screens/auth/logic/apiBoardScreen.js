@@ -1,5 +1,5 @@
 import {addNote,changeInfo,addPendingNote} from '../../../store/notes/boardSlice';
-import auth, { firebase } from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 export const fetchNotes = async (dispatch) => {  
