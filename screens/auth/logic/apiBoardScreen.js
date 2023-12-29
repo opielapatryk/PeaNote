@@ -9,25 +9,28 @@ export const fetchNotes = async (dispatch) => {
 
     const MY_EMAIL = auth().currentUser.email
 
+    
     const result = await firestore()
     .collection('users')
     .where('email', '==', MY_EMAIL)
-    .get();
+    .get()
 
     result.forEach(doc=>{
-      stickersonboard = doc.data().stickersOnBoard
       pending = doc.data().pending
+      stickersonboard = doc.data().stickersOnBoard
     })
-
+    
     await fetchAndDispatchStickers(stickersonboard, dispatch, addNote);
     await fetchAndDispatchStickers(pending, dispatch, addPendingNote);
   } catch (error) {
-    console.log('Cannot fetch notes, check connection with database server');
+    console.log(error);
   }
 };
 
 const fetchAndDispatchStickers = async (stickers, dispatch, addNoteAction) => {
-  stickers.forEach((sticker,index) => dispatch(addNoteAction({ id: index + 1, text: sticker.content, isInfo: false })));
+  if(stickers){
+    stickers.forEach((sticker,index) => dispatch(addNoteAction({ id: index + 1, text: sticker.content, isInfo: false })));
+  }
 };
 
 export const checkThenChangeInfo = (dispatch, notes) => {

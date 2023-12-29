@@ -32,7 +32,7 @@ export async function sendNoteToBoard(stickerID,stickerContent,dispatch,index,an
       const result = await firestore()
       .collection('users')
       .where('email', '==', MY_EMAIL)
-      .get();
+      .get()
   
       result.forEach(doc=>{
         pending = doc.data().pending
