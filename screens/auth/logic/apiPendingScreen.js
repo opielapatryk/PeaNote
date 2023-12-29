@@ -1,6 +1,3 @@
-import * as SecureStore from 'expo-secure-store';
-import axios from 'axios';
-import {userLink,stickerLink} from '../../../components/Constants'
 import {removePendingNote,changePendingInfo, addNote} from '../../../store/notes/boardSlice';
 import { Animated, Easing } from 'react-native';
 import auth, { firebase } from '@react-native-firebase/auth';

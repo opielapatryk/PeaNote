@@ -1,6 +1,5 @@
 import axios from 'axios'
-import {userLink,usersLink} from '../../../components/Constants'
-import * as SecureStore from 'expo-secure-store';
+import {userLink} from '../../../components/Constants'
 import {removeNote} from '../../../store/notes/boardSlice';
 import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
