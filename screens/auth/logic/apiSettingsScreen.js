@@ -2,15 +2,22 @@ import { userLink } from '../../../components/Constants';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import { removeNote } from '../../../store/notes/boardSlice';
-import auth, { firebase } from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import { GoogleSignin} from '@react-native-google-signin/google-signin';
 
 export const checkIsAskBeforeStickingNoteFlagOff = async (setAskBeforeStickingNoteFlag) => {
     try {
-      let userID = await SecureStore.getItemAsync('userId');
-      const resp = await axios.get(userLink(userID));
-      const data = resp.data.askBeforeStick;
+      const MY_EMAIL = auth().currentUser.email
+
+      const result = await firestore()
+      .collection('users')
+      .where('email', '==', MY_EMAIL)
+      .get()
+  
+      result.forEach(doc=>{
+        data = doc.data().askBeforeStick
+      })
+
       setAskBeforeStickingNoteFlag(data ? true : false);
     } catch (error) {
       console.log(error.message);
@@ -19,16 +26,34 @@ export const checkIsAskBeforeStickingNoteFlagOff = async (setAskBeforeStickingNo
 
 export const askBeforeStick = async (setAskBeforeStickingNoteFlag,setMessage) => {
   try {
-    let userID = await SecureStore.getItemAsync('userId');
-    const resp = await axios.get(userLink(userID));
-    const data = resp.data.askBeforeStick;
-    const patchRequest = await axios.patch(userLink(userID), {
-      askBeforeStick: !data,
-    });
+    const MY_EMAIL = auth().currentUser.email
 
-    if (patchRequest.status && patchRequest.status === 200) {
-      setAskBeforeStickingNoteFlag(data ? false : true);
-    }
+    const result = await firestore()
+    .collection('users')
+    .where('email', '==', MY_EMAIL)
+    .get()
+
+    result.forEach(doc=>{
+      data = doc.data().askBeforeStick
+    })
+
+    firestore()
+    .collection('users')
+    .where('email', '==', MY_EMAIL)
+    .get()
+    .then((querySnapshot)=>{
+      querySnapshot.forEach(doc => {
+        firestore()
+        .collection('users')
+        .doc(doc.id)
+        .update({
+          askBeforeStick: !data,
+        })
+        .then(()=>{
+          setAskBeforeStickingNoteFlag(data ? false : true);
+        })
+      })
+    })
   } catch (error) {
     setMessage('Something went wrong! Try again later..');
     console.log(error.message);
