@@ -70,7 +70,7 @@ const SettingsScreen = () => {
 
       <TextInput placeholder="Old Password" onChangeText={setOldPassword} secureTextEntry />
       <TextInput placeholder="New Password" onChangeText={setNewPassword} secureTextEntry />
-      <Button title="CONFIRM NEW PASSWORD" onPress={()=>changePassword(setConfirmAccountDelete,oldPassword,newPassword,setMessage,setShowInput)} />
+      <Button title="CONFIRM NEW PASSWORD" onPress={()=>changePassword(setConfirmAccountDelete,newPassword,setMessage)} />
 
       {confirmAccountDelete ? (
         <Button title="CONFIRM ACCOUNT DELETE" onPress={()=>deleteAccount(notes,dispatchRedux,pendingNotes)} />

@@ -65,28 +65,11 @@ export const askBeforeStick = async (setAskBeforeStickingNoteFlag,setMessage) =>
     }
   };
 
- export const changePassword = async (setConfirmAccountDelete,oldPassword,newPassword,setMessage,setShowInput) => {
+ export const changePassword = async (setConfirmAccountDelete,newPassword,setMessage) => {
     setConfirmAccountDelete(false);
     try {
-      const token = await SecureStore.getItemAsync('userToken');
-      const resp = await axios.put(
-        'http://localhost:8000/update_password',
-        {
-          old_password: oldPassword,
-          new_password: newPassword,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: token,
-          },
-        }
-      );
-
-      if (resp.status && resp.status === 204) {
-        setMessage('Password updated!');
-      }
-      setShowInput(true);
+      await auth().currentUser.updatePassword(newPassword)
+      setMessage('Password updated!');
     } catch (error) {
       if (error) {
         setMessage('Something went wrong! Try providing a different password!');
