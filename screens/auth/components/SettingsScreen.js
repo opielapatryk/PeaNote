@@ -1,12 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import { Text, View, Button, TextInput, Switch} from 'react-native';
-import { AuthContext } from '../../../context/AuthContext';
 import { useDispatch, useSelector } from 'react-redux';
 import {checkIsAskBeforeStickingNoteFlagOff,deleteAccount,changePassword,askBeforeStick} from '../logic/apiSettingsScreen'
 import { styles } from '../../../assets/styles/styles';
 
 const SettingsScreen = () => {
-  const { notes } = useSelector((state) => state.board);
+  const { notes,pendingNotes } = useSelector((state)=>state.board)
   const dispatchRedux = useDispatch();
   const [message, setMessage] = useState('');
   const [showInput, setShowInput] = useState(true);
@@ -25,7 +24,7 @@ const SettingsScreen = () => {
   const renderChangePasswordButtons = () => (
     <>
       <Button title="CHANGE PASSWORD" onPress={handlePasswordChangeButtonPress} />
-      <Button title="CONFIRM ACCOUNT DELETE" onPress={()=>deleteAccount(signOut,notes,dispatchRedux)} />
+      <Button title="CONFIRM ACCOUNT DELETE" onPress={()=>deleteAccount(notes,dispatchRedux,pendingNotes)} />
     </>
   );
 
@@ -74,7 +73,7 @@ const SettingsScreen = () => {
       <Button title="CONFIRM NEW PASSWORD" onPress={()=>changePassword(setConfirmAccountDelete,oldPassword,newPassword,setMessage,setShowInput)} />
 
       {confirmAccountDelete ? (
-        <Button title="CONFIRM ACCOUNT DELETE" onPress={()=>deleteAccount(signOut,notes,dispatchRedux)} />
+        <Button title="CONFIRM ACCOUNT DELETE" onPress={()=>deleteAccount(notes,dispatchRedux,pendingNotes)} />
       ) : (
         <Button title="DELETE ACCOUNT" onPress={() => setConfirmAccountDelete(true)} />
       )}

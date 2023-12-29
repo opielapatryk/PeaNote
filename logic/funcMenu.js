@@ -11,5 +11,4 @@ export const signOutAndClearReduxStore = async (notes,dispatch_redux,pendingNote
     } catch (error) {
         console.error(error);
     }
-    
 };

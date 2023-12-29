@@ -2,6 +2,9 @@ import { userLink } from '../../../components/Constants';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import { removeNote } from '../../../store/notes/boardSlice';
+import auth, { firebase } from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import { GoogleSignin} from '@react-native-google-signin/google-signin';
 
 export const checkIsAskBeforeStickingNoteFlagOff = async (setAskBeforeStickingNoteFlag) => {
     try {
@@ -14,15 +17,49 @@ export const checkIsAskBeforeStickingNoteFlagOff = async (setAskBeforeStickingNo
     }
   };
 
- export const deleteAccount = async (signOut,notes,dispatchRedux) => {
-    try {
-      let userID = await SecureStore.getItemAsync('userId');
-      const resp = await axios.delete(userLink(userID));
+export const askBeforeStick = async (setAskBeforeStickingNoteFlag,setMessage) => {
+  try {
+    let userID = await SecureStore.getItemAsync('userId');
+    const resp = await axios.get(userLink(userID));
+    const data = resp.data.askBeforeStick;
+    const patchRequest = await axios.patch(userLink(userID), {
+      askBeforeStick: !data,
+    });
 
-      if (resp.status === 204) {
-        signOut();
-        notes.forEach((sticker) => dispatchRedux(removeNote(sticker.id)));
-      }
+    if (patchRequest.status && patchRequest.status === 200) {
+      setAskBeforeStickingNoteFlag(data ? false : true);
+    }
+  } catch (error) {
+    setMessage('Something went wrong! Try again later..');
+    console.log(error.message);
+  }
+};
+
+ export const deleteAccount = async (notes,dispatch_redux,pendingNotes) => {
+    try {
+      const MY_EMAIL = auth().currentUser.email
+
+      firestore()
+      .collection('users')
+      .where('email', '==', MY_EMAIL)
+      .get()
+      .then((querySnapshot)=>{
+        querySnapshot.forEach(doc => {
+          firestore()
+          .collection('users')
+          .doc(doc.id)
+          .delete()
+          .then(async () => {
+            try {
+              notes.forEach(sticker => dispatch_redux(removeNote(sticker.id)));
+              pendingNotes.forEach(sticker => dispatch_redux(removePendingNote(sticker.id)));
+              auth().currentUser.delete()
+            } catch (error) {
+                console.error(error);
+            }
+          });
+        })})
+
     } catch (error) {
       console.log(error.message);
     }
@@ -54,24 +91,6 @@ export const checkIsAskBeforeStickingNoteFlagOff = async (setAskBeforeStickingNo
       if (error) {
         setMessage('Something went wrong! Try providing a different password!');
       }
-      console.log(error.message);
-    }
-  };
-
-  export const askBeforeStick = async (setAskBeforeStickingNoteFlag,setMessage) => {
-    try {
-      let userID = await SecureStore.getItemAsync('userId');
-      const resp = await axios.get(userLink(userID));
-      const data = resp.data.askBeforeStick;
-      const patchRequest = await axios.patch(userLink(userID), {
-        askBeforeStick: !data,
-      });
-
-      if (patchRequest.status && patchRequest.status === 200) {
-        setAskBeforeStickingNoteFlag(data ? false : true);
-      }
-    } catch (error) {
-      setMessage('Something went wrong! Try again later..');
       console.log(error.message);
     }
   };
