@@ -15,11 +15,10 @@ import { GoogleSignin} from '@react-native-google-signin/google-signin';
 import 'expo-dev-client'
 import 'firebase/auth';
 import { WEB_CLIENT_ID, IOS_CLIENT_ID} from './FIrebaseConfig';
+
 const Stack = createNativeStackNavigator();
 
-
 export default function App(){
-  //////////// AUTH //////////////////////////////
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 

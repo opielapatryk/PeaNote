@@ -1,5 +1,3 @@
-import renderer from 'react-test-renderer';
-import React from 'react'
 import {userLink,usersLink,stickerLink,stickersLink} from '../Constants'
 
 describe('Testing constants', () => {
