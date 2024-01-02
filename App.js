@@ -14,7 +14,9 @@ import auth from '@react-native-firebase/auth';
 import { GoogleSignin} from '@react-native-google-signin/google-signin';
 import 'expo-dev-client'
 import 'firebase/auth';
+import { WEB_CLIENT_ID, IOS_CLIENT_ID} from './FIrebaseConfig';
 const Stack = createNativeStackNavigator();
+
 
 export default function App(){
   //////////// AUTH //////////////////////////////
@@ -22,8 +24,8 @@ export default function App(){
   const [user, setUser] = useState();
 
   GoogleSignin.configure({
-    webClientId:"1088925346926-il03fpvr7b6q4qb5llrofkafd7c292dr.apps.googleusercontent.com",
-    iosClientId:"1088925346926-3e883fbcli5qkc14vibgq3c2i3rl1735.apps.googleusercontent.com"
+    webClientId:WEB_CLIENT_ID,
+    iosClientId:IOS_CLIENT_ID
   })
 
   function onAuthStateChangedd(user) {
