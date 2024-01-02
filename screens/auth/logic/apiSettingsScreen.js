@@ -1,6 +1,3 @@
-import { userLink } from '../../../components/Constants';
-import axios from 'axios';
-import * as SecureStore from 'expo-secure-store';
 import { removeNote } from '../../../store/notes/boardSlice';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';

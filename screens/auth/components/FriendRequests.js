@@ -4,7 +4,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { loadUser, removeReq,approveFriend } from '../logic/apiFriendRequests';
 
-const FriendRequests = ({ navigation }) => {
+const FriendRequests = () => {
     const [friends,setFriends] = useState([])
     const animatedValues = friends.map(() => new Animated.Value(200));
 

@@ -1,5 +1,3 @@
-import axios from 'axios'
-import {userLink} from '../../../components/Constants'
 import {removeNote} from '../../../store/notes/boardSlice';
 import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -53,41 +51,6 @@ export const sendFriendRequest = async (newFriendEmail,setNewFriendID,setdoesEma
         .catch(error => {
           console.error('Error getting user:', error);
         });
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
-
-  export const addNewFriend = async (setFriends,newFriendID,friends) => {
-    try {
-      const friendURL = userLink(newFriendID)
-      const userURL = userLink(currentUserId)
-      const result = await axios.get(userURL)
-
-      let list = result.data.friends_requests
-
-      if (!list.includes(userURL)) {
-        list.push(userURL);
-      }
-      
-      await axios.patch(friendURL,{
-          'friends_requests':list
-      })
-
-      const friendsRequests = list.map(url =>
-        axios.get(url)
-        .then(response => response.data)
-      );
-    
-      Promise.all(friendsRequests)
-        .then(friendsData => {
-          if (JSON.stringify(friends) !== JSON.stringify(friendsData)) {
-            setFriends(friendsData);
-          }
-        })
-        .catch(error => {
-          console.error('Error fetching friends:', error);
-      });
     } catch (error) {
       console.log(error.message);
     }

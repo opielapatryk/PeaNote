@@ -10,7 +10,6 @@ import FriendsBoard from './screens/auth/components/FriendsBoard';
 import SettingsScreen from './screens/auth/components/SettingsScreen';
 import PendingScreen from './screens/auth/components/PendingScreen';
 import FriendRequests from './screens/auth/components/FriendRequests';
-import * as SecureStore from 'expo-secure-store';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin} from '@react-native-google-signin/google-signin';
 import 'expo-dev-client'

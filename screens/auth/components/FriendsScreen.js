@@ -1,7 +1,7 @@
 import { Text,ScrollView, Button, TextInput } from 'react-native'
 import React, {useState,useEffect} from 'react'
 import { useFocusEffect } from '@react-navigation/native';
-import {sendFriendRequest,addNewFriend,loadUser,getUserEmail} from '../logic/apiFriendsScreen'
+import {sendFriendRequest,loadUser,getUserEmail} from '../logic/apiFriendsScreen'
 
 export const FriendsScreen = ({ navigation }) => {
   const [friends,setFriends] = useState([])
