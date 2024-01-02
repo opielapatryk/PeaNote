@@ -5,6 +5,7 @@ import { useDispatch, useSelector} from 'react-redux';
 import {styles} from '../../../assets/styles/styles';
 import Menu from '../../../components/Menu'
 import { fetchNotes, checkThenChangeInfo} from '../logic/apiBoardScreen';
+import { useFocusEffect } from '@react-navigation/native';
 
 const BoardScreen = ({navigation}) => {
     const {notes} = useSelector((state) => state.board);
@@ -13,6 +14,12 @@ const BoardScreen = ({navigation}) => {
     useEffect(()=>{
       fetchNotes(dispatch);
     },[])
+
+    useFocusEffect(
+      React.useCallback(() => {
+        fetchNotes(dispatch);
+      }, [])
+    );
 
     const renderNotes = ({item}) => {
       return (

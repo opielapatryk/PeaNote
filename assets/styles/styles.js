@@ -41,13 +41,15 @@ export const styles = StyleSheet.create({
     shadowColor: 'rgb(0, 0, 0)'
   },
   board:{
-    height: 1000,
-    paddingBottom:250
+    marginBottom:40,
+    height:1000
   },
   menu:{
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
+    marginTop:40,
+    marginBottom:20
   },
   button_two_text: {
     color:'rgb(0,122,255)',

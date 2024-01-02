@@ -45,17 +45,17 @@ export default function App(){
           <Stack.Navigator>
             {!user?(
               <>
-                <Stack.Screen name="LoginFB" component={LoginFB} screenOptions={{headerShown:false}}></Stack.Screen>
+                <Stack.Screen name="LoginFB" component={LoginFB} options={{headerShown:false}}></Stack.Screen>
               </>
              
             ):(
               <>
-                <Stack.Screen name="Board" component={BoardScreen}></Stack.Screen>
-                <Stack.Screen name="Pending" component={PendingScreen}></Stack.Screen>
+                <Stack.Screen name="Board" options={{headerShown:false}} component={BoardScreen}></Stack.Screen>
+                <Stack.Screen name="Pending" options={{headerTitle:'Pending notes'}} component={PendingScreen}></Stack.Screen>
                 <Stack.Screen name="Settings" component={SettingsScreen}></Stack.Screen>
                 <Stack.Screen name="Friends" component={FriendsScreen}initialParams={{ userId:'12'}}></Stack.Screen>
                 <Stack.Screen name="FriendsBoard" component={FriendsBoard}></Stack.Screen>
-                <Stack.Screen name="Requests" component={FriendRequests}></Stack.Screen>
+                <Stack.Screen name="Requests" options={{headerTitle:'Friends requests'}} component={FriendRequests}></Stack.Screen>
               </>
             )}
           </Stack.Navigator>
