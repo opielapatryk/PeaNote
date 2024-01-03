@@ -5,7 +5,8 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent:'space-between',
+    paddingTop:100
   },
   note: {
     backgroundColor: 'rgba(226, 216, 124, 1)',
@@ -70,5 +71,8 @@ export const styles = StyleSheet.create({
     color:'rgb(0,122,255)',
     fontSize:18,
     paddingRight:15,
+  },
+  header:{
+    fontSize:40
   }
 });
