@@ -6,7 +6,7 @@ import { signOutAndClearReduxStore } from '../logic/funcMenu';
 
 export default function menu({ navigation }) {
   const { notes,pendingNotes } = useSelector((state)=>state.board)
-  const dispatch_redux = useDispatch()
+  const dispatch = useDispatch()
 
   return (
     <View style={styles.menu}>
@@ -28,7 +28,7 @@ export default function menu({ navigation }) {
           SETTINGS
         </Text>
       </Pressable>
-      <Pressable onPress={()=>signOutAndClearReduxStore(notes,dispatch_redux,pendingNotes)}>
+      <Pressable onPress={()=>signOutAndClearReduxStore(notes,dispatch,pendingNotes)}>
         <Text style={styles.button_two_text}>
           LOGOUT
         </Text>
