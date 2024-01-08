@@ -2,20 +2,23 @@ import auth from '@react-native-firebase/auth';
 import { GoogleSignin} from '@react-native-google-signin/google-signin';
 import firestore from '@react-native-firebase/firestore';
 
-export const signInFirebase = (createAccount,setCreateAccount,email,password) =>{
-    if(createAccount){
-      setCreateAccount(false)
-    }else{
-      try {
-        auth().signInWithEmailAndPassword(email,password)
-      } catch (error) {
-          console.log(error);
-      }
+export const signInFirebase = (email,password,setMessage) =>{
+    try {
+      auth().signInWithEmailAndPassword(email,password).catch((err) => {
+        console.log(err.code)
+        if(err.code === "auth/wrong-password"){
+          setMessage('The password is invalid, try again.')
+        }else if(err.code === "auth/invalid-email"){
+          setMessage('The email is invalid, try again.')
+        }
+      })
+    } catch (error) {
+        setMessage(error)
+        console.log(error);
     }
-  }
+  } 
 
-export const signUpFirebase = async (createAccount,email,password,first_name,last_name,setCreateAccount) =>{
-    if(createAccount){
+export const signUpFirebase = async (email,password,first_name,last_name,setMessage) =>{
         try {
         const user = await auth().createUserWithEmailAndPassword(email, password);
         await user.user.sendEmailVerification();
@@ -36,15 +39,19 @@ export const signUpFirebase = async (createAccount,email,password,first_name,las
             console.log('User added!');
             })
         }
-        } catch (error) {
-        console.log(error);
+        } catch (err) {
+          console.log(err)
+          if(err.code === "auth/weak-password"){
+            setMessage('The given password is invalid.')
+          }else if(err.code === "auth/invalid-email"){
+            setMessage('The email address is badly formatted.')
+          }else if(err.code === "auth/email-already-in-use"){
+            setMessage('The email address is already in use by another account.')
+          }
         }
-    }else{
-        setCreateAccount(true)
-    }
-}
+      }
 
-export const signIn = async ()=>{
+export const signIn = async (setMessage)=>{
     try {
       const {idToken} = await GoogleSignin.signIn()
       const googleCredential = auth.GoogleAuthProvider.credential(idToken)
@@ -64,12 +71,9 @@ export const signIn = async ()=>{
             stickersOnBoard: [],
             pending: []
           })
-          .then(() => {
-            console.log('User added!');
-          })
         }
       })
     } catch (error) {
-      console.log(error);
+      setMessage(error)
     }
   }

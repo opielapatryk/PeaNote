@@ -157,5 +157,8 @@ export const styles = StyleSheet.create({
     marginBottom:5,
     alignItems:'center',
     borderLeftWidth: 1,
+  },
+  errorMessage:{
+    color:'red'
   }
 });

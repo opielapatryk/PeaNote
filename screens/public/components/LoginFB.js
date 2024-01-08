@@ -1,7 +1,6 @@
-import { View,TextInput,Button,Text,Image, Pressable } from 'react-native'
+import { View,TextInput,Text, Pressable } from 'react-native'
 import React, {useState} from 'react'
 import { styles } from '../../../assets/styles/styles';
-import { GoogleSigninButton} from '@react-native-google-signin/google-signin';
 import {signInFirebase,signUpFirebase,signIn} from '../logic/apiLoginFB'
 import Logo from '../../../assets/images/logo.svg';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -15,14 +14,25 @@ const LoginFB = () => {
   const [createAccount,setCreateAccount] = useState(false);
   const goToCreateAccount = ()=>{
     setCreateAccount(true)
+    setMessage('')
+    setLastName('')
+    setEmail('')
+    setPassword('')
+    setFirstName('')
   }
   const goToLogIn = ()=>{
     setCreateAccount(false)
+    setMessage('')
+    setLastName('')
+    setEmail('')
+    setPassword('')
+    setFirstName('')
   }
 
   return (
     <View style={styles.container}>
       <Logo width={200} height={200}/>
+      <Text style={styles.errorMessage}>{message}</Text>
       {!createAccount && <>
         <Text style={styles.header}>Log In</Text>
       <Text style={styles.paragraph}>Please provide your credentials by filling out the form below.</Text>
@@ -39,7 +49,7 @@ const LoginFB = () => {
       <TextInput style={styles.roundTextInput} placeholder='Email' onChangeText={setEmail} value={email}/>
       <TextInput style={styles.roundTextInput} placeholder='Password' secureTextEntry onChangeText={setPassword} value={password}/>   
       {!createAccount && <>
-        <Pressable style={styles.confirmButton} onPress={()=>signInFirebase(createAccount,setCreateAccount,email,password)}>
+        <Pressable style={styles.confirmButton} onPress={()=>signInFirebase(email,password,setMessage)}>
         <Text>
         Log In</Text>
         </Pressable>  
@@ -47,7 +57,7 @@ const LoginFB = () => {
 
 
         {createAccount && <>
-        <Pressable style={styles.confirmButton} onPress={()=>signUpFirebase(createAccount,email,password,first_name,last_name,setCreateAccount)}> 
+        <Pressable style={styles.confirmButton} onPress={()=>signUpFirebase(email,password,first_name,last_name,setMessage)}> 
         <Text>
         Get Started
         </Text>
@@ -56,11 +66,10 @@ const LoginFB = () => {
       
        
       <Text style={styles.paragraph}>Or sign up with</Text>
-      <Pressable style={styles.continuteWithGoogle} onPress={signIn}>
+      <Pressable style={styles.continuteWithGoogle} onPress={()=>signIn(setMessage)}>
       <Ionicons name="md-logo-google" size={22} color="black" />
         <Text>
         Continue with Google</Text></Pressable>  
-      <Text>{message}</Text>
       {!createAccount && <>
         <View style={styles.bottomView}>
       <Pressable style={styles.pressableInBottonViewLeftLogInOn} onPress={goToCreateAccount}>
