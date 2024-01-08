@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet,StatusBar } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
@@ -41,8 +41,8 @@ export const styles = StyleSheet.create({
     shadowColor: 'rgb(0, 0, 0)'
   },
   board:{
-    marginBottom:40,
-    height:1000
+    flex: 1,
+    paddingBottom: 10,
   },
   menu:{
     flexDirection: 'row',
@@ -160,5 +160,9 @@ export const styles = StyleSheet.create({
   },
   errorMessage:{
     color:'red'
-  }
+  },
+  containerboard: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight || 0,
+  },
 });

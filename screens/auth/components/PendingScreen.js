@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, Button, FlatList, Animated } from 'react-native';
+import { Pressable, Button, FlatList, Animated,SafeAreaView } from 'react-native';
 import { PendingNote } from '../../../components/PendingNote';
 import { styles } from '../../../assets/styles/styles';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,7 +15,7 @@ const PendingScreen = () => {
       <Animated.View style={{ overflow: 'hidden', maxHeight: animatedValues[index] }}>
         <PendingNote id={item.id} text={item.text} isInfo={item.isInfo} />
         <Button
-          title="Approve note"
+          title={`Approve note | ID: ${item.id}`}
           onPress={() => {
             sendNoteToBoard(item.id, item.text, dispatch,index,animatedValues);
           }}
@@ -25,10 +25,11 @@ const PendingScreen = () => {
   };
 
   return (
-      <Pressable onPress={() => onClickChangeInfo(dispatch, pendingNotes)} style={styles.board}>
-        <FlatList data={pendingNotes} renderItem={renderNotes} keyExtractor={(note) => note.id} />
-      </Pressable>
+    <Pressable onPress={() => onClickChangeInfo(dispatch, pendingNotes)} style={{flex:1}}>
+      <FlatList data={pendingNotes} renderItem={renderNotes} keyExtractor={(note) => note.id} />
+    </Pressable>
   );
 };
 
 export default PendingScreen;
+
