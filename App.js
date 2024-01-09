@@ -15,8 +15,15 @@ import { GoogleSignin} from '@react-native-google-signin/google-signin';
 import 'expo-dev-client'
 import 'firebase/auth';
 import { WEB_CLIENT_ID, IOS_CLIENT_ID} from './FIrebaseConfig';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { Pressable, View,Text } from 'react-native';
+import { styles } from './assets/styles/styles';
+import Logout from './screens/auth/components/Logout'
 
 const Stack = createNativeStackNavigator();
+
+const Tab = createMaterialTopTabNavigator();
+
 
 export default function App(){
   const [initializing, setInitializing] = useState(true);
@@ -39,26 +46,36 @@ export default function App(){
 
   if (initializing) return null;
 
+  function FriendStack() {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name="Friends" component={FriendsScreen} options={{headerShown:false}}/>
+        <Stack.Screen name="FriendsBoard" component={FriendsBoard} />
+        <Stack.Screen name="Requests" component={FriendRequests} />
+      </Stack.Navigator>
+    );
+  }
+
   return (
     <Provider store={store}>
         <NavigationContainer>
-          <Stack.Navigator>
+        <Tab.Navigator>
             {!user?(
               <>
-                <Stack.Screen name="LoginFB" component={LoginFB} options={{headerShown:false}}></Stack.Screen>
+                <Tab.Screen name="LoginFB" component={LoginFB} options={{tabBarShowLabel:false}}></Tab.Screen>
               </>
              
             ):(
               <>
-                <Stack.Screen name="Board" options={{headerShown:false}} component={BoardScreen}></Stack.Screen>
-                <Stack.Screen name="Pending" options={{headerTitle:'Pending notes'}} component={PendingScreen}></Stack.Screen>
-                <Stack.Screen name="Settings" component={SettingsScreen}></Stack.Screen>
-                <Stack.Screen name="Friends" component={FriendsScreen}initialParams={{ userId:'12'}}></Stack.Screen>
-                <Stack.Screen name="FriendsBoard" component={FriendsBoard}></Stack.Screen>
-                <Stack.Screen name="Requests" options={{headerTitle:'Friends requests'}} component={FriendRequests}></Stack.Screen>
+                <Tab.Screen name="Board" component={BoardScreen}></Tab.Screen>
+                <Tab.Screen name="Pending" component={PendingScreen}></Tab.Screen>
+                <Tab.Screen name="Settings" component={SettingsScreen}></Tab.Screen>
+                <Tab.Screen name="Friends" component={FriendStack} initialParams={{ userId:'12'}} ></Tab.Screen>
+                <Tab.Screen name="Logout" component={Logout}></Tab.Screen>
+                
               </>
             )}
-          </Stack.Navigator>
+          </Tab.Navigator>
         </NavigationContainer>
     </Provider>
   )

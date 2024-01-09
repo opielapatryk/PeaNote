@@ -28,7 +28,7 @@ const BoardScreen = ({navigation}) => {
     }
       return (
         <View style={{flex:1}}>
-          <Menu navigation={navigation}/>
+          {/* <Menu navigation={navigation}/> */}
           <Pressable onPress={() => checkThenChangeInfo(dispatch,notes)} style={styles.board}>
             <FlatList data={notes} renderItem={renderNotes} keyExtractor={note => note.id}/>
           </Pressable>

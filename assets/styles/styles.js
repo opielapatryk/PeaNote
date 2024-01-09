@@ -51,8 +51,14 @@ export const styles = StyleSheet.create({
     marginTop:40,
     marginBottom:20
   },
-  button_two_text: {
-    color:'rgb(0,122,255)',
+  button_text: {
+    fontSize:12,
+    letterSpacing:2,
+  },
+  button_text_clicked: {
+    fontSize:12,
+    letterSpacing:2,
+    fontWeight: '900'
   },
   modal:{
     flex: 1,
