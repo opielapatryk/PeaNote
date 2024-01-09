@@ -78,6 +78,6 @@ export const signIn = async (setMessage)=>{
         }
       })
     } catch (error) {
-      setMessage(error)
+      console.log(error);
     }
   }
