@@ -59,10 +59,10 @@ export default function App(){
   return (
     <Provider store={store}>
         <NavigationContainer>
-        <Tab.Navigator>
+        <Tab.Navigator screenOptions={{tabBarItemStyle:{padding:0,marginTop:10},tabBarIndicatorStyle:{backgroundColor:'#000'},tabBarLabelStyle:{letterSpacing:1.5, fontSize:11}}}>
             {!user?(
               <>
-                <Tab.Screen name="LoginFB" component={LoginFB} options={{tabBarShowLabel:false}}></Tab.Screen>
+                <Tab.Screen name="LoginFB" component={LoginFB} options={{tabBarShowLabel:false, tabBarIndicatorStyle: {display:'none'},tabBarInactiveTintColor:'white'}}></Tab.Screen>
               </>
              
             ):(

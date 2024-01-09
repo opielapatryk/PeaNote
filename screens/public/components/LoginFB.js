@@ -31,8 +31,8 @@ const LoginFB = () => {
 
   return (
     <View style={styles.container}>
-      <Logo width={200} height={200}/>
-      <Text style={styles.errorMessage}>{message}</Text>
+      <Logo width={200} height={150}/>
+      {message !== '' && <Text style={styles.errorMessage}>{message}</Text>}
       {!createAccount && <>
         <Text style={styles.header}>Log In</Text>
       <Text style={styles.paragraph}>Please provide your credentials by filling out the form below.</Text>
