@@ -2,6 +2,8 @@ import {changeInfo,removeNote} from '../store/notes/boardSlice'
 import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
+let numberOfDeleted = 0
+
 export const handlePress = (notes,dispatch,isInfo,id) => {
     {notes.forEach(note => {
         if(note.isInfo === true){
@@ -37,12 +39,13 @@ const deleteNote = async (id) => {
   
         stickersonboard.forEach((sticker,index) => {
           index = index + 1
-          if(index === id){
+          let sum = id - numberOfDeleted
+          if(index === sum){
             creator = sticker.creator
             content = sticker.content
           }
         })
-
+        numberOfDeleted++
          // REMOVE STICKER FROM PENDING 
         firestore()
         .collection('users')

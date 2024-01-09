@@ -1,7 +1,6 @@
 import React from 'react';
-import { Pressable, Button, FlatList, Animated,SafeAreaView } from 'react-native';
+import { Pressable, Button, FlatList, Animated } from 'react-native';
 import { PendingNote } from '../../../components/PendingNote';
-import { styles } from '../../../assets/styles/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { sendNoteToBoard, onClickChangeInfo } from '../logic/apiPendingScreen';
 
