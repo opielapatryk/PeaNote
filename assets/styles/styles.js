@@ -3,12 +3,13 @@ import { StyleSheet,StatusBar } from 'react-native';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFBE4',
     alignItems: 'center',
     justifyContent:'space-between',
+    paddingTop:20
   },
   note: {
-    backgroundColor: 'rgba(226, 216, 124, 1)',
+    backgroundColor: '#FFF3B2',
     width: 100,
     height: 150,
     borderWidth: 1,
@@ -19,9 +20,15 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 3,
     shadowColor: 'rgb(0, 0, 0)',
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingTop:10,
+    paddingLeft:10,
     marginLeft:10,
+    borderRadius:8,
+    marginBottom:10
+  },
+  noteText:{
+    fontSize:15,
+    letterSpacing:1.5
   },
   button: {
     marginLeft:10,
@@ -42,7 +49,8 @@ export const styles = StyleSheet.create({
   },
   board:{
     flex: 1,
-    paddingBottom: 10,
+    paddingTop: 10,
+    backgroundColor: '#FFFBE4',
   },
   menu:{
     flexDirection: 'row',
@@ -66,21 +74,12 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 22,
   },
-  switchRow:{
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent:'center',
-    marginTop:5
-  },
-  settingsActionText:{
-    color:'rgb(0,122,255)',
-    fontSize:18,
-    paddingRight:15,
-  },
   header:{
     fontSize:22,
   },
-  paragraph:{fontSize:12,color:'gray'},
+  paragraph:{
+    fontSize:12,color:'gray'
+  },
   roundTextInput:{
     borderRadius:20,
     borderWidth: 1,
@@ -171,4 +170,102 @@ export const styles = StyleSheet.create({
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
   },
+  settingButton:{
+    backgroundColor:'#FFF3B2',
+    borderWidth:1,
+    borderRadius:20,
+    width:300,
+    padding:10,
+    alignSelf:'center',
+    alignItems:'center',
+    marginBottom:20,
+  },
+  switchRow:{
+    flexDirection: 'row',
+    backgroundColor:'#FFF3B2',
+    borderWidth:1,
+    borderRadius:20,
+    width:300,
+    alignSelf:'center',
+    alignItems:'center',
+    marginBottom:20,
+    justifyContent:'center',
+    padding:3,
+  },
+  settingsActionText:{
+    fontSize:12,
+    paddingRight:10,
+    letterSpacing:.5,
+  },
+  settingsText:{
+    fontSize:12,
+    letterSpacing:.5,
+  },
+  settingsTextInput:{
+    alignSelf:'center',
+    marginBottom:20,
+    width:300,
+    borderWidth:1,
+    padding:3,
+    borderRadius:5,
+    padding:5
+  },
+  settingsMessage:{
+    alignSelf:'center',
+  },
+  friendsHeaderRequest:{
+    fontSize:20,
+    fontWeight:'bold',
+    letterSpacing:1,
+    alignSelf:'center',
+    borderWidth:2,
+    borderRadius:3,
+    padding:5,
+    margin:10
+  },
+  friendsFriendsHeader:{
+    fontSize:20,
+    fontWeight:'bold',
+    alignSelf:'center',
+    marginTop:15
+  },
+  friendsTextInput:{
+    alignSelf:'center',
+    marginTop:10,
+    width:300,
+    borderWidth:1,
+    padding:5,
+    borderRadius:5,
+  },
+  friendsButton:{
+    backgroundColor:'#FFF3B2',
+    borderWidth:1,
+    borderRadius:20,
+    width:200,
+    padding:10,
+    alignSelf:'center',
+    alignItems:'center',
+    marginBottom:20,
+  },
+  friendsMessage:{
+    alignSelf:'center',
+    marginTop:15
+  },
+  friendInList:{
+    borderBottomWidth:1,
+    paddingBottom:5
+  },
+  requestItem:{
+    flexDirection: 'row',
+    backgroundColor:'#FFF3B2',
+    borderWidth:1,
+    borderRadius:20,
+    width:300,
+    alignSelf:'center',
+    alignItems:'center',
+    marginBottom:20,
+    justifyContent:'center',
+    padding:3,
+  }
+
 });

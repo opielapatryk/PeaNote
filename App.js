@@ -16,8 +16,6 @@ import 'expo-dev-client'
 import 'firebase/auth';
 import { WEB_CLIENT_ID, IOS_CLIENT_ID} from './FIrebaseConfig';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { Pressable, View,Text } from 'react-native';
-import { styles } from './assets/styles/styles';
 import Logout from './screens/auth/components/Logout'
 
 const Stack = createNativeStackNavigator();
@@ -46,11 +44,12 @@ export default function App(){
 
   if (initializing) return null;
 
+
   function FriendStack() {
     return (
       <Stack.Navigator>
-        <Stack.Screen name="Friends" component={FriendsScreen} options={{headerShown:false}}/>
-        <Stack.Screen name="FriendsBoard" component={FriendsBoard} />
+        <Stack.Screen name="FriendsScreen" component={FriendsScreen} options={{headerShown:false}}/>
+        <Stack.Screen name={'FriendsBoard'} component={FriendsBoard} options={({ route }) => ({ title: route.params.name })} />
         <Stack.Screen name="Requests" component={FriendRequests} />
       </Stack.Navigator>
     );
@@ -59,10 +58,10 @@ export default function App(){
   return (
     <Provider store={store}>
         <NavigationContainer>
-        <Tab.Navigator screenOptions={{tabBarItemStyle:{padding:0,marginTop:10},tabBarIndicatorStyle:{backgroundColor:'#000'},tabBarLabelStyle:{letterSpacing:1.5, fontSize:11}}}>
+        <Tab.Navigator screenOptions={{tabBarItemStyle:{padding:0,marginTop:10},tabBarIndicatorStyle:{backgroundColor:'#000'},tabBarLabelStyle:{letterSpacing:1, fontSize:11}}}>
             {!user?(
               <>
-                <Tab.Screen name="LoginFB" component={LoginFB} options={{tabBarShowLabel:false, tabBarIndicatorStyle: {display:'none'},tabBarInactiveTintColor:'white'}}></Tab.Screen>
+                <Tab.Screen name="LoginFB" component={LoginFB} options={{tabBarStyle:{display:'none'}}}></Tab.Screen>
               </>
              
             ):(

@@ -1,5 +1,5 @@
 import React, {useEffect, useState } from 'react';
-import { Text, View, Button, TextInput, Switch} from 'react-native';
+import { Text, View, TextInput, Switch,Pressable} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import {checkIsAskBeforeStickingNoteFlagOff,deleteAccount,changePassword,askBeforeStick} from '../logic/apiSettingsScreen'
 import { styles } from '../../../assets/styles/styles';
@@ -23,15 +23,15 @@ const SettingsScreen = () => {
 
   const renderChangePasswordButtons = () => (
     <>
-      <Button title="CHANGE PASSWORD" onPress={handlePasswordChangeButtonPress} />
-      <Button title="CONFIRM ACCOUNT DELETE" onPress={()=>deleteAccount(notes,dispatchRedux,pendingNotes)} />
+      <Pressable style={styles.settingButton} onPress={handlePasswordChangeButtonPress}><Text style={styles.settingsText}>CHANGE PASSWORD</Text></Pressable>
+      <Pressable style={styles.settingButton} onPress={()=>deleteAccount(notes,dispatchRedux,pendingNotes)}><Text style={styles.settingsText}>CONFIRM ACCOUNT DELETE</Text></Pressable>
     </>
   );
 
   const renderDeleteAccountButtons = () => (
     <>
-      <Button title="CHANGE PASSWORD" onPress={handlePasswordChangeButtonPress} />
-      <Button title="DELETE ACCOUNT" onPress={() => setConfirmAccountDelete(true)} />
+      <Pressable style={styles.settingButton} onPress={handlePasswordChangeButtonPress}><Text style={styles.settingsText}>CHANGE PASSWORD</Text></Pressable>
+      <Pressable style={styles.settingButton} onPress={() => setConfirmAccountDelete(true)}><Text style={styles.settingsText}>DELETE ACCOUNT</Text></Pressable>
     </>
   );
 
@@ -42,12 +42,13 @@ const SettingsScreen = () => {
   };
 
   const renderDeleteAccountBeforeClickingChangePassword = () => (
-    <View>
+    <View style={styles.board}>
       <View style={styles.switchRow}>
         <Text style={styles.settingsActionText}>ASK BEFORE STICKING NOTE</Text>
         <Switch
           onValueChange={toggleSwitch}
           value={askBeforeStickingNoteFlag}
+          thumbColor={'white'}
         />
       </View>
 
@@ -58,7 +59,7 @@ const SettingsScreen = () => {
   );
 
   const renderDeleteAccountAfterClickingChangePassword = () => (
-    <View>
+    <View style={styles.board}>
       <View style={styles.switchRow}>
         <Text style={styles.settingsActionText}>ASK BEFORE STICKING NOTE</Text>
         <Switch
@@ -68,17 +69,17 @@ const SettingsScreen = () => {
       </View>
 
 
-      <TextInput placeholder="Old Password" onChangeText={setOldPassword} secureTextEntry />
-      <TextInput placeholder="New Password" onChangeText={setNewPassword} secureTextEntry />
-      <Button title="CONFIRM NEW PASSWORD" onPress={()=>changePassword(setConfirmAccountDelete,newPassword,setMessage)} />
+      <TextInput style={styles.settingsTextInput} placeholder="Old Password" onChangeText={setOldPassword} secureTextEntry />
+      <TextInput style={styles.settingsTextInput} placeholder="New Password" onChangeText={setNewPassword} secureTextEntry />
+      <Pressable style={styles.settingButton} onPress={()=>changePassword(setConfirmAccountDelete,newPassword,setMessage)}><Text style={styles.settingsText}>CONFIRM NEW PASSWORD</Text></Pressable>
 
       {confirmAccountDelete ? (
-        <Button title="CONFIRM ACCOUNT DELETE" onPress={()=>deleteAccount(notes,dispatchRedux,pendingNotes)} />
+        <Pressable style={styles.settingButton} onPress={()=>deleteAccount(notes,dispatchRedux,pendingNotes)}><Text style={styles.settingsText}>CONFIRM ACCOUNT DELETE</Text></Pressable>
       ) : (
-        <Button title="DELETE ACCOUNT" onPress={() => setConfirmAccountDelete(true)} />
+        <Pressable style={styles.settingButton} onPress={() => setConfirmAccountDelete(true)}><Text style={styles.settingsText}>DELETE ACCOUNT</Text></Pressable>
       )}
 
-      <Text>{message}</Text>
+      <Text style={styles.settingsMessage}>{message}</Text>
     </View>
   );
 

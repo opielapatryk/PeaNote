@@ -5,8 +5,6 @@ import firestore from '@react-native-firebase/firestore';
 
 let numberOfDeleted = 0
 export async function sendNoteToBoard(itemID,stickerContent,dispatch,index,animatedValues){
-
-  console.log('id: ' + itemID, 'content: ' + stickerContent, 'index: ' + index);
   const MY_EMAIL = auth().currentUser.email
 
   const animate = (index,addNote,removeNote) => {

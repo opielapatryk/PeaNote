@@ -1,11 +1,11 @@
 import React from 'react';
-import { Pressable, Button, FlatList, Animated,View } from 'react-native';
+import { Pressable, Text, FlatList, Animated,View } from 'react-native';
 import { PendingNote } from '../../../components/PendingNote';
 import { useDispatch, useSelector } from 'react-redux';
 import { sendNoteToBoard, onClickChangeInfo } from '../logic/apiPendingScreen';
-import Menu from '../../../components/Menu'
+import { styles } from '../../../assets/styles/styles';
 
-const PendingScreen = ({navigation}) => {
+const PendingScreen = () => {
   const { pendingNotes } = useSelector((state) => state.board);
   const dispatch = useDispatch();
   const animatedValues = pendingNotes.map(() => new Animated.Value(200));
@@ -14,24 +14,21 @@ const PendingScreen = ({navigation}) => {
     return (
       <Animated.View style={{ overflow: 'hidden', maxHeight: animatedValues[index] }}>
         <PendingNote id={item.id} text={item.text} isInfo={item.isInfo} />
-        <Button
-          title={`Approve note | ID: ${item.id}`}
+        <Pressable style={{alignItems: 'center'}}
           onPress={() => {
             sendNoteToBoard(item.id, item.text, dispatch,index,animatedValues);
           }}
-        />
+        ><Text style={styles.noteText}>Approve note</Text></Pressable>
       </Animated.View>
     );
   };
 
   return (
     <View style={{flex:1}}>
-      {/* <Menu navigation={navigation}/> */}
-    <Pressable onPress={() => onClickChangeInfo(dispatch, pendingNotes)} style={{flex:1}}>
+    <Pressable onPress={() => onClickChangeInfo(dispatch, pendingNotes)} style={styles.board}>
       <FlatList data={pendingNotes} renderItem={renderNotes} keyExtractor={(note) => note.id} />
     </Pressable>
     </View>
-
   );
 };
 
