@@ -72,7 +72,7 @@ export const removeFriend = async (navigation,friendEmail) => {
                 friends: firebase.firestore.FieldValue.arrayRemove(MY_EMAIL),
               })
               .then(()=>{
-                navigation.navigate('Friends');
+                navigation.navigate('FriendsScreen');
               })
             })
           })
