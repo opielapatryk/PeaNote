@@ -41,6 +41,7 @@ export const createNote = async (content,setContent,setMessage,friendEmail) => {
 export const removeFriend = async (navigation,friendEmail) => {
     try {
       const MY_EMAIL = auth().currentUser.email
+
       firestore()
           .collection('users')
           .where('email', '==', MY_EMAIL)
@@ -52,9 +53,6 @@ export const removeFriend = async (navigation,friendEmail) => {
               .doc(doc.id)
               .update({
                 friends: firebase.firestore.FieldValue.arrayRemove(friendEmail),
-              })
-              .then(()=>{
-                navigation.navigate('Friends');
               })
             })
           })

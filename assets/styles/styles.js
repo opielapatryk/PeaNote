@@ -328,8 +328,21 @@ elevation: 1,
     marginTop:15
   },
   friendInList:{
-    borderBottomWidth:1,
-    paddingBottom:5
+    flexDirection: 'row',
+    width:300,
+    alignSelf:'center',
+    alignItems:'center',
+    marginBottom:10,
+    padding:10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.00,
+    elevation: 1,
+    borderBottomWidth:1
   },
   requestItem:{
     flexDirection: 'row',

@@ -49,7 +49,7 @@ export default function App(){
     return (
       <Stack.Navigator>
         <Stack.Screen name="FriendsScreen" component={FriendsScreen} options={{headerShown:false}}/>
-        <Stack.Screen name={'FriendsBoard'} component={FriendsBoard} options={({ route }) => ({ title: route.params.name })} />
+        <Stack.Screen name='FriendsBoard' component={FriendsBoard} options={({ route }) => ({ title: route.params.name })} />
         <Stack.Screen name="Requests" component={FriendRequests} />
       </Stack.Navigator>
     );

@@ -1,4 +1,4 @@
-import { Text,ScrollView, Pressable, TextInput } from 'react-native'
+import { Text,View, Pressable, TextInput,FlatList } from 'react-native'
 import React, {useState,useEffect} from 'react'
 import { useFocusEffect } from '@react-navigation/native';
 import {sendFriendRequest,loadUser,getUserEmail} from '../logic/apiFriendsScreen'
@@ -23,20 +23,22 @@ export const FriendsScreen = ({ navigation }) => {
     }, [])
   );
 
+  const renderFriends = ({ item }) => {
+    return (
+      <Pressable onPress={() =>navigation.navigate('FriendsBoard', {name:item, friendEmail: item})} style={styles.friendInList}><Text>{item}</Text></Pressable>
+    );
+  };
+
   return (
-    <ScrollView style={styles.board}>
+    <View style={styles.board}>
       <Pressable onPress={()=>navigation.navigate('Requests')}><Text style={styles.friendsHeaderRequest}>REQUESTS</Text></Pressable>
       <TextInput style={styles.friendsTextInput} placeholder='Insert friend email' onChangeText={(newFriendEmail) => setNewFriendEmail(newFriendEmail)} value={newFriendEmail}/>
       <Text style={styles.friendsMessage}>{message}</Text>
       {friendReqMessage&&<Text style={styles.settingsMessage}>Friend request sent!</Text>}
       <Pressable style={ buttonTitle && styles.friendsButton} onPress={()=>sendFriendRequest(newFriendEmail,setNewFriendEmail,setdoesEmailExist,setList,setMessage,setNewFriendEmail,setButtonTitle,setFriendReqMessage)}><Text style={!buttonTitle ? {height:0} : {fontWeight:700}}>{buttonTitle}</Text></Pressable>
       <Text style={styles.friendsFriendsHeader}>Friends:</Text>
-      <ScrollView style={{margin:10}}>
-        {friends.map((friend)=>(
-          <Pressable key={friend} onPress={() =>navigation.navigate('FriendsBoard', {name:friend, friendEmail: friend})} style={styles.friendInList}><Text>{friend}</Text></Pressable>
-        ))}
-      </ScrollView>
-    </ScrollView>
+      <FlatList data={friends} renderItem={renderFriends} keyExtractor={(friend) => friend} style={{margin:10}}/>
+    </View>
   );
 }
 
