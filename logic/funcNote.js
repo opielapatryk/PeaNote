@@ -1,24 +1,10 @@
 import {changeInfo,removeNote} from '../store/notes/boardSlice'
 import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import { Animated, Easing } from 'react-native';
 
 let numberOfDeleted = 0
 
 export const handlePress = (notes,dispatch,isInfo,id,animatedValues) => {
-  const animate = (index,removeNote) => {
-    Animated.timing(animatedValues[index], {
-      toValue: 0,
-      duration: 1000,
-      easing: Easing.bounce,
-      useNativeDriver: false,
-    }).start(async ()=>{
-      if (removeNote) {
-        await removeNote();
-        console.log('note removed from notes redux store');
-      }
-    });
-  };
 
     {notes.forEach(note => {
         if(note.isInfo === true){
@@ -29,7 +15,6 @@ export const handlePress = (notes,dispatch,isInfo,id,animatedValues) => {
         dispatch(changeInfo(id));
         dispatch(removeNote(id));
         deleteNote(id);
-        animate(id,()=>dispatch(removeNote(itemID)));
     } else {
         dispatch(changeInfo(id));
     }
