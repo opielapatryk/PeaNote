@@ -69,7 +69,7 @@ export default function App(){
                 <Tab.Screen name="Board" component={BoardScreen}></Tab.Screen>
                 <Tab.Screen name="Pending" component={PendingScreen}></Tab.Screen>
                 <Tab.Screen name="Settings" component={SettingsScreen}></Tab.Screen>
-                <Tab.Screen name="Friends" component={FriendStack} initialParams={{ userId:'12'}} ></Tab.Screen>
+                <Tab.Screen options={{ swipeEnabled: false }} name="Friends" component={FriendStack}></Tab.Screen>
                 <Tab.Screen name="Logout" component={Logout}></Tab.Screen>
                 
               </>

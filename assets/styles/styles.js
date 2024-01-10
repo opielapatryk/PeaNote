@@ -14,11 +14,11 @@ export const styles = StyleSheet.create({
     height: 150,
     borderWidth: 1,
     shadowOffset: {
-      width: -6,
-      height: 4,
+      width: -2,
+      height: 2,
     },
     shadowOpacity: 0.3,
-    shadowRadius: 3,
+    shadowRadius: 2,
     shadowColor: 'rgb(0, 0, 0)',
     paddingTop:10,
     paddingLeft:10,
@@ -28,24 +28,16 @@ export const styles = StyleSheet.create({
   },
   noteText:{
     fontSize:15,
-    letterSpacing:1.5
-  },
-  button: {
-    marginLeft:10,
-    backgroundColor: 'red',
-    height: 30,
-    width: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderBottomWidth: 0,
-    shadowOffset: {
-      width: -6,
-      height: 4,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 3,
-    shadowColor: 'rgb(0, 0, 0)'
+    letterSpacing:1.5,
+    shadowColor: "#000",
+shadowOffset: {
+	width: 0,
+	height: 1,
+},
+shadowOpacity: 0.18,
+shadowRadius: 1.00,
+
+elevation: 1,
   },
   board:{
     flex: 1,
@@ -99,6 +91,15 @@ export const styles = StyleSheet.create({
     marginTop:5,
     marginBottom:5,
     alignItems:'center',
+    shadowColor: "#000",
+shadowOffset: {
+	width: 0,
+	height: 1,
+},
+shadowOpacity: 0.18,
+shadowRadius: 1.00,
+
+elevation: 1,
   },
   continuteWithGoogle:{
     borderRadius:20,
@@ -179,6 +180,15 @@ export const styles = StyleSheet.create({
     alignSelf:'center',
     alignItems:'center',
     marginBottom:20,
+    shadowColor: "#000",
+shadowOffset: {
+	width: 0,
+	height: 1,
+},
+shadowOpacity: 0.18,
+shadowRadius: 1.00,
+
+elevation: 1,
   },
   switchRow:{
     flexDirection: 'row',
@@ -191,6 +201,15 @@ export const styles = StyleSheet.create({
     marginBottom:20,
     justifyContent:'center',
     padding:3,
+    shadowColor: "#000",
+shadowOffset: {
+	width: 0,
+	height: 1,
+},
+shadowOpacity: 0.18,
+shadowRadius: 1.00,
+
+elevation: 1,
   },
   settingsActionText:{
     fontSize:12,
@@ -221,7 +240,16 @@ export const styles = StyleSheet.create({
     borderWidth:2,
     borderRadius:3,
     padding:5,
-    margin:10
+    margin:10,
+    shadowColor: "#000",
+shadowOffset: {
+	width: 0,
+	height: 1,
+},
+shadowOpacity: 0.18,
+shadowRadius: 1.00,
+
+elevation: 1,
   },
   friendsFriendsHeader:{
     fontSize:20,
@@ -246,6 +274,15 @@ export const styles = StyleSheet.create({
     alignSelf:'center',
     alignItems:'center',
     marginBottom:20,
+    shadowColor: "#000",
+shadowOffset: {
+	width: 0,
+	height: 1,
+},
+shadowOpacity: 0.18,
+shadowRadius: 1.00,
+
+elevation: 1,
   },
   friendsMessage:{
     alignSelf:'center',
@@ -266,6 +303,30 @@ export const styles = StyleSheet.create({
     marginBottom:20,
     justifyContent:'center',
     padding:3,
+  },
+  createNoteButton:{
+    backgroundColor:'#FFF3B2',
+    borderWidth:1,
+    borderRadius:20,
+    width:100,
+    padding:10,
+    alignSelf:'center',
+    alignItems:'center',
+    marginBottom:20,
+    marginTop:20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.00,
+    
+    elevation: 1,
+  },
+  createNoteButtonText:{
+    fontWeight:'bold',
+    fontSize:12,
+    letterSpacing:.5,
   }
-
 });

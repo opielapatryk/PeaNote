@@ -20,7 +20,7 @@ const FriendRequests = () => {
               <View style={styles.requestItem}>
               <Pressable onPress={()=>approveFriend(item,index,animatedValues)}><Text>{String(item)}</Text></Pressable>
                 <Pressable onPress={()=>removeReq(item,index,animatedValues)}>
-                    <FontAwesome5 name="trash-alt" size={24} color="black" />
+                    <Text>Remove</Text>
                 </Pressable>
               </View>
             </Animated.View>
