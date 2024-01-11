@@ -6,6 +6,12 @@ import { styles } from '../../../assets/styles/styles';
 import { checkThenChangeInfo } from './checkThenChangeInfo';
 import { useFocusEffect } from '@react-navigation/native';
 import { fetchNotes } from './fetchNotes';
+import Animated, {
+  useSharedValue,
+  withTiming,
+  useAnimatedStyle,
+  Easing,
+} from 'react-native-reanimated';
 
 const BoardScreen = () => {
   const { notes } = useSelector((state) => state.board);
