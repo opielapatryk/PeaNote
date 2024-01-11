@@ -4,7 +4,7 @@ import { styles } from '../assets/styles/styles';
 import { useDispatch, useSelector} from 'react-redux';
 import { handlePress } from '../logic/funcNote';
 
-export function Note({ id, text, isInfo }) {
+export function Note({ id, isInfo }) {
   const { notes } = useSelector((state) => state.board);
   const dispatch = useDispatch();
   const animatedValues = notes.map(() => new Animated.Value(200));

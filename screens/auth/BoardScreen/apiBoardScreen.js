@@ -1,6 +1,13 @@
 import {addNote,changeInfo,addPendingNote} from '../../../store/notes/boardSlice';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import {Note} from '../../../components/Note'
+
+export const renderNotes = ({item}) => {
+  return (
+    <Note id={item.id} isInfo={item.isInfo} />
+  )
+}
 
 export const fetchNotes = async (dispatch) => {  
   try {

@@ -4,7 +4,7 @@ import { styles } from '../assets/styles/styles';
 import { useDispatch, useSelector} from 'react-redux';
 import { handlePress } from '../logic/funcPendingNote';
 
-export function PendingNote({ id, text, isInfo }) {
+export function PendingNote({ id, isInfo }) {
   const {pendingNotes} = useSelector((state) => state.board);
   const dispatch = useDispatch();
 

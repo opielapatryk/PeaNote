@@ -13,7 +13,7 @@ const PendingScreen = () => {
   const renderNotes = ({ item, index }) => {
     return (
       <Animated.View style={{ overflow: 'hidden', maxHeight: animatedValues[index] }}>
-        <PendingNote id={item.id} text={item.text} isInfo={item.isInfo} />
+        <PendingNote id={item.id} isInfo={item.isInfo} />
         <Pressable style={{alignItems: 'center'}}
           onPress={() => {
             sendNoteToBoard(item.id, item.text, dispatch,index,animatedValues);
