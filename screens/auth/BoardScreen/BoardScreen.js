@@ -1,10 +1,11 @@
 import React,{ useEffect } from 'react';
 import { Pressable,View,FlatList } from 'react-native';
-import { renderNotes } from './apiBoardScreen';
+import { renderNotes } from './renderNotes';
 import { useDispatch, useSelector } from 'react-redux';
 import { styles } from '../../../assets/styles/styles';
-import { fetchNotes, checkThenChangeInfo } from './apiBoardScreen';
+import { checkThenChangeInfo } from './checkThenChangeInfo';
 import { useFocusEffect } from '@react-navigation/native';
+import { fetchNotes } from './fetchNotes';
 
 const BoardScreen = () => {
   const { notes } = useSelector((state) => state.board);
