@@ -403,5 +403,10 @@ elevation: 1,
     fontWeight:'bold',
     fontSize:12,
     letterSpacing:.5,
-  }
+  },
+  renderFriends:{
+    flex: 1,
+    padding: 10,
+    backgroundColor: '#FFFBE4',
+  },
 });

@@ -1,31 +1,10 @@
-import {Animated,Easing} from 'react-native'
-import auth, { firebase } from '@react-native-firebase/auth';
+import { MY_EMAIL } from "./constants";
 import firestore from '@react-native-firebase/firestore';
-
-export const loadUser = async (setFriends)=>{
-    try{
-      const MY_EMAIL = auth().currentUser.email
-      firestore()
-        .collection('users')
-        .where('email', '==', MY_EMAIL)
-        .get()
-        .then(querySnapshot =>{
-          if (!querySnapshot.empty) {
-            const friendRequests = querySnapshot.docs[0].data().friends_requests;
-            setFriends(friendRequests);
-          }
-        })
-    }catch(e){
-      console.log(e.message)
-    }
-  }
-
-
+import { firebase } from '@react-native-firebase/auth';
+import { animate } from "./animate";
 
 export const approveFriend = async (friendEmail,index,animatedValues) =>{
-    
     try {
-        const MY_EMAIL = auth().currentUser.email
         firestore()
         .collection('users')
         .where('email', '==', MY_EMAIL)
@@ -95,43 +74,3 @@ export const approveFriend = async (friendEmail,index,animatedValues) =>{
         console.log(error.message);
     }
   }
-
-const animate = (index,animatedValues) => {
-    Animated.timing(animatedValues[index], {
-        toValue: 0,
-        duration: 1000,
-        easing: Easing.bounce,
-        useNativeDriver: false,
-    }).start();
-};
-
-export const removeReq = async (friendEmail,index,animatedValues) =>{
-  const MY_EMAIL = auth().currentUser.email
-  try {
-    firestore()
-    .collection('users')
-    .where('email', '==', MY_EMAIL)
-    .get()
-    .then(querySnapshot => {
-      if(!querySnapshot.empty){
-        querySnapshot.forEach(doc=>{
-          if(doc.data().friends_requests.includes(friendEmail)){
-            firestore()
-            .collection('users')
-            .doc(doc.id)
-            .update({
-              friends_requests: firebase.firestore.FieldValue.arrayRemove(friendEmail),
-            })
-            .then(() => {
-              animate(index,animatedValues)
-            });
-          }
-        })
-      }else{
-        console.log('error');
-      }
-    })
-  } catch (error) {
-    console.log(error.message);
-  }
-}
