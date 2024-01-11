@@ -11,9 +11,7 @@ export function Note({ id, isInfo }) {
 
   return (
     <Pressable style={styles.note} onPress={()=>handlePress(notes,dispatch,isInfo,id,animatedValues)}>
-      <View>
         <Text style={styles.noteText}>{notes.find((item) => item.id === id)?.text}</Text>
-      </View>
     </Pressable>
   );
 }
