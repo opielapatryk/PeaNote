@@ -1,7 +1,7 @@
 import React, {useEffect, useState } from 'react';
 import { Text, View, TextInput, Switch,Pressable} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import {checkIsAskBeforeStickingNoteFlagOff,deleteAccount,changePassword,askBeforeStick} from '../logic/apiSettingsScreen'
+import {checkIsAskBeforeStickingNoteFlagOff,deleteAccount,changePassword,askBeforeStick} from './apiSettingsScreen'
 import { styles } from '../../../assets/styles/styles';
 
 const SettingsScreen = () => {

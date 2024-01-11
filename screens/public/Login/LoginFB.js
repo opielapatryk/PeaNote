@@ -1,7 +1,7 @@
 import { View,TextInput,Text, Pressable } from 'react-native'
 import React, {useState} from 'react'
 import { styles } from '../../../assets/styles/styles';
-import {signInFirebase,signUpFirebase,signIn} from '../logic/apiLoginFB'
+import {signInFirebase,signUpFirebase,signIn} from './apiLoginFB'
 import Logo from '../../../assets/images/logo.svg';
 import Ionicons from '@expo/vector-icons/Ionicons';
 

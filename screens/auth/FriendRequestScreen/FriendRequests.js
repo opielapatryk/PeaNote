@@ -2,7 +2,7 @@ import { Text, Pressable,  FlatList, Animated, View} from 'react-native'
 import React, {useState} from 'react'
 import { useFocusEffect } from '@react-navigation/native';
 import { FontAwesome5 } from '@expo/vector-icons'; 
-import { loadUser, removeReq,approveFriend } from '../logic/apiFriendRequests';
+import { loadUser, removeReq,approveFriend } from './apiFriendRequests';
 import {styles} from '../../../assets/styles/styles'
 const FriendRequests = () => {
     const [friends,setFriends] = useState([])

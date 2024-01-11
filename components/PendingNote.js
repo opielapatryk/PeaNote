@@ -11,7 +11,7 @@ export function PendingNote({ id, text, isInfo }) {
   return (
     <Pressable style={styles.note} onPress={()=>handlePress(pendingNotes,dispatch,isInfo,id)}>
       <View>
-        <Text>{pendingNotes.find((item) => item.id === id)?.text}</Text>
+        <Text style={styles.noteText}>{pendingNotes.find((item) => item.id === id)?.text}</Text>
       </View>
     </Pressable>
   );

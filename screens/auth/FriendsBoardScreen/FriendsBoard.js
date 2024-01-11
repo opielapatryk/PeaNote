@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Text, TextInput, View, Pressable } from 'react-native';
-import {createNote,removeFriend} from '../logic/apiFriendsBoard'
+import {createNote,removeFriend} from './apiFriendsBoard'
 import {styles} from '../../../assets/styles/styles'
 const FriendsBoard = ({ route, navigation }) => {
   const { friendEmail } = route.params;

@@ -1,6 +1,9 @@
 import { StyleSheet,StatusBar } from 'react-native';
 
 export const styles = StyleSheet.create({
+  flexone:{
+    flex: 1,
+  },
   container: {
     flex: 1,
     backgroundColor: '#FFFBE4',
@@ -29,8 +32,13 @@ export const styles = StyleSheet.create({
   noteText:{
     fontSize:15,
     letterSpacing:1.5,
-    shadowColor: "#000",
     backgroundColor:'#FFF3B2',
+  },
+  approveNote:{
+    fontSize:15,
+    letterSpacing:1.5,
+    shadowColor: "#000",
+    backgroundColor:'#FFFBE4',
     shadowOffset: {
       width: 0,
       height: 1,
