@@ -9,7 +9,6 @@ const SettingsScreen = () => {
   const dispatchRedux = useDispatch();
   const [message, setMessage] = useState('');
   const [showInput, setShowInput] = useState(true);
-  const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmAccountDelete, setConfirmAccountDelete] = useState(false);
   const [askBeforeStickingNoteFlag, setAskBeforeStickingNoteFlag] = useState(false);
@@ -67,9 +66,6 @@ const SettingsScreen = () => {
           value={askBeforeStickingNoteFlag}
         />
       </View>
-
-
-      <TextInput style={styles.settingsTextInput} placeholder="Old Password" onChangeText={setOldPassword} secureTextEntry />
       <TextInput style={styles.settingsTextInput} placeholder="New Password" onChangeText={setNewPassword} secureTextEntry />
       <Pressable style={styles.settingButton} onPress={()=>changePassword(setConfirmAccountDelete,newPassword,setMessage)}><Text style={styles.settingsText}>CONFIRM NEW PASSWORD</Text></Pressable>
 
