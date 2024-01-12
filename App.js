@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import store from './store/store'
 import { Provider } from 'react-redux';
-import LoginFB from './screens/public/Login/LoginFB'
+import Login from './screens/public/Login/components/Login'
 import BoardScreen from './screens/auth/BoardScreen/BoardScreen';
 import FriendsScreen from './screens/auth/FriendsScreen/FriendsScreen';
 import FriendsBoard from './screens/auth/FriendsBoardScreen/FriendsBoard';
@@ -61,7 +61,7 @@ export default function App(){
         <Tab.Navigator screenOptions={{tabBarItemStyle:{padding:0,marginTop:10},tabBarIndicatorStyle:{backgroundColor:'#000'},tabBarLabelStyle:{letterSpacing:1, fontSize:11}}}>
             {!user?(
               <>
-                <Tab.Screen name="LoginFB" component={LoginFB} options={{tabBarStyle:{display:'none'}}}></Tab.Screen>
+                <Tab.Screen name="Login" component={Login} options={{tabBarStyle:{display:'none'}}}></Tab.Screen>
               </>
              
             ):(
