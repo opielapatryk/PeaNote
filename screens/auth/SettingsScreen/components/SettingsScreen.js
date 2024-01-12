@@ -1,11 +1,11 @@
 import React, {useEffect, useState } from 'react';
 import { Text, View, TextInput, Switch,Pressable} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import {deleteAccount,changePassword,askBeforeStick} from './functions/changePassword'
-import { styles } from '../../../assets/styles/styles';
-import { checkIsAskBeforeStickingNoteFlagOff } from './functions/checkIsAskBeforeStickingNoteFlagOff';
-import {renderDeleteAccountBeforeClickingChangePassword} from './components/renderDeleteAccountBeforeClickingChangePassword'
-import {renderDeleteAccountAfterClickingChangePassword} from './components/renderDeleteAccountAfterClickingChangePassword'
+import {deleteAccount,changePassword,askBeforeStick} from '../functions/changePassword'
+import { styles } from '../../../../assets/styles/styles';
+import { checkIsAskBeforeStickingNoteFlagOff } from '../functions/checkIsAskBeforeStickingNoteFlagOff';
+import {renderDeleteAccountBeforeClickingChangePassword} from './renderDeleteAccountBeforeClickingChangePassword'
+import {renderDeleteAccountAfterClickingChangePassword} from './renderDeleteAccountAfterClickingChangePassword'
 
 const SettingsScreen = () => {
   const { notes,pendingNotes } = useSelector((state)=>state.board)

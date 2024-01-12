@@ -7,7 +7,7 @@ import LoginFB from './screens/public/Login/LoginFB'
 import BoardScreen from './screens/auth/BoardScreen/BoardScreen';
 import FriendsScreen from './screens/auth/FriendsScreen/FriendsScreen';
 import FriendsBoard from './screens/auth/FriendsBoardScreen/FriendsBoard';
-import SettingsScreen from './screens/auth/SettingsScreen/SettingsScreen';
+import SettingsScreen from './screens/auth/SettingsScreen/components/SettingsScreen';
 import PendingScreen from './screens/auth/PendingScreen/PendingScreen';
 import FriendRequests from './screens/auth/FriendRequestScreen/FriendRequests';
 import auth from '@react-native-firebase/auth';
