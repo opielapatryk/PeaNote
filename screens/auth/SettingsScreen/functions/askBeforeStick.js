@@ -1,4 +1,4 @@
-import { MY_EMAIL } from "./constants";
+import { MY_EMAIL } from "../../../constants";
 
 export const askBeforeStick = async (setAskBeforeStickingNoteFlag,setMessage) => {
     try {  

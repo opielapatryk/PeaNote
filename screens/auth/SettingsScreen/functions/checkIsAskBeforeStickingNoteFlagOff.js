@@ -1,4 +1,4 @@
-import { MY_EMAIL } from "./constants";
+import { MY_EMAIL } from "../../../constants";
 import firestore from '@react-native-firebase/firestore';
 
 export const checkIsAskBeforeStickingNoteFlagOff = async (setAskBeforeStickingNoteFlag) => {

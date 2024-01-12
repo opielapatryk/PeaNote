@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useFocusEffect } from '@react-navigation/native';
 import { loadUser } from './loadUser'
 import { renderFriends } from './renderFriends';
-import { KEY_EXTRACTOR } from './constants';
+import { KEY_EXTRACTOR_FRIENDS } from '../../constants';
 import { styles } from '../../../assets/styles/styles';
 
 const FriendRequests = () => {
@@ -16,7 +16,7 @@ const FriendRequests = () => {
     );
       
   return (
-    <FlatList data={friends} renderItem={({item,index})=>renderFriends({item,index},friends)} keyExtractor={KEY_EXTRACTOR} style={styles.renderFriends}/>
+    <FlatList data={friends} renderItem={({item,index})=>renderFriends({item,index},friends)} keyExtractor={KEY_EXTRACTOR_FRIENDS} style={styles.renderFriends}/>
   );
 }
 

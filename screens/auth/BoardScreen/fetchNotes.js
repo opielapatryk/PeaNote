@@ -1,7 +1,7 @@
 import {addNote,addPendingNote} from '../../../store/notes/boardSlice';
 import firestore from '@react-native-firebase/firestore';
 import { fetchAndDispatchStickers } from './fetchAndDispatchStickers'
-import { MY_EMAIL } from './constants';
+import { MY_EMAIL } from '../../constants';
 
 export const fetchNotes = async (dispatch) => {  
     try {
