@@ -1,30 +1,11 @@
-import {removePendingNote,changePendingInfo, addNote} from '../../../store/notes/boardSlice';
-import { Animated, Easing } from 'react-native';
-import auth, { firebase } from '@react-native-firebase/auth';
+import {removePendingNote, addNote} from '../../../store/notes/boardSlice';
+import { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import { MY_EMAIL } from './constants';
+import { animate } from './animate';
 
 let numberOfDeleted = 0
-export async function sendNoteToBoard(itemID,stickerContent,dispatch,index,animatedValues){
-  const MY_EMAIL = auth().currentUser.email
-
-  const animate = (index,addNote,removeNote) => {
-    Animated.timing(animatedValues[index], {
-      toValue: 0,
-      duration: 1000,
-      easing: Easing.bounce,
-      useNativeDriver: false,
-    }).start(async ()=>{
-      if (addNote) {
-        await addNote();
-        console.log('note added to board screen redux store');
-      }
-      if (removeNote) {
-        await removeNote();
-        console.log('note removed from pending notes redux store');
-      }
-    });
-  };
-
+export async function sendNoteToBoard(itemID,dispatch,index,animatedValues){
     try {
       // TAKE STICKER CONTENT AND CREATOR 
       // create variable of pending notes
@@ -91,18 +72,10 @@ export async function sendNoteToBoard(itemID,stickerContent,dispatch,index,anima
       })
 
       // MANAGE REDUX STORE
-      animate(index,()=>dispatch(addNote({ id: itemID, text: content, isInfo: false })),()=>dispatch(removePendingNote(itemID)));
+      animate(index,()=>dispatch(addNote({ id: itemID, text: content, isInfo: false })),()=>dispatch(removePendingNote(itemID)),animatedValues);
 
     } catch (error) {
       console.log(error.message);
     }
 }
 
-export const onClickChangeInfo = (dispatch,pendingNotes) => {
-  pendingNotes.map((note) => {
-    if(note.isInfo === true)
-    {
-      dispatch(changePendingInfo(note.id))
-    }
-  })
-}

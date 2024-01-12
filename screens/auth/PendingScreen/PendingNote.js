@@ -1,8 +1,8 @@
 import { Text, View, Pressable } from 'react-native';
 import React from 'react';
-import { styles } from '../assets/styles/styles';
+import { styles } from '../../../assets/styles/styles';
 import { useDispatch, useSelector} from 'react-redux';
-import { handlePress } from '../logic/funcPendingNote';
+import { handlePress } from './funcPendingNote';
 
 export function PendingNote({ id, isInfo }) {
   const {pendingNotes} = useSelector((state) => state.board);

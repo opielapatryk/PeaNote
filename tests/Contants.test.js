@@ -1,6 +1,6 @@
 // import {signOutAndClearReduxStore}from '../funcMenu'
 import { useDispatch,useSelector } from 'react-redux';
-import {removeNote,removePendingNote,addNote,addPendingNote} from '../../store/notes/boardSlice'
+import {removeNote,removePendingNote,addNote,addPendingNote} from '../store/notes/boardSlice'
 
 describe('Testing sign out function', () => {
    test('create note and pending note', () => {

@@ -1,35 +1,29 @@
-import {changeInfo,removeNote} from '../store/notes/boardSlice'
+import {changePendingInfo,removePendingNote} from '../../../store/notes/boardSlice'
 import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 let numberOfDeleted = 0
-
-export const handlePress = (notes,dispatch,isInfo,id,animatedValues) => {
-
+export const handlePress = (notes,dispatch,isInfo,id) => {
     {notes.forEach(note => {
         if(note.isInfo === true){
-        dispatch(changeInfo(note.id));
+        dispatch(changePendingInfo(note.id));
         }
     });}
     if (isInfo) {
-        dispatch(changeInfo(id));
-        dispatch(removeNote(id));
+        dispatch(changePendingInfo(id));
+        dispatch(removePendingNote(id));
         deleteNote(id);
     } else {
-        dispatch(changeInfo(id));
+        dispatch(changePendingInfo(id));
     }
 };
 
 const deleteNote = async (id) => {
-
-      
-    const MY_EMAIL = auth().currentUser.email
-
     try {
-
+        const MY_EMAIL = auth().currentUser.email
         
-        // TAKE STICKERS ON BOARD
-        let stickersonboard
+        // TAKE STICKER CONTENT AND CREATOR 
+        let pending
 
         const result = await firestore()
         .collection('users')
@@ -37,12 +31,12 @@ const deleteNote = async (id) => {
         .get()
     
         result.forEach(doc=>{
-            stickersonboard = doc.data().stickersOnBoard
+          pending = doc.data().pending
         })
   
-        // ITERATE OVER STICKERS ON BOARD
+        // ITERATE OVER PENDING NOTES 
   
-        stickersonboard.forEach((sticker,index) => {
+        pending.forEach((sticker,index) => {
           index = index + 1
           let sum = id - numberOfDeleted
           if(index === sum){
@@ -51,8 +45,7 @@ const deleteNote = async (id) => {
           }
         })
         numberOfDeleted++
-
-         // REMOVE STICKER FROM FIRESTORE 
+         // REMOVE STICKER FROM PENDING 
         firestore()
         .collection('users')
         .where('email', '==', MY_EMAIL)
@@ -63,19 +56,15 @@ const deleteNote = async (id) => {
             .collection('users')
             .doc(doc.id)
             .update({
-            stickersOnBoard: firebase.firestore.FieldValue.arrayRemove({
+            pending: firebase.firestore.FieldValue.arrayRemove({
                 content: content,
                 creator: creator,
             }),
             })
         })
         })
-
-        // MANAGE REDUX STORE
-        
     } catch (error) {
       console.log(error.message);
     }
 }
-
 
