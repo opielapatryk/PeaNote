@@ -8,7 +8,7 @@ import BoardScreen from './screens/auth/BoardScreen/BoardScreen';
 import FriendsScreen from './screens/auth/FriendsScreen/FriendsScreen';
 import FriendsBoard from './screens/auth/FriendsBoardScreen/FriendsBoard';
 import SettingsScreen from './screens/auth/SettingsScreen/components/SettingsScreen';
-import PendingScreen from './screens/auth/PendingScreen/PendingScreen';
+import PendingScreen from './screens/auth/PendingScreen/components/PendingScreen';
 import FriendRequests from './screens/auth/FriendRequestScreen/FriendRequests';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin} from '@react-native-google-signin/google-signin';

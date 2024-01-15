@@ -1,4 +1,4 @@
-import {changePendingInfo,removePendingNote} from '../../../store/notes/boardSlice'
+import {changePendingInfo,removePendingNote} from '../../../../store/notes/boardSlice'
 import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 

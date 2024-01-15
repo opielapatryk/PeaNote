@@ -1,4 +1,4 @@
-import {changePendingInfo} from '../../../store/notes/boardSlice';
+import {changePendingInfo} from '../../../../store/notes/boardSlice';
 
 export const onClickChangeInfo = (dispatch,pendingNotes) => {
     pendingNotes.map((note) => {

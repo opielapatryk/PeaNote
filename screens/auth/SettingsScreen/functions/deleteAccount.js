@@ -1,8 +1,10 @@
 import { MY_EMAIL } from "../../../constants";
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import { setShowInput } from "../../../../store/settings/settingsSlice";
+setShowInput
 
-export const deleteAccount = async (notes,dispatch_redux,pendingNotes) => {
+export const deleteAccount = async ({notes,dispatch,pendingNotes}) => {
     try {
       firestore()
       .collection('users')
@@ -16,9 +18,11 @@ export const deleteAccount = async (notes,dispatch_redux,pendingNotes) => {
           .delete()
           .then(async () => {
             try {
-              notes.forEach(sticker => dispatch_redux(removeNote(sticker.id)));
-              pendingNotes.forEach(sticker => dispatch_redux(removePendingNote(sticker.id)));
+              notes.forEach(sticker => dispatch(removeNote(sticker.id)));
+              pendingNotes.forEach(sticker => dispatch(removePendingNote(sticker.id)));
+              dispatch(setShowInput(false))
               auth().currentUser.delete()
+
             } catch (error) {
                 console.error(error);
             }
@@ -26,6 +30,6 @@ export const deleteAccount = async (notes,dispatch_redux,pendingNotes) => {
         })})
 
     } catch (error) {
-      console.log('email error',error.message);
+      console.log('[deleteAccount.js] email error',error.message);
     }
   };

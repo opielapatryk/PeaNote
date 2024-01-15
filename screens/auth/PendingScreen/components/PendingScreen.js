@@ -1,9 +1,9 @@
 import React from 'react';
 import { Pressable, FlatList,View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { onClickChangeInfo } from './onClickChangeInfo';
-import { styles } from '../../../assets/styles/styles';
-import { KEY_EXTRACTOR_NOTES } from '../../constants';
+import { onClickChangeInfo } from '../functions/onClickChangeInfo';
+import { styles } from '../../../../assets/styles/styles'
+import { KEY_EXTRACTOR_NOTES } from '../../../constants';
 import { renderNotes } from './renderNotes';
 
 const PendingScreen = () => {

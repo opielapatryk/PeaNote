@@ -1,6 +1,7 @@
 import { MY_EMAIL } from "../../../constants";
+import firestore from '@react-native-firebase/firestore';
 
-export const askBeforeStick = async (setAskBeforeStickingNoteFlag,setMessage) => {
+export const askBeforeStick = async ({setAskBeforeStickingNoteFlag,setMessage}) => {
     try {  
       const result = await firestore()
       .collection('users')
@@ -30,6 +31,6 @@ export const askBeforeStick = async (setAskBeforeStickingNoteFlag,setMessage) =>
       })
     } catch (error) {
       setMessage('Something went wrong! Try again later..');
-      console.log('email error',error.message);
+      console.log('[askBeforeStick.js] email error: ',error.message);
     }
   };

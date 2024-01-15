@@ -1,7 +1,7 @@
-import { sendNoteToBoard } from './sendNoteToBoard';
+import { sendNoteToBoard } from '../functions/sendNoteToBoard';
 import { Pressable, Text, Animated } from 'react-native';
 import { PendingNote } from './PendingNote';
-import { styles } from '../../../assets/styles/styles';
+import { styles } from '../../../../assets/styles/styles';
 
 export const renderNotes = ({ item, index }, pendingNotes,dispatch) => {
     const animatedValues = pendingNotes.map(() => new Animated.Value(200));

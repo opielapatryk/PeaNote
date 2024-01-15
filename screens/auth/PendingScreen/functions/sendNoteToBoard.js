@@ -1,7 +1,7 @@
-import {removePendingNote, addNote} from '../../../store/notes/boardSlice';
+import {removePendingNote, addNote} from '../../../../store/notes/boardSlice';
 import { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import { MY_EMAIL } from '../../constants';
+import { MY_EMAIL } from '../../../constants';
 import { animate } from './animate';
 
 let numberOfDeleted = 0
