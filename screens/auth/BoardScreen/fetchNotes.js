@@ -8,15 +8,14 @@ export const fetchNotes = async (dispatch) => {
       let stickersonboard 
       let pending
       
-      const result = await firestore()
+      const doc = (await firestore()
       .collection('users')
       .where('email', '==', MY_EMAIL)
-      .get()
+      .get()).docs[0];
   
-      result.forEach(doc=>{
-        pending = doc.data().pending
-        stickersonboard = doc.data().stickersOnBoard
-      })
+      pending = doc.data().pending;
+      stickersonboard = doc.data().stickersOnBoard;
+      
       
       await fetchAndDispatchStickers(stickersonboard, dispatch, addNote);
       await fetchAndDispatchStickers(pending, dispatch, addPendingNote);
