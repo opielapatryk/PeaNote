@@ -12,7 +12,7 @@ const SettingsScreen = () => {
   const [message, setMessage] = useState('');
   const [askBeforeStickingNoteFlag, setAskBeforeStickingNoteFlag] = useState(false);
   const [newPassword, setNewPassword] = useState('');
-  const [deleteAccountPressed, setDeleteAccountPressed] = useState(true);
+  const [deleteAccountPressed, setDeleteAccountPressed] = useState(false);
 
   const { notes, pendingNotes } = useSelector((state) => state.board);
   const { showInput } = useSelector((state) => state.settings);
@@ -35,7 +35,7 @@ const SettingsScreen = () => {
     if (deleteAccountPressed) {
       deleteAccount({ notes, dispatch, pendingNotes });
     } else {
-      setDeleteAccountPressed(false);
+      setDeleteAccountPressed(true);
     }
   };
 

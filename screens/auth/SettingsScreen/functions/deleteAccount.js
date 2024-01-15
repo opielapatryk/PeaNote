@@ -3,10 +3,15 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import { setShowInput } from "../../../../store/settings/settingsSlice";
 setShowInput
-// import {removeAllFriendsAfterAccountDelete} from './removeAllFriendsAfterAccountDelete'
+import {removeAllFriendsBeforeAccountDelete} from './removeAllFriendsBeforeAccountDelete'
+import { removeNote } from "../../../../store/notes/boardSlice";
 
 export const deleteAccount = async ({notes,dispatch,pendingNotes}) => {
     try {
+      // remove this account from friends lists
+      removeAllFriendsBeforeAccountDelete()
+
+      // delete this account
       firestore()
       .collection('users')
       .where('email', '==', MY_EMAIL)
@@ -19,12 +24,10 @@ export const deleteAccount = async ({notes,dispatch,pendingNotes}) => {
           .delete()
           .then(async () => {
             try {
-              // removeAllFriendsAfterAccountDelete()
               notes.forEach(sticker => dispatch(removeNote(sticker.id)));
               pendingNotes.forEach(sticker => dispatch(removePendingNote(sticker.id)));
               dispatch(setShowInput(false))
               auth().currentUser.delete()
-
             } catch (error) {
                 console.error(error);
             }
