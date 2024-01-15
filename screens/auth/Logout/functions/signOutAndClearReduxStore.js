@@ -1,7 +1,7 @@
-import {removeNote,removePendingNote} from '../../../store/notes/boardSlice';
+import {removeNote,removePendingNote} from '../../../../store/notes/boardSlice';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin} from '@react-native-google-signin/google-signin';
-import { setShowInput } from '../../../store/settings/settingsSlice';
+import { setShowInput } from '../../../../store/settings/settingsSlice';
 
 export const signOutAndClearReduxStore = async (notes, dispatch, pendingNotes) => {
     try {

@@ -4,19 +4,19 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import store from './store/store'
 import { Provider } from 'react-redux';
 import Login from './screens/public/Login/components/Login'
-import BoardScreen from './screens/auth/BoardScreen/BoardScreen';
-import FriendsScreen from './screens/auth/FriendsScreen/FriendsScreen';
-import FriendsBoard from './screens/auth/FriendsBoardScreen/FriendsBoard';
+import BoardScreen from './screens/auth/BoardScreen/components/BoardScreen';
+import FriendsScreen from './screens/auth/FriendsScreen/components/FriendsScreen';
+import FriendsBoard from './screens/auth/FriendsBoardScreen/components/FriendsBoard';
 import SettingsScreen from './screens/auth/SettingsScreen/components/SettingsScreen';
 import PendingScreen from './screens/auth/PendingScreen/components/PendingScreen';
-import FriendRequests from './screens/auth/FriendRequestScreen/FriendRequests';
+import FriendRequests from './screens/auth/FriendRequestScreen/components/FriendRequests';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin} from '@react-native-google-signin/google-signin';
 import 'expo-dev-client'
 import 'firebase/auth';
 import { WEB_CLIENT_ID, IOS_CLIENT_ID} from './FIrebaseConfig';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import Logout from './screens/auth/Logout/Logout'
+import Logout from './screens/auth/Logout/components/Logout'
 
 const Stack = createNativeStackNavigator();
 

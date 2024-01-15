@@ -1,5 +1,5 @@
 import React from 'react';
-import { signOutAndClearReduxStore } from './signOutAndClearReduxStore';
+import { signOutAndClearReduxStore } from '../functions/signOutAndClearReduxStore';
 import { useDispatch, useSelector} from 'react-redux';
 
 const Logout = ({navigation}) => {

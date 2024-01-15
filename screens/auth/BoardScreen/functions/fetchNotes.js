@@ -1,7 +1,7 @@
-import {addNote,addPendingNote} from '../../../store/notes/boardSlice';
+import {addNote,addPendingNote} from '../../../../store/notes/boardSlice';
 import firestore from '@react-native-firebase/firestore';
 import { fetchAndDispatchStickers } from './fetchAndDispatchStickers'
-import { MY_EMAIL } from '../../constants';
+import { MY_EMAIL } from '../../../constants';
 
 export const fetchNotes = async (dispatch) => {  
     try {
@@ -15,7 +15,6 @@ export const fetchNotes = async (dispatch) => {
   
       pending = doc.data().pending;
       stickersonboard = doc.data().stickersOnBoard;
-      
       
       await fetchAndDispatchStickers(stickersonboard, dispatch, addNote);
       await fetchAndDispatchStickers(pending, dispatch, addPendingNote);

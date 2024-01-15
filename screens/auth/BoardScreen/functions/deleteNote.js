@@ -1,33 +1,10 @@
-import {changeInfo,removeNote} from '../../../store/notes/boardSlice'
-import auth, { firebase } from '@react-native-firebase/auth';
+import { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import { MY_EMAIL } from '../../../constants';
 
 let numberOfDeleted = 0
-
-export const handlePress = (notes,dispatch,isInfo,id,animatedValues) => {
-
-    {notes.forEach(note => {
-        if(note.isInfo === true){
-        dispatch(changeInfo(note.id));
-        }
-    });}
-    if (isInfo) {
-        dispatch(changeInfo(id));
-        dispatch(removeNote(id));
-        deleteNote(id);
-    } else {
-        dispatch(changeInfo(id));
-    }
-};
-
-const deleteNote = async (id) => {
-
-      
-    const MY_EMAIL = auth().currentUser.email
-
+export const deleteNote = async (id) => {
     try {
-
-        
         // TAKE STICKERS ON BOARD
         let stickersonboard
 
@@ -70,9 +47,6 @@ const deleteNote = async (id) => {
             })
         })
         })
-
-        // MANAGE REDUX STORE
-        
     } catch (error) {
       console.log(error.message);
     }

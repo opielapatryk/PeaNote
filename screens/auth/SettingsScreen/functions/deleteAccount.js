@@ -3,6 +3,7 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import { setShowInput } from "../../../../store/settings/settingsSlice";
 setShowInput
+// import {removeAllFriendsAfterAccountDelete} from './removeAllFriendsAfterAccountDelete'
 
 export const deleteAccount = async ({notes,dispatch,pendingNotes}) => {
     try {
@@ -18,6 +19,7 @@ export const deleteAccount = async ({notes,dispatch,pendingNotes}) => {
           .delete()
           .then(async () => {
             try {
+              // removeAllFriendsAfterAccountDelete()
               notes.forEach(sticker => dispatch(removeNote(sticker.id)));
               pendingNotes.forEach(sticker => dispatch(removePendingNote(sticker.id)));
               dispatch(setShowInput(false))
