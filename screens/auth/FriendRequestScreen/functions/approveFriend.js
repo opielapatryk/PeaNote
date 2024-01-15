@@ -71,6 +71,6 @@ export const approveFriend = async (friendEmail,index,animatedValues) =>{
             }
           });
     } catch (error) {
-        console.log(error.message);
+        console.log('[approveFriend.js] ',error.message);
     }
   }

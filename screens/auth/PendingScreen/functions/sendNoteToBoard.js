@@ -75,7 +75,7 @@ export async function sendNoteToBoard(itemID,dispatch,index,animatedValues){
       animate(index,()=>dispatch(addNote({ id: itemID, text: content, isInfo: false })),()=>dispatch(removePendingNote(itemID)),animatedValues);
 
     } catch (error) {
-      console.log(error.message);
+      console.log('[sendNoteToBoard.js ]',error.message);
     }
 }
 

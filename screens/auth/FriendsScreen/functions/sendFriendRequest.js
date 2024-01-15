@@ -51,6 +51,6 @@ export const sendFriendRequest = async (newFriendEmail,setNewFriendID,setdoesEma
           console.error('Error getting user:', error);
         });
     } catch (error) {
-      console.log(error.message);
+      console.log('[sendFriendRequest.js] ',error.message);
     }
   }

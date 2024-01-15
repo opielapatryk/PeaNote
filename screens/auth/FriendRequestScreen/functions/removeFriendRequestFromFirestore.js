@@ -29,6 +29,6 @@ export const removeFriendRequestFromFirestore = async (friendEmail,index,animate
       }
     })
   } catch (error) {
-    console.log(error.message);
+    console.log('[removeFriendRequestFromFirestore.js] ',error.message);
   }
 }

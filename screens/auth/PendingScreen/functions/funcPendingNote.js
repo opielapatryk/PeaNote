@@ -64,7 +64,7 @@ const deleteNote = async (id) => {
         })
         })
     } catch (error) {
-      console.log(error.message);
+      console.log('[funcPendingNote.js] ', error.message);
     }
 }
 

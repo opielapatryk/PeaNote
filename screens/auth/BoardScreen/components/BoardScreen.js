@@ -6,6 +6,7 @@ import { styles } from '../../../../assets/styles/styles';
 import { checkThenChangeInfo } from '../functions/checkThenChangeInfo';
 import { useFocusEffect } from '@react-navigation/native';
 import { fetchNotes } from '../functions/fetchNotes';
+import { MY_EMAIL } from '../../../constants';
 
 const BoardScreen = () => {
   const { notes } = useSelector((state) => state.board);
@@ -13,6 +14,7 @@ const BoardScreen = () => {
 
   useEffect(()=>{
     fetchNotes(dispatch);
+    console.log('[BoardScreen.js] my email: ',MY_EMAIL);
   },[])
 
   useFocusEffect(

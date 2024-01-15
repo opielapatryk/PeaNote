@@ -53,6 +53,6 @@ export const getUserEmail = async (
           }
         })  
     } catch (error) {
-      console.error('Error checking email existence:', error);
+      console.error('[getUserEmail.js]:', error);
     }
   };

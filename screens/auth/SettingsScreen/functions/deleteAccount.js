@@ -8,8 +8,9 @@ import { removeNote } from "../../../../store/notes/boardSlice";
 
 export const deleteAccount = async ({notes,dispatch,pendingNotes}) => {
     try {
+      console.log('trying to delete account');
       // remove this account from friends lists
-      removeAllFriendsBeforeAccountDelete()
+      await removeAllFriendsBeforeAccountDelete()
 
       // delete this account
       firestore()
@@ -33,6 +34,7 @@ export const deleteAccount = async ({notes,dispatch,pendingNotes}) => {
             }
           });
         })})
+        console.log('account deleted');
 
     } catch (error) {
       console.log('[deleteAccount.js] email error',error.message);

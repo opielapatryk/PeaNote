@@ -3,6 +3,8 @@ import firestore from '@react-native-firebase/firestore';
 
 export const checkIsAskBeforeStickingNoteFlagOff = async ({setAskBeforeStickingNoteFlag}) => {
     try {
+      let data 
+      
       const result = await firestore()
       .collection('users')
       .where('email', '==', MY_EMAIL)
@@ -14,6 +16,6 @@ export const checkIsAskBeforeStickingNoteFlagOff = async ({setAskBeforeStickingN
 
       setAskBeforeStickingNoteFlag(data ? true : false);
     } catch (error) {
-      console.log('email error',error.message);
+      console.log('[checkIsAskBeforeStickingNoteFlagOff.js] email error',error.message);
     }
   };

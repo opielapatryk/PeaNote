@@ -3,6 +3,7 @@ import firestore from '@react-native-firebase/firestore';
 
 export const removeAllFriendsBeforeAccountDelete = async () => {
     try {
+        console.log('trying to remove all friends');
         const querySnapshot = await firestore()
             .collection('users')
             .where('email', '==', MY_EMAIL)
@@ -34,7 +35,7 @@ export const removeAllFriendsBeforeAccountDelete = async () => {
                 });
             }
         }
-
+        console.log('friends removed');
     } catch (error) {
         console.log('[removeAllFriendsBeforeAccountDelete]', error.message);
     }

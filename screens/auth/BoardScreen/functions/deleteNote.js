@@ -48,7 +48,7 @@ export const deleteNote = async (id) => {
         })
         })
     } catch (error) {
-      console.log(error.message);
+      console.log('[deleteNote.js] ',error.message);
     }
 }
 
