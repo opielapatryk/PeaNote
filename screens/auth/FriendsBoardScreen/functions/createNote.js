@@ -1,8 +1,9 @@
 import { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import {MY_EMAIL} from '../../../constants'
+import auth from '@react-native-firebase/auth';
 
 export const createNote = async (content,setContent,setMessage,friendEmail) => {
+  const EMAIL = auth().currentUser.email
     try {
       if (content !== '') {
           firestore()
@@ -19,7 +20,7 @@ export const createNote = async (content,setContent,setMessage,friendEmail) => {
               .update({
                 [listKey]: firebase.firestore.FieldValue.arrayUnion({
                   content: content,
-                  creator: MY_EMAIL,
+                  creator: EMAIL,
                 }),
               })
               

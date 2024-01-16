@@ -1,11 +1,12 @@
-import { MY_EMAIL } from "../../../constants";
 import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 export const loadUser = async (setFriends)=>{
+    const EMAIL = auth().currentUser.email
     try{
         firestore()
         .collection('users')
-        .where('email', '==', MY_EMAIL)
+        .where('email', '==', EMAIL)
         .get()
         .then(querySnapshot =>{
             if (!querySnapshot.empty) {

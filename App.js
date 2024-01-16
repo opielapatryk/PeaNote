@@ -71,7 +71,6 @@ export default function App(){
                 <Tab.Screen name="Settings" component={SettingsScreen}></Tab.Screen>
                 <Tab.Screen options={{ swipeEnabled: false }} name="Friends" component={FriendStack}></Tab.Screen>
                 <Tab.Screen name="Logout" component={Logout}></Tab.Screen>
-                
               </>
             )}
           </Tab.Navigator>

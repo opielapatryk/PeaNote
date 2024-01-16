@@ -1,11 +1,11 @@
 import {removePendingNote, addNote} from '../../../../store/notes/boardSlice';
-import { firebase } from '@react-native-firebase/auth';
+import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import { MY_EMAIL } from '../../../constants';
 import { animate } from './animate';
 
 let numberOfDeleted = 0
 export async function sendNoteToBoard(itemID,dispatch,index,animatedValues){
+  const EMAIL = auth().currentUser.email
     try {
       // TAKE STICKER CONTENT AND CREATOR 
       // create variable of pending notes
@@ -14,7 +14,7 @@ export async function sendNoteToBoard(itemID,dispatch,index,animatedValues){
       // get current user collection to take action on in next step
       const result = await firestore()
       .collection('users')
-      .where('email', '==', MY_EMAIL)
+      .where('email', '==', EMAIL)
       .get()
   
       // create list of pending note to iterate over in next step
@@ -36,7 +36,7 @@ export async function sendNoteToBoard(itemID,dispatch,index,animatedValues){
       // ADD THIS NOTE TO NOTESONBOARD
       firestore()
       .collection('users')
-      .where('email', '==', MY_EMAIL)
+      .where('email', '==', EMAIL)
       .get()
       .then((querySnapshot)=>{
         querySnapshot.forEach(doc => {
@@ -55,7 +55,7 @@ export async function sendNoteToBoard(itemID,dispatch,index,animatedValues){
       // REMOVE STICKER FROM PENDING 
       firestore()
       .collection('users')
-      .where('email', '==', MY_EMAIL)
+      .where('email', '==', EMAIL)
       .get()
       .then((querySnapshot)=>{
         querySnapshot.forEach(doc => {

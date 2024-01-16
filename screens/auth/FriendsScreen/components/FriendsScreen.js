@@ -17,7 +17,7 @@ export const FriendsScreen = ({ navigation }) => {
   const [friendReqMessage, setFriendReqMessage] = useState(false)
   
   useEffect(() => {
-    getUserEmail(setdoesEmailExist,doesEmailExist,firstRender,setMessage,setButtonTitle,setFirstRender,list,newFriendEmail,setFriendReqMessage)
+    getUserEmail(setdoesEmailExist,firstRender,setMessage,setButtonTitle,setFirstRender,newFriendEmail,setFriendReqMessage)
   }, [newFriendEmail]);
 
   useFocusEffect(
@@ -38,7 +38,7 @@ export const FriendsScreen = ({ navigation }) => {
       <TextInput style={styles.friendsTextInput} placeholder='Insert friend email' onChangeText={(newFriendEmail) => setNewFriendEmail(newFriendEmail)} value={newFriendEmail}/>
       <Text style={styles.friendsMessage}>{message}</Text>
       {friendReqMessage&&<Text style={styles.settingsMessage}>Friend request sent!</Text>}
-      <Pressable style={ buttonTitle && styles.friendsButton} onPress={()=>sendFriendRequest(newFriendEmail,setNewFriendEmail,setdoesEmailExist,setList,setMessage,setNewFriendEmail,setButtonTitle,setFriendReqMessage)}><Text style={!buttonTitle ? {height:0} : {fontWeight:700}}>{buttonTitle}</Text></Pressable>
+      <Pressable style={ buttonTitle && styles.friendsButton} onPress={()=>sendFriendRequest(newFriendEmail,setNewFriendEmail,setButtonTitle,setFriendReqMessage)}><Text style={!buttonTitle ? {height:0} : {fontWeight:700}}>{buttonTitle}</Text></Pressable>
       <Text style={styles.friendsFriendsHeader}>Friends:</Text>
       <FlatList data={friends} renderItem={renderFriends} keyExtractor={(friend) => friend} style={{margin:10}}/>
     </View>

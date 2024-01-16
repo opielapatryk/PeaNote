@@ -1,8 +1,6 @@
 import {changePendingInfo,removePendingNote} from '../../../../store/notes/boardSlice'
-import auth, { firebase } from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
+import { deleteNote } from '../../BoardScreen/functions/deleteNote';
 
-let numberOfDeleted = 0
 export const handlePress = (notes,dispatch,isInfo,id) => {
     {notes.forEach(note => {
         if(note.isInfo === true){
@@ -17,54 +15,3 @@ export const handlePress = (notes,dispatch,isInfo,id) => {
         dispatch(changePendingInfo(id));
     }
 };
-
-const deleteNote = async (id) => {
-    try {
-        const MY_EMAIL = auth().currentUser.email
-        
-        // TAKE STICKER CONTENT AND CREATOR 
-        let pending
-
-        const result = await firestore()
-        .collection('users')
-        .where('email', '==', MY_EMAIL)
-        .get()
-    
-        result.forEach(doc=>{
-          pending = doc.data().pending
-        })
-  
-        // ITERATE OVER PENDING NOTES 
-  
-        pending.forEach((sticker,index) => {
-          index = index + 1
-          let sum = id - numberOfDeleted
-          if(index === sum){
-            creator = sticker.creator
-            content = sticker.content
-          }
-        })
-        numberOfDeleted++
-         // REMOVE STICKER FROM PENDING 
-        firestore()
-        .collection('users')
-        .where('email', '==', MY_EMAIL)
-        .get()
-        .then((querySnapshot)=>{
-        querySnapshot.forEach(doc => {
-            firestore()
-            .collection('users')
-            .doc(doc.id)
-            .update({
-            pending: firebase.firestore.FieldValue.arrayRemove({
-                content: content,
-                creator: creator,
-            }),
-            })
-        })
-        })
-    } catch (error) {
-      console.log('[funcPendingNote.js] ', error.message);
-    }
-}
-

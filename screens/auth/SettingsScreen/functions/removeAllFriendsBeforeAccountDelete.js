@@ -1,12 +1,13 @@
-import { MY_EMAIL } from "../../../constants";
 import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 export const removeAllFriendsBeforeAccountDelete = async () => {
+    const EMAIL = auth().currentUser.email
     try {
         console.log('trying to remove all friends');
         const querySnapshot = await firestore()
             .collection('users')
-            .where('email', '==', MY_EMAIL)
+            .where('email', '==', EMAIL)
             .get();
 
         let friendsList;
@@ -24,7 +25,7 @@ export const removeAllFriendsBeforeAccountDelete = async () => {
 
                 friendQuerySnapshot.forEach(doc => {
                     let updatedFriendsList = doc.data().friends;
-                    updatedFriendsList = updatedFriendsList.filter(item => item !== MY_EMAIL);
+                    updatedFriendsList = updatedFriendsList.filter(item => item !== EMAIL);
 
                     firestore()
                         .collection('users')

@@ -3,10 +3,10 @@ import firestore from '@react-native-firebase/firestore';
 
 let numberOfDeleted = 0
 export const deleteNote = async (id) => {
-  const EMAIL = auth().currentUser.email
+    const EMAIL = auth().currentUser.email
     try {
-        // TAKE STICKERS ON BOARD
-        let stickersonboard
+        // TAKE STICKER CONTENT AND CREATOR 
+        let pending
 
         const result = await firestore()
         .collection('users')
@@ -14,12 +14,12 @@ export const deleteNote = async (id) => {
         .get()
     
         result.forEach(doc=>{
-            stickersonboard = doc.data().stickersOnBoard
+          pending = doc.data().pending
         })
   
-        // ITERATE OVER STICKERS ON BOARD
+        // ITERATE OVER PENDING NOTES 
   
-        stickersonboard.forEach((sticker,index) => {
+        pending.forEach((sticker,index) => {
           index = index + 1
           let sum = id - numberOfDeleted
           if(index === sum){
@@ -28,8 +28,7 @@ export const deleteNote = async (id) => {
           }
         })
         numberOfDeleted++
-
-         // REMOVE STICKER FROM FIRESTORE 
+         // REMOVE STICKER FROM PENDING 
         firestore()
         .collection('users')
         .where('email', '==', EMAIL)
@@ -40,7 +39,7 @@ export const deleteNote = async (id) => {
             .collection('users')
             .doc(doc.id)
             .update({
-            stickersOnBoard: firebase.firestore.FieldValue.arrayRemove({
+            pending: firebase.firestore.FieldValue.arrayRemove({
                 content: content,
                 creator: creator,
             }),
@@ -48,8 +47,7 @@ export const deleteNote = async (id) => {
         })
         })
     } catch (error) {
-      console.log('[deleteNote.js] ',error.message);
+      console.log('[funcPendingNote.js] ', error.message);
     }
 }
-
 

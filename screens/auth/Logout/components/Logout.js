@@ -7,8 +7,8 @@ const Logout = ({navigation}) => {
     const dispatch = useDispatch()
 
     React.useEffect(() => {
-        const unsubscribe = navigation.addListener('tabPress', (e) => {
-          e.preventDefault();
+        const unsubscribe = navigation.addListener('tabPress', async (e) => {
+          await e.preventDefault();
           signOutAndClearReduxStore(notes,dispatch,pendingNotes)
         });
         return unsubscribe;

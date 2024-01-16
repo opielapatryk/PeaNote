@@ -1,13 +1,13 @@
-import { firebase } from '@react-native-firebase/auth';
+import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { animate } from './animate'
-import { MY_EMAIL } from '../../../constants';
 
 export const removeFriendRequestFromFirestore = async (friendEmail,index,animatedValues) =>{
+  const EMAIL = auth().currentUser.email
   try {
     firestore()
     .collection('users')
-    .where('email', '==', MY_EMAIL)
+    .where('email', '==', EMAIL)
     .get()
     .then(querySnapshot => {
       if(!querySnapshot.empty){

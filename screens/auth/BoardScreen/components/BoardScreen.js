@@ -6,7 +6,7 @@ import { styles } from '../../../../assets/styles/styles';
 import { checkThenChangeInfo } from '../functions/checkThenChangeInfo';
 import { useFocusEffect } from '@react-navigation/native';
 import { fetchNotes } from '../functions/fetchNotes';
-import { MY_EMAIL } from '../../../constants';
+import { KEY_EXTRACTOR_NOTES } from '../../../constants';
 
 const BoardScreen = () => {
   const { notes } = useSelector((state) => state.board);
@@ -14,7 +14,6 @@ const BoardScreen = () => {
 
   useEffect(()=>{
     fetchNotes(dispatch);
-    console.log('[BoardScreen.js] my email: ',MY_EMAIL);
   },[])
 
   useFocusEffect(
@@ -26,7 +25,7 @@ const BoardScreen = () => {
   return (
     <View style={styles.flexone}>
       <Pressable onPress={() => checkThenChangeInfo(dispatch,notes)} style={styles.board}>
-        <FlatList data={notes} renderItem={renderNotes} keyExtractor={note => note.id}/>
+        <FlatList data={notes} renderItem={renderNotes} keyExtractor={KEY_EXTRACTOR_NOTES}/>
       </Pressable>
     </View>
   );

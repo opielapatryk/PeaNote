@@ -1,12 +1,13 @@
 import { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import {MY_EMAIL} from '../../../constants'
+import auth from '@react-native-firebase/auth';
 
 export const removeFriend = async (navigation,friendEmail) => {
+  const EMAIL = auth().currentUser.email
     try {
       firestore()
           .collection('users')
-          .where('email', '==', MY_EMAIL)
+          .where('email', '==', EMAIL)
           .get()
           .then((querySnapshot)=>{
             querySnapshot.forEach(doc => {
@@ -29,7 +30,7 @@ export const removeFriend = async (navigation,friendEmail) => {
               .collection('users')
               .doc(doc.id)
               .update({
-                friends: firebase.firestore.FieldValue.arrayRemove(MY_EMAIL),
+                friends: firebase.firestore.FieldValue.arrayRemove(EMAIL),
               })
               .then(()=>{
                 navigation.navigate('FriendsScreen');

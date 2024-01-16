@@ -1,17 +1,16 @@
-import { MY_EMAIL } from '../../../constants';
 import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 export const getUserEmail = async (
     setdoesEmailExist,
-    doesEmailExist,
     firstRender,
     setMessage,
     setButtonTitle,
     setFirstRender,
-    list,
     newFriendEmail,
     setFriendReqMessage
   ) => {
+    const EMAIL = auth().currentUser.email
     try {
       if(newFriendEmail.length > 0){
         setFriendReqMessage(false)
@@ -20,7 +19,7 @@ export const getUserEmail = async (
   
       const myQuerySnapshot = await firestore()
         .collection('users')
-        .where('email', '==', MY_EMAIL)
+        .where('email', '==', EMAIL)
         .get();
 
         const querySnapshot = await firestore()
@@ -34,7 +33,7 @@ export const getUserEmail = async (
             setButtonTitle('');
           }else if (!querySnapshot.empty) {
             setdoesEmailExist(true);
-            if (newFriendEmail === MY_EMAIL) {
+            if (newFriendEmail === EMAIL) {
               setMessage('You cannot add yourself to friends!..');
               setButtonTitle('');
             } else {

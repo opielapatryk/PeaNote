@@ -32,7 +32,7 @@ const LoginHeader = ({setCreateAccount}) => {
       
       <LoginWithGoogleButton/>
 
-      <LoginFooter setCreateAccount={setCreateAccount} setMessage={setMessage} />
+      <LoginFooter setCreateAccount={setCreateAccount}/>
       </>
     );
 }

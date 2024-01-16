@@ -1,12 +1,13 @@
 import { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import {MY_EMAIL} from '../../../constants'
+import auth from '@react-native-firebase/auth';
 
-export const sendFriendRequest = async (newFriendEmail,setNewFriendID,setdoesEmailExist,setList,setMessage,setNewFriendEmail,setButtonTitle,setFriendReqMessage) => {
+export const sendFriendRequest = async (newFriendEmail,setNewFriendEmail,setButtonTitle,setFriendReqMessage) => {
+  const EMAIL = auth().currentUser.email;
     try {
         firestore()
         .collection('users')
-        .where('email', '==', MY_EMAIL)
+        .where('email', '==', EMAIL)
         .get()
         .then(querySnapshot => {
           if (!querySnapshot.empty) {
@@ -23,14 +24,14 @@ export const sendFriendRequest = async (newFriendEmail,setNewFriendID,setdoesEma
                 .then(querySnapshot => {
                   if(!querySnapshot.empty){
                     querySnapshot.forEach(doc=>{
-                      if(doc.data().friends_requests.includes(MY_EMAIL)){
+                      if(doc.data().friends_requests.includes(EMAIL)){
                         console.log('request already send')
                       }else{
                         firestore()
                         .collection('users')
                         .doc(doc.id)
                         .update({
-                          friends_requests: firebase.firestore.FieldValue.arrayUnion(MY_EMAIL),
+                          friends_requests: firebase.firestore.FieldValue.arrayUnion(EMAIL),
                         })
                         .then(() => {
                           setNewFriendEmail('')

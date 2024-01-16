@@ -1,9 +1,8 @@
 import React from 'react';
 import {View, Pressable,Text} from 'react-native';
 import { styles } from '../../../../assets/styles/styles';
-import { goToCreateAccount,goToLogIn } from '../../../constants';
 
-const CreateAccountFooter = ({setCreateAccount,setMessage,setLastName,setEmail,setPassword,setFirstName}) => {
+const CreateAccountFooter = ({setCreateAccount}) => {
     return (
 <>
         <View style={styles.bottomView}>

@@ -34,7 +34,7 @@ const CreateAccountHeader = ({setCreateAccount}) => {
       
       <LoginWithGoogleButton/>
 
-      <CreateAccountFooter setCreateAccount={setCreateAccount} setMessage={setMessage} setLastName={setLastName} setEmail={setEmail} setPassword={setPassword} setFirstName={setFirstName}/>
+      <CreateAccountFooter setCreateAccount={setCreateAccount}/>
       </>
     );
 }

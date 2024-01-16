@@ -1,16 +1,17 @@
 import {addNote,addPendingNote} from '../../../../store/notes/boardSlice';
 import firestore from '@react-native-firebase/firestore';
 import { fetchAndDispatchStickers } from './fetchAndDispatchStickers'
-import { MY_EMAIL } from '../../../constants';
+import auth from '@react-native-firebase/auth';
 
 export const fetchNotes = async (dispatch) => {  
+  const EMAIL = auth().currentUser.email
     try {
       let stickersonboard 
       let pending
       
       const result = await firestore()
       .collection('users')
-      .where('email', '==', MY_EMAIL)
+      .where('email', '==', EMAIL)
       .get()
   
       result.forEach(doc=>{

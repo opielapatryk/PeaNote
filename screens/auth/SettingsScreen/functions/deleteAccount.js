@@ -1,4 +1,3 @@
-import { MY_EMAIL } from "../../../constants";
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import { setShowInput } from "../../../../store/settings/settingsSlice";
@@ -7,6 +6,7 @@ import {removeAllFriendsBeforeAccountDelete} from './removeAllFriendsBeforeAccou
 import { removeNote } from "../../../../store/notes/boardSlice";
 
 export const deleteAccount = async ({notes,dispatch,pendingNotes}) => {
+  const EMAIL = auth().currentUser.email
     try {
       console.log('trying to delete account');
       // remove this account from friends lists
@@ -15,7 +15,7 @@ export const deleteAccount = async ({notes,dispatch,pendingNotes}) => {
       // delete this account
       firestore()
       .collection('users')
-      .where('email', '==', MY_EMAIL)
+      .where('email', '==', EMAIL)
       .get()
       .then((querySnapshot)=>{
         querySnapshot.forEach(doc => {

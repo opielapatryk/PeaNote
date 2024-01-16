@@ -1,7 +1,4 @@
-import auth from '@react-native-firebase/auth';
 import { setShowInput } from '../store/settings/settingsSlice';
-
-export const MY_EMAIL = auth().currentUser && auth().currentUser.email
 
 export const HANDLE_PASSWORD_CHANGE_BUTTON_PRESS = ({setDeleteAccountPressed,dispatch,setMessage}) => {
     setDeleteAccountPressed(false);
@@ -9,7 +6,6 @@ export const HANDLE_PASSWORD_CHANGE_BUTTON_PRESS = ({setDeleteAccountPressed,dis
     setMessage('');
   };
   
-
 export const KEY_EXTRACTOR_NOTES = (note) => note.id
 
 export const KEY_EXTRACTOR_FRIENDS = (friend, index) => friend.id || index.toString();
