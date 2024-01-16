@@ -19,8 +19,9 @@ export const fetchNotes = async (dispatch) => {
         stickersonboard = doc.data().stickersOnBoard
       })
       
-      await fetchAndDispatchStickers(stickersonboard, dispatch, addNote);
-      await fetchAndDispatchStickers(pending, dispatch, addPendingNote);
+
+      fetchAndDispatchStickers(stickersonboard, dispatch, addNote);
+      fetchAndDispatchStickers(pending, dispatch, addPendingNote);
     } catch (error) {
       console.log('[fetchNotes.js] ',error);
     }
