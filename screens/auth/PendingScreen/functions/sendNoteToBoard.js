@@ -10,6 +10,7 @@ export async function sendNoteToBoard(itemID,dispatch,index,animatedValues){
       // TAKE STICKER CONTENT AND CREATOR 
       // create variable of pending notes
       let pending
+      let content
 
       // get current user collection to take action on in next step
       const result = await firestore()

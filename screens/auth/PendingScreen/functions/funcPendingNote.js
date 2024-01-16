@@ -1,16 +1,16 @@
 import {changePendingInfo,removePendingNote} from '../../../../store/notes/boardSlice'
-import { deleteNote } from '../../BoardScreen/functions/deleteNote';
+import { deleteNote } from './deleteNote';
 
-export const handlePress = (notes,dispatch,isInfo,id) => {
+export const handlePress = async (notes,dispatch,isInfo,id) => {
     {notes.forEach(note => {
         if(note.isInfo === true){
         dispatch(changePendingInfo(note.id));
         }
     });}
+    
     if (isInfo) {
-        dispatch(changePendingInfo(id));
+        deleteNote(id)
         dispatch(removePendingNote(id));
-        deleteNote(id);
     } else {
         dispatch(changePendingInfo(id));
     }

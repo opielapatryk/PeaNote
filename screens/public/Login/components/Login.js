@@ -16,6 +16,9 @@ const Login = () => {
     notes.forEach(note => {
       dispatch(removeNote(note.id))
     });
+    pendingNotes.forEach(note => {
+      dispatch(removePendingNote(note.id))
+    });
   }, []);
 
   return (
