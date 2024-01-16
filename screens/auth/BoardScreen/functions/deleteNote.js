@@ -51,5 +51,3 @@ export const deleteNote = async (id) => {
       console.log('[deleteNote.js] ',error.message);
     }
 }
-
-

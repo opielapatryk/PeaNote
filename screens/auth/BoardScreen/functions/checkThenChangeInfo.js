@@ -1,4 +1,4 @@
-import {changeInfo} from '../../../../store/notes/boardSlice';
+import {changeInfo} from '../../../../src/store/notes/boardSlice';
 
 export const checkThenChangeInfo = (dispatch, notes) => {
     notes.map((note) => {

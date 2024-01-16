@@ -1,4 +1,4 @@
-import {changeInfo,removeNote} from '../../../../store/notes/boardSlice'
+import {changeInfo,removeNote} from '../../../../src/store/notes/boardSlice'
 import {deleteNote} from './deleteNote'
 export const handlePress = (notes,dispatch,isInfo,id) => {
 

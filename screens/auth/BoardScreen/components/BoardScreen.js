@@ -8,6 +8,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { fetchNotes } from '../functions/fetchNotes';
 import { KEY_EXTRACTOR_NOTES } from '../../../constants';
 
+// Here are displayed all approved notes
 const BoardScreen = () => {
   const { notes } = useSelector((state) => state.board);
   const dispatch = useDispatch()
