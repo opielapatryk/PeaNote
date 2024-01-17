@@ -12,8 +12,11 @@ const FriendsBoard = ({ route, navigation }) => {
   return (
     <View style={styles.board}>
       <Pressable onPress={()=>removeFriend(navigation,friendEmail)}><Text style={styles.friendsHeaderRequest}>Remove Friend</Text></Pressable>
+
       <TextInput style={styles.friendsTextInput} placeholder="Note.." value={content} onChangeText={(content)=>setContent(content)} />
+
       <Pressable style={styles.createNoteButton} onPress={()=>createNote(content,setContent,setMessage,friendEmail)}><Text style={styles.createNoteButtonText}>Create Note</Text></Pressable>
+      
       <Text style={styles.settingsMessage}>{message}</Text>
     </View>
   );
