@@ -9,7 +9,7 @@ import { setMessage } from '../../../../store/login/loginReducer';
       dispatch(setMessage('Password updated!'));
       setTimeout(() => {
         dispatch(setShowInput(false))
-        setMessage('');
+        dispatch(setMessage(''));
       }, 1500);
     } catch (error) {
       if (error.code === 'auth/requires-recent-login') {
