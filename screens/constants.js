@@ -1,9 +1,10 @@
 import { setShowInput } from '../store/settings/settingsSlice';
+import { setMessage } from '../store/login/loginReducer';
 
-export const HANDLE_PASSWORD_CHANGE_BUTTON_PRESS = ({setDeleteAccountPressed,dispatch,setMessage}) => {
+export const HANDLE_PASSWORD_CHANGE_BUTTON_PRESS = ({setDeleteAccountPressed,dispatch}) => {
     setDeleteAccountPressed(false);
     dispatch(setShowInput(true))
-    setMessage('');
+    dispatch(setMessage(''));
   };
   
 export const KEY_EXTRACTOR_NOTES = (note) => note.id

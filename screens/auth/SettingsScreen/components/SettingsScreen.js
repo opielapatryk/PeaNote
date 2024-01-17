@@ -9,13 +9,13 @@ import {changePassword} from '../functions/changePassword';
 import { HANDLE_PASSWORD_CHANGE_BUTTON_PRESS } from '../../../constants';
 
 const SettingsScreen = () => {
-  const [message, setMessage] = useState('');
   const [askBeforeStickingNoteFlag, setAskBeforeStickingNoteFlag] = useState(false);
   const [newPassword, setNewPassword] = useState('');
   const [deleteAccountPressed, setDeleteAccountPressed] = useState(false);
 
   const { notes, pendingNotes } = useSelector((state) => state.board);
   const { showInput } = useSelector((state) => state.settings);
+  const { message } = useSelector((state) => state.login);
 
   const dispatch = useDispatch();
 
@@ -25,9 +25,9 @@ const SettingsScreen = () => {
 
   const handlePasswordChange = () => {
     if (showInput) {
-      changePassword({ setDeleteAccountPressed, newPassword, setMessage, dispatch });
+      changePassword({ setDeleteAccountPressed, newPassword, dispatch });
     } else {
-      HANDLE_PASSWORD_CHANGE_BUTTON_PRESS({ setDeleteAccountPressed, dispatch, setMessage });
+      HANDLE_PASSWORD_CHANGE_BUTTON_PRESS({ setDeleteAccountPressed, dispatch });
     }
   };
 
@@ -44,7 +44,7 @@ const SettingsScreen = () => {
       <View style={styles.switchRow}>
         <Text style={styles.settingsActionText}>ASK BEFORE STICKING NOTE</Text>
         <Switch
-          onValueChange={() => askBeforeStick({ setAskBeforeStickingNoteFlag, setMessage })}
+          onValueChange={() => askBeforeStick({ setAskBeforeStickingNoteFlag,dispatch })}
           value={askBeforeStickingNoteFlag}
         />
       </View>

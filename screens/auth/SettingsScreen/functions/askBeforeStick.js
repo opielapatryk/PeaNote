@@ -1,7 +1,8 @@
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import {setMessage} from '../../../../store/login/loginReducer'
 
-export const askBeforeStick = async ({setAskBeforeStickingNoteFlag,setMessage}) => {
+export const askBeforeStick = async ({setAskBeforeStickingNoteFlag,dispatch}) => {
   const EMAIL = auth().currentUser.email
     try {  
       const result = await firestore()
@@ -31,7 +32,7 @@ export const askBeforeStick = async ({setAskBeforeStickingNoteFlag,setMessage}) 
         })
       })
     } catch (error) {
-      setMessage('Something went wrong! Try again later..');
+      dispatch(setMessage('Something went wrong! Try again later..'));
       console.log('[askBeforeStick.js] email error: ',error.message);
     }
   };

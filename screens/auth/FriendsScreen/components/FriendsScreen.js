@@ -12,7 +12,6 @@ export const FriendsScreen = ({ navigation }) => {
   const [buttonTitle,setButtonTitle] = useState('')
   const [message,setMessage] = useState('')
   const [doesEmailExist, setdoesEmailExist] = useState(false)
-  const [list,setList] = useState([])
   const [firstRender, setFirstRender] = useState(true)
   const [friendReqMessage, setFriendReqMessage] = useState(false)
   
