@@ -1,0 +1,131 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`create account footer renders correctly 1`] = `
+<View
+  style={
+    {
+      "borderColor": "lightgray",
+      "borderLeftWidth": 1,
+      "borderRightWidth": 1,
+      "borderTopLeftRadius": 10,
+      "borderTopRightRadius": 10,
+      "borderTopWidth": 1,
+      "flexDirection": "row",
+    }
+  }
+>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#FFFBE4",
+        "borderBottomColor": "#e6c019",
+        "borderBottomLeftRadius": 30,
+        "borderBottomRightRadius": 30,
+        "borderBottomWidth": 2,
+        "borderColor": "lightgray",
+        "elevation": 1,
+        "marginBottom": 5,
+        "marginTop": 5,
+        "padding": 10,
+        "shadowColor": "#000",
+        "shadowOffset": {
+          "height": 1,
+          "width": 0,
+        },
+        "shadowOpacity": 0.18,
+        "shadowRadius": 1,
+        "width": 150,
+      }
+    }
+  >
+    <Text>
+      Create Account
+    </Text>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#FFFBE4",
+        "borderColor": "lightgray",
+        "borderLeftWidth": 1,
+        "elevation": 1,
+        "marginBottom": 5,
+        "marginTop": 5,
+        "padding": 10,
+        "shadowColor": "#000",
+        "shadowOffset": {
+          "height": 1,
+          "width": 0,
+        },
+        "shadowOpacity": 0.18,
+        "shadowRadius": 1,
+        "width": 150,
+      }
+    }
+  >
+    <Text>
+      Log In
+    </Text>
+  </View>
+</View>
+`;
