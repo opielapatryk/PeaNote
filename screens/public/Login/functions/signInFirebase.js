@@ -1,21 +1,22 @@
 import auth from '@react-native-firebase/auth';
+import {setMessage} from '../../../../store/login/loginReducer'
 
-export const signInFirebase = (email,password,setMessage) =>{
+export const signInFirebase = (email,password,dispatch) =>{
     try {
       auth().signInWithEmailAndPassword(email,password).catch((err) => {
         console.log(err)
         if(err.code === "auth/wrong-password"){
-          setMessage('The password is invalid, try again.')
+          dispatch(setMessage('The password is invalid, try again.'))
         }else if(err.code === "auth/invalid-email"){
-          setMessage('The email is invalid, try again.')
+          dispatch(setMessage('The email is invalid, try again.'))
         }else if(err.code === "auth/invalid-credential"){
-          setMessage('The supplied credential is wrong or has expired.')
+          dispatch(setMessage('The supplied credential is wrong or has expired.'))
         }else if(err.code === "auth/too-many-requests"){
-          setMessage('Access to this account has been temporarily disabled due to many failed login attempts. You can try again later.')
+          dispatch(setMessage('Access to this account has been temporarily disabled due to many failed login attempts. You can try again later.'))
         }
       })
     } catch (error) {
-        setMessage(error)
+        dispatch(setMessage(error))
         console.log(error);
     }
   } 

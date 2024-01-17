@@ -2,11 +2,14 @@ import React from 'react';
 import {Pressable,Text} from 'react-native';
 import { styles } from '../../../../assets/styles/styles';
 import {signInFirebase} from '../functions/signInFirebase';
+import { useSelector,useDispatch } from 'react-redux';
 
-const LoginButton = ({email,password,setMessage}) => {
+const LoginButton = () => {
+  const { email,password } = useSelector((state)=>state.login)
+  const dispatch = useDispatch()
     return (
 <>
-        <Pressable style={styles.confirmButton} onPress={()=>signInFirebase(email,password,setMessage)}>
+        <Pressable style={styles.confirmButton} onPress={()=>signInFirebase(email,password,dispatch)}>
           <Text>
             Log In
           </Text>

@@ -1,4 +1,4 @@
-import {addNote,addPendingNote} from '../../../../src/store/notes/boardSlice';
+import {addNote,addPendingNote} from '../../../../store/notes/boardSlice';
 import firestore from '@react-native-firebase/firestore';
 import { fetchAndDispatchStickers } from './fetchAndDispatchStickers'
 import auth from '@react-native-firebase/auth';

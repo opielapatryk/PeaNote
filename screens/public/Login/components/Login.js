@@ -8,8 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { removeNote,removePendingNote } from '../../../../store/notes/boardSlice';
 
 const Login = () => {
-  const [createAccount,setCreateAccount] = useState(true);
   const { notes,pendingNotes } = useSelector((state)=>state.board)
+  const { createAccount } = useSelector((state)=>state.login)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -26,10 +26,10 @@ const Login = () => {
       <Logo width={200} height={150}/>
 
       {/* login screen */}
-      {!createAccount && <LoginBody setCreateAccount={setCreateAccount}/>}
+      {!createAccount && <LoginBody/>}
       
       {/* create account screen */}
-      {createAccount && <CreateAccountBody setCreateAccount={setCreateAccount}/>}
+      {createAccount && <CreateAccountBody/>}
     </View>
   );
 }

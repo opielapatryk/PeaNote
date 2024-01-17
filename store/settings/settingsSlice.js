@@ -9,7 +9,6 @@ export const settingsSlice = createSlice({
     initialState,
     reducers:{
         setShowInput: (state,action) => {
-            const showInput = state.showInput
             return {...state, showInput:action.payload}
         }
     }

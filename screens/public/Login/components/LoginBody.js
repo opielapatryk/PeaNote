@@ -4,11 +4,12 @@ import { styles } from '../../../../assets/styles/styles';
 import LoginButton from './LoginButton';
 import LoginWithGoogleButton from './LoginWithGoogleButton';
 import LoginFooter from './LoginFooter';
+import { useDispatch, useSelector } from 'react-redux';
+import { setEmail,setPassword } from '../../../../store/login/loginReducer';
 
-const LoginHeader = ({setCreateAccount}) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
+const LoginHeader = () => {
+  const {email,password,message} = useSelector((state)=>state.login)
+  const dispatch = useDispatch()
 
     return (
         <>
@@ -20,10 +21,10 @@ const LoginHeader = ({setCreateAccount}) => {
           Please provide your credentials by filling out the form below.
         </Text>
 
-        <TextInput style={styles.roundTextInput} placeholder='Email' onChangeText={setEmail} value={email}/>
-        <TextInput style={styles.roundTextInput} placeholder='Password' secureTextEntry onChangeText={setPassword} value={password}/>   
+        <TextInput style={styles.roundTextInput} placeholder='Email' onChangeText={text=>dispatch(setEmail(text))} value={email}/>
+        <TextInput style={styles.roundTextInput} placeholder='Password' secureTextEntry onChangeText={text=>dispatch(setPassword(text))} value={password}/>   
 
-        <LoginButton email={email} password={password} setMessage={setMessage}/>
+        <LoginButton/>
 
                
       <Text style={styles.paragraph}>
@@ -32,7 +33,7 @@ const LoginHeader = ({setCreateAccount}) => {
       
       <LoginWithGoogleButton/>
 
-      <LoginFooter setCreateAccount={setCreateAccount}/>
+      <LoginFooter/>
       </>
     );
 }
