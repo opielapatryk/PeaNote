@@ -12,7 +12,7 @@ jest.mock('@react-native-firebase/auth', () => ({
     },
   }));
   
-test('login button renders correctly', () => {
+test('Login button renders correctly.', () => {
 
   const tree = renderer.create(
     <Provider store={store}>

@@ -2,7 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { Provider } from 'react-redux';  
 import store from '../../../../../store/store'; 
-import {Note} from '../Note';
+import SettingsScreen from '../SettingsScreen';
 
 jest.mock('@react-native-firebase/auth', () => () => {
     return {
@@ -12,17 +12,25 @@ jest.mock('@react-native-firebase/auth', () => () => {
     }
   })
 
-jest.mock('@react-native-firebase/firestore', () => ({
-    collection: jest.fn(),
-    doc: jest.fn(),
-    get: jest.fn(),
-}));
+  jest.mock('@react-native-firebase/firestore', () =>()=> {
+    return {
+      collection: jest.fn(()=>{
+        return{
+          where: jest.fn(()=>{
+            return{
+              get: jest.fn(() => Promise.resolve(true))
+            }
+          }),
+        }
+      }),
+    };
+  })
 
 
-test('Note renders correctly.', async () => {
+test('Settings screen renders correctly.', async () => {
   const tree = renderer.create(
     <Provider store={store}>
-        <Note id={1} isInfo={false}/>
+        <SettingsScreen/>
     </Provider>
   ).toJSON();
   expect(tree).toMatchSnapshot();

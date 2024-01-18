@@ -1,8 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import FriendRequests from '../FriendRequests';
-import { NavigationContainer } from '@react-navigation/native';
-import { act } from 'react-test-renderer';
+import FriendsBoard from '../FriendsBoard';
 
 jest.mock('@react-native-firebase/auth', () => () => {
     return {
@@ -18,15 +16,18 @@ jest.mock('@react-native-firebase/firestore', () => ({
     get: jest.fn(),
 }));
 
+test('FriendsBoard screen renders correctly.', async () => {
+    const route = {
+      params: {
+        friendEmail: 'test@example.com',
+      },
+    };
+    const navigation = {
+      navigate: jest.fn(),
+    };
 
-test('Friend requests screen renders correctly.', async () => {
-  const tree = renderer.create(
-    <NavigationContainer>
-        <FriendRequests />
-    </NavigationContainer>
-  ).toJSON();
-
-  await act(async () => {
+    const tree = renderer.create(
+        <FriendsBoard route={route} navigation={navigation} />
+      ).toJSON();
     expect(tree).toMatchSnapshot();
-  })
-});
+})

@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pending note renders correctly 1`] = `
+<View
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    {
+      "backgroundColor": "#FFF3B2",
+      "borderRadius": 8,
+      "borderWidth": 1,
+      "height": 150,
+      "marginBottom": 10,
+      "marginLeft": 10,
+      "paddingLeft": 10,
+      "paddingTop": 10,
+      "shadowColor": "rgb(0, 0, 0)",
+      "shadowOffset": {
+        "height": 2,
+        "width": -2,
+      },
+      "shadowOpacity": 0.3,
+      "shadowRadius": 2,
+      "width": 100,
+    }
+  }
+>
+  <Text
+    style={
+      {
+        "backgroundColor": "#FFF3B2",
+        "fontSize": 15,
+        "letterSpacing": 1.5,
+      }
+    }
+  />
+</View>
+`;

@@ -11,8 +11,6 @@ const Logout = ({navigation}) => {
           await e.preventDefault();
 
           await signOutAndClearReduxStore(notes,dispatch,pendingNotes)
-          
-          console.log('notes after logout: ', notes);
         });
         return unsubscribe;
       }, [navigation]);

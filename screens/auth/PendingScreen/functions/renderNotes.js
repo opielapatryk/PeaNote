@@ -1,6 +1,6 @@
-import { sendNoteToBoard } from '../functions/sendNoteToBoard';
+import { sendNoteToBoard } from './sendNoteToBoard';
 import { Pressable, Text, Animated } from 'react-native';
-import { PendingNote } from './PendingNote';
+import { PendingNote } from '../components/PendingNote';
 import { styles } from '../../../../assets/styles/styles';
 
 export const renderNotes = ({ item, index }, pendingNotes,dispatch) => {

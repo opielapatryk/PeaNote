@@ -28,7 +28,7 @@ jest.mock('@react-native-firebase/firestore', () => ({
 
 jest.mock('../../../../../assets/images/logo.svg', () => 'logo.svg');
 
-test('login screen renders correctly', () => {
+test('Login screen renders correctly.', () => {
   const tree = renderer.create(
     <Provider store={store}>
       <Login />

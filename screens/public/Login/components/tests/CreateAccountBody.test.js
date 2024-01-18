@@ -26,7 +26,7 @@ jest.mock('@react-native-firebase/firestore', () => ({
     },
 }));
 
-test('create account body renders correctly', () => {
+test('Create account body renders correctly.', () => {
 
   const tree = renderer.create(
     <Provider store={store}>

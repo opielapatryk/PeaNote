@@ -2,7 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { Provider } from 'react-redux';  
 import store from '../../../../../store/store'; 
-import {Note} from '../Note';
+import {PendingNote} from '../PendingNote';
 
 jest.mock('@react-native-firebase/auth', () => () => {
     return {
@@ -19,10 +19,10 @@ jest.mock('@react-native-firebase/firestore', () => ({
 }));
 
 
-test('Note renders correctly.', async () => {
+test('Pending note renders correctly.', async () => {
   const tree = renderer.create(
     <Provider store={store}>
-        <Note id={1} isInfo={false}/>
+        <PendingNote id={1} isInfo={false}/>
     </Provider>
   ).toJSON();
   expect(tree).toMatchSnapshot();

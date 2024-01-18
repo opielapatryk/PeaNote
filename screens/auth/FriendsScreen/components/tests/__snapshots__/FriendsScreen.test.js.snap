@@ -1,0 +1,171 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FriendsBoard component 1`] = `
+<View
+  style={
+    {
+      "backgroundColor": "#FFFBE4",
+      "flex": 1,
+      "paddingTop": 10,
+    }
+  }
+>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+  >
+    <Text
+      style={
+        {
+          "alignSelf": "center",
+          "backgroundColor": "#FFF3B2",
+          "borderRadius": 3,
+          "borderWidth": 2,
+          "elevation": 1,
+          "fontSize": 20,
+          "fontWeight": "bold",
+          "letterSpacing": 1,
+          "margin": 10,
+          "padding": 5,
+          "shadowColor": "#000",
+          "shadowOffset": {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.18,
+          "shadowRadius": 1,
+        }
+      }
+    >
+      REQUESTS
+    </Text>
+  </View>
+  <TextInput
+    onChangeText={[Function]}
+    placeholder="Insert friend email"
+    style={
+      {
+        "alignSelf": "center",
+        "borderRadius": 5,
+        "borderWidth": 1,
+        "marginTop": 10,
+        "padding": 5,
+        "width": 300,
+      }
+    }
+    value=""
+  />
+  <Text
+    style={
+      {
+        "alignSelf": "center",
+        "marginTop": 15,
+      }
+    }
+  />
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style=""
+  >
+    <Text
+      style={
+        {
+          "height": 0,
+        }
+      }
+    />
+  </View>
+  <Text
+    style={
+      {
+        "alignSelf": "center",
+        "fontSize": 20,
+        "fontWeight": "bold",
+        "marginTop": 15,
+      }
+    }
+  >
+    Friends:
+  </Text>
+  <RCTScrollView
+    data={[]}
+    getItem={[Function]}
+    getItemCount={[Function]}
+    keyExtractor={[Function]}
+    onContentSizeChange={[Function]}
+    onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={50}
+    stickyHeaderIndices={[]}
+    style={
+      {
+        "margin": 10,
+      }
+    }
+    viewabilityConfigCallbackPairs={[]}
+  >
+    <View />
+  </RCTScrollView>
+</View>
+`;

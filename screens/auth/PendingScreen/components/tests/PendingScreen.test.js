@@ -2,7 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { Provider } from 'react-redux';  
 import store from '../../../../../store/store'; 
-import BoardScreen from '../BoardScreen';
+import PendingScreen from '../PendingScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { act } from 'react-test-renderer';
 
@@ -28,11 +28,11 @@ jest.mock('@react-native-firebase/auth', () => ()=> {
   };
 })
 
-test('Board screen renders correctly.', async () =>  {
+test('Pending screen renders correctly.', async () =>  {
   const tree = renderer.create(
     <Provider store={store}>
         <NavigationContainer>
-            <BoardScreen />
+            <PendingScreen />
         </NavigationContainer>
     </Provider>
   ).toJSON();

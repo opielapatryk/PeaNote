@@ -24,7 +24,7 @@ jest.mock('@react-native-google-signin/google-signin', () => ({
   },
 }));
   
-test('renders correctly', () => {
+test('LoginWithGoogle button renders correctly.', () => {
   const tree = renderer.create(<LoginWithGoogleButton />).toJSON();
   expect(tree).toMatchSnapshot();
 });

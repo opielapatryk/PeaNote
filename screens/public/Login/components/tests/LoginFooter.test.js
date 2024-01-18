@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import LoginFooter from '../LoginFooter';
 import store from '../../../../../store/store'; 
 
-test('login footer renders correctly', () => {
+test('Login footer renders correctly.', () => {
 
   const tree = renderer.create(
     <Provider store={store}>
