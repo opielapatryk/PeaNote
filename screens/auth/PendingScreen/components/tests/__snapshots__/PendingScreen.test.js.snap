@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`pending screen renders correctly 1`] = `
+exports[`Pending screen renders correctly. 1`] = `
 <View
   style={
     {

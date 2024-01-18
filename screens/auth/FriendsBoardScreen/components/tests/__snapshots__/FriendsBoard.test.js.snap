@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`FriendsBoard component 1`] = `
+exports[`FriendsBoard screen renders correctly. 1`] = `
 <View
   style={
     {

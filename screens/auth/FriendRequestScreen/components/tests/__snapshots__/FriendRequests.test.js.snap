@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`board screen renders correctly 1`] = `
+exports[`Friend requests screen renders correctly. 1`] = `
 <RCTScrollView
   data={[]}
   getItem={[Function]}

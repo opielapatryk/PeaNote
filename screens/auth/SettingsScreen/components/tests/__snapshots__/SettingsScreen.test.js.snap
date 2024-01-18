@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`pending note renders correctly 1`] = `
+exports[`Settings screen renders correctly. 1`] = `
 <View
   style={
     {

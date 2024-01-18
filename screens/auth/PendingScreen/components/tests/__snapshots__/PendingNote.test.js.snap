@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`pending note renders correctly 1`] = `
+exports[`Pending note renders correctly. 1`] = `
 <View
   accessibilityState={
     {
