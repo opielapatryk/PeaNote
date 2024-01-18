@@ -1,6 +1,6 @@
 import React,{ useEffect } from 'react';
 import { Pressable,View,FlatList } from 'react-native';
-import { renderNotes } from './renderNotes';
+import { renderNotes } from '../functions/renderNotes';
 import { useDispatch, useSelector } from 'react-redux';
 import { styles } from '../../../../assets/styles/styles';
 import { checkThenChangeInfo } from '../functions/checkThenChangeInfo';
