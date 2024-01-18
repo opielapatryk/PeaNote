@@ -15,6 +15,6 @@ export const loadUser = async (setFriends)=>{
             }
         })
     }catch(e){
-        console.log('[loadUser.js] ',e.message)
+        // console.log('[loadUser.js] ',e.message)
     }
 }

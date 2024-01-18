@@ -5,24 +5,24 @@ import auth from '@react-native-firebase/auth';
 
 export const fetchNotes = async (dispatch) => {  
   const EMAIL = auth().currentUser.email
-    try {
-      let stickersonboard 
-      let pending
-      
-      const result = await firestore()
-      .collection('users')
-      .where('email', '==', EMAIL)
-      .get()
-  
-      result.forEach(doc=>{
-        pending = doc.data().pending
-        stickersonboard = doc.data().stickersOnBoard
-      })
-      
 
-      fetchAndDispatchStickers(stickersonboard, dispatch, addNote);
-      fetchAndDispatchStickers(pending, dispatch, addPendingNote);
-    } catch (error) {
-      console.log('[fetchNotes.js] ',error);
+  let stickersonboard 
+  let pending
+  
+  const result = await firestore()
+    .collection('users')
+    .where('email', '==', EMAIL)
+    .get()
+
+    const docs = result.docs;
+
+    if (Array.isArray(docs) && docs.length > 0) {
+      docs.forEach((doc) => {
+        pending = doc.data().pending;
+        stickersonboard = doc.data().stickersOnBoard;
+      })
     }
-  };
+  
+  fetchAndDispatchStickers(stickersonboard, dispatch, addNote);
+  fetchAndDispatchStickers(pending, dispatch, addPendingNote);
+};
