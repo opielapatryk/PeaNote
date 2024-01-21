@@ -13,7 +13,6 @@ import FriendRequests from './screens/auth/FriendRequestScreen/components/Friend
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin} from '@react-native-google-signin/google-signin';
 import 'expo-dev-client'
-import 'firebase/auth';
 import { WEB_CLIENT_ID, IOS_CLIENT_ID} from './FIrebaseConfig';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Logout from './screens/auth/Logout/components/Logout'

@@ -5,25 +5,19 @@ import store from '../../../../../store/store';
 import Login from '../Login';
 
 jest.mock('@react-native-firebase/auth', () => ({
-    auth: {
-        signInWithEmailAndPassword: jest.fn(),
-        createUserWithEmailAndPassword: jest.fn(),
-        signOut: jest.fn(),
-    },
+    signInWithEmailAndPassword: jest.fn(),
+    createUserWithEmailAndPassword: jest.fn(),
+    signOut: jest.fn(),
 }));
 
 jest.mock('@react-native-google-signin/google-signin', () => ({
-    GoogleSignin: {
-        signIn: jest.fn(),
-    },
+    signIn: jest.fn(),
 }));
 
 jest.mock('@react-native-firebase/firestore', () => ({
-    firestore: {
-        collection: jest.fn(),
-        doc: jest.fn(),
-        get: jest.fn(),
-    },
+    collection: jest.fn(),
+    doc: jest.fn(),
+    get: jest.fn(),
 }));
 
 jest.mock('../../../../../assets/images/logo.svg', () => 'logo.svg');
