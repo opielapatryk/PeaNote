@@ -1,15 +1,19 @@
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
-export const loadUser = async (setFriends)=>{
+export const loadUser = async (setFriends) => {
     const EMAIL = auth().currentUser.email
 
-    const getUserByEmail = await firestore()
-    .collection('users')
-    .where('email', '==', EMAIL)
-    .get()
-
+    let friendRequests
+        
+    const getUserByEmail = await firestore().collection('users').where('email', '==', EMAIL).get();
     
-    const friendRequests = getUserByEmail.docs[0].data().friends_requests;
-    setFriends(friendRequests);
+    const docs = getUserByEmail.docs;
+
+    if (Array.isArray(docs) && docs.length > 0) {
+        docs.forEach((doc) => {
+            friendRequests = doc.data().friends_requests;
+            setFriends(friendRequests);
+        })
+      }
 }

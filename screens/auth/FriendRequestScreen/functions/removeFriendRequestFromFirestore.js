@@ -10,19 +10,17 @@ export const removeFriendRequestFromFirestore = async (friendEmail,index,animate
   .where('email', '==', EMAIL)
   .get()
 
-  if(!getUserByEmail.empty){
-    getUserByEmail.forEach(doc=>{
-      if(doc.data().friends_requests.includes(friendEmail)){
-        firestore()
-        .collection('users')
-        .doc(doc.id)
-        .update({
-          friends_requests: firebase.firestore.FieldValue.arrayRemove(friendEmail),
-        })
-        .then(() => {
-          animate(index,animatedValues)
-        });
-      }
-    })
-  }
+  getUserByEmail.forEach(doc=>{
+    if(doc.data().friends_requests.includes(friendEmail)){
+      firestore()
+      .collection('users')
+      .doc(doc.id)
+      .update({
+        friends_requests: firebase.firestore.FieldValue.arrayRemove(friendEmail),
+      })
+      .then(() => {
+        animate(index,animatedValues)
+      });
+    }
+  })
 }
