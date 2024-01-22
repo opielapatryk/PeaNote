@@ -9,19 +9,19 @@ export const fetchNotes = async (dispatch) => {
   let stickersonboard 
   let pending
   
-  const result = await firestore()
+  const getUserByEmail = await firestore()
     .collection('users')
     .where('email', '==', EMAIL)
     .get()
 
-    const docs = result.docs;
+  const docs = getUserByEmail.docs;
 
-    if (Array.isArray(docs) && docs.length > 0) {
-      docs.forEach((doc) => {
-        pending = doc.data().pending;
-        stickersonboard = doc.data().stickersOnBoard;
-      })
-    }
+  if (Array.isArray(docs) && docs.length > 0) {
+    docs.forEach((doc) => {
+      pending = doc.data().pending;
+      stickersonboard = doc.data().stickersOnBoard;
+    })
+  }
   
   fetchAndDispatchStickers(stickersonboard, dispatch, addNote);
   fetchAndDispatchStickers(pending, dispatch, addPendingNote);

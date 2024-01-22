@@ -4,50 +4,40 @@ import firestore from '@react-native-firebase/firestore';
 let numberOfDeleted = 0
 export const deleteNote = async (id) => {
   const EMAIL = auth().currentUser.email
-    try {
-        // TAKE STICKERS ON BOARD
-        let stickersonboard
+  // TAKE STICKERS ON BOARD
+  let stickersonboard
 
-        const result = await firestore()
-        .collection('users')
-        .where('email', '==', EMAIL)
-        .get()
-    
-        result.forEach(doc=>{
-            stickersonboard = doc.data().stickersOnBoard
-        })
-  
-        // ITERATE OVER STICKERS ON BOARD
-  
-        stickersonboard.forEach((sticker,index) => {
-          index = index + 1
-          let sum = id - numberOfDeleted
-          if(index === sum){
-            creator = sticker.creator
-            content = sticker.content
-          }
-        })
-        numberOfDeleted++
+  const getUserByEmail = await firestore()
+  .collection('users')
+  .where('email', '==', EMAIL)
+  .get()
 
-         // REMOVE STICKER FROM FIRESTORE 
-        firestore()
-        .collection('users')
-        .where('email', '==', EMAIL)
-        .get()
-        .then((querySnapshot)=>{
-        querySnapshot.forEach(doc => {
-            firestore()
-            .collection('users')
-            .doc(doc.id)
-            .update({
-            stickersOnBoard: firebase.firestore.FieldValue.arrayRemove({
-                content: content,
-                creator: creator,
-            }),
-            })
-        })
-        })
-    } catch (error) {
-      console.log('[deleteNote.js] ',error.message);
+  getUserByEmail.forEach(doc=>{
+      stickersonboard = doc.data().stickersOnBoard
+  })
+
+  // ITERATE OVER STICKERS ON BOARD
+
+  stickersonboard.forEach((sticker,index) => {
+    index = index + 1
+    let sum = id - numberOfDeleted
+    if(index === sum){
+      creator = sticker.creator
+      content = sticker.content
     }
+  })
+  numberOfDeleted++
+
+    // REMOVE STICKER FROM FIRESTORE 
+  getUserByEmail.forEach(doc => {
+      firestore()
+      .collection('users')
+      .doc(doc.id)
+      .update({
+      stickersOnBoard: firebase.firestore.FieldValue.arrayRemove({
+          content: content,
+          creator: creator,
+      }),
+      })
+  })
 }
