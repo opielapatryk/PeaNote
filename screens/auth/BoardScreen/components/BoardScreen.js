@@ -26,7 +26,7 @@ const BoardScreen = () => {
   return (
     <View style={styles.flexone}>
       <Pressable onPress={() => checkThenChangeInfo(dispatch,notes)} style={styles.board}>
-        <FlatList data={notes} renderItem={renderNotes} keyExtractor={KEY_EXTRACTOR_NOTES}/>
+        <FlatList numColumns={3} data={notes} renderItem={renderNotes} keyExtractor={KEY_EXTRACTOR_NOTES}/>
       </Pressable>
     </View>
   );

@@ -7,7 +7,7 @@ export const renderNotes = ({ item, index }, pendingNotes,dispatch) => {
     const animatedValues = pendingNotes.map(() => new Animated.Value(200));
 
     return (
-      <Animated.View style={{ overflow: 'hidden', maxHeight: animatedValues[index] }}>
+      <Animated.View style={{ overflow: 'hidden', maxHeight: animatedValues[index], width:120,marginBottom:10 }}>
         <PendingNote id={item.id} isInfo={item.isInfo} />
         <Pressable style={{alignItems: 'center'}}
           onPress={() => {
