@@ -4,12 +4,12 @@ import auth from '@react-native-firebase/auth';
 export const loadUser = async (setFriends)=>{
   const EMAIL = auth().currentUser.email
 
-  const result = await firestore()
+  const getUserByEmail = await firestore()
     .collection('users')
     .where('email', '==', EMAIL)
     .get()
   
-  const docs = result.docs
+  const docs = getUserByEmail.docs
 
   if (Array.isArray(docs) && docs.length > 0) {
     docs.forEach((doc) => {
