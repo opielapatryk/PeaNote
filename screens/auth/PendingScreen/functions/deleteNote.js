@@ -2,56 +2,43 @@ import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 export const deleteNote = async (id) => {
+    let numberOfDeleted = 0
+    const EMAIL = auth().currentUser.email
 
-  let numberOfDeleted = 0
-  const EMAIL = auth().currentUser.email
+    let pending
+    let content
+    let creator
 
-  try {
-      let pending
-      let content
-      let creator
+    const getUserByEmail = await firestore()
+        .collection('users')
+        .where('email', '==', EMAIL)
+        .get()
 
-      const result = await firestore()
-          .collection('users')
-          .where('email', '==', EMAIL)
-          .get()
+        getUserByEmail.forEach(doc=>{
+            pending = doc.data().pending
+        })
 
-      result.forEach(doc=>{
-          pending = doc.data().pending
-      })
+    pending.forEach((sticker,index) => {
+        index = index + 1
+        let sum = id - numberOfDeleted
 
-      pending.forEach((sticker,index) => {
-          index = index + 1
-          let sum = id - numberOfDeleted
-          if(index === sum){
-            // take creator and content from clicked pending note
+        if(index === sum){
             creator = sticker.creator
             content = sticker.content
-          }
-      })
+        }
+    })
 
-      numberOfDeleted++
+    numberOfDeleted++
 
-      await firestore()
-      .collection('users')
-      .where('email', '==', EMAIL)
-      .get()
-      .then((querySnapshot)=>{
-          querySnapshot.forEach(doc => {
-              firestore()
-              .collection('users')
-              .doc(doc.id)
-              .update({
-              pending: firebase.firestore.FieldValue.arrayRemove({
-                  content: content,
-                  creator: creator,
-              }),
-              }).then(()=>{console.log('note removed from firestore');})
-          })
-      })
-
-      
-  } catch (error) {
-      console.log('[funcPendingNote.js] ', error.message);
-  }
+    getUserByEmail.forEach(doc=>{
+        firestore()
+        .collection('users')
+        .doc(doc.id)
+        .update({
+            pending: firebase.firestore.FieldValue.arrayRemove({
+                content: content,
+                creator: creator,
+            }),
+        })
+    })
 }

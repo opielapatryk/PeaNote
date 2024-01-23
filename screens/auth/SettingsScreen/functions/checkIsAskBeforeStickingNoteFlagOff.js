@@ -6,12 +6,12 @@ export const checkIsAskBeforeStickingNoteFlagOff = async ({setAskBeforeStickingN
 
   let data 
   
-  const result = await firestore()
+  const getUserByEmail = await firestore()
   .collection('users')
   .where('email', '==', EMAIL)
   .get()
 
-  const docs = result.docs;
+  const docs = getUserByEmail.docs;
 
   if (Array.isArray(docs) && docs.length > 0) {
     docs.forEach((doc) => {

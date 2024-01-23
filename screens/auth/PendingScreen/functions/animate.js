@@ -9,11 +9,9 @@ export const animate = (index,addNote,removeNote,animatedValues) => {
     }).start(async ()=>{
       if (addNote) {
         await addNote();
-        console.log('note added to board screen redux store');
       }
       if (removeNote) {
         await removeNote();
-        console.log('note removed from pending notes redux store');
       }
     });
   };

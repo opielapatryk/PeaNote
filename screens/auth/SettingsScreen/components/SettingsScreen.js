@@ -44,7 +44,7 @@ const SettingsScreen = () => {
       <View style={styles.switchRow}>
         <Text style={styles.settingsActionText}>ASK BEFORE STICKING NOTE</Text>
         <Switch
-          onValueChange={() => askBeforeStick({ setAskBeforeStickingNoteFlag,dispatch })}
+          onValueChange={() => askBeforeStick({ setAskBeforeStickingNoteFlag })}
           value={askBeforeStickingNoteFlag}
         />
       </View>

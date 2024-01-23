@@ -4,27 +4,23 @@ import { setMessage } from '../../../../store/login/loginReducer';
 
 export const signUpFirebase = async (email,password,first_name,last_name,dispatch) =>{
     try {
-    const user = await auth().createUserWithEmailAndPassword(email, password);
-    await user.user.sendEmailVerification();
-    if(user.additionalUserInfo.isNewUser){
-        firestore()
-        .collection('users')
-        .add({
-        first_name: first_name,
-        last_name: last_name,
-        email: email,
-        friends: [],
-        friends_requests: [],
-        askBeforeStick: false,
-        stickersOnBoard: [],
-        pending: []
-        })
-        .then(() => {
-        console.log('User added!');
-        })
-    }
+      const user = await auth().createUserWithEmailAndPassword(email, password);
+      user.user.sendEmailVerification();
+      if(user.additionalUserInfo.isNewUser){
+          firestore()
+          .collection('users')
+          .add({
+            first_name: first_name,
+            last_name: last_name,
+            email: email,
+            friends: [],
+            friends_requests: [],
+            askBeforeStick: false,
+            stickersOnBoard: [],
+            pending: []
+          })
+      }
     } catch (err) {
-      console.log(err)
       if(err.code === "auth/weak-password"){
         dispatch(setMessage('The given password is invalid.'))
       }else if(err.code === "auth/invalid-email"){

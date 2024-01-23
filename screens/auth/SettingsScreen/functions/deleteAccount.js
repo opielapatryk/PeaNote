@@ -7,36 +7,29 @@ import { removeNote } from "../../../../store/notes/boardSlice";
 
 export const deleteAccount = async ({notes,dispatch,pendingNotes}) => {
   const EMAIL = auth().currentUser.email
-    try {
-      console.log('trying to delete account');
-      // remove this account from friends lists
-      await removeAllFriendsBeforeAccountDelete()
 
-      // delete this account
-      firestore()
-      .collection('users')
-      .where('email', '==', EMAIL)
-      .get()
-      .then((querySnapshot)=>{
-        querySnapshot.forEach(doc => {
-          firestore()
-          .collection('users')
-          .doc(doc.id)
-          .delete()
-          .then(async () => {
-            try {
-              notes.forEach(sticker => dispatch(removeNote(sticker.id)));
-              pendingNotes.forEach(sticker => dispatch(removePendingNote(sticker.id)));
-              dispatch(setShowInput(false))
-              auth().currentUser.delete()
-            } catch (error) {
-                console.error(error);
-            }
-          });
-        })})
-        console.log('account deleted');
+  // remove this account from friends lists
+  await removeAllFriendsBeforeAccountDelete()
 
-    } catch (error) {
-      console.log('[deleteAccount.js] email error',error.message);
-    }
-  };
+  // delete this account
+  const getUserByEmail = await firestore()
+  .collection('users')
+  .where('email', '==', EMAIL)
+  .get()
+
+  const docs = getUserByEmail.docs
+
+  if(Array.isArray(docs) && docs.length > 0) {
+    let doc = docs[0];
+
+    await firestore()
+    .collection('users')
+    .doc(doc.id)
+    .delete()
+
+    auth().currentUser.delete()
+    notes.forEach(sticker => dispatch(removeNote(sticker.id)));
+    pendingNotes.forEach(sticker => dispatch(removePendingNote(sticker.id)));
+    dispatch(setShowInput(false))
+  }
+};
