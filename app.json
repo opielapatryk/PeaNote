@@ -16,8 +16,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "googleServicesFile": "./GoogleService-Info.plist",
-      "bundleIdentifier": "host.exp.exponent"
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "plugins": [
       "@react-native-firebase/app",
