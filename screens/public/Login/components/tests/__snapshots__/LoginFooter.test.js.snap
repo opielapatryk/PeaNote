@@ -106,7 +106,7 @@ exports[`Login footer renders correctly. 1`] = `
         "borderBottomColor": "#e6c019",
         "borderBottomLeftRadius": 30,
         "borderBottomRightRadius": 30,
-        "borderBottomWidth": 2,
+        "borderBottomWidth": 4,
         "borderColor": "lightgray",
         "elevation": 1,
         "marginBottom": 5,

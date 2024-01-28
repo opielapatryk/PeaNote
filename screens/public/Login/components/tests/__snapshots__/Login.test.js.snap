@@ -8,7 +8,7 @@ exports[`Login screen renders correctly. 1`] = `
       "backgroundColor": "#FFFBE4",
       "flex": 1,
       "justifyContent": "space-between",
-      "paddingTop": 20,
+      "paddingTop": 50,
     }
   }
 >
@@ -298,7 +298,7 @@ exports[`Login screen renders correctly. 1`] = `
           "borderBottomColor": "#e6c019",
           "borderBottomLeftRadius": 30,
           "borderBottomRightRadius": 30,
-          "borderBottomWidth": 2,
+          "borderBottomWidth": 4,
           "borderColor": "lightgray",
           "elevation": 1,
           "marginBottom": 5,
