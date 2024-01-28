@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     backgroundColor: '#FFFBE4',
     alignItems: 'center',
     justifyContent:'space-between',
-    paddingTop:20
+    paddingTop:50
   },
   note: {
     backgroundColor: '#FFF3B2',
@@ -164,7 +164,7 @@ export const styles = StyleSheet.create({
     marginTop:5,
     marginBottom:5,
     alignItems:'center',
-    borderBottomWidth:2,
+    borderBottomWidth:4,
     borderBottomLeftRadius:30,
     borderBottomRightRadius:30,
     borderBottomColor:'#e6c019',

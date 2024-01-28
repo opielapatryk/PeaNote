@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1088925346926-3e883fbcli5qkc14vibgq3c2i3rl1735.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1088925346926-3e883fbcli5qkc14vibgq3c2i3rl1735</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDWOzBrX65RdbFdwCTwd-0PsrCfMbhxBmA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1088925346926</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.reactnativefirebase</string>
+	<key>PROJECT_ID</key>
+	<string>stickify-407810</string>
+	<key>STORAGE_BUCKET</key>
+	<string>stickify-407810.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1088925346926:ios:aebdec6593dac4f561ca7f</string>
+</dict>
+</plist>

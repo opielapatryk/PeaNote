@@ -3,7 +3,7 @@
 # dependencies
 node_modules/
 FirebaseConfig.js
-GoogleService-Info.plist
+# GoogleService-Info.plist
 # Expo
 .expo/
 dist/

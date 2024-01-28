@@ -1,4 +1,5 @@
 import React, {useEffect,useState} from 'react'
+import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import store from './store/store'
@@ -57,7 +58,7 @@ export default function App(){
   return (
     <Provider store={store}>
         <NavigationContainer>
-        <Tab.Navigator screenOptions={{tabBarItemStyle:{padding:0,marginTop:10},tabBarIndicatorStyle:{backgroundColor:'#000'},tabBarLabelStyle:{letterSpacing:1, fontSize:11}}}>
+        <Tab.Navigator screenOptions={{tabBarItemStyle:{padding:0,marginTop: StatusBar.currentHeight || 40,},tabBarIndicatorStyle:{backgroundColor:'#000'},tabBarLabelStyle:{letterSpacing:1, fontSize:11}}}>
             {!user?(
               <>
                 <Tab.Screen name="Login" component={Login} options={{tabBarStyle:{display:'none'}}}></Tab.Screen>

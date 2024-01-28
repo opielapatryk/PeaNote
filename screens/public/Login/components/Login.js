@@ -1,5 +1,5 @@
 import { View } from 'react-native'
-import React,{ useState,useEffect } from 'react';
+import React,{ useEffect } from 'react';
 import { styles } from '../../../../assets/styles/styles';
 import Logo from '../../../../assets/images/logo.svg'
 import LoginBody from './LoginBody';

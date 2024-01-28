@@ -1,9 +1,31 @@
 {
   "expo": {
+    "name": "stickyinreactnative",
+    "slug": "stickyinreactnative",
+    "ios": {
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "bundleIdentifier": "com.patrykopiela.stickyinreactnativedev"
+    },
     "extra": {
       "eas": {
         "projectId": "d99ff50f-0885-4261-9450-58f9b727b214"
       }
-    }
+    },
+    "version": "1.0.0",
+    "sdkVersion": "49.0.0",
+    "platforms": [
+      "ios"
+    ],
+    "plugins": [
+      "@react-native-firebase/app",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ]
+    ]
   }
 }
