@@ -12,6 +12,7 @@ Device: npx expo start --dev-client
 
 ## Test
 npm test
+Overwrite snapshots: npm test -- -u
 
 ## Build
 Device: eas build --profile development --platform ios
