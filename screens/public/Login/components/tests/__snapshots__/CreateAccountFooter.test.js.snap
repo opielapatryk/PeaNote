@@ -47,7 +47,7 @@ exports[`Create account footer renders correctly. 1`] = `
     style={
       {
         "alignItems": "center",
-        "backgroundColor": "#FFFBE4",
+        "backgroundColor": "#FFFDF3",
         "borderBottomColor": "#e6c019",
         "borderBottomLeftRadius": 30,
         "borderBottomRightRadius": 30,
@@ -105,7 +105,7 @@ exports[`Create account footer renders correctly. 1`] = `
     style={
       {
         "alignItems": "center",
-        "backgroundColor": "#FFFBE4",
+        "backgroundColor": "#FFFDF3",
         "borderColor": "lightgray",
         "borderLeftWidth": 1,
         "elevation": 1,

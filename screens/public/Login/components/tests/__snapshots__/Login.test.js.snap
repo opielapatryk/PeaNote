@@ -5,7 +5,7 @@ exports[`Login screen renders correctly. 1`] = `
   style={
     {
       "alignItems": "center",
-      "backgroundColor": "#FFFBE4",
+      "backgroundColor": "#FFFDF3",
       "flex": 1,
       "justifyContent": "space-between",
       "paddingTop": 50,
@@ -167,7 +167,7 @@ exports[`Login screen renders correctly. 1`] = `
     style={
       {
         "alignItems": "center",
-        "backgroundColor": "#FFFBE4",
+        "backgroundColor": "#FFFDF3",
         "borderColor": "lightgray",
         "borderRadius": 20,
         "borderWidth": 1,
@@ -239,7 +239,7 @@ exports[`Login screen renders correctly. 1`] = `
       style={
         {
           "alignItems": "center",
-          "backgroundColor": "#FFFBE4",
+          "backgroundColor": "#FFFDF3",
           "borderColor": "lightgray",
           "borderRightWidth": 1,
           "elevation": 1,
@@ -294,7 +294,7 @@ exports[`Login screen renders correctly. 1`] = `
       style={
         {
           "alignItems": "center",
-          "backgroundColor": "#FFFBE4",
+          "backgroundColor": "#FFFDF3",
           "borderBottomColor": "#e6c019",
           "borderBottomLeftRadius": 30,
           "borderBottomRightRadius": 30,

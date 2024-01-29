@@ -40,7 +40,7 @@ exports[`Pending screen renders correctly. 1`] = `
     onStartShouldSetResponder={[Function]}
     style={
       {
-        "backgroundColor": "#FFFBE4",
+        "backgroundColor": "#FFFDF3",
         "flex": 1,
         "paddingTop": 10,
       }

@@ -34,7 +34,7 @@ exports[`LoginWithGoogle button renders correctly. 1`] = `
   style={
     {
       "alignItems": "center",
-      "backgroundColor": "#FFFBE4",
+      "backgroundColor": "#FFFDF3",
       "borderColor": "lightgray",
       "borderRadius": 20,
       "borderWidth": 1,

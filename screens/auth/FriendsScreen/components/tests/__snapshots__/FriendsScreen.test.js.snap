@@ -4,7 +4,7 @@ exports[`FriendsBoard screen renders correctly. 1`] = `
 <View
   style={
     {
-      "backgroundColor": "#FFFBE4",
+      "backgroundColor": "#FFFDF3",
       "flex": 1,
       "paddingTop": 10,
     }
@@ -45,7 +45,7 @@ exports[`FriendsBoard screen renders correctly. 1`] = `
       style={
         {
           "alignSelf": "center",
-          "backgroundColor": "#FFF3B2",
+          "backgroundColor": "#FFF5BD",
           "borderRadius": 3,
           "borderWidth": 2,
           "elevation": 1,

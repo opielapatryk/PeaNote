@@ -33,31 +33,25 @@ exports[`Note renders correctly. 1`] = `
   onStartShouldSetResponder={[Function]}
   style={
     {
-      "backgroundColor": "#FFF3B2",
-      "borderRadius": 8,
-      "borderWidth": 1,
-      "height": 150,
-      "marginBottom": 10,
-      "marginLeft": 10,
+      "backgroundColor": "#FFF5BD",
+      "borderRadius": 5,
+      "height": 266.8,
+      "margin": 8,
       "paddingLeft": 10,
       "paddingTop": 10,
-      "shadowColor": "rgb(0, 0, 0)",
       "shadowOffset": {
-        "height": 2,
-        "width": -2,
+        "height": 0.5,
       },
-      "shadowOpacity": 0.3,
-      "shadowRadius": 2,
-      "width": 100,
+      "shadowOpacity": 0.25,
+      "shadowRadius": 1,
+      "width": 340.9090909090909,
     }
   }
 >
   <Text
     style={
       {
-        "backgroundColor": "#FFF3B2",
         "fontSize": 15,
-        "letterSpacing": 1.5,
       }
     }
   />

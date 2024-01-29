@@ -19,7 +19,7 @@ exports[`Friend requests screen renders correctly. 1`] = `
   stickyHeaderIndices={[]}
   style={
     {
-      "backgroundColor": "#FFFBE4",
+      "backgroundColor": "#FFFDF3",
       "flex": 1,
       "padding": 10,
     }
