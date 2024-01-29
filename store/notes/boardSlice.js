@@ -38,7 +38,7 @@ export const boardSlice = createSlice({
             };
         },
         changeInfo: (state, action) => {
-            const prevText = state.history.find((note) => note.id === action.payload)?.text || "";
+            // const prevText = state.history.find((note) => note.id === action.payload)?.text || "";
             return {
                 ...state,
                 notes: state.notes.map((note) => {
@@ -46,7 +46,7 @@ export const boardSlice = createSlice({
                         return {
                             ...note,
                             isInfo: !note.isInfo,
-                            text: note.isInfo ? prevText : 'click again to delete note',
+                            // text: note.isInfo ? prevText : '',
                         };
                     }
                     return note;
@@ -55,7 +55,7 @@ export const boardSlice = createSlice({
             };
         },
         changePendingInfo: (state, action) => {
-            const prevText = state.pendingHistory.find((note) => note.id === action.payload)?.text || "";
+            // const prevText = state.pendingHistory.find((note) => note.id === action.payload)?.text || "";
             return {
                 ...state,
                 pendingNotes: state.pendingNotes.map((note) => {
@@ -63,7 +63,7 @@ export const boardSlice = createSlice({
                         return {
                             ...note,
                             isInfo: !note.isInfo,
-                            text: note.isInfo ? prevText : 'click again to delete note',
+                            // text: note.isInfo ? prevText : '',
                         };
                     }
                     return note;

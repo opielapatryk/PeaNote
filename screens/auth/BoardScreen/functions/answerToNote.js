@@ -1,0 +1,3 @@
+export const answerToNote = () =>{
+    return 
+}

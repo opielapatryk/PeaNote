@@ -60,5 +60,5 @@ export async function sendNoteToBoard(itemID,dispatch,index,animatedValues){
   })
 
   // MANAGE REDUX STORE
-  animate(index,()=>dispatch(addNote({ id: itemID, text: content, isInfo: false })),()=>dispatch(removePendingNote(itemID)),animatedValues);
+  animate(index,()=>dispatch(addNote({ id: itemID, text: content, isInfo: false,creator:creator.replace(/@.*/, "") })),()=>dispatch(removePendingNote(itemID)),animatedValues);
 }

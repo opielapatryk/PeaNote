@@ -40,35 +40,36 @@ const SettingsScreen = () => {
   };
 
   return (
-    <View style={styles.board}>
-      <View style={styles.switchRow}>
-        <Text style={styles.settingsActionText}>ASK BEFORE STICKING NOTE</Text>
-        <Switch
-          onValueChange={() => askBeforeStick({ setAskBeforeStickingNoteFlag })}
-          value={askBeforeStickingNoteFlag}
-        />
+    <View style={styles.friendsboard}>
+      <View>
+        <View style={styles.switchRow}>
+          <Text style={styles.settingsActionText}>ASK BEFORE STICKING NOTE</Text>
+          <Switch
+            onValueChange={() => askBeforeStick({ setAskBeforeStickingNoteFlag })}
+            value={askBeforeStickingNoteFlag}
+          />
+        </View>
+
+        {showInput && (
+          <TextInput
+            style={styles.friendsTextInput}
+            placeholder="NEW PASSWORD"
+            onChangeText={setNewPassword}
+            secureTextEntry
+          />
+        )}
+
+        <Pressable style={styles.friendsHeaderRequest} onPress={handlePasswordChange}>
+          <Text style={styles.friendsHeaderRequestText}>{showInput ? 'SET NEW PASSWORD' : 'CHANGE PASSWORD'}</Text>
+        </Pressable>
+        <Text style={styles.settingsMessage}>{message}</Text>
       </View>
 
-      {showInput && (
-        <TextInput
-          style={styles.settingsTextInput}
-          placeholder="New Password"
-          onChangeText={setNewPassword}
-          secureTextEntry
-        />
-      )}
-
-      <Pressable style={styles.settingButton} onPress={handlePasswordChange}>
-        <Text style={styles.settingsText}>{showInput ? 'SET NEW PASSWORD' : 'CHANGE PASSWORD'}</Text>
-      </Pressable>
-
-      <Pressable style={styles.settingButton} onPress={handleDeleteAccount}>
-        <Text style={styles.settingsText}>
+      <Pressable style={styles.friendsHeaderRequest} onPress={handleDeleteAccount}>
+        <Text style={styles.friendsHeaderRequestText}>
           {deleteAccountPressed ? 'CONFIRM ACCOUNT DELETE' : 'DELETE ACCOUNT'}
         </Text>
       </Pressable>
-
-      <Text style={styles.settingsMessage}>{message}</Text>
     </View>
   );
 };

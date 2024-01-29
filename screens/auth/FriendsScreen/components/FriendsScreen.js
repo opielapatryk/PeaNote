@@ -33,13 +33,18 @@ export const FriendsScreen = ({ navigation }) => {
 
   return (
     <View style={styles.board}>
-      <Pressable onPress={()=>navigation.navigate('Requests')}><Text style={styles.friendsHeaderRequest}>REQUESTS</Text></Pressable>
-      <TextInput style={styles.friendsTextInput} placeholder='Insert friend email' onChangeText={(newFriendEmail) => setNewFriendEmail(newFriendEmail)} value={newFriendEmail}/>
+      <Pressable style={styles.friendsHeaderRequest} onPress={()=>navigation.navigate('Requests')}><Text style={styles.friendsHeaderRequestText}>REQUESTS</Text></Pressable>
+
+      <TextInput style={styles.friendsTextInput} placeholder='INSERT FRIEND EMAIL' onChangeText={(newFriendEmail) => setNewFriendEmail(newFriendEmail)} value={newFriendEmail}/>
+
+      <Pressable style={styles.friendsHeaderRequest} onPress={()=>sendFriendRequest(newFriendEmail,setNewFriendEmail,setButtonTitle,setFriendReqMessage)}><Text style={styles.friendsHeaderRequestText}>ADD</Text></Pressable>
+
       <Text style={styles.friendsMessage}>{message}</Text>
+
       {friendReqMessage&&<Text style={styles.settingsMessage}>Friend request sent!</Text>}
-      <Pressable style={ buttonTitle && styles.friendsButton} onPress={()=>sendFriendRequest(newFriendEmail,setNewFriendEmail,setButtonTitle,setFriendReqMessage)}><Text style={!buttonTitle ? {height:0} : {fontWeight:700}}>{buttonTitle}</Text></Pressable>
-      <Text style={styles.friendsFriendsHeader}>Friends:</Text>
-      <FlatList data={friends} renderItem={renderFriends} keyExtractor={(friend) => friend} style={{margin:10}}/>
+
+      <Text style={styles.friendsFriendsHeader}>FRIENDS</Text>
+      <FlatList data={friends} renderItem={renderFriends} keyExtractor={(friend) => friend}/>
     </View>
   );
 }

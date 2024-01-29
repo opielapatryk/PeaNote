@@ -49,8 +49,8 @@ export default function App(){
     return (
       <Stack.Navigator>
         <Stack.Screen name="FriendsScreen" component={FriendsScreen} options={{headerShown:false}}/>
-        <Stack.Screen name='FriendsBoard' component={FriendsBoard} options={({ route }) => ({ title: route.params.name })} />
-        <Stack.Screen name="Requests" component={FriendRequests} />
+        <Stack.Screen name='FriendsBoard' component={FriendsBoard} options={({ route }) => ({ title: route.params.name,headerTintColor:'black'})} />
+        <Stack.Screen name="Requests" component={FriendRequests} options={{headerTintColor:"black"}} />
       </Stack.Navigator>
     );
   }
@@ -58,7 +58,7 @@ export default function App(){
   return (
     <Provider store={store}>
         <NavigationContainer>
-        <Tab.Navigator screenOptions={{tabBarItemStyle:{padding:0,marginTop: StatusBar.currentHeight || 40,},tabBarIndicatorStyle:{backgroundColor:'#000'},tabBarLabelStyle:{letterSpacing:1, fontSize:11}}}>
+        <Tab.Navigator screenOptions={{tabBarItemStyle:{padding:0,marginTop: StatusBar.currentHeight || 40,},tabBarIndicatorStyle:{backgroundColor:'#000'},tabBarLabelStyle:{letterSpacing:1.5, fontSize:12}}}>
             {!user?(
               <>
                 <Tab.Screen name="Login" component={Login} options={{tabBarStyle:{display:'none'}}}></Tab.Screen>
@@ -68,8 +68,8 @@ export default function App(){
               <>
                 <Tab.Screen name="Board" component={BoardScreen}></Tab.Screen>
                 <Tab.Screen name="Pending" component={PendingScreen}></Tab.Screen>
-                <Tab.Screen name="Settings" component={SettingsScreen}></Tab.Screen>
-                <Tab.Screen options={{ swipeEnabled: false }} name="Friends" component={FriendStack}></Tab.Screen>
+                <Tab.Screen name="Friends" component={FriendStack}></Tab.Screen>
+                <Tab.Screen options={{ swipeEnabled: false }} name="Settings" component={SettingsScreen}></Tab.Screen>
                 <Tab.Screen name="Logout" component={Logout}></Tab.Screen>
               </>
             )}

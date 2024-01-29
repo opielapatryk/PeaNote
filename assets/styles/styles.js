@@ -25,8 +25,27 @@ export const styles = StyleSheet.create({
     margin: 8,
     borderRadius:5,
   },
+  noteclicked:{
+    backgroundColor: '#FFF5BD',
+    width: Dimensions.get("window").width / 2.20,
+    height: Dimensions.get("window").height / 5,
+    shadowOffset: {
+      height: .5,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 1,
+    margin: 8,
+    borderRadius:5,
+    flexDirection:'row',
+    backgroundColor:'#DAD097',
+  },
   noteText:{
     fontSize:15
+  },
+  noteTextHeader:{
+    fontSize:20,
+    fontWeight: 'bold',
+    marginBottom:5
   },
   approveNote:{
     fontSize:15,
@@ -44,8 +63,12 @@ export const styles = StyleSheet.create({
   },
   board:{
     flex: 1,
-    paddingTop: 10,
+    backgroundColor: '#FFFDF3'
+  },
+  friendsboard:{
+    flex: 1,
     backgroundColor: '#FFFDF3',
+    justifyContent:"space-between",
   },
   menu:{
     flexDirection: 'row',
@@ -237,32 +260,8 @@ shadowRadius: 1.00,
 
 elevation: 1,
   },
-  switchRow:{
-    flexDirection: 'row',
-    backgroundColor:'#FFF5BD',
-    borderWidth:1,
-    borderRadius:20,
-    width:300,
-    alignSelf:'center',
-    alignItems:'center',
-    marginBottom:20,
-    justifyContent:'center',
-    padding:3,
-    shadowColor: "#000",
-shadowOffset: {
-	width: 0,
-	height: 1,
-},
-shadowOpacity: 0.18,
-shadowRadius: 1.00,
 
-elevation: 1,
-  },
-  settingsActionText:{
-    fontSize:12,
-    paddingRight:10,
-    letterSpacing:.5,
-  },
+
   settingsText:{
     fontSize:12,
     letterSpacing:.5,
@@ -278,73 +277,37 @@ elevation: 1,
   },
   settingsMessage:{
     alignSelf:'center',
+    fontStyle:'italic',
+    margin:10
   },
   friendsHeaderRequest:{
-    fontSize:20,
+    backgroundColor:'#FFF',
+    shadowOffset: {
+      width: 0,
+      height: .5,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: .5,
+    zIndex:1000,
+    width: Dimensions.get("window").width,
+    height:Dimensions.get("window").height / 20,
+    justifyContent:'center'
+  },
+  removeFriendButton:{
+    backgroundColor:'#FFF',
+    shadowOffset: {
+      width: 0,
+      height: .5,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: .5,
+    width: Dimensions.get("window").width,
+    height:Dimensions.get("window").height / 20,
+    justifyContent:'center'
+  },
+  friendsHeaderRequestText:{
+    fontSize:17,
     fontWeight:'bold',
-    letterSpacing:1,
-    alignSelf:'center',
-    borderWidth:2,
-    borderRadius:3,
-    padding:5,
-    margin:10,
-    shadowColor: "#000",
-    backgroundColor:'#FFF5BD',
-shadowOffset: {
-	width: 0,
-	height: 1,
-},
-shadowOpacity: 0.18,
-shadowRadius: 1.00,
-
-elevation: 1,
-  },
-  friendsFriendsHeader:{
-    fontSize:20,
-    fontWeight:'bold',
-    alignSelf:'center',
-    marginTop:15
-  },
-  friendsTextInput:{
-    alignSelf:'center',
-    marginTop:10,
-    width:300,
-    borderWidth:1,
-    padding:5,
-    borderRadius:5,
-  },
-  friendsButton:{
-    backgroundColor:'#FFF5BD',
-    borderWidth:1,
-    borderRadius:20,
-    width:200,
-    padding:10,
-    alignSelf:'center',
-    alignItems:'center',
-    marginBottom:20,
-    shadowColor: "#000",
-shadowOffset: {
-	width: 0,
-	height: 1,
-},
-shadowOpacity: 0.18,
-shadowRadius: 1.00,
-
-elevation: 1,
-  },
-  friendsMessage:{
-    alignSelf:'center',
-    marginTop:15
-  },
-  friendInList:{
-    flexDirection: 'row',
-    width:300,
-    alignSelf:'center',
-    alignItems:'center',
-    marginBottom:10,
-    padding:10,
-    shadowColor: "#000",
-    backgroundColor: '#FFFDF3',
     shadowOffset: {
       width: 0,
       height: 1,
@@ -352,7 +315,89 @@ elevation: 1,
     shadowOpacity: 0.18,
     shadowRadius: 1.00,
     elevation: 1,
-    borderBottomWidth:1
+    letterSpacing:2,
+    alignSelf:'center'
+  },
+  switchRow:{
+    width: Dimensions.get("window").width,
+    flexDirection: 'row',
+    backgroundColor:'#FFF',
+    alignSelf:'center',
+    alignItems:'center',
+    justifyContent:'center',
+    padding:8,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.00,
+    elevation: 1,
+  },
+  settingsActionText:{
+    fontSize:17,
+    fontWeight:'bold',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.00,
+    elevation: 1,
+    letterSpacing:2,
+    alignSelf:'center',
+    paddingRight:10
+  },
+  removeFriendText:{
+    fontSize:17,
+    fontWeight:'bold',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.00,
+    elevation: 1,
+    letterSpacing:1,
+    alignSelf:'center'
+  },
+  friendsFriendsHeader:{
+    fontSize:20,
+    fontWeight:"bold",
+    alignSelf:'center',
+    marginTop:15,
+    marginBottom:15
+  },
+  friendsTextInput:{
+    backgroundColor:'#FFF',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.00,
+    elevation: 1,
+    width: Dimensions.get("window").width,
+    height:Dimensions.get("window").height / 20,
+    textAlign:'center',
+    letterSpacing:.5,
+    fontWeight:'bold',
+  },
+  friendsMessage:{
+    alignSelf:'center',
+    marginTop:15,
+    fontStyle:'italic',
+  },
+  friendInList:{
+    padding:10,
+    marginLeft:10,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: .1,
   },
   requestItem:{
     flexDirection: 'row',

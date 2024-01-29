@@ -20,7 +20,7 @@ export const createNote = async (content,setContent,setMessage,friendEmail) => {
           .update({
             [listKey]: firebase.firestore.FieldValue.arrayUnion({
               content: content,
-              creator: EMAIL,
+              creator: EMAIL.replace(/@.*/, ""),
             }),
           })
           
