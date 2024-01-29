@@ -13,7 +13,7 @@ const PendingScreen = () => {
   return (
     <View style={styles.flexone}>
       <Pressable onPress={() => onClickChangeInfo(dispatch, pendingNotes)} style={styles.board}>
-        <FlatList numColumns={2} data={pendingNotes} renderItem={({item,index})=>renderNotes({item,index},pendingNotes)} keyExtractor={KEY_EXTRACTOR_NOTES} />
+        <FlatList numColumns={2} data={pendingNotes} renderItem={({item,index})=>renderNotes({item,index})} keyExtractor={KEY_EXTRACTOR_NOTES} />
       </Pressable>
     </View>
   );

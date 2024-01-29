@@ -14,7 +14,9 @@ const Logout = ({navigation}) => {
         const unsubscribe = navigation.addListener('focus', () => {
           signOutAndClearReduxStore(notes,dispatch,pendingNotes)
         });
-        return unsubscribe;
+        return ()=>{
+          unsubscribe;
+        }
       }, [navigation]);
     
       return (

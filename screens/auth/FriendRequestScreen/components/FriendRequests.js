@@ -16,7 +16,7 @@ const FriendRequests = () => {
     );
       
   return (
-    <FlatList data={friends} renderItem={({item,index})=>renderFriends({item,index},friends)} keyExtractor={KEY_EXTRACTOR_FRIENDS} style={styles.renderFriends}/>
+    <FlatList data={friends} renderItem={({item})=>renderFriends({item},friends)} keyExtractor={KEY_EXTRACTOR_FRIENDS} style={styles.renderFriends}/>
   );
 }
 

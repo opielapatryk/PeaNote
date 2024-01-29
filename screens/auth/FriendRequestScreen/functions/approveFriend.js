@@ -1,8 +1,7 @@
 import firestore from '@react-native-firebase/firestore';
 import auth, { firebase } from '@react-native-firebase/auth';
-import { animate } from "./animate";
 
-export const approveFriend = async (friendEmail,index,animatedValues) =>{
+export const approveFriend = async (friendEmail) =>{
   const EMAIL = auth().currentUser.email
 
   const getUserByEmail = await firestore()
@@ -26,9 +25,6 @@ export const approveFriend = async (friendEmail,index,animatedValues) =>{
           .update({
             friends_requests: firebase.firestore.FieldValue.arrayRemove(friendEmail),
           })
-          .then(() => {
-            animate(index,animatedValues)
-          });
         });
         }
       })
@@ -55,9 +51,6 @@ export const approveFriend = async (friendEmail,index,animatedValues) =>{
           .update({
             friends_requests: firebase.firestore.FieldValue.arrayRemove(EMAIL),
           })
-          .then(() => {
-            animate(index,animatedValues)
-          });
         });
         }
       })

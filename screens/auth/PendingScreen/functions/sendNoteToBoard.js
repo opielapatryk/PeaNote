@@ -1,15 +1,19 @@
 import {removePendingNote, addNote} from '../../../../store/notes/boardSlice';
 import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import { animate } from './animate';
 
 let numberOfDeleted = 0
-export async function sendNoteToBoard(itemID,dispatch,index,animatedValues){
+export async function sendNoteToBoard(itemID,dispatch){
   const EMAIL = auth().currentUser.email
 
   let pending
   let content
   let creator
+
+  const manageStore = async () => {
+    await dispatch(addNote({ id: itemID, text: content, isInfo: false,creator:creator.replace(/@.*/, "") }))
+    dispatch(removePendingNote(itemID))
+   }
 
   // get current user collection to take action on in next step
   const getUserByEmail = await firestore()
@@ -60,5 +64,5 @@ export async function sendNoteToBoard(itemID,dispatch,index,animatedValues){
   })
 
   // MANAGE REDUX STORE
-  animate(index,()=>dispatch(addNote({ id: itemID, text: content, isInfo: false,creator:creator.replace(/@.*/, "") })),()=>dispatch(removePendingNote(itemID)),animatedValues);
+  manageStore()
 }
