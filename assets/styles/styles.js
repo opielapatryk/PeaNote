@@ -308,13 +308,11 @@ elevation: 1,
   friendsHeaderRequestText:{
     fontSize:17,
     fontWeight:'bold',
-    shadowOffset: {
+    textShadowOffset: {
       width: 0,
       height: 1,
     },
-    shadowOpacity: 0.18,
-    shadowRadius: 1.00,
-    elevation: 1,
+    textShadowRadius: 1,
     letterSpacing:2,
     alignSelf:'center'
   },
@@ -393,12 +391,6 @@ elevation: 1,
   friendInList:{
     padding:10,
     marginLeft:10,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.18,
-    shadowRadius: .1,
   },
   requestItem:{
     flexDirection: 'row',

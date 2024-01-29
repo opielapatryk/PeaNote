@@ -1,8 +1,8 @@
 import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
+let numberOfDeleted = 0
 export const deleteNote = async (id) => {
-    let numberOfDeleted = 0
     const EMAIL = auth().currentUser.email
 
     let pending
