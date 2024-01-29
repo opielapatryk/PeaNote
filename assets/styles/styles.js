@@ -1,4 +1,4 @@
-import { StyleSheet,StatusBar } from 'react-native';
+import { StyleSheet,StatusBar,Dimensions } from 'react-native';
 
 export const styles = StyleSheet.create({
   flexone:{
@@ -6,39 +6,33 @@ export const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#FFFBE4',
+    backgroundColor: '#FFFDF3',
     alignItems: 'center',
     justifyContent:'space-between',
     paddingTop:50
   },
   note: {
-    backgroundColor: '#FFF3B2',
-    width: 100,
-    height: 150,
-    borderWidth: 1,
+    backgroundColor: '#FFF5BD',
+    width: Dimensions.get("window").width / 2.20,
+    height: Dimensions.get("window").height / 5,
     shadowOffset: {
-      width: -2,
-      height: 2,
+      height: .5,
     },
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
-    shadowColor: 'rgb(0, 0, 0)',
+    shadowOpacity: 0.25,
+    shadowRadius: 1,
     paddingTop:10,
     paddingLeft:10,
-    marginLeft:10,
-    borderRadius:8,
-    marginBottom:10
+    margin: 8,
+    borderRadius:5,
   },
   noteText:{
-    fontSize:15,
-    letterSpacing:1.5,
-    backgroundColor:'#FFF3B2',
+    fontSize:15
   },
   approveNote:{
     fontSize:15,
     letterSpacing:1.5,
     shadowColor: "#000",
-    backgroundColor:'#FFFBE4',
+    backgroundColor:'#FFFDF3',
     shadowOffset: {
       width: 0,
       height: 1,
@@ -51,7 +45,7 @@ export const styles = StyleSheet.create({
   board:{
     flex: 1,
     paddingTop: 10,
-    backgroundColor: '#FFFBE4',
+    backgroundColor: '#FFFDF3',
   },
   menu:{
     flexDirection: 'row',
@@ -121,7 +115,7 @@ export const styles = StyleSheet.create({
     flexDirection:'row',
     justifyContent:'space-around',
     shadowColor: "#000",
-    backgroundColor: '#FFFBE4',
+    backgroundColor: '#FFFDF3',
     shadowOffset: {
       width: 0,
       height: 1,
@@ -148,7 +142,7 @@ export const styles = StyleSheet.create({
     alignItems:'center',
     borderRightWidth: 1,
     shadowColor: "#000",
-    backgroundColor: '#FFFBE4',
+    backgroundColor: '#FFFDF3',
     shadowOffset: {
       width: 0,
       height: 1,
@@ -169,7 +163,7 @@ export const styles = StyleSheet.create({
     borderBottomRightRadius:30,
     borderBottomColor:'#e6c019',
     shadowColor: "#000",
-    backgroundColor: '#FFFBE4',
+    backgroundColor: '#FFFDF3',
     shadowOffset: {
       width: 0,
       height: 1,
@@ -190,7 +184,7 @@ export const styles = StyleSheet.create({
     borderBottomRightRadius:30,
     borderBottomColor:'#e6c019',
     shadowColor: "#000",
-    backgroundColor: '#FFFBE4',
+    backgroundColor: '#FFFDF3',
     shadowOffset: {
       width: 0,
       height: 1,
@@ -208,7 +202,7 @@ export const styles = StyleSheet.create({
     alignItems:'center',
     borderLeftWidth: 1,
     shadowColor: "#000",
-    backgroundColor: '#FFFBE4',
+    backgroundColor: '#FFFDF3',
     shadowOffset: {
       width: 0,
       height: 1,
@@ -225,7 +219,7 @@ export const styles = StyleSheet.create({
     marginTop: StatusBar.currentHeight || 0,
   },
   settingButton:{
-    backgroundColor:'#FFF3B2',
+    backgroundColor:'#FFF5BD',
     borderWidth:1,
     borderRadius:20,
     width:300,
@@ -245,7 +239,7 @@ elevation: 1,
   },
   switchRow:{
     flexDirection: 'row',
-    backgroundColor:'#FFF3B2',
+    backgroundColor:'#FFF5BD',
     borderWidth:1,
     borderRadius:20,
     width:300,
@@ -295,7 +289,7 @@ elevation: 1,
     padding:5,
     margin:10,
     shadowColor: "#000",
-    backgroundColor:'#FFF3B2',
+    backgroundColor:'#FFF5BD',
 shadowOffset: {
 	width: 0,
 	height: 1,
@@ -320,7 +314,7 @@ elevation: 1,
     borderRadius:5,
   },
   friendsButton:{
-    backgroundColor:'#FFF3B2',
+    backgroundColor:'#FFF5BD',
     borderWidth:1,
     borderRadius:20,
     width:200,
@@ -350,7 +344,7 @@ elevation: 1,
     marginBottom:10,
     padding:10,
     shadowColor: "#000",
-    backgroundColor: '#FFFBE4',
+    backgroundColor: '#FFFDF3',
     shadowOffset: {
       width: 0,
       height: 1,
@@ -368,7 +362,7 @@ elevation: 1,
     marginBottom:10,
     padding:10,
     shadowColor: "#000",
-    backgroundColor: '#FFFBE4',
+    backgroundColor: '#FFFDF3',
     shadowOffset: {
       width: 0,
       height: 1,
@@ -380,7 +374,7 @@ elevation: 1,
     borderBottomWidth:1
   },
   createNoteButton:{
-    backgroundColor:'#FFF3B2',
+    backgroundColor:'#FFF5BD',
     borderWidth:1,
     borderRadius:20,
     width:100,
@@ -407,6 +401,6 @@ elevation: 1,
   renderFriends:{
     flex: 1,
     padding: 10,
-    backgroundColor: '#FFFBE4',
+    backgroundColor: '#FFFDF3',
   },
 });
