@@ -35,6 +35,8 @@ jest.mock('@react-native-google-signin/google-signin', () => ({
   },
 }));
 
+jest.mock('../../../../../assets/images/logo.svg', () => 'logo.svg');
+
 test('Logout component renders correctly.', async () => {
     const navigation = {
       navigate: jest.fn(),

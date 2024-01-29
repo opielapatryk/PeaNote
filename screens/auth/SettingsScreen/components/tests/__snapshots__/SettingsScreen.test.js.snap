@@ -117,16 +117,14 @@ exports[`Settings screen renders correctly. 1`] = `
         style={
           {
             "alignSelf": "center",
-            "elevation": 1,
             "fontSize": 17,
             "fontWeight": "bold",
             "letterSpacing": 2,
-            "shadowOffset": {
+            "textShadowOffset": {
               "height": 1,
               "width": 0,
             },
-            "shadowOpacity": 0.18,
-            "shadowRadius": 1,
+            "textShadowRadius": 1,
           }
         }
       >
@@ -193,16 +191,14 @@ exports[`Settings screen renders correctly. 1`] = `
       style={
         {
           "alignSelf": "center",
-          "elevation": 1,
           "fontSize": 17,
           "fontWeight": "bold",
           "letterSpacing": 2,
-          "shadowOffset": {
+          "textShadowOffset": {
             "height": 1,
             "width": 0,
           },
-          "shadowOpacity": 0.18,
-          "shadowRadius": 1,
+          "textShadowRadius": 1,
         }
       }
     >
