@@ -42,7 +42,7 @@ exports[`FriendsBoard screen renders correctly. 1`] = `
     style={
       {
         "backgroundColor": "#FFF",
-        "height": 66.7,
+        "height": 72.5,
         "justifyContent": "center",
         "shadowOffset": {
           "height": 0.5,
@@ -81,9 +81,9 @@ exports[`FriendsBoard screen renders correctly. 1`] = `
     style={
       {
         "backgroundColor": "#FFF",
-        "elevation": 1,
+        "fontSize": 17,
         "fontWeight": "bold",
-        "height": 66.7,
+        "height": 71.72043010752688,
         "letterSpacing": 0.5,
         "shadowOffset": {
           "height": 1,
@@ -130,7 +130,7 @@ exports[`FriendsBoard screen renders correctly. 1`] = `
     style={
       {
         "backgroundColor": "#FFF",
-        "height": 66.7,
+        "height": 72.5,
         "justifyContent": "center",
         "shadowOffset": {
           "height": 0.5,

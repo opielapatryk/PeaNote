@@ -1,5 +1,5 @@
 import React, {useEffect,useState} from 'react'
-import { StatusBar } from 'react-native';
+import { StatusBar,Dimensions } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import store from './store/store'
@@ -69,7 +69,7 @@ export default function App(){
                 <Tab.Screen name="Board" component={BoardScreen}></Tab.Screen>
                 <Tab.Screen name="Pending" component={PendingScreen}></Tab.Screen>
                 <Tab.Screen name="Friends" component={FriendStack}></Tab.Screen>
-                <Tab.Screen options={{ swipeEnabled: false }} name="Settings" component={SettingsScreen}></Tab.Screen>
+                <Tab.Screen name="Settings" component={SettingsScreen}></Tab.Screen>
                 <Tab.Screen name="Logout" component={Logout}></Tab.Screen>
               </>
             )}

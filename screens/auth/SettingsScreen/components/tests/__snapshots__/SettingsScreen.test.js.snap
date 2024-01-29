@@ -19,6 +19,7 @@ exports[`Settings screen renders correctly. 1`] = `
           "backgroundColor": "#FFF",
           "elevation": 1,
           "flexDirection": "row",
+          "height": 72.5,
           "justifyContent": "center",
           "padding": 8,
           "shadowColor": "#000",
@@ -99,7 +100,7 @@ exports[`Settings screen renders correctly. 1`] = `
       style={
         {
           "backgroundColor": "#FFF",
-          "height": 66.7,
+          "height": 72.5,
           "justifyContent": "center",
           "shadowOffset": {
             "height": 0.5,
@@ -175,7 +176,7 @@ exports[`Settings screen renders correctly. 1`] = `
     style={
       {
         "backgroundColor": "#FFF",
-        "height": 66.7,
+        "height": 72.5,
         "justifyContent": "center",
         "shadowOffset": {
           "height": 0.5,
