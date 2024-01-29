@@ -42,7 +42,6 @@ exports[`Board screen renders correctly. 1`] = `
       {
         "backgroundColor": "#FFFDF3",
         "flex": 1,
-        "paddingTop": 10,
       }
     }
   >

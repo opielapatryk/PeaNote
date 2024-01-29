@@ -6,7 +6,6 @@ exports[`FriendsBoard screen renders correctly. 1`] = `
     {
       "backgroundColor": "#FFFDF3",
       "flex": 1,
-      "paddingTop": 10,
     }
   }
 >
@@ -40,21 +39,30 @@ exports[`FriendsBoard screen renders correctly. 1`] = `
     onResponderTerminate={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "backgroundColor": "#FFF",
+        "height": 66.7,
+        "justifyContent": "center",
+        "shadowOffset": {
+          "height": 0.5,
+          "width": 0,
+        },
+        "shadowOpacity": 0.1,
+        "shadowRadius": 0.5,
+        "width": 750,
+        "zIndex": 1000,
+      }
+    }
   >
     <Text
       style={
         {
           "alignSelf": "center",
-          "backgroundColor": "#FFF5BD",
-          "borderRadius": 3,
-          "borderWidth": 2,
           "elevation": 1,
-          "fontSize": 20,
+          "fontSize": 17,
           "fontWeight": "bold",
-          "letterSpacing": 1,
-          "margin": 10,
-          "padding": 5,
-          "shadowColor": "#000",
+          "letterSpacing": 2,
           "shadowOffset": {
             "height": 1,
             "width": 0,
@@ -69,26 +77,25 @@ exports[`FriendsBoard screen renders correctly. 1`] = `
   </View>
   <TextInput
     onChangeText={[Function]}
-    placeholder="Insert friend email"
+    placeholder="INSERT FRIEND EMAIL"
     style={
       {
-        "alignSelf": "center",
-        "borderRadius": 5,
-        "borderWidth": 1,
-        "marginTop": 10,
-        "padding": 5,
-        "width": 300,
+        "backgroundColor": "#FFF",
+        "elevation": 1,
+        "fontWeight": "bold",
+        "height": 66.7,
+        "letterSpacing": 0.5,
+        "shadowOffset": {
+          "height": 1,
+          "width": 0,
+        },
+        "shadowOpacity": 0.18,
+        "shadowRadius": 1,
+        "textAlign": "center",
+        "width": 750,
       }
     }
     value=""
-  />
-  <Text
-    style={
-      {
-        "alignSelf": "center",
-        "marginTop": 15,
-      }
-    }
   />
   <View
     accessibilityState={
@@ -120,27 +127,63 @@ exports[`FriendsBoard screen renders correctly. 1`] = `
     onResponderTerminate={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
-    style=""
+    style={
+      {
+        "backgroundColor": "#FFF",
+        "height": 66.7,
+        "justifyContent": "center",
+        "shadowOffset": {
+          "height": 0.5,
+          "width": 0,
+        },
+        "shadowOpacity": 0.1,
+        "shadowRadius": 0.5,
+        "width": 750,
+        "zIndex": 1000,
+      }
+    }
   >
     <Text
       style={
         {
-          "height": 0,
+          "alignSelf": "center",
+          "elevation": 1,
+          "fontSize": 17,
+          "fontWeight": "bold",
+          "letterSpacing": 2,
+          "shadowOffset": {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.18,
+          "shadowRadius": 1,
         }
       }
-    />
+    >
+      ADD
+    </Text>
   </View>
+  <Text
+    style={
+      {
+        "alignSelf": "center",
+        "fontStyle": "italic",
+        "marginTop": 15,
+      }
+    }
+  />
   <Text
     style={
       {
         "alignSelf": "center",
         "fontSize": 20,
         "fontWeight": "bold",
+        "marginBottom": 15,
         "marginTop": 15,
       }
     }
   >
-    Friends:
+    FRIENDS
   </Text>
   <RCTScrollView
     data={[]}
@@ -158,11 +201,6 @@ exports[`FriendsBoard screen renders correctly. 1`] = `
     renderItem={[Function]}
     scrollEventThrottle={50}
     stickyHeaderIndices={[]}
-    style={
-      {
-        "margin": 10,
-      }
-    }
     viewabilityConfigCallbackPairs={[]}
   >
     <View />

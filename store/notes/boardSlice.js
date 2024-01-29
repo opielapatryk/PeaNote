@@ -1,10 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-
 const initialState = {
     notes:[],
     pendingNotes: [],
-    history:[],
-    pendingHistory: []
 }
 
 export const boardSlice = createSlice({
@@ -14,31 +11,28 @@ export const boardSlice = createSlice({
         addNote: (state, action) => {
             const existingNote = state.notes.find(note => note.id === action.payload.id);
             if(!existingNote){
-                return {...state, notes:[...state.notes, action.payload],history: [...state.notes]}
+                return {...state, notes:[...state.notes, action.payload]}
             }
         },
         addPendingNote: (state, action) => {
             const existingNote = state.pendingNotes.find(note => note.id === action.payload.id);
             if (!existingNote) {
-                return {...state, pendingNotes: [...state.pendingNotes, action.payload], pendingHistory: [...state.pendingNotes]}
+                return {...state, pendingNotes: [...state.pendingNotes, action.payload]}
             }
         },
         removeNote: (state, action) => {
             return {
                 ...state,
-                notes: state.notes.filter(note => note.id !== action.payload),
-                history: [...state.notes]
+                notes: state.notes.filter(note => note.id !== action.payload)
             };
         },
         removePendingNote: (state,action) => {
             return {
                 ...state,
-                pendingNotes: state.pendingNotes.filter(note => note.id !== action.payload),
-                pendingHistory: [...state.pendingNotes]
+                pendingNotes: state.pendingNotes.filter(note => note.id !== action.payload)
             };
         },
         changeInfo: (state, action) => {
-            // const prevText = state.history.find((note) => note.id === action.payload)?.text || "";
             return {
                 ...state,
                 notes: state.notes.map((note) => {
@@ -46,16 +40,14 @@ export const boardSlice = createSlice({
                         return {
                             ...note,
                             isInfo: !note.isInfo,
-                            // text: note.isInfo ? prevText : '',
                         };
                     }
                     return note;
-                }),
-                history: [...state.notes]
+                })
             };
         },
         changePendingInfo: (state, action) => {
-            // const prevText = state.pendingHistory.find((note) => note.id === action.payload)?.text || "";
+
             return {
                 ...state,
                 pendingNotes: state.pendingNotes.map((note) => {
@@ -63,12 +55,10 @@ export const boardSlice = createSlice({
                         return {
                             ...note,
                             isInfo: !note.isInfo,
-                            // text: note.isInfo ? prevText : '',
                         };
                     }
                     return note;
-                }),
-                pendingHistory: [...state.pendingNotes]
+                })
             };
         },
 

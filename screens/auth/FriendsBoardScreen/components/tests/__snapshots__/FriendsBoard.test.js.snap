@@ -6,10 +6,109 @@ exports[`FriendsBoard screen renders correctly. 1`] = `
     {
       "backgroundColor": "#FFFDF3",
       "flex": 1,
-      "paddingTop": 10,
+      "justifyContent": "space-between",
     }
   }
 >
+  <View>
+    <TextInput
+      onChangeText={[Function]}
+      placeholder="NEW NOTE"
+      style={
+        {
+          "backgroundColor": "#FFF",
+          "elevation": 1,
+          "fontWeight": "bold",
+          "height": 66.7,
+          "letterSpacing": 0.5,
+          "shadowOffset": {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.18,
+          "shadowRadius": 1,
+          "textAlign": "center",
+          "width": 750,
+        }
+      }
+      value=""
+    />
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "backgroundColor": "#FFF",
+          "height": 66.7,
+          "justifyContent": "center",
+          "shadowOffset": {
+            "height": 0.5,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 0.5,
+          "width": 750,
+          "zIndex": 1000,
+        }
+      }
+    >
+      <Text
+        style={
+          {
+            "alignSelf": "center",
+            "elevation": 1,
+            "fontSize": 17,
+            "fontWeight": "bold",
+            "letterSpacing": 1,
+            "shadowOffset": {
+              "height": 1,
+              "width": 0,
+            },
+            "shadowOpacity": 0.18,
+            "shadowRadius": 1,
+          }
+        }
+      >
+        CREATE NOTE
+      </Text>
+    </View>
+    <Text
+      style={
+        {
+          "alignSelf": "center",
+          "fontStyle": "italic",
+          "margin": 10,
+        }
+      }
+    />
+  </View>
   <View
     accessibilityState={
       {
@@ -40,21 +139,29 @@ exports[`FriendsBoard screen renders correctly. 1`] = `
     onResponderTerminate={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "backgroundColor": "#FFF",
+        "height": 66.7,
+        "justifyContent": "center",
+        "shadowOffset": {
+          "height": 0.5,
+          "width": 0,
+        },
+        "shadowOpacity": 0.1,
+        "shadowRadius": 0.5,
+        "width": 750,
+      }
+    }
   >
     <Text
       style={
         {
           "alignSelf": "center",
-          "backgroundColor": "#FFF5BD",
-          "borderRadius": 3,
-          "borderWidth": 2,
           "elevation": 1,
-          "fontSize": 20,
+          "fontSize": 17,
           "fontWeight": "bold",
           "letterSpacing": 1,
-          "margin": 10,
-          "padding": 5,
-          "shadowColor": "#000",
           "shadowOffset": {
             "height": 1,
             "width": 0,
@@ -64,94 +171,8 @@ exports[`FriendsBoard screen renders correctly. 1`] = `
         }
       }
     >
-      Remove Friend
+      REMOVE FRIEND
     </Text>
   </View>
-  <TextInput
-    onChangeText={[Function]}
-    placeholder="Note.."
-    style={
-      {
-        "alignSelf": "center",
-        "borderRadius": 5,
-        "borderWidth": 1,
-        "marginTop": 10,
-        "padding": 5,
-        "width": 300,
-      }
-    }
-    value=""
-  />
-  <View
-    accessibilityState={
-      {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": undefined,
-        "expanded": undefined,
-        "selected": undefined,
-      }
-    }
-    accessibilityValue={
-      {
-        "max": undefined,
-        "min": undefined,
-        "now": undefined,
-        "text": undefined,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onBlur={[Function]}
-    onClick={[Function]}
-    onFocus={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      {
-        "alignItems": "center",
-        "alignSelf": "center",
-        "backgroundColor": "#FFF5BD",
-        "borderRadius": 20,
-        "borderWidth": 1,
-        "elevation": 1,
-        "marginBottom": 20,
-        "marginTop": 20,
-        "padding": 10,
-        "shadowColor": "#000",
-        "shadowOffset": {
-          "height": 1,
-          "width": 0,
-        },
-        "shadowOpacity": 0.18,
-        "shadowRadius": 1,
-        "width": 100,
-      }
-    }
-  >
-    <Text
-      style={
-        {
-          "fontSize": 12,
-          "fontWeight": "bold",
-          "letterSpacing": 0.5,
-        }
-      }
-    >
-      Create Note
-    </Text>
-  </View>
-  <Text
-    style={
-      {
-        "alignSelf": "center",
-      }
-    }
-  />
 </View>
 `;

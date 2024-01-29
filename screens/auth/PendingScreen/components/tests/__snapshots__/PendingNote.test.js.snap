@@ -31,29 +31,41 @@ exports[`Pending note renders correctly. 1`] = `
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
-  style={
-    {
-      "backgroundColor": "#FFF5BD",
-      "borderRadius": 5,
-      "height": 266.8,
-      "margin": 8,
-      "paddingLeft": 10,
-      "paddingTop": 10,
-      "shadowOffset": {
-        "height": 0.5,
-      },
-      "shadowOpacity": 0.25,
-      "shadowRadius": 1,
-      "width": 340.9090909090909,
-    }
-  }
 >
-  <Text
+  <View
     style={
       {
-        "fontSize": 15,
+        "backgroundColor": "#FFF5BD",
+        "borderRadius": 5,
+        "height": 266.8,
+        "margin": 8,
+        "paddingLeft": 10,
+        "paddingTop": 10,
+        "shadowOffset": {
+          "height": 0.5,
+        },
+        "shadowOpacity": 0.25,
+        "shadowRadius": 1,
+        "width": 340.9090909090909,
       }
     }
-  />
+  >
+    <Text
+      style={
+        {
+          "fontSize": 20,
+          "fontWeight": "bold",
+          "marginBottom": 5,
+        }
+      }
+    />
+    <Text
+      style={
+        {
+          "fontSize": 15,
+        }
+      }
+    />
+  </View>
 </View>
 `;
