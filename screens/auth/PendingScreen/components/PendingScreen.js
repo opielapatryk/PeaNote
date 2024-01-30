@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, FlatList,View } from 'react-native';
+import { Pressable, FlatList,View,Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { onClickChangeInfo } from '../functions/onClickChangeInfo';
 import { styles } from '../../../../assets/styles/styles'
@@ -13,6 +13,7 @@ const PendingScreen = () => {
   return (
     <View style={styles.flexone}>
       <Pressable onPress={() => onClickChangeInfo(dispatch, pendingNotes)} style={styles.board}>
+      {pendingNotes.length==0&&<Text style={styles.emptyBoardText}>THIS BOARD IS EMPTY</Text>}
         <FlatList numColumns={2} data={pendingNotes} renderItem={({item,index})=>renderNotes({item,index})} keyExtractor={KEY_EXTRACTOR_NOTES} />
       </Pressable>
     </View>

@@ -156,37 +156,27 @@ export const styles = StyleSheet.create({
     borderTopLeftRadius:10,
     borderTopRightRadius:10,
     borderColor: 'lightgray',
+    marginBottom:20
   },
   pressableInBottonViewLeftLogInOn:{
     padding:10,
     borderColor: 'lightgray',
     width:150,
     marginTop:5,
-    marginBottom:5,
     alignItems:'center',
-    borderRightWidth: 1,
-    shadowColor: "#000",
-    backgroundColor: '#FFFDF3',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.18,
-    shadowRadius: 1.00,
-    elevation: 1,
+    borderRightWidth: 1
   },
   pressableInBottonViewRightLogInOn:{
     padding:10,
     borderColor: 'lightgray',
     width:150,
     marginTop:5,
-    marginBottom:5,
     alignItems:'center',
-    borderBottomWidth:4,
+    borderBottomWidth:2,
     borderBottomLeftRadius:30,
     borderBottomRightRadius:30,
     borderBottomColor:'#e6c019',
-    shadowColor: "#000",
+    shadowColor: "#e6c019",
     backgroundColor: '#FFFDF3',
     shadowOffset: {
       width: 0,
@@ -201,13 +191,12 @@ export const styles = StyleSheet.create({
     borderColor: 'lightgray',
     width:150,
     marginTop:5,
-    marginBottom:5,
     alignItems:'center',
     borderBottomWidth:2,
     borderBottomLeftRadius:30,
     borderBottomRightRadius:30,
     borderBottomColor:'#e6c019',
-    shadowColor: "#000",
+    shadowColor: "#e6c019",
     backgroundColor: '#FFFDF3',
     shadowOffset: {
       width: 0,
@@ -222,18 +211,8 @@ export const styles = StyleSheet.create({
     borderColor: 'lightgray',
     width:150,
     marginTop:5,
-    marginBottom:5,
     alignItems:'center',
-    borderLeftWidth: 1,
-    shadowColor: "#000",
-    backgroundColor: '#FFFDF3',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.18,
-    shadowRadius: 1.00,
-    elevation: 1,
+    borderLeftWidth: 1
   },
   errorMessage:{
     color:'red'
@@ -493,4 +472,69 @@ elevation: 1,
     padding: 10,
     backgroundColor: '#FFFDF3',
   },
+  emptyBoardText:{
+    textAlign:'center',
+    fontSize:30,
+    fontWeight:'bold',
+    marginTop:Dimensions.get('window').height / 10,
+    opacity: .5,
+    letterSpacing:.5
+  },
+  modalPasswordResetView:{    
+    flex: 1,
+    justifyContent: 'center',
+    marginTop: 22
+  },
+  modalPasswordResetViewChild:{
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  modalPasswordResetHeader:{
+    fontWeight:'bold',
+    fontSize:20,
+    marginBottom:10
+  },
+  modalPasswordResetParagraph:{
+    marginBottom:10
+  },
+  modalPasswordResetTextInput:{
+    borderWidth:1,
+    padding:10,
+    borderColor:'lightgray',
+    borderRadius:5,
+    marginBottom:25
+  },
+  modalPasswordResetButtonNext:{
+    backgroundColor:'black',
+    padding:10,
+    width:100,
+    borderRadius:10,
+  },
+  modalPasswordResetButtonNextText:{
+    color:'white',
+    textAlign:'center',
+    fontWeight:'bold',
+    letterSpacing:1
+  },
+  modalPasswordResetButtonBack:{
+    padding:10,
+    width:100,
+    borderRadius:10,
+    borderWidth:1
+  },
+  modalPasswordResetButtonBackText:{
+    textAlign:'center',
+    fontWeight:'bold',
+    letterSpacing:1
+  }
 });

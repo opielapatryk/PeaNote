@@ -5,9 +5,9 @@ export const signInFirebase = (email,password,dispatch) =>{
   try {
     auth().signInWithEmailAndPassword(email,password).catch((err) => {
       if(err.code === "auth/wrong-password"){
-        dispatch(setMessage('The password is invalid, try again.'))
+        dispatch(setMessage('Please enter a valid password.'))
       }else if(err.code === "auth/invalid-email"){
-        dispatch(setMessage('The email is invalid, try again.'))
+        dispatch(setMessage('Please enter a valid email.'))
       }else if(err.code === "auth/invalid-credential"){
         dispatch(setMessage('The supplied credential is wrong or has expired.'))
       }else if(err.code === "auth/too-many-requests"){

@@ -24,9 +24,9 @@ export const signUpFirebase = async (email,password,first_name,last_name,dispatc
       if(err.code === "auth/weak-password"){
         dispatch(setMessage('The given password is invalid.'))
       }else if(err.code === "auth/invalid-email"){
-        dispatch(setMessage('The email address is badly formatted.'))
+        dispatch(setMessage('Please enter a valid email.'))
       }else if(err.code === "auth/email-already-in-use"){
-        dispatch(setMessage('The email address is already in use by another account.'))
+        dispatch(setMessage('Email has already been taken.'))
       }
     }
   }
