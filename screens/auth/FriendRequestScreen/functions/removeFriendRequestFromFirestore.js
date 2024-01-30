@@ -1,7 +1,8 @@
 import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import { removeRequestReducer } from '../../../../store/friends/friendsSlice';
 
-export const removeFriendRequestFromFirestore = async (friendEmail) =>{
+export const removeFriendRequestFromFirestore = async (friendEmail,dispatch,navigation) =>{
   const EMAIL = auth().currentUser.email
 
   const getUserByEmail = await firestore()
@@ -16,6 +17,9 @@ export const removeFriendRequestFromFirestore = async (friendEmail) =>{
       .doc(doc.id)
       .update({
         friends_requests: firebase.firestore.FieldValue.arrayRemove(friendEmail),
+      }).then(() =>{
+        dispatch(removeRequestReducer(friendEmail))
+        navigation.navigate('FriendsScreen'); // Change for some animation instead of navigation to previous screen.
       })
     }
   })

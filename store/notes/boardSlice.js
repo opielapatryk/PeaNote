@@ -21,14 +21,12 @@ export const boardSlice = createSlice({
             }
         },
         removeNote: (state, action) => {
-            console.log('note removed');
             return {
                 ...state,
                 notes: state.notes.filter(note => note.id !== action.payload)
             };
         },
         removePendingNote: (state,action) => {
-            console.log('pend removed');
             return {
                 ...state,
                 pendingNotes: state.pendingNotes.filter(note => note.id !== action.payload)
