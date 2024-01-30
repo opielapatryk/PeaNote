@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Switch, TextInput, Pressable } from 'react-native';
+import { View, Text, Switch, TextInput, Pressable,Keyboard,TouchableWithoutFeedback } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { styles } from '../../../../assets/styles/styles';
 import {checkIsAskBeforeStickingNoteFlagOff} from '../functions/checkIsAskBeforeStickingNoteFlagOff';
@@ -7,6 +7,8 @@ import {askBeforeStick} from '../functions/askBeforeStick';
 import {deleteAccount} from '../functions/deleteAccount';
 import {changePassword} from '../functions/changePassword';
 import { HANDLE_PASSWORD_CHANGE_BUTTON_PRESS } from '../../../constants';
+import { setShowInput } from '../../../../store/settings/settingsSlice';
+import { useFocusEffect } from '@react-navigation/native';
 
 const SettingsScreen = () => {
   const [askBeforeStickingNoteFlag, setAskBeforeStickingNoteFlag] = useState(false);
@@ -18,6 +20,15 @@ const SettingsScreen = () => {
   const { message } = useSelector((state) => state.login);
 
   const dispatch = useDispatch();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      return ()=>{
+        setDeleteAccountPressed(false)
+        dispatch(setShowInput(false))
+      }
+    }, [])
+  );
 
   useEffect(() => {
     checkIsAskBeforeStickingNoteFlagOff({ setAskBeforeStickingNoteFlag });
@@ -40,6 +51,8 @@ const SettingsScreen = () => {
   };
 
   return (
+    <TouchableWithoutFeedback 
+    onPress={() => Keyboard.dismiss()}>
     <View style={styles.friendsboard}>
       <View>
         <View style={styles.switchRow}>
@@ -71,6 +84,7 @@ const SettingsScreen = () => {
         </Text>
       </Pressable>
     </View>
+    </TouchableWithoutFeedback>
   );
 };
 

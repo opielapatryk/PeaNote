@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, TextInput, View, Pressable } from 'react-native';
+import { Text, TextInput, View, Pressable, Keyboard,  TouchableWithoutFeedback } from 'react-native';
 import {createNote} from '../functions/createNote'
 import {removeFriend} from '../functions/removeFriend'
 import {styles} from '../../../../assets/styles/styles'
@@ -10,19 +10,22 @@ const FriendsBoard = ({ route, navigation }) => {
   const [message, setMessage] = useState('');
 
   return (
-    <View style={styles.friendsboard}>
-      <View>
-        <TextInput style={styles.friendsTextInput} placeholder="NEW NOTE" value={content} onChangeText={text=>setContent(text)} autoCapitalize="sentences"
-        autoCorrect={false} maxLength={100} multiline />
+    <TouchableWithoutFeedback 
+    onPress={() => Keyboard.dismiss()}>
+      <View style={styles.friendsboard}>
+        <View>
+          <TextInput style={styles.friendsTextInput} placeholder="NEW NOTE" value={content} onChangeText={text=>setContent(text)} autoCapitalize="sentences"
+          autoCorrect={false} maxLength={100} multiline/>
 
-        <Pressable style={styles.friendsHeaderRequest} onPress={()=>createNote(content,setContent,setMessage,friendEmail)}><Text style={styles.removeFriendText}>CREATE NOTE</Text></Pressable>
-        
-        <Text style={styles.settingsMessage}>{message}</Text>
+          <Pressable style={styles.friendsHeaderRequest} onPress={()=>createNote(content,setContent,setMessage,friendEmail)}><Text style={styles.removeFriendText}>CREATE NOTE</Text></Pressable>
+          
+          <Text style={styles.settingsMessage}>{message}</Text>
+        </View>
+
+
+        <Pressable style={styles.deleteAccountButton} onPress={()=>removeFriend(navigation,friendEmail)}><Text style={styles.deleteAccountText}>REMOVE FRIEND</Text></Pressable>
       </View>
-
-
-      <Pressable style={styles.deleteAccountButton} onPress={()=>removeFriend(navigation,friendEmail)}><Text style={styles.deleteAccountText}>REMOVE FRIEND</Text></Pressable>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 

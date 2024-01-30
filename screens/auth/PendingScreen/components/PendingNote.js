@@ -23,7 +23,7 @@ export function PendingNote({ id, isInfo }) {
 
       {isInfo&&<>
       <View style={styles.noteclicked}>
-      <Pressable style={{borderRightWidth:0,height:Dimensions.get("window").height / 5,width:Dimensions.get('window').width / 4.4,justifyContent:'center',paddingLeft:Dimensions.get('window').width / 20}} onPress={() => {
+      <Pressable style={{height:Dimensions.get("window").height / 5,width:Dimensions.get('window').width / 4.4,justifyContent:'center',paddingLeft:Dimensions.get('window').width / 20}} onPress={() => {
               deleteNote(id);
               dispatch(removePendingNote(id));
             }}>

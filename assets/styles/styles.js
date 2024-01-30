@@ -27,7 +27,6 @@ export const styles = StyleSheet.create({
     borderRadius:5,
   },
   noteclicked:{
-    backgroundColor: '#FFF5BD',
     width: Dimensions.get("window").width / 2.20,
     height: Dimensions.get("window").height / 5,
     shadowOffset: {
@@ -47,20 +46,6 @@ export const styles = StyleSheet.create({
     fontSize:20,
     fontWeight: 'bold',
     marginBottom:5
-  },
-  approveNote:{
-    fontSize:15,
-    letterSpacing:1.5,
-    shadowColor: "#000",
-    backgroundColor:'#FFFDF3',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.18,
-    shadowRadius: 1.00,
-
-    elevation: 1,
   },
   board:{
     flex: 1,

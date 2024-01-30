@@ -1,4 +1,4 @@
-import { View } from 'react-native'
+import { View,Keyboard,TouchableWithoutFeedback } from 'react-native'
 import React,{ useEffect } from 'react';
 import { styles } from '../../../../assets/styles/styles';
 import Logo from '../../../../assets/images/logo.svg'
@@ -22,6 +22,7 @@ const Login = () => {
   }, []);
 
   return (
+    <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
     <View style={styles.container}>
       <Logo width={200} height={150}/>
 
@@ -31,6 +32,7 @@ const Login = () => {
       {/* create account screen */}
       {createAccount && <CreateAccountBody/>}
     </View>
+    </TouchableWithoutFeedback>
   );
 }
 

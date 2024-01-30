@@ -3,6 +3,7 @@ import renderer from 'react-test-renderer';
 import { Provider } from 'react-redux';  
 import store from '../../../../../store/store'; 
 import SettingsScreen from '../SettingsScreen';
+import { NavigationContainer } from '@react-navigation/native';
 
 jest.mock('@react-native-firebase/auth', () => () => {
     return {
@@ -30,7 +31,9 @@ jest.mock('@react-native-firebase/auth', () => () => {
 test('Settings screen renders correctly.', async () => {
   const tree = renderer.create(
     <Provider store={store}>
+      <NavigationContainer>
         <SettingsScreen/>
+      </NavigationContainer>
     </Provider>
   ).toJSON();
   expect(tree).toMatchSnapshot();
