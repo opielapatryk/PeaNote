@@ -1,6 +1,8 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import FriendsBoard from '../FriendsBoard';
+import { Provider } from 'react-redux';  
+import store from '../../../../../store/store'; 
 
 jest.mock('@react-native-firebase/auth', () => () => {
     return {
@@ -27,7 +29,9 @@ test('FriendsBoard screen renders correctly.', async () => {
     };
 
     const tree = renderer.create(
+      <Provider store={store}>
         <FriendsBoard route={route} navigation={navigation} />
+      </Provider>
       ).toJSON();
     expect(tree).toMatchSnapshot();
 })

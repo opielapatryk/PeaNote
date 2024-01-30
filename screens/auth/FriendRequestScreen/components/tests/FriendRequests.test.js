@@ -3,6 +3,8 @@ import renderer from 'react-test-renderer';
 import FriendRequests from '../FriendRequests';
 import { NavigationContainer } from '@react-navigation/native';
 import { act } from 'react-test-renderer';
+import { Provider } from 'react-redux';  
+import store from '../../../../../store/store'; 
 
 jest.mock('@react-native-firebase/auth', () => () => {
     return {
@@ -29,9 +31,11 @@ jest.mock('@react-native-firebase/auth', () => () => {
 
 test('Friend requests screen renders correctly.', async () => {
   const tree = renderer.create(
-    <NavigationContainer>
-        <FriendRequests />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+          <FriendRequests />
+      </NavigationContainer>
+    </Provider>
   ).toJSON();
 
   await act(async () => {

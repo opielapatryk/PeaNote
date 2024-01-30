@@ -76,6 +76,7 @@ exports[`FriendsBoard screen renders correctly. 1`] = `
     </Text>
   </View>
   <TextInput
+    autoCorrect={false}
     onChangeText={[Function]}
     placeholder="INSERT FRIEND EMAIL"
     style={

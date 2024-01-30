@@ -3,6 +3,8 @@ import renderer from 'react-test-renderer';
 import FriendsScreen from '../FriendsScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { act } from 'react-test-renderer';
+import { Provider } from 'react-redux';  
+import store from '../../../../../store/store'; 
 
 jest.mock('@react-native-firebase/auth', () => () => {
     return {
@@ -32,9 +34,11 @@ test('FriendsBoard screen renders correctly.', async () => {
     };
 
     const tree = renderer.create(
-        <NavigationContainer>
-            <FriendsScreen navigation={navigation} />
-        </NavigationContainer>
+      <Provider store={store}>
+          <NavigationContainer>
+              <FriendsScreen navigation={navigation} />
+          </NavigationContainer>
+        </Provider>
       ).toJSON();
 
       await act(async () => {
