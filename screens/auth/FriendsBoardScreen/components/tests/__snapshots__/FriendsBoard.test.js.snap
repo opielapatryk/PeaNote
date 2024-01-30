@@ -12,6 +12,10 @@ exports[`FriendsBoard screen renders correctly. 1`] = `
 >
   <View>
     <TextInput
+      autoCapitalize="sentences"
+      autoCorrect={false}
+      maxLength={100}
+      multiline={true}
       onChangeText={[Function]}
       placeholder="NEW NOTE"
       style={
@@ -21,6 +25,7 @@ exports[`FriendsBoard screen renders correctly. 1`] = `
           "fontWeight": "bold",
           "height": 71.72043010752688,
           "letterSpacing": 0.5,
+          "paddingTop": 10,
           "shadowOffset": {
             "height": 1,
             "width": 0,
@@ -142,8 +147,9 @@ exports[`FriendsBoard screen renders correctly. 1`] = `
     style={
       {
         "backgroundColor": "#FFF",
-        "height": 66.7,
+        "height": 107.58064516129032,
         "justifyContent": "center",
+        "paddingBottom": 13.34,
         "shadowOffset": {
           "height": 0.5,
           "width": 0,
@@ -151,6 +157,7 @@ exports[`FriendsBoard screen renders correctly. 1`] = `
         "shadowOpacity": 0.1,
         "shadowRadius": 0.5,
         "width": 750,
+        "zIndex": 1000,
       }
     }
   >
@@ -161,7 +168,7 @@ exports[`FriendsBoard screen renders correctly. 1`] = `
           "elevation": 1,
           "fontSize": 17,
           "fontWeight": "bold",
-          "letterSpacing": 1,
+          "letterSpacing": 2,
           "shadowOffset": {
             "height": 1,
             "width": 0,

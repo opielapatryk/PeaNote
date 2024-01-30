@@ -117,14 +117,16 @@ exports[`Settings screen renders correctly. 1`] = `
         style={
           {
             "alignSelf": "center",
+            "elevation": 1,
             "fontSize": 17,
             "fontWeight": "bold",
             "letterSpacing": 2,
-            "textShadowOffset": {
+            "shadowOffset": {
               "height": 1,
               "width": 0,
             },
-            "textShadowRadius": 1,
+            "shadowOpacity": 0.18,
+            "shadowRadius": 1,
           }
         }
       >
@@ -174,8 +176,9 @@ exports[`Settings screen renders correctly. 1`] = `
     style={
       {
         "backgroundColor": "#FFF",
-        "height": 72.5,
+        "height": 107.58064516129032,
         "justifyContent": "center",
+        "paddingBottom": 13.34,
         "shadowOffset": {
           "height": 0.5,
           "width": 0,
@@ -191,14 +194,16 @@ exports[`Settings screen renders correctly. 1`] = `
       style={
         {
           "alignSelf": "center",
+          "elevation": 1,
           "fontSize": 17,
           "fontWeight": "bold",
           "letterSpacing": 2,
-          "textShadowOffset": {
+          "shadowOffset": {
             "height": 1,
             "width": 0,
           },
-          "textShadowRadius": 1,
+          "shadowOpacity": 0.18,
+          "shadowRadius": 1,
         }
       }
     >

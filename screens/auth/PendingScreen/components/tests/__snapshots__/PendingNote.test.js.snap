@@ -40,6 +40,7 @@ exports[`Pending note renders correctly. 1`] = `
         "height": 266.8,
         "margin": 8,
         "paddingLeft": 10,
+        "paddingRight": 10,
         "paddingTop": 10,
         "shadowOffset": {
           "height": 0.5,

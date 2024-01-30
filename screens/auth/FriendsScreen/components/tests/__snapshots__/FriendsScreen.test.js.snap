@@ -59,14 +59,16 @@ exports[`FriendsBoard screen renders correctly. 1`] = `
       style={
         {
           "alignSelf": "center",
+          "elevation": 1,
           "fontSize": 17,
           "fontWeight": "bold",
           "letterSpacing": 2,
-          "textShadowOffset": {
+          "shadowOffset": {
             "height": 1,
             "width": 0,
           },
-          "textShadowRadius": 1,
+          "shadowOpacity": 0.18,
+          "shadowRadius": 1,
         }
       }
     >
@@ -83,6 +85,7 @@ exports[`FriendsBoard screen renders correctly. 1`] = `
         "fontWeight": "bold",
         "height": 71.72043010752688,
         "letterSpacing": 0.5,
+        "paddingTop": 10,
         "shadowOffset": {
           "height": 1,
           "width": 0,
@@ -145,14 +148,16 @@ exports[`FriendsBoard screen renders correctly. 1`] = `
       style={
         {
           "alignSelf": "center",
+          "elevation": 1,
           "fontSize": 17,
           "fontWeight": "bold",
           "letterSpacing": 2,
-          "textShadowOffset": {
+          "shadowOffset": {
             "height": 1,
             "width": 0,
           },
-          "textShadowRadius": 1,
+          "shadowOpacity": 0.18,
+          "shadowRadius": 1,
         }
       }
     >
