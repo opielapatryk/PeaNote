@@ -22,6 +22,7 @@ export const styles = StyleSheet.create({
     shadowRadius: 1,
     paddingTop:10,
     paddingLeft:10,
+    paddingRight:10,
     margin: 8,
     borderRadius:5,
   },
@@ -432,6 +433,7 @@ elevation: 1,
     textAlign:'center',
     letterSpacing:.5,
     fontWeight:'bold',
+    paddingTop:10
   },
   friendsMessage:{
     alignSelf:'center',

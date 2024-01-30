@@ -1,4 +1,4 @@
-import { View, Pressable, Text } from "react-native"
+import { View, Pressable, Text,Dimensions } from "react-native"
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { removeFriendRequestFromFirestore } from './removeFriendRequestFromFirestore';
 import { styles } from '../../../../assets/styles/styles'
@@ -7,11 +7,11 @@ import { approveFriend } from './approveFriend'
 export const renderFriends = ({item}) =>{
     return (
         <View style={styles.friendsRequestList}>
-            <Pressable onPress={()=>approveFriend(item)}>
+            <Pressable onPress={()=>approveFriend(item)} style={{justifyContent:'center',height: Dimensions.get("window").height / 18.4}}>
                 <Text>{String(item)}</Text>
             </Pressable>
-            <Pressable onPress={()=>removeFriendRequestFromFirestore(item)}>
-                <FontAwesome5 name="trash-alt" size={24} color="black" />
+            <Pressable onPress={()=>removeFriendRequestFromFirestore(item)}  style={{justifyContent:'center',height: Dimensions.get("window").height / 18.4}}>
+                <FontAwesome5 name="trash-alt" size={24} color="black"  />
             </Pressable>
         </View>
     )
