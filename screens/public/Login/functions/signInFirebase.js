@@ -1,5 +1,5 @@
 import auth from '@react-native-firebase/auth';
-import {setMessage} from '../../../../store/login/loginReducer'
+import {setMessage} from '../../../../store/login/loginSlice'
 
 export const signInFirebase = (email,password,dispatch) =>{
   try {

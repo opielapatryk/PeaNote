@@ -4,10 +4,10 @@ import { removeFriendRequestFromFirestore } from './removeFriendRequestFromFires
 import { styles } from '../../../../assets/styles/styles'
 import { approveFriend } from './approveFriend'
 
-export const renderFriends = ({item}) =>{
+export const renderFriends = ({item},dispatch) =>{
     return (
         <View style={styles.friendsRequestList}>
-            <Pressable onPress={()=>approveFriend(item)} style={{justifyContent:'center',height: Dimensions.get("window").height / 18.4}}>
+            <Pressable onPress={()=>approveFriend(item,dispatch)} style={{justifyContent:'center',height: Dimensions.get("window").height / 18.4}}>
                 <Text>{String(item)}</Text>
             </Pressable>
             <Pressable onPress={()=>removeFriendRequestFromFirestore(item)}  style={{justifyContent:'center',height: Dimensions.get("window").height / 18.4}}>

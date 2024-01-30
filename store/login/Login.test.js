@@ -1,4 +1,4 @@
-import reducer, { setCreateAccount,setEmail,setPassword,setMessage } from './loginReducer';
+import reducer, { setCreateAccount,setEmail,setPassword,setMessage } from './loginSlice';
 
 test('should change createAccount bool', () => {
     // dispatch the action using the reducer

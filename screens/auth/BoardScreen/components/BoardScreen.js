@@ -7,13 +7,14 @@ import { checkThenChangeInfo } from '../functions/checkThenChangeInfo';
 import { useFocusEffect } from '@react-navigation/native';
 import { fetchNotes } from '../functions/fetchNotes';
 import { KEY_EXTRACTOR_NOTES } from '../../../constants';
-
+import { loadUser } from '../../FriendsScreen/functions/loadUser';
 const BoardScreen = () => {
   const { notes } = useSelector((state) => state.board);
   const dispatch = useDispatch()
 
   useEffect(()=>{
     fetchNotes(dispatch);
+    loadUser(dispatch)
   },[])
 
   useFocusEffect(

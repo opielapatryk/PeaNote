@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Pressable,Text} from 'react-native';
 import { styles } from '../../../../assets/styles/styles';
 import { useDispatch } from 'react-redux';
-import { setEmail,setPassword,setCreateAccount,setMessage } from '../../../../store/login/loginReducer';
+import { setEmail,setPassword,setCreateAccount,setMessage } from '../../../../store/login/loginSlice';
 
 const CreateAccountFooter = () => {
   const dispatch = useDispatch()

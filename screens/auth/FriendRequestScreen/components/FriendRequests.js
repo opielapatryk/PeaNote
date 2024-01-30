@@ -5,9 +5,11 @@ import { loadUser } from '../functions/loadUser'
 import { renderFriends } from '../functions/renderFriends';
 import { KEY_EXTRACTOR_FRIENDS } from '../../../constants';
 import { styles } from '../../../../assets/styles/styles';
+import { useDispatch } from "react-redux";
 
 const FriendRequests = () => {
   const [friends,setFriends] = useState([])
+  const dispatch = useDispatch()
 
   useFocusEffect(
       React.useCallback(() => {
@@ -17,7 +19,7 @@ const FriendRequests = () => {
       
   return (
     <View style={styles.board}>
-       <FlatList data={friends} renderItem={({item})=>renderFriends({item},friends)} keyExtractor={KEY_EXTRACTOR_FRIENDS}/>
+       <FlatList data={friends} renderItem={({item})=>renderFriends({item},dispatch)} keyExtractor={KEY_EXTRACTOR_FRIENDS}/>
     </View>
    
   );

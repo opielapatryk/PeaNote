@@ -5,7 +5,7 @@ import LoginButton from './LoginButton';
 import LoginWithGoogleButton from './LoginWithGoogleButton';
 import LoginFooter from './LoginFooter';
 import { useDispatch, useSelector } from 'react-redux';
-import { setEmail,setPassword } from '../../../../store/login/loginReducer';
+import { setEmail,setPassword } from '../../../../store/login/loginSlice';
 import auth from '@react-native-firebase/auth';
 
 const LoginHeader = () => {

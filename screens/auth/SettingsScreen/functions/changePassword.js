@@ -1,6 +1,6 @@
 import auth from '@react-native-firebase/auth';
 import { setShowInput } from '../../../../store/settings/settingsSlice';
-import { setMessage } from '../../../../store/login/loginReducer';
+import { setMessage } from '../../../../store/login/loginSlice';
 
  export const changePassword = async ({setDeleteAccountPressed,newPassword,dispatch}) => {
   setDeleteAccountPressed(false);

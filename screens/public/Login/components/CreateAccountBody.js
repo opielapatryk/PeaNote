@@ -5,7 +5,7 @@ import CreateAccountButton from './CreateAccountButton';
 import CreateAccountFooter from './CreateAccountFooter';
 import LoginWithGoogleButton from './LoginWithGoogleButton';
 import { useDispatch, useSelector } from 'react-redux';
-import { setEmail,setPassword } from '../../../../store/login/loginReducer';
+import { setEmail,setPassword } from '../../../../store/login/loginSlice';
 
 const CreateAccountHeader = () => {
   const {email,password,message} = useSelector((state)=>state.login)

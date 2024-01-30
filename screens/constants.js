@@ -1,5 +1,5 @@
 import { setShowInput } from '../store/settings/settingsSlice';
-import { setMessage } from '../store/login/loginReducer';
+import { setMessage } from '../store/login/loginSlice';
 
 export const HANDLE_PASSWORD_CHANGE_BUTTON_PRESS = ({setDeleteAccountPressed,dispatch}) => {
     setDeleteAccountPressed(false);

@@ -2,7 +2,7 @@ import { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
-export const sendFriendRequest = async (newFriendEmail,setNewFriendEmail,setButtonTitle,setFriendReqMessage) => {
+export const sendFriendRequest = async (newFriendEmail,setNewFriendEmail,setFriendReqMessage) => {
   const EMAIL = auth().currentUser.email;
 
   const getUserByEmail = await firestore()
@@ -35,7 +35,6 @@ export const sendFriendRequest = async (newFriendEmail,setNewFriendEmail,setButt
           })
 
           setNewFriendEmail('')
-          setButtonTitle('')
           setFriendReqMessage(true)
         }
       }

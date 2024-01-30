@@ -1,7 +1,8 @@
 import firestore from '@react-native-firebase/firestore';
 import auth, { firebase } from '@react-native-firebase/auth';
+import { removeRequest, setFriends } from '../../../../store/friends/friendsSlice';
 
-export const approveFriend = async (friendEmail) =>{
+export const approveFriend = async (friendEmail,dispatch) =>{
   const EMAIL = auth().currentUser.email
 
   const getUserByEmail = await firestore()
@@ -51,6 +52,9 @@ export const approveFriend = async (friendEmail) =>{
           .update({
             friends_requests: firebase.firestore.FieldValue.arrayRemove(EMAIL),
           })
+
+          dispatch(setFriends(friendEmail))
+          dispatch(removeRequest(friendEmail))
         });
         }
       })
