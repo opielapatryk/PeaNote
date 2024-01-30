@@ -11,6 +11,7 @@ exports[`Login footer renders correctly. 1`] = `
       "borderTopRightRadius": 10,
       "borderTopWidth": 1,
       "flexDirection": "row",
+      "marginBottom": 20,
     }
   }
 >
@@ -47,20 +48,10 @@ exports[`Login footer renders correctly. 1`] = `
     style={
       {
         "alignItems": "center",
-        "backgroundColor": "#FFFDF3",
         "borderColor": "lightgray",
         "borderRightWidth": 1,
-        "elevation": 1,
-        "marginBottom": 5,
         "marginTop": 5,
         "padding": 10,
-        "shadowColor": "#000",
-        "shadowOffset": {
-          "height": 1,
-          "width": 0,
-        },
-        "shadowOpacity": 0.18,
-        "shadowRadius": 1,
         "width": 150,
       }
     }
@@ -106,13 +97,12 @@ exports[`Login footer renders correctly. 1`] = `
         "borderBottomColor": "#e6c019",
         "borderBottomLeftRadius": 30,
         "borderBottomRightRadius": 30,
-        "borderBottomWidth": 4,
+        "borderBottomWidth": 2,
         "borderColor": "lightgray",
         "elevation": 1,
-        "marginBottom": 5,
         "marginTop": 5,
         "padding": 10,
-        "shadowColor": "#000",
+        "shadowColor": "#e6c019",
         "shadowOffset": {
           "height": 1,
           "width": 0,

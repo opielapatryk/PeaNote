@@ -23,38 +23,6 @@ exports[`Create account body renders correctly. 1`] = `
   </Text>,
   <TextInput
     onChangeText={[Function]}
-    placeholder="First Name"
-    style={
-      {
-        "borderColor": "lightgrey",
-        "borderRadius": 20,
-        "borderWidth": 1,
-        "marginBottom": 5,
-        "marginTop": 5,
-        "padding": 10,
-        "width": 250,
-      }
-    }
-    value=""
-  />,
-  <TextInput
-    onChangeText={[Function]}
-    placeholder="Last Name"
-    style={
-      {
-        "borderColor": "lightgrey",
-        "borderRadius": 20,
-        "borderWidth": 1,
-        "marginBottom": 5,
-        "marginTop": 5,
-        "padding": 10,
-        "width": 250,
-      }
-    }
-    value=""
-  />,
-  <TextInput
-    onChangeText={[Function]}
     placeholder="Email"
     style={
       {
@@ -221,6 +189,7 @@ exports[`Create account body renders correctly. 1`] = `
         "borderTopRightRadius": 10,
         "borderTopWidth": 1,
         "flexDirection": "row",
+        "marginBottom": 20,
       }
     }
   >
@@ -264,10 +233,9 @@ exports[`Create account body renders correctly. 1`] = `
           "borderBottomWidth": 2,
           "borderColor": "lightgray",
           "elevation": 1,
-          "marginBottom": 5,
           "marginTop": 5,
           "padding": 10,
-          "shadowColor": "#000",
+          "shadowColor": "#e6c019",
           "shadowOffset": {
             "height": 1,
             "width": 0,
@@ -315,20 +283,10 @@ exports[`Create account body renders correctly. 1`] = `
       style={
         {
           "alignItems": "center",
-          "backgroundColor": "#FFFDF3",
           "borderColor": "lightgray",
           "borderLeftWidth": 1,
-          "elevation": 1,
-          "marginBottom": 5,
           "marginTop": 5,
           "padding": 10,
-          "shadowColor": "#000",
-          "shadowOffset": {
-            "height": 1,
-            "width": 0,
-          },
-          "shadowOpacity": 0.18,
-          "shadowRadius": 1,
           "width": 150,
         }
       }

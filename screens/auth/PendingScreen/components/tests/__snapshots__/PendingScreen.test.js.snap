@@ -45,6 +45,20 @@ exports[`Pending screen renders correctly. 1`] = `
       }
     }
   >
+    <Text
+      style={
+        {
+          "fontSize": 30,
+          "fontWeight": "bold",
+          "letterSpacing": 0.5,
+          "marginTop": 133.4,
+          "opacity": 0.5,
+          "textAlign": "center",
+        }
+      }
+    >
+      THIS BOARD IS EMPTY
+    </Text>
     <RCTScrollView
       data={[]}
       getItem={[Function]}
