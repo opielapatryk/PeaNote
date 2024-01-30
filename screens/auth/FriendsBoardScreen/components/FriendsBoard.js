@@ -20,7 +20,7 @@ const FriendsBoard = ({ route, navigation }) => {
       </View>
 
 
-      <Pressable style={styles.removeFriendButton} onPress={()=>removeFriend(navigation,friendEmail)}><Text style={styles.removeFriendText}>REMOVE FRIEND</Text></Pressable>
+      <Pressable style={styles.deleteAccountButton} onPress={()=>removeFriend(navigation,friendEmail)}><Text style={styles.deleteAccountText}>REMOVE FRIEND</Text></Pressable>
     </View>
   );
 };

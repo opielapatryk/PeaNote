@@ -65,8 +65,8 @@ const SettingsScreen = () => {
         <Text style={styles.settingsMessage}>{message}</Text>
       </View>
 
-      <Pressable style={styles.friendsHeaderRequest} onPress={handleDeleteAccount}>
-        <Text style={styles.friendsHeaderRequestText}>
+      <Pressable style={styles.deleteAccountButton} onPress={handleDeleteAccount}>
+        <Text style={styles.deleteAccountText}>
           {deleteAccountPressed ? 'CONFIRM ACCOUNT DELETE' : 'DELETE ACCOUNT'}
         </Text>
       </Pressable>

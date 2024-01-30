@@ -1,4 +1,4 @@
-import { FlatList } from 'react-native'
+import { FlatList,View } from 'react-native'
 import React, { useState } from 'react'
 import { useFocusEffect } from '@react-navigation/native';
 import { loadUser } from '../functions/loadUser'
@@ -16,7 +16,10 @@ const FriendRequests = () => {
     );
       
   return (
-    <FlatList data={friends} renderItem={({item})=>renderFriends({item},friends)} keyExtractor={KEY_EXTRACTOR_FRIENDS} style={styles.renderFriends}/>
+    <View style={styles.board}>
+       <FlatList data={friends} renderItem={({item})=>renderFriends({item},friends)} keyExtractor={KEY_EXTRACTOR_FRIENDS}/>
+    </View>
+   
   );
 }
 

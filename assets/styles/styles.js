@@ -293,37 +293,15 @@ elevation: 1,
     height:Dimensions.get("window").height / 18.4,
     justifyContent:'center'
   },
-  removeFriendButton:{
-    backgroundColor:'#FFF',
-    shadowOffset: {
-      width: 0,
-      height: .5,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: .5,
-    width: Dimensions.get("window").width,
-    height:Dimensions.get("window").height / 20,
-    justifyContent:'center'
-  },
-  friendsHeaderRequestText:{
-    fontSize:17,
-    fontWeight:'bold',
-    textShadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    textShadowRadius: 1,
-    letterSpacing:2,
-    alignSelf:'center'
-  },
-  switchRow:{
+
+  friendsRequestList:{
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height / 18.4,
     flexDirection: 'row',
     backgroundColor:'#FFF',
     alignSelf:'center',
     alignItems:'center',
-    justifyContent:'center',
+    justifyContent:'space-around',
     padding:8,
     shadowColor: "#000",
     shadowOffset: {
@@ -348,6 +326,78 @@ elevation: 1,
     alignSelf:'center',
     paddingRight:10
   },
+  friendsHeaderRequestText:{
+    fontSize:17,
+    fontWeight:'bold',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.00,
+    elevation: 1,
+    letterSpacing:2,
+    alignSelf:'center',
+  },
+  deleteAccountButton:{
+    backgroundColor:'#FFF',
+    shadowOffset: {
+      width: 0,
+      height: .5,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: .5,
+    zIndex:1000,
+    width: Dimensions.get("window").width,
+    height:Dimensions.get("window").height / 12.4,
+    justifyContent:'center',
+    paddingBottom:Dimensions.get("window").height / 100,
+  },
+  removeFriendButton:{
+    backgroundColor:'#FFF',
+    shadowOffset: {
+      width: 0,
+      height: .5,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: .5,
+    width: Dimensions.get("window").width,
+    height:Dimensions.get("window").height / 20,
+    justifyContent:'center'
+  },
+
+  deleteAccountText:{
+    fontSize:17,
+    fontWeight:'bold',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.00,
+    elevation: 1,
+    letterSpacing:2,
+    alignSelf:'center',
+  },
+  switchRow:{
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height / 18.4,
+    flexDirection: 'row',
+    backgroundColor:'#FFF',
+    alignSelf:'center',
+    alignItems:'center',
+    justifyContent:'center',
+    padding:8,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.00,
+    elevation: 1,
+  },
+
   removeFriendText:{
     fontSize:17,
     fontWeight:'bold',

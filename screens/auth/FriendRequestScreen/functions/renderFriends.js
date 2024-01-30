@@ -6,15 +6,13 @@ import { approveFriend } from './approveFriend'
 
 export const renderFriends = ({item}) =>{
     return (
-
-            <View style={styles.requestItem}>
-                <Pressable onPress={()=>approveFriend(item)}>
-                    <Text>{String(item)}</Text>
-                </Pressable>
-                <Pressable onPress={()=>removeFriendRequestFromFirestore(item)}>
-                    <FontAwesome5 name="trash-alt" size={24} color="black" />
-                </Pressable>
-            </View>
-
+        <View style={styles.friendsRequestList}>
+            <Pressable onPress={()=>approveFriend(item)}>
+                <Text>{String(item)}</Text>
+            </Pressable>
+            <Pressable onPress={()=>removeFriendRequestFromFirestore(item)}>
+                <FontAwesome5 name="trash-alt" size={24} color="black" />
+            </Pressable>
+        </View>
     )
 }
