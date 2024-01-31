@@ -7,7 +7,7 @@ import { removeNote } from '../../../../store/notes/boardSlice';
 import {answerToNote} from '../functions/answerToNote'
 import { deleteNote } from '../functions/deleteNote';
 
-export const Note = ({ id, isInfo }) => {
+export const Note = ({ id, isInfo,content,creator }) => {
   const { notes } = useSelector((state) => state.board);
   const dispatch = useDispatch();
 
@@ -23,8 +23,8 @@ export const Note = ({ id, isInfo }) => {
       
       {isInfo&&<>
         <View style={styles.noteclicked}>
-          <Pressable style={styles.noteIsInfoTrueLeftButton} onPress={() => {
-                deleteNote(id);
+          <Pressable style={styles.noteIsInfoTrueLeftButton} onPress={async () => {
+                await deleteNote(content,creator);
                 dispatch(removeNote(id));
               }}>
           <Text style={styles.noteIsInfoTrueButtonsText}>Click{"\n"}here{"\n"}to{"\n"}remove</Text>

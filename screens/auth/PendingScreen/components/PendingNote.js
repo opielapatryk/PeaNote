@@ -7,6 +7,7 @@ import { sendNoteToBoard } from '../functions/sendNoteToBoard';
 import { deleteNote } from '../functions/deleteNote';
 import { removePendingNote ,addNote} from '../../../../store/notes/boardSlice';
 
+
 export function PendingNote({ id, isInfo, content,creator }) {
   const {pendingNotes} = useSelector((state) => state.board);
   const dispatch = useDispatch();
@@ -23,8 +24,8 @@ export function PendingNote({ id, isInfo, content,creator }) {
 
       {isInfo&&<>
       <View style={styles.noteclicked}>
-        <Pressable style={styles.noteIsInfoTrueLeftButton} onPress={() => {
-                deleteNote(id);
+        <Pressable style={styles.noteIsInfoTrueLeftButton} onPress={ async () => {
+                await deleteNote(content,creator);
                 dispatch(removePendingNote(id));
               }}>
           <Text style={styles.noteIsInfoTrueButtonsText}>Click{"\n"}here{"\n"}to{"\n"}remove</Text>
@@ -32,9 +33,8 @@ export function PendingNote({ id, isInfo, content,creator }) {
 
         <View style={styles.notesIsInfoVerticalLine}></View>
 
-        <Pressable style={styles.noteIsInfoTrueRightButton} onPress={() => {
-              sendNoteToBoard(id);
-              dispatch(addNote({ id: id, text: content, isInfo: false, creator:creator}));
+        <Pressable style={styles.noteIsInfoTrueRightButton} onPress={async () => {
+              await sendNoteToBoard(content,creator);
               dispatch(removePendingNote(id));
             }}>
           <Text style={styles.noteIsInfoTrueButtonsText}>Click{"\n"}here{"\n"}to{"\n"}approve</Text>

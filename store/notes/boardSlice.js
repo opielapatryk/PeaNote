@@ -66,10 +66,32 @@ export const boardSlice = createSlice({
                 notes:[],
                 pendingNotes: [],
             }
-        }
+        },
+        clearPendingInfo:(state)=>{
+            return {
+                ...state,
+                pendingNotes: state.pendingNotes.map((note)=>{
+                    return {
+                        ...note,
+                        isInfo: false
+                    }
+                })
+            }
+        },
+        clearBoardInfo:(state)=>{
+            return {
+                ...state,
+                notes: state.notes.map((note)=>{
+                    return {
+                        ...note,
+                        isInfo: false
+                    }
+                })
+            }
+        },
 
     }
 })
 
-export const {addNote, removeNote,changeInfo,addPendingNote,removePendingNote,changePendingInfo,cleanStoreNotes} = boardSlice.actions
+export const {addNote, removeNote,changeInfo,addPendingNote,removePendingNote,changePendingInfo,cleanStoreNotes,clearPendingInfo,clearBoardInfo} = boardSlice.actions
 export default boardSlice.reducer

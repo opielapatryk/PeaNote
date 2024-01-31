@@ -1,13 +1,8 @@
 import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
-let numberOfDeleted = 0
-export async function sendNoteToBoard(itemID){
+export async function sendNoteToBoard(content,creator){
   const EMAIL = auth().currentUser.email
-
-  let pending
-  let content
-  let creator
 
   // get current user collection to take action on in next step
   const getUserByEmail = await firestore()
@@ -15,23 +10,7 @@ export async function sendNoteToBoard(itemID){
   .where('email', '==', EMAIL)
   .get()
 
-  // create list of pending note to iterate over in next step
-  getUserByEmail.forEach(doc=>{
-    pending = doc.data().pending
-  })
-
-  // ITERATE OVER PENDING NOTES 
-  pending.forEach((sticker,index) => {
-    index = index + 1
-    let sum = itemID - numberOfDeleted
-    if(index === sum){
-      creator = sticker.creator
-      content = sticker.content
-    }
-  })
-
-  numberOfDeleted++
-
+  // ADD STICKER TO BOARD 
   getUserByEmail.forEach(doc => {
     firestore()
     .collection('users')

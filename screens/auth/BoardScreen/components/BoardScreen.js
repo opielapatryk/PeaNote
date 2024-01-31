@@ -8,6 +8,8 @@ import { useFocusEffect } from '@react-navigation/native';
 import { fetchNotes } from '../functions/fetchNotes';
 import { KEY_EXTRACTOR_NOTES } from '../../../constants';
 import { loadUser } from '../../FriendsScreen/functions/loadUser';
+import { clearBoardInfo } from '../../../../store/notes/boardSlice';
+
 const BoardScreen = () => {
   const { notes } = useSelector((state) => state.board);
   const dispatch = useDispatch()
@@ -20,6 +22,9 @@ const BoardScreen = () => {
   useFocusEffect(
     React.useCallback(() => {
       fetchNotes(dispatch);
+      return ()=>{
+        dispatch(clearBoardInfo());
+      }
     }, [])
   );
 
@@ -27,7 +32,7 @@ const BoardScreen = () => {
     <View style={styles.flexone}>
       <Pressable onPress={() => checkThenChangeInfo(dispatch,notes)} style={styles.board}>
       {notes.length==0&&<Text style={styles.emptyBoardText}>THIS BOARD IS EMPTY</Text>}
-        <FlatList numColumns={2} data={notes} renderItem={renderNotes} keyExtractor={KEY_EXTRACTOR_NOTES}/>
+        <FlatList numColumns={2} data={notes} renderItem={({item})=>renderNotes({item})} keyExtractor={KEY_EXTRACTOR_NOTES}/>
       </Pressable>
     </View>
   );
