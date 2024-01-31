@@ -90,9 +90,14 @@ export const boardSlice = createSlice({
                 })
             }
         },
-
+        updateNoteOrder: (state, action) => {
+            return {
+                ...state,
+                notes: action.payload,
+            };
+        },
     }
 })
 
-export const {addNote, removeNote,changeInfo,addPendingNote,removePendingNote,changePendingInfo,cleanStoreNotes,clearPendingInfo,clearBoardInfo} = boardSlice.actions
+export const {addNote, removeNote,changeInfo,addPendingNote,removePendingNote,changePendingInfo,cleanStoreNotes,clearPendingInfo,clearBoardInfo,updateNoteOrder} = boardSlice.actions
 export default boardSlice.reducer

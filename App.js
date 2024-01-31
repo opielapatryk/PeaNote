@@ -15,6 +15,7 @@ import { GoogleSignin} from '@react-native-google-signin/google-signin';
 import 'expo-dev-client'
 import { WEB_CLIENT_ID, IOS_CLIENT_ID} from './FIrebaseConfig';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const Stack = createNativeStackNavigator();
 
@@ -61,23 +62,25 @@ export default function App(){
   }
 
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <Tab.Navigator initialRouteName={!user?"Login":"Board"} screenOptions={{tabBarItemStyle:{padding:0,marginTop: 40,},tabBarIndicatorStyle:{backgroundColor:'black'},tabBarLabelStyle:{letterSpacing:1.5, fontSize:12}}}>
-            {!user?(
-              <>
-                <Tab.Screen name="Login" component={Login} options={{tabBarStyle:{display:'none'}}}></Tab.Screen>
-              </>
-            ):(
-              <>
-                <Tab.Screen name="Board" component={BoardScreen}></Tab.Screen>
-                <Tab.Screen name="Pending" component={PendingScreen}></Tab.Screen>
-                <Tab.Screen name="Friends" component={FriendStack}></Tab.Screen>
-                <Tab.Screen name="Settings" component={SettingsScreen}></Tab.Screen>
-              </>
-            )}
-        </Tab.Navigator>
-      </NavigationContainer>
-    </Provider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Provider store={store}>
+        <NavigationContainer>
+          <Tab.Navigator initialRouteName={!user?"Login":"Board"} screenOptions={{tabBarItemStyle:{padding:0,marginTop: 40,},tabBarIndicatorStyle:{backgroundColor:'black'},tabBarLabelStyle:{letterSpacing:1.5, fontSize:12}}}>
+              {!user?(
+                <>
+                  <Tab.Screen name="Login" component={Login} options={{tabBarStyle:{display:'none'}}}></Tab.Screen>
+                </>
+              ):(
+                <>
+                  <Tab.Screen name="Board" component={BoardScreen}></Tab.Screen>
+                  <Tab.Screen name="Pending" component={PendingScreen}></Tab.Screen>
+                  <Tab.Screen name="Friends" component={FriendStack}></Tab.Screen>
+                  <Tab.Screen name="Settings" component={SettingsScreen}></Tab.Screen>
+                </>
+              )}
+          </Tab.Navigator>
+        </NavigationContainer>
+      </Provider>
+    </GestureHandlerRootView>
   )
 }

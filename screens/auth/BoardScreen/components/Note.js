@@ -14,17 +14,13 @@ export const Note = ({ id, isInfo,content,creator }) => {
   const [isLoadingRight,setLoadingRight] = useState(false)
 
   return (
-    <Pressable onPress={()=>handlePress(notes,dispatch,isInfo,id)}>
+    <Pressable style={isInfo?styles.noteclicked:styles.note} onPress={()=>handlePress(notes,dispatch,isInfo,id)}>
       {!isInfo&&<>
-      <View style={styles.note}>
         <Text style={styles.noteTextHeader}>{notes.find((item) => item.id === id)?.creator}</Text>
         <Text style={styles.noteText}>{notes.find((item) => item.id === id)?.text}</Text>
-      </View>
-
         </>}
       
       {isInfo&&<>
-        <View style={styles.noteclicked}>
           <Pressable style={styles.noteIsInfoTrueLeftButton} onPress={async () => {
                 setLoadingLeft(true)
                 await deleteNote(content,creator);
@@ -41,7 +37,6 @@ export const Note = ({ id, isInfo,content,creator }) => {
             }}>
           {isLoadingRight?<ActivityIndicator size={'large'} color={'black'}/>:<Text style={styles.noteIsInfoTrueButtonsText}>Click{"\n"}here{"\n"}to{"\n"}answer</Text>}
           </Pressable>
-        </View>
       </>}
     </Pressable>
   );
