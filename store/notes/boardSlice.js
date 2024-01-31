@@ -15,10 +15,11 @@ export const boardSlice = createSlice({
             }
         },
         addPendingNote: (state, action) => {
-            const existingNote = state.pendingNotes.find(note => note.id === action.payload.id);
+            const existingNote = state.pendingNotes.find(note => note.id === action.payload.id || (note.creator === action.payload.creator && note.text === action.payload.text));
             if (!existingNote) {
                 return {...state, pendingNotes: [...state.pendingNotes, action.payload]}
             }
+            return state;
         },
         removeNote: (state, action) => {
             return {
