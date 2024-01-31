@@ -1,43 +1,63 @@
 import { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import { setEmail, setMessage } from '../../../../store/login/loginSlice';
+import { Keyboard } from 'react-native';
 
-export const sendFriendRequest = async (newFriendEmail,setNewFriendEmail,setFriendReqMessage) => {
-  const EMAIL = auth().currentUser.email;
+export const sendFriendRequest = async (dispatch, friendEmail) => {
+  const currentUserEmail = auth().currentUser.email;
 
-  const getUserByEmail = await firestore()
-  .collection('users')
-  .where('email', '==', EMAIL)
-  .get()
-
-  const docs = getUserByEmail.docs
-
-  if(Array.isArray(docs) && docs.length > 0) {
-    let doc = docs[0];
-
-    if(!doc.data().friends.includes(newFriendEmail)){
-      const getNewFriendByEmail = await firestore()
+  const getUserDetails = async (email, errorMessage) => {
+    const userSnapshot = await firestore()
       .collection('users')
-      .where('email', '==', newFriendEmail)
-      .get()
+      .where('email', '==', email)
+      .get();
 
-      const docs = getNewFriendByEmail.docs
+    if (userSnapshot.empty) {
+      dispatch(setMessage(errorMessage));
+      dispatch(setEmail(''));
+      Keyboard.dismiss();
+      setTimeout(() => {
+        dispatch(setMessage(''));
+      }, 2000);
+      return null;
+    }
 
-      if(Array.isArray(docs) && docs.length > 0) {
-        let doc = docs[0];
+    return userSnapshot.docs[0];
+  };
 
-        if(!doc.data().friends_requests.includes(EMAIL)){
-          await firestore()
-          .collection('users')
-          .doc(doc.id)
-          .update({
-            friends_requests: firebase.firestore.FieldValue.arrayUnion(EMAIL),
-          })
+  const currentUserDoc = await getUserDetails(currentUserEmail, '');
 
-          setNewFriendEmail('')
-          setFriendReqMessage(true)
-        }
-      }
+  if (!currentUserDoc) {
+    return;
+  }
+
+  if (currentUserDoc.data().friends.includes(friendEmail)) {
+    dispatch(setMessage('You are already friends'));
+  } else {
+    const friendDoc = await getUserDetails(friendEmail, 'Friend not found');
+
+    if (!friendDoc) {
+      return;
+    }
+
+    if (friendEmail === currentUserEmail) {
+      dispatch(setMessage('You cannot add yourself to friends'));
+    } else {
+      await firestore()
+        .collection('users')
+        .doc(friendDoc.id)
+        .update({
+          friends_requests: firebase.firestore.FieldValue.arrayUnion(currentUserEmail),
+        });
+
+      dispatch(setMessage('Friend request sent successfully'));
     }
   }
-}
+
+  dispatch(setEmail(''));
+  Keyboard.dismiss();
+  setTimeout(() => {
+    dispatch(setMessage(''));
+  }, 2000);
+};

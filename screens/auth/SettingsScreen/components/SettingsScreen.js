@@ -7,8 +7,10 @@ import {askBeforeStick} from '../functions/askBeforeStick';
 import {deleteAccount} from '../functions/deleteAccount';
 import {changePassword} from '../functions/changePassword';
 import { HANDLE_PASSWORD_CHANGE_BUTTON_PRESS } from '../../../constants';
-import { setShowInput } from '../../../../store/settings/settingsSlice';
+import { setShowInput} from '../../../../store/settings/settingsSlice';
+import { setMessage } from '../../../../store/login/loginSlice';
 import { useFocusEffect } from '@react-navigation/native';
+import { signOutAndClearReduxStore } from '../../Logout/functions/signOutAndClearReduxStore';
 
 const SettingsScreen = () => {
   const [askBeforeStickingNoteFlag, setAskBeforeStickingNoteFlag] = useState(false);
@@ -26,6 +28,7 @@ const SettingsScreen = () => {
       return ()=>{
         setDeleteAccountPressed(false)
         dispatch(setShowInput(false))
+        dispatch(setMessage(''))
       }
     }, [])
   );
@@ -75,6 +78,11 @@ const SettingsScreen = () => {
         <Pressable style={styles.friendsHeaderRequest} onPress={handlePasswordChange}>
           <Text style={styles.friendsHeaderRequestText}>{showInput ? 'SET NEW PASSWORD' : 'CHANGE PASSWORD'}</Text>
         </Pressable>
+
+        <Pressable style={styles.friendsHeaderRequest} onPress={()=>signOutAndClearReduxStore(dispatch)}>
+          <Text style={styles.friendsHeaderRequestText}>LOGOUT</Text>
+        </Pressable>
+
         <Text style={styles.settingsMessage}>{message}</Text>
       </View>
 

@@ -15,7 +15,6 @@ import { GoogleSignin} from '@react-native-google-signin/google-signin';
 import 'expo-dev-client'
 import { WEB_CLIENT_ID, IOS_CLIENT_ID} from './FIrebaseConfig';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import Logout from './screens/auth/Logout/components/Logout'
 
 const Stack = createNativeStackNavigator();
 
@@ -75,7 +74,6 @@ export default function App(){
                 <Tab.Screen name="Pending" component={PendingScreen}></Tab.Screen>
                 <Tab.Screen name="Friends" component={FriendStack}></Tab.Screen>
                 <Tab.Screen name="Settings" component={SettingsScreen}></Tab.Screen>
-                <Tab.Screen name="Logout" component={Logout}></Tab.Screen>
               </>
             )}
         </Tab.Navigator>
