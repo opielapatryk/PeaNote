@@ -23,20 +23,21 @@ export const Note = ({ id, isInfo }) => {
       
       {isInfo&&<>
         <View style={styles.noteclicked}>
-        <Pressable style={{borderRightWidth:0,height:Dimensions.get("window").height / 5,width:Dimensions.get('window').width / 4.4,justifyContent:'center',paddingLeft:Dimensions.get('window').width / 20}} onPress={() => {
-              deleteNote(id);
-              dispatch(removeNote(id));
-            }}>
-        <Text style={{fontWeight:'bold',fontSize:20}}>Click{"\n"}here{"\n"}to{"\n"}remove</Text>
-      </Pressable>
-          <View style={{height:Dimensions.get("window").height / 8,borderLeftWidth:1,alignSelf:'center'}}></View>
-          <Pressable style={{height:Dimensions.get("window").height / 5,width:Dimensions.get('window').width / 4.4,justifyContent:'center',paddingLeft:Dimensions.get('window').width / 25}} onPress={() => {
+          <Pressable style={styles.noteIsInfoTrueLeftButton} onPress={() => {
+                deleteNote(id);
+                dispatch(removeNote(id));
+              }}>
+          <Text style={styles.noteIsInfoTrueButtonsText}>Click{"\n"}here{"\n"}to{"\n"}remove</Text>
+          </Pressable>
+          
+          <View style={styles.notesIsInfoVerticalLine}></View>
+          
+          <Pressable style={styles.noteIsInfoTrueRightButton} onPress={() => {
               answerToNote();
             }}>
-          <Text style={{fontWeight:'bold',fontSize:20}}>Click{"\n"}here{"\n"}to{"\n"}answer</Text>
-        </Pressable>
+          <Text style={styles.noteIsInfoTrueButtonsText}>Click{"\n"}here{"\n"}to{"\n"}answer</Text>
+          </Pressable>
         </View>
-
       </>}
     </Pressable>
   );

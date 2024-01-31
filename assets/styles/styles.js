@@ -521,5 +521,18 @@ elevation: 1,
     textAlign:'center',
     fontWeight:'bold',
     letterSpacing:1
-  }
+  },
+  noteIsInfoTrueLeftButton:{
+    height:Dimensions.get("window").height / 5,width:Dimensions.get('window').width / 4.4,justifyContent:'center',paddingLeft:Dimensions.get('window').width / 20
+  },
+  noteIsInfoTrueRightButton:{
+    height:Dimensions.get("window").height / 5,width:Dimensions.get('window').width / 4.4,justifyContent:'center',paddingLeft:Dimensions.get('window').width / 25
+  },
+  noteIsInfoTrueButtonsText:{
+    fontWeight:'bold',
+    fontSize:20
+  },
+  notesIsInfoVerticalLine:{
+    height:Dimensions.get("window").height / 8,borderLeftWidth:1,alignSelf:'center'
+  },
 });
