@@ -32,6 +32,12 @@
     }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "ios":{
+        "appleId": "xpatrykopiela@gmail.com",
+        "ascAppId": "6476780346",
+        "appleTeamId": "9WVBGTZK85"
+      }
+    }
   }
 }
