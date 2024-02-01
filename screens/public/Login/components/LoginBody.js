@@ -42,26 +42,28 @@ const LoginHeader = () => {
             </View>
           </View>
         </Modal>
-
-        {message !== '' && <Text style={styles.errorMessage}>{message}</Text>}
-        <Text style={styles.header}>
+      <View style={{gap:30,alignItems:'center'}}>
+      {message !== '' && <Text style={styles.errorMessage}>{message}</Text>}
+        {/* <Text style={styles.header}>
           Log In
         </Text>
         <Text style={styles.paragraph}>
           Please provide your credentials by filling out the form below.
-        </Text>
+        </Text> */}
 
         <TextInput style={styles.roundTextInput} placeholder='Email' onChangeText={text=>dispatch(setEmail(text))} value={email}/>
         <TextInput style={styles.roundTextInput} placeholder='Password' secureTextEntry onChangeText={text=>dispatch(setPassword(text))} value={password}/>   
 
         <LoginButton/>
-        <Pressable onPress={() => setModalVisible(true)}><Text style={styles.paragraph}>Forgot password?</Text></Pressable>
+        <Pressable onPress={() => setModalVisible(true)}><Text style={styles.paragraph}>Forgotten Password?</Text></Pressable>
                
-        <Text style={styles.paragraph}>
+        {/* <Text style={styles.paragraph}>
           Or sign up with
-        </Text>
+        </Text> */}
         
         <LoginWithGoogleButton/>
+      </View>
+       
 
         <LoginFooter/>
       </>

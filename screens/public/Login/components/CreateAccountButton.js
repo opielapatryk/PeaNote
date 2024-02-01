@@ -11,7 +11,7 @@ const dispatch = useDispatch()
     return (
 <>
         <Pressable style={styles.confirmButton} onPress={()=>signUpFirebase(email,password,first_name,last_name,dispatch)}> 
-          <Text>
+        <Text style={{fontWeight:'600'}}>
             Get Started
           </Text>
         </Pressable>  

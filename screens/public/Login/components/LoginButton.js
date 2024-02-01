@@ -10,7 +10,7 @@ const LoginButton = () => {
     return (
 <>
         <Pressable style={styles.confirmButton} onPress={()=>signInFirebase(email,password,dispatch)}>
-          <Text>
+        <Text style={{fontWeight:'600'}}>
             Log In
           </Text>
         </Pressable>  

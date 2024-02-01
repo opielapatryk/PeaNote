@@ -8,7 +8,7 @@ const LoginWithGoogleButton = () => {
     return (
         <Pressable style={styles.continuteWithGoogle} onPress={signIn}>
         <Ionicons name="md-logo-google" size={22} color="black" />
-        <Text>
+        <Text style={{fontWeight:'600'}}>
           Continue with Google
         </Text>
       </Pressable>  

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text,TextInput} from 'react-native';
+import {Text,TextInput,View} from 'react-native';
 import { styles } from '../../../../assets/styles/styles';
 import CreateAccountButton from './CreateAccountButton';
 import CreateAccountFooter from './CreateAccountFooter';
@@ -13,13 +13,14 @@ const CreateAccountHeader = () => {
 const dispatch = useDispatch()
     return (
 <>
+<View style={{gap:30,alignItems:'center'}}>
 {message !== '' && <Text style={styles.errorMessage}>{message}</Text>}
-        <Text style={styles.header}>
+        {/* <Text style={styles.header}>
           Create Account
         </Text>
         <Text style={styles.paragraph}>
           Let's get started by filling out the form below.
-        </Text>
+        </Text> */}
         <TextInput style={styles.roundTextInput} placeholder='Email' onChangeText={text=>dispatch(setEmail(text))} value={email}/>
       <TextInput style={styles.roundTextInput} placeholder='Password' secureTextEntry onChangeText={text=>dispatch(setPassword(text))} value={password}/>   
       
@@ -30,6 +31,7 @@ const dispatch = useDispatch()
       </Text>
       
       <LoginWithGoogleButton/>
+      </View>
 
       <CreateAccountFooter/>
       </>

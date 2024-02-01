@@ -80,29 +80,33 @@ export const styles = StyleSheet.create({
   },
   header:{
     fontSize:22,
+    fontWeight: '500',
+    letterSpacing:.5
   },
   paragraph:{
-    fontSize:12,color:'gray'
+    fontSize:12,color:'gray',fontWeight:'700'
   },
   roundTextInput:{
-    borderRadius:20,
+    borderRadius:10,
     borderWidth: 1,
     padding:10,
     borderColor: 'lightgrey',
     width:250,
     marginTop:5,
-    marginBottom:5
+    marginBottom:5,
+    backgroundColor:'white',
+    height:Dimensions.get('window').height /20,
   },
   confirmButton:{
+    height:Dimensions.get('window').height /20,
     backgroundColor:'#fff2ba',
-    borderRadius:20,
+    borderRadius:10,
     borderWidth: 1,
     padding:10,
     borderColor: '#e6c019',
-    width:200,
-    marginTop:5,
-    marginBottom:5,
+    width:250,
     alignItems:'center',
+    justifyContent:'center',
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -113,16 +117,15 @@ export const styles = StyleSheet.create({
     elevation: 1,
   },
   continuteWithGoogle:{
-    borderRadius:20,
+    height:Dimensions.get('window').height /20,
+    borderRadius:10,
     borderWidth: 1,
-    padding:10,
+    paddingLeft:10,
     borderColor: 'lightgray',
-    width:200,
-    marginTop:5,
-    marginBottom:5,
+    width:250,
     alignItems:'center',
     flexDirection:'row',
-    justifyContent:'space-around',
+    gap:30,
     shadowColor: "#000",
     backgroundColor: '#FFFDF3',
     shadowOffset: {
