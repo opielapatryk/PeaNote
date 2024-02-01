@@ -28,8 +28,8 @@ export default function App(){
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
-  async function changeScreenOrientation() {
-    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+  function changeScreenOrientation() {
+    ScreenOrientation.OrientationLock.PORTRAIT;
   }
   changeScreenOrientation();
 
