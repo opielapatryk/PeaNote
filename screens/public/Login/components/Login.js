@@ -1,11 +1,11 @@
-import { View,Keyboard,TouchableWithoutFeedback } from 'react-native'
+import { View,Keyboard,TouchableWithoutFeedback,Image } from 'react-native'
 import React,{ useEffect } from 'react';
 import { styles } from '../../../../assets/styles/styles';
-import Logo from '../../../../assets/images/logo.svg'
 import LoginBody from './LoginBody';
 import CreateAccountBody from './CreateAccountBody';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeNote,removePendingNote } from '../../../../store/notes/boardSlice';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Login = () => {
   const { notes,pendingNotes } = useSelector((state)=>state.board)
@@ -23,15 +23,17 @@ const Login = () => {
 
   return (
     <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
-    <View style={styles.container}>
-      <Logo width={200} height={150}/>
+      <LinearGradient>
+        <View style={styles.container}>
+          <Image source={require('../../../../assets/images/logoPeaNote.png')}/>
 
-      {/* login screen */}
-      {!createAccount && <LoginBody/>}
-      
-      {/* create account screen */}
-      {createAccount && <CreateAccountBody/>}
-    </View>
+          {/* login screen */}
+          {!createAccount && <LoginBody/>}
+          
+          {/* create account screen */}
+          {createAccount && <CreateAccountBody/>}
+        </View>
+      </LinearGradient>
     </TouchableWithoutFeedback>
   );
 }
