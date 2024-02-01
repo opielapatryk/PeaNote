@@ -25,6 +25,12 @@
             "useFrameworks": "static"
           }
         }
+      ],
+      [
+        "expo-screen-orientation",
+        {
+          "initialOrientation": "PORTRAIT"
+        }
       ]
     ]
   }

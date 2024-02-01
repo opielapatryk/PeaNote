@@ -16,6 +16,8 @@ import 'expo-dev-client'
 import { WEB_CLIENT_ID, IOS_CLIENT_ID} from './FIrebaseConfig';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import * as ScreenOrientation from 'expo-screen-orientation';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +27,11 @@ const Tab = createMaterialTopTabNavigator();
 export default function App(){
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
+
+  async function changeScreenOrientation() {
+    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+  }
+  changeScreenOrientation();
 
   GoogleSignin.configure({
     webClientId:WEB_CLIENT_ID,
