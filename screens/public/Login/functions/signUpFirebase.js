@@ -2,7 +2,7 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { setMessage } from '../../../../store/login/loginSlice';
 
-export const signUpFirebase = async (email,password,first_name,last_name,dispatch) =>{
+export const signUpFirebase = async (email,password,dispatch) =>{
     try {
       const user = await auth().createUserWithEmailAndPassword(email, password);
       user.user.sendEmailVerification();
@@ -10,8 +10,6 @@ export const signUpFirebase = async (email,password,first_name,last_name,dispatc
           firestore()
           .collection('users')
           .add({
-            first_name: first_name,
-            last_name: last_name,
             email: email,
             friends: [],
             friends_requests: [],
@@ -23,10 +21,19 @@ export const signUpFirebase = async (email,password,first_name,last_name,dispatc
     } catch (err) {
       if(err.code === "auth/weak-password"){
         dispatch(setMessage('The given password is invalid.'))
+        setTimeout(() => {
+          dispatch(setMessage(''))
+        }, 2000);
       }else if(err.code === "auth/invalid-email"){
         dispatch(setMessage('Please enter a valid email.'))
+        setTimeout(() => {
+          dispatch(setMessage(''))
+        }, 2000);
       }else if(err.code === "auth/email-already-in-use"){
         dispatch(setMessage('Email has already been taken.'))
+        setTimeout(() => {
+          dispatch(setMessage(''))
+        }, 2000);
       }
     }
   }
