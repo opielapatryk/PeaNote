@@ -2,9 +2,12 @@
   "expo": {
     "name": "stickyinreactnative",
     "slug": "stickyinreactnative",
+    "icon": "./assets/images/appicon.png",
     "ios": {
+      "supportsTablet": true,
       "googleServicesFile": "./GoogleService-Info.plist",
-      "bundleIdentifier": "com.patrykopiela.stickyinreactnativedev"
+      "bundleIdentifier": "com.patrykopiela.stickyinreactnativedev",
+      "buildNumber": "1"
     },
     "extra": {
       "eas": {

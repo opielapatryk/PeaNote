@@ -14,3 +14,10 @@ Overwrite snapshots: npm test -- -u
 
 ## Build
 Device: eas build --profile development --platform ios
+
+## Update build app store
+eas build --platform ios
+eas submit -p ios --latest
+
+## Small update to app store
+expo publish
