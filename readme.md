@@ -4,8 +4,6 @@
 # Useful commands
 ## Clone
 npm install</br>
-create in root folder FIrebaseConfig.js</br>
-add web and ios identifiers</br>
 
 ## Run
 Device: npx expo start --dev-client

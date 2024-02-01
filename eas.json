@@ -25,10 +25,6 @@
       }
     },
     "production": {
-      "ios": {
-        "resourceClass": "m-medium",
-        "cocoapods": "1.14.3"
-      }
     }
   },
   "submit": {
