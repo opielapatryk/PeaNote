@@ -17,6 +17,7 @@ import { WEB_CLIENT_ID, IOS_CLIENT_ID} from './FIrebaseConfig';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as ScreenOrientation from 'expo-screen-orientation';
+import Constants from 'expo-constants';
 
 
 const Stack = createNativeStackNavigator();
@@ -72,7 +73,7 @@ export default function App(){
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Provider store={store}>
         <NavigationContainer>
-          <Tab.Navigator initialRouteName={!user?"Login":"Board"} screenOptions={{tabBarItemStyle:{padding:0,marginTop: 40,},tabBarIndicatorStyle:{backgroundColor:'black'},tabBarLabelStyle:{letterSpacing:1.5, fontSize:12}}}>
+          <Tab.Navigator initialRouteName={!user?"Login":"Board"} screenOptions={{tabBarItemStyle:{marginTop:Constants.statusBarHeight},tabBarIndicatorStyle:{backgroundColor:'black'},tabBarLabelStyle:{letterSpacing:1.5, fontSize:12}}}>
               {!user?(
                 <>
                   <Tab.Screen name="Login" component={Login} options={{tabBarStyle:{display:'none'}}}></Tab.Screen>

@@ -5,7 +5,7 @@ import { setMessage } from '../../../../store/login/loginSlice';
 export const signUpFirebase = async (email,password,dispatch) =>{
     try {
       const user = await auth().createUserWithEmailAndPassword(email, password);
-      user.user.sendEmailVerification();
+      // user.user.sendEmailVerification();
       if(user.additionalUserInfo.isNewUser){
           firestore()
           .collection('users')
