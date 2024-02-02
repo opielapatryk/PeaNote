@@ -4,6 +4,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { styles } from '../../../../assets/styles/styles';
 import {signIn} from '../functions/signIn'
 import * as AppleAuthentication from 'expo-apple-authentication';
+import auth from '@react-native-firebase/auth';
 
 const LoginWithAppleButton = () => {
     return (
@@ -13,21 +14,24 @@ const LoginWithAppleButton = () => {
         cornerRadius={5}
         style={styles.continuteWithGoogle}
         onPress={async () => {
-          try {
-            const credential = await AppleAuthentication.signInAsync({
-              requestedScopes: [
+            const appleAuthRequestResponse = await AppleAuthentication.signInAsync({
+                requestedScopes: [
                 AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
                 AppleAuthentication.AppleAuthenticationScope.EMAIL,
-              ],
+                ],
             });
-            // signed in
-          } catch (e) {
-            if (e.code === 'ERR_REQUEST_CANCELED') {
-              // handle that the user canceled the sign-in flow
-            } else {
-              // handle other errors
-            }
-          }
+
+            if (!appleAuthRequestResponse.identityToken) {
+                console.log('Apple Sign-In failed - no identify token returned');
+                }
+                else{
+                    console.log('Apple Sign-In succeeded');
+                }
+
+            const { identityToken, nonce } = appleAuthRequestResponse;
+            const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce);
+
+            return auth().signInWithCredential(appleCredential);
         }}
       />
     );

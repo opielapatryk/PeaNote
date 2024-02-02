@@ -1,13 +1,14 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import { Pressable, Text,TextInput,Modal,View} from 'react-native';
 import { styles } from '../../../../assets/styles/styles';
 import LoginButton from './LoginButton';
 import LoginWithGoogleButton from './LoginWithGoogleButton';
-import LoginWithAppleButton from './LoginWithAppleButton';
 import LoginFooter from './LoginFooter';
 import { useDispatch, useSelector } from 'react-redux';
 import { setEmail,setPassword } from '../../../../store/login/loginSlice';
 import auth from '@react-native-firebase/auth';
+import * as AppleAuthentication from 'expo-apple-authentication';
+import * as Crypto from 'expo-crypto';
 
 const LoginHeader = () => {
   const {email,password,message} = useSelector((state)=>state.login)
@@ -15,6 +16,11 @@ const LoginHeader = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [resetEmail,setResetEmail] = useState("")
   const [resetPasswordLog,setResetPasswordLog] = useState("Email")
+  const [isAppleLoginAvailable, setIsAppleLoginAvailable] = useState(false);
+
+  useEffect(() => {
+    AppleAuthentication.isAvailableAsync().then(setIsAppleLoginAvailable);
+}, []);
 
   const checkIfEmailExist = () => {
     auth().sendPasswordResetEmail(resetEmail)
@@ -27,6 +33,31 @@ const LoginHeader = () => {
       setResetEmail('')
     });
   }
+
+  async function onAppleButtonPress(){
+    const nonce = Math.random().toString(36).substring(2, 10);
+
+    return Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, nonce)
+        .then((hashedNonce) =>
+            AppleAuthentication.signInAsync({
+                requestedScopes: [
+                    AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+                    AppleAuthentication.AppleAuthenticationScope.EMAIL
+                ],
+                nonce: hashedNonce
+            })
+        )
+        .then((appleCredential) => {
+          const { identityToken } = appleCredential;
+          
+          const provider = new auth.OAuthProvider('apple.com');
+          const credential = provider.credential({
+              idToken: identityToken,
+              rawNonce: nonce
+          });
+          return auth().signInWithCredential(credential);
+      })
+}
 
     return (
       <>
@@ -63,6 +94,15 @@ const LoginHeader = () => {
         </Text> */}
         
         <LoginWithGoogleButton/>
+
+        {isAppleLoginAvailable && 
+        <AppleAuthentication.AppleAuthenticationButton
+        buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
+        buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
+        cornerRadius={5}
+        style={styles.continuteWithGoogle}
+        onPress={() => onAppleButtonPress().then(() => console.log('Apple sign-in complete!'))}
+        />}
       </View>
        
 
