@@ -4,6 +4,9 @@
     "slug": "stickyinreactnative",
     "icon": "./assets/images/appicon.png",
     "ios": {
+      "entitlements": {
+        "com.apple.developer.applesignin": ["Default"]
+      },
       "usesAppleSignIn": true,
       "supportsTablet": true,
       "googleServicesFile": "./GoogleService-Info.plist",

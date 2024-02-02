@@ -6,9 +6,8 @@ import LoginWithGoogleButton from './LoginWithGoogleButton';
 import LoginFooter from './LoginFooter';
 import { useDispatch, useSelector } from 'react-redux';
 import { setEmail,setPassword } from '../../../../store/login/loginSlice';
-import auth from '@react-native-firebase/auth';
-import * as AppleAuthentication from 'expo-apple-authentication';
-import * as Crypto from 'expo-crypto';
+import * as AppleAuthentication from 'expo-apple-authentication'
+import auth from '@react-native-firebase/auth'
 
 const LoginHeader = () => {
   const {email,password,message} = useSelector((state)=>state.login)
@@ -34,30 +33,26 @@ const LoginHeader = () => {
     });
   }
 
-  async function onAppleButtonPress(){
-    const nonce = Math.random().toString(36).substring(2, 10);
-
-    return Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, nonce)
-        .then((hashedNonce) =>
-            AppleAuthentication.signInAsync({
-                requestedScopes: [
-                    AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
-                    AppleAuthentication.AppleAuthenticationScope.EMAIL
-                ],
-                nonce: hashedNonce
-            })
-        )
-        .then((appleCredential) => {
-          const { identityToken } = appleCredential;
-          
-          const provider = new auth.OAuthProvider('apple.com');
-          const credential = provider.credential({
-              idToken: identityToken,
-              rawNonce: nonce
-          });
-          return auth().signInWithCredential(credential);
+  const signInWithApple = async () => {
+    try {
+      const { state, identityToken } = await AppleAuthentication.signInAsync({
+        requestedScopes: [
+          AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+          AppleAuthentication.AppleAuthenticationScope.EMAIL,
+        ],
       })
-}
+  
+      const credential = auth.AppleAuthProvider.credential(
+        identityToken,
+        state || undefined
+      )
+  
+      return auth().signInWithCredential(credential)
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
 
     return (
       <>
@@ -76,12 +71,7 @@ const LoginHeader = () => {
         </Modal>
       <View style={{gap:30,alignItems:'center'}}>
       {message !== '' && <Text style={styles.errorMessage}>{message}</Text>}
-        {/* <Text style={styles.header}>
-          Log In
-        </Text>
-        <Text style={styles.paragraph}>
-          Please provide your credentials by filling out the form below.
-        </Text> */}
+    
 
         <TextInput style={styles.roundTextInput} placeholder='Email' onChangeText={text=>dispatch(setEmail(text))} value={email}/>
         <TextInput style={styles.roundTextInput} placeholder='Password' secureTextEntry onChangeText={text=>dispatch(setPassword(text))} value={password}/>   
@@ -89,10 +79,6 @@ const LoginHeader = () => {
         <LoginButton/>
         <Pressable onPress={() => setModalVisible(true)}><Text style={styles.paragraph}>Forgotten Password?</Text></Pressable>
                
-        {/* <Text style={styles.paragraph}>
-          Or sign up with
-        </Text> */}
-        
         <LoginWithGoogleButton/>
 
         {isAppleLoginAvailable && 
@@ -101,7 +87,7 @@ const LoginHeader = () => {
         buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
         cornerRadius={5}
         style={styles.continuteWithGoogle}
-        onPress={() => onAppleButtonPress().then(() => console.log('Apple sign-in complete!'))}
+        onPress={signInWithApple}
         />}
       </View>
        
