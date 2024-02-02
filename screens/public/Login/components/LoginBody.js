@@ -33,24 +33,29 @@ const LoginHeader = () => {
     });
   }
 
-  const signInWithApple = async () => {
+  async function signInWithApple(){
     try {
-      const { state, identityToken } = await AppleAuthentication.signInAsync({
+      const credential = await AppleAuthentication.signInAsync({
         requestedScopes: [
           AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
           AppleAuthentication.AppleAuthenticationScope.EMAIL,
         ],
-      })
-  
-      const credential = auth.AppleAuthProvider.credential(
-        identityToken,
-        state || undefined
-      )
-  
-      return auth().signInWithCredential(credential)
-    } catch (e) {
-      console.log(e);
-    }
+      });
+      const { identityToken } = credential;
+      if (identityToken) {
+        console.log("ID TOKEN:", identityToken); // I AM GETTING TOKEN HERE YAY!
+        const provider = new auth.OAuthProvider("apple.com");
+            provider.addScope("email");
+            provider.addScope("name");
+            const providerCredential = provider.credential({ idToken: identityToken });
+            const result = await auth().signInWithCredential(
+              providerCredential
+            );
+            console.log("GOT RESULT:", result);
+          }
+        } catch (error) {
+          console.log("CAUGHT ERROR:", error);
+        }
   }
 
 

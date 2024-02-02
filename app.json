@@ -24,7 +24,9 @@
       "ios"
     ],
     "plugins": [
-      "expo-apple-authentication",
+      [
+        "expo-apple-authentication"
+      ],
       "@react-native-firebase/app",
       [
         "expo-build-properties",
