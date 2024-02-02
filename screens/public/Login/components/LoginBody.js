@@ -3,6 +3,7 @@ import { Pressable, Text,TextInput,Modal,View} from 'react-native';
 import { styles } from '../../../../assets/styles/styles';
 import LoginButton from './LoginButton';
 import LoginWithGoogleButton from './LoginWithGoogleButton';
+import LoginWithAppleButton from './LoginWithAppleButton';
 import LoginFooter from './LoginFooter';
 import { useDispatch, useSelector } from 'react-redux';
 import { setEmail,setPassword } from '../../../../store/login/loginSlice';

@@ -4,6 +4,7 @@
     "slug": "stickyinreactnative",
     "icon": "./assets/images/appicon.png",
     "ios": {
+      "usesAppleSignIn": true,
       "supportsTablet": true,
       "googleServicesFile": "./GoogleService-Info.plist",
       "bundleIdentifier": "com.patrykopiela.stickyinreactnativedev",
@@ -20,6 +21,7 @@
       "ios"
     ],
     "plugins": [
+      "expo-apple-authentication",
       "@react-native-firebase/app",
       [
         "expo-build-properties",
