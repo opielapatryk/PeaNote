@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     backgroundColor: '#FFFDF3',
     alignItems: 'center',
     justifyContent:'space-between',
-    paddingTop:50
+    paddingTop:Dimensions.get('window').height/50
   },
   note: {
     backgroundColor: '#FFF5BD',
@@ -91,7 +91,7 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     padding:10,
     borderColor: 'lightgrey',
-    width:250,
+    width:Dimensions.get('window').width/1.5,
     marginTop:5,
     marginBottom:5,
     backgroundColor:'white',
@@ -104,7 +104,7 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     padding:10,
     borderColor: '#e6c019',
-    width:250,
+    width:Dimensions.get('window').width/1.5,
     alignItems:'center',
     justifyContent:'center',
     shadowColor: "#000",
@@ -122,10 +122,9 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     paddingLeft:10,
     borderColor: 'lightgray',
-    width:250,
+    width:Dimensions.get('window').width/1.5,
     alignItems:'center',
     flexDirection:'row',
-    gap:30,
     shadowColor: "#000",
     backgroundColor: '#FFFDF3',
     shadowOffset: {
@@ -135,6 +134,7 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.18,
     shadowRadius: 1.00,
     elevation: 1,
+    justifyContent:'center'
   },
   bottomView:{
     flexDirection:'row',

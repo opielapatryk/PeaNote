@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import { Pressable, Text,TextInput,Modal,View} from 'react-native';
+import { Pressable, Text,TextInput,Modal,View, Dimensions} from 'react-native';
 import { styles } from '../../../../assets/styles/styles';
 import LoginButton from './LoginButton';
 import LoginWithGoogleButton from './LoginWithGoogleButton';
@@ -51,7 +51,7 @@ const LoginHeader = () => {
             </View>
           </View>
         </Modal>
-      <View style={{gap:30,alignItems:'center'}}>
+      <View style={{gap:Dimensions.get('window').height/30,alignItems:'center'}}>
       
       {<Text style={styles.errorMessage}>{message}</Text>}
 
@@ -68,7 +68,7 @@ const LoginHeader = () => {
         buttonStyle={AppleButton.Style.BLACK}
         buttonType={AppleButton.Type.SIGN_IN}
         style={{
-          width: 250,
+          width:Dimensions.get('window').width/1.5,
           height: 45,
         }}
         onPress={appleSignin}

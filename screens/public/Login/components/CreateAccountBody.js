@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react';
-import {Text,TextInput,View} from 'react-native';
+import {Text,TextInput,View,Dimensions} from 'react-native';
 import { styles } from '../../../../assets/styles/styles';
 import CreateAccountButton from './CreateAccountButton';
 import CreateAccountFooter from './CreateAccountFooter';
@@ -22,7 +22,7 @@ const CreateAccountHeader = () => {
 
     return (
 <>
-<View style={{gap:30,alignItems:'center'}}>
+<View style={{gap:Dimensions.get('window').height/30,alignItems:'center'}}>
 {<Text style={styles.errorMessage}>{message}</Text>}
         <TextInput style={styles.roundTextInput} placeholder='Email' onChangeText={text=>dispatch(setEmail(text))} value={email}/>
       <TextInput style={styles.roundTextInput} placeholder='Password' secureTextEntry onChangeText={text=>dispatch(setPassword(text))} value={password}/>   
@@ -40,7 +40,7 @@ const CreateAccountHeader = () => {
         buttonStyle={AppleButton.Style.BLACK}
         buttonType={AppleButton.Type.SIGN_IN}
         style={{
-          width: 250,
+          width:Dimensions.get('window').width/1.5,
           height: 45,
         }}
         onPress={appleSignin}
