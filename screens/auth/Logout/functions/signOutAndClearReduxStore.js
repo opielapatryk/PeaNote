@@ -1,6 +1,5 @@
 import {cleanStoreNotes} from '../../../../store/notes/boardSlice';
 import auth from '@react-native-firebase/auth';
-import { GoogleSignin} from '@react-native-google-signin/google-signin';
 import { setShowInput } from '../../../../store/settings/settingsSlice';
 import { setEmail,setPassword,setCreateAccount,setMessage } from '../../../../store/login/loginSlice';
 import { cleanStoreFriends } from '../../../../store/friends/friendsSlice';
@@ -17,6 +16,4 @@ export const signOutAndClearReduxStore = async (dispatch) => {
     await dispatch(cleanStoreFriends())
 
     await auth().signOut()
-
-    GoogleSignin.revokeAccess()
 };

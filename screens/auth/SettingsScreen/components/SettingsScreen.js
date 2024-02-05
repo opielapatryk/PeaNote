@@ -47,7 +47,7 @@ const SettingsScreen = () => {
 
   const handleDeleteAccount = () => {
     if (deleteAccountPressed) {
-      deleteAccount({ notes, dispatch, pendingNotes });
+      deleteAccount({ notes, dispatch, pendingNotes })
     } else {
       setDeleteAccountPressed(true);
     }

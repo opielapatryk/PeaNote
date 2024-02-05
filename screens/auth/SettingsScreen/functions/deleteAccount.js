@@ -4,6 +4,7 @@ import { setShowInput } from "../../../../store/settings/settingsSlice";
 setShowInput
 import {removeAllFriendsBeforeAccountDelete} from './removeAllFriendsBeforeAccountDelete'
 import { removeNote } from "../../../../store/notes/boardSlice";
+import { appleAuth } from '@invertase/react-native-apple-authentication';
 
 export const deleteAccount = async ({notes,dispatch,pendingNotes}) => {
   const EMAIL = auth().currentUser.email

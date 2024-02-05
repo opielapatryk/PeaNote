@@ -33,15 +33,15 @@ const Login = () => {
 
   return (
     <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
-<View style={styles.container}>
-<Image source={require('../../../../assets/images/logoPeaNoteWhiteBg.png')}/>
+    <View style={styles.container}>
+      <Image source={require('../../../../assets/images/logoPeaNoteWhiteBg.png')}/>
 
-{/* login screen */}
-{!createAccount && <LoginBody/>}
+      {/* login screen */}
+      {!createAccount && <LoginBody/>}
 
-{/* create account screen */}
-{createAccount && <CreateAccountBody/>}
-</View>
+      {/* create account screen */}
+      {createAccount && <CreateAccountBody/>}
+    </View>
 
 
 

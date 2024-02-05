@@ -11,8 +11,6 @@ export const signIn = async ()=>{
     firestore()
     .collection('users')
     .add({
-      first_name: user_sign_in.additionalUserInfo.profile.given_name,
-      last_name: user_sign_in.additionalUserInfo.profile.family_name,
       email: user_sign_in.user.email,
       friends: [],
       friends_requests: [],

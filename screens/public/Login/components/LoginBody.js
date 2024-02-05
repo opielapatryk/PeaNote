@@ -8,7 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setEmail,setPassword } from '../../../../store/login/loginSlice';
 import * as AppleAuthentication from 'expo-apple-authentication'
 import auth from '@react-native-firebase/auth'
-import { AppleButton,appleAuth } from '@invertase/react-native-apple-authentication';
+import { AppleButton } from '@invertase/react-native-apple-authentication';
+import { appleSignin } from '../functions/appleSignin';
 
 const LoginHeader = () => {
   const {email,password,message} = useSelector((state)=>state.login)
@@ -32,22 +33,6 @@ const LoginHeader = () => {
       setResetPasswordLog('Email address is badly formatted.')
       setResetEmail('')
     });
-  }
-
-  async function onAppleButtonPress() {
-    const appleAuthRequestResponse = await appleAuth.performRequest({
-      requestedOperation:appleAuth.Operation.LOGIN,
-      requestedScopes:[appleAuth.Scope.FULL_NAME,appleAuth.Scope.EMAIL],
-    })
-
-    const { identityToken, nonce } = appleAuthRequestResponse;
-    console.log(identityToken);
-    console.log(nonce);
-
-    const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce)
-    console.log(appleCredential);
-
-    return auth().signInWithCredential(appleCredential);
   }
 
 
@@ -86,7 +71,7 @@ const LoginHeader = () => {
           width: 250,
           height: 45,
         }}
-        onPress={() => onAppleButtonPress().then(() => console.log('Apple sign-in complete!'))}
+        onPress={appleSignin}
       />}
       </View>
        
