@@ -69,7 +69,7 @@ const SettingsScreen = () => {
         {showInput && (
           <TextInput
             style={styles.friendsTextInput}
-            placeholder="NEW PASSWORD"
+            placeholder={message?message:"NEW PASSWORD"}
             onChangeText={setNewPassword}
             secureTextEntry
           />
@@ -82,8 +82,6 @@ const SettingsScreen = () => {
         <Pressable style={styles.friendsHeaderRequest} onPress={()=>signOutAndClearReduxStore(dispatch)}>
           <Text style={styles.friendsHeaderRequestText}>LOGOUT</Text>
         </Pressable>
-
-        <Text style={styles.settingsMessage}>{message}</Text>
       </View>
 
       <Pressable style={styles.deleteAccountButton} onPress={handleDeleteAccount}>

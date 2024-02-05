@@ -22,7 +22,7 @@ export const FriendsScreen = ({ navigation }) => {
 
   const renderFriends = ({ item }) => {
     return (
-      <Pressable onPress={() =>navigation.navigate('FriendsBoard', {name:item, friendEmail: item})} style={styles.friendInList}><Text>{item}</Text></Pressable>
+      <Pressable onPress={() =>navigation.navigate('FriendsBoard', {name:item, friendEmail: item})} style={styles.friendsList}><Text style={styles.firendListText}>{item}</Text></Pressable>
     );
   };
 
@@ -30,13 +30,10 @@ export const FriendsScreen = ({ navigation }) => {
     <View style={styles.board}>
       <Pressable style={styles.friendsHeaderRequest} onPress={()=>navigation.navigate('Requests')}><Text style={styles.friendsHeaderRequestText}>REQUESTS</Text></Pressable>
 
-      <TextInput style={styles.friendsTextInput} placeholder='INSERT FRIEND EMAIL' onChangeText={text => dispatch(setEmail(text))} value={email} autoCorrect={false}/>
+      <TextInput style={styles.friendsTextInput} placeholder={message?message:'INSERT FRIEND EMAIL'} onChangeText={text => dispatch(setEmail(text))} value={email} autoCorrect={false}/>
 
       <Pressable style={styles.friendsHeaderRequest} onPress={()=>sendFriendRequest(dispatch,email)}><Text style={styles.friendsHeaderRequestText}>ADD</Text></Pressable>
 
-      <Text style={styles.friendsMessage}>{message}</Text>
-
-      <Text style={styles.friendsFriendsHeader}>FRIENDS</Text>
       <FlatList data={friends} renderItem={renderFriends} keyExtractor={(friend) => friend}/>
     </View>
   );

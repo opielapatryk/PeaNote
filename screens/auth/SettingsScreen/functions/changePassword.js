@@ -6,16 +6,24 @@ import { setMessage } from '../../../../store/login/loginSlice';
   setDeleteAccountPressed(false);
     try {
       await auth().currentUser.updatePassword(newPassword)
-      dispatch(setMessage('Password updated!'));
+      dispatch(setMessage('PASSWORD UPDATED'));
       setTimeout(() => {
         dispatch(setShowInput(false))
         dispatch(setMessage(''));
-      }, 1500);
+      }, 2000);
     } catch (error) {
       if (error.code === 'auth/requires-recent-login') {
-        dispatch(setMessage('This operation is sensitive and requires recent authentication. Log in again before retrying this request.'));
+        dispatch(setMessage('LOG IN AGAIN BEFORE THIS REQUEST'));
+        setTimeout(() => {
+          dispatch(setShowInput(false))
+          dispatch(setMessage(''));
+        }, 2000);
       } else if (error.code === 'auth/weak-password'){
-        dispatch(setMessage('The given password is invalid.'))
+        dispatch(setMessage('THE GIVEN PASSWORD IS INVALID'))
+        setTimeout(() => {
+          dispatch(setShowInput(false))
+          dispatch(setMessage(''));
+        }, 2000);
       } else{
         dispatch(setMessage(error.message))
       }

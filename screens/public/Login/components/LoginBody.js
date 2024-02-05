@@ -52,8 +52,8 @@ const LoginHeader = () => {
           </View>
         </Modal>
       <View style={{gap:30,alignItems:'center'}}>
-      {message !== '' && <Text style={styles.errorMessage}>{message}</Text>}
-    
+      
+      {<Text style={styles.errorMessage}>{message}</Text>}
 
         <TextInput style={styles.roundTextInput} placeholder='Email' onChangeText={text=>dispatch(setEmail(text))} value={email}/>
         <TextInput style={styles.roundTextInput} placeholder='Password' secureTextEntry onChangeText={text=>dispatch(setPassword(text))} value={password}/>   

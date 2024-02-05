@@ -33,16 +33,16 @@ export const sendFriendRequest = async (dispatch, friendEmail) => {
   }
 
   if (currentUserDoc.data().friends.includes(friendEmail)) {
-    dispatch(setMessage('You are already friends'));
+    dispatch(setMessage('YOU ARE FRIENDS ALREADY'));
   } else {
-    const friendDoc = await getUserDetails(friendEmail, 'Friend not found');
+    const friendDoc = await getUserDetails(friendEmail, 'USER NOT FOUND');
 
     if (!friendDoc) {
       return;
     }
 
     if (friendEmail === currentUserEmail) {
-      dispatch(setMessage('You cannot add yourself to friends'));
+      dispatch(setMessage('YOU CANNOT ADD YOURSELF TO FRIENDS'));
     } else {
       await firestore()
         .collection('users')
@@ -51,7 +51,7 @@ export const sendFriendRequest = async (dispatch, friendEmail) => {
           friends_requests: firebase.firestore.FieldValue.arrayUnion(currentUserEmail),
         });
 
-      dispatch(setMessage('Friend request sent successfully'));
+      dispatch(setMessage('FRIEND REQUEST SENT SUCCESSFULLY'));
     }
   }
 

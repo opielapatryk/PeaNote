@@ -26,9 +26,15 @@ export const createNote = async (content,setContent,setMessage,friendEmail) => {
           
         })
 
-      setMessage('Note created successfully!');
+      setMessage('NOTE SENT CORRECTLY');
       setContent('');
+      setTimeout(() => {
+        setMessage('')
+      }, 2000);
     }else {
-      setMessage('Note cannot be empty..');
+      setMessage('NOTE CANNOT BE EMPTY');
+      setTimeout(() => {
+        setMessage('')
+      }, 2000);
     }
   };

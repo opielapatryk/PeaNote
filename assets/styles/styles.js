@@ -407,9 +407,22 @@ elevation: 1,
     marginTop:15,
     fontStyle:'italic',
   },
-  friendInList:{
-    padding:10,
-    marginLeft:10,
+  friendsList:{
+    backgroundColor:'#FFF',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.00,
+    width: Dimensions.get("window").width,
+    height:Dimensions.get("window").height / 18.6,
+    justifyContent: 'center',
+    paddingLeft:Dimensions.get("window").width / 20,
+  },
+  firendListText:{
+    fontSize:12,
+    letterSpacing:1.5,
   },
   requestItem:{
     flexDirection: 'row',

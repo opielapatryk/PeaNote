@@ -16,12 +16,11 @@ const FriendsBoard = ({ route, navigation }) => {
     onPress={() => Keyboard.dismiss()}>
       <View style={styles.friendsboard}>
         <View>
-          <TextInput style={styles.friendsTextInput} placeholder="NEW NOTE" value={content} onChangeText={text=>setContent(text)} autoCapitalize="sentences"
+          <TextInput style={styles.friendsTextInput} placeholder={message?message:"NEW NOTE"} value={content} onChangeText={text=>setContent(text)} autoCapitalize="sentences"
           autoCorrect={false} maxLength={100} multiline/>
 
           <Pressable style={styles.friendsHeaderRequest} onPress={()=>createNote(content,setContent,setMessage,friendEmail)}><Text style={styles.removeFriendText}>CREATE NOTE</Text></Pressable>
           
-          <Text style={styles.settingsMessage}>{message}</Text>
         </View>
 
 
