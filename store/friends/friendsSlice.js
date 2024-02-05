@@ -9,13 +9,18 @@ export const friendsSlice = createSlice({
     initialState,
     reducers:{
         setFriends: (state, action) => {
-            return {
-                ...state, 
-                friends:[...state.friends, action.payload]
+            const existingFriend = state.friends.find(friend => friend === action.payload);
+            if(!existingFriend){
+                return {...state, 
+                    friends:[...state.friends, action.payload]}
             }
         },
         setRequests: (state, action) => {
-            return {...state, requests:[...state.requests, action.payload]}
+            const existingRequest = state.requests.find(request => request === action.payload);
+            if(!existingRequest){
+                return {...state, 
+                    requests:[...state.requests, action.payload]}
+            }
         },
         removeFriendReducer: (state, action) => {
             return {

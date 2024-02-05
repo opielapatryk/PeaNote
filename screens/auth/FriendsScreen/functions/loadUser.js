@@ -1,7 +1,7 @@
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import {setFriends, setRequests} from '../../../../store/friends/friendsSlice'
-import { fetchAndDispatchFriendsAndRequests } from './fetchAndDispatchFriendsAndRequests';
+import { fetchAndDispatchFriends } from './fetchAndDispatchFriendsAndRequests';
 
 export const loadUser = async (dispatch)=>{
   const EMAIL = auth().currentUser.email
@@ -22,6 +22,11 @@ export const loadUser = async (dispatch)=>{
       requests = doc.data().friends_requests;
     })
   }
-
-  fetchAndDispatchFriendsAndRequests(friends,requests, dispatch, setFriends,setRequests);
+  if(friends.length>0){
+    fetchAndDispatchFriends(friends, dispatch, setFriends);
+  }
+  if(requests.length>0){
+    fetchAndDispatchFriends(requests, dispatch, setRequests);
+  }
+  
 }
