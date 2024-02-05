@@ -12,6 +12,7 @@ export const signIn = async ()=>{
     .collection('users')
     .add({
       email: user_sign_in.user.email,
+      username:'',
       friends: [],
       friends_requests: [],
       askBeforeStick: false,

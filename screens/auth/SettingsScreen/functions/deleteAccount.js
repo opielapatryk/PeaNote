@@ -6,7 +6,24 @@ import {removeAllFriendsBeforeAccountDelete} from './removeAllFriendsBeforeAccou
 import { removeNote } from "../../../../store/notes/boardSlice";
 import { appleAuth } from '@invertase/react-native-apple-authentication';
 
+async function revokeSignInWithAppleToken() {
+  // Get an authorizationCode from Apple
+  const { authorizationCode } = await appleAuth.performRequest({
+    requestedOperation: appleAuth.Operation.REFRESH,
+  });
+
+  // Ensure Apple returned an authorizationCode
+  if (!authorizationCode) {
+    throw new Error('Apple Revocation failed - no authorizationCode returned');
+  }
+
+  // Revoke the token
+  return auth().revokeToken(authorizationCode);
+}
+
 export const deleteAccount = async ({notes,dispatch,pendingNotes}) => {
+  // revokeSignInWithAppleToken()
+  
   const EMAIL = auth().currentUser.email
 
   // remove this account from friends lists

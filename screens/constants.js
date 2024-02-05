@@ -1,9 +1,15 @@
-import { setShowInput } from '../store/settings/settingsSlice';
+import { setShowInput,setShowInputUsername } from '../store/settings/settingsSlice';
 import { setMessage } from '../store/login/loginSlice';
 
 export const HANDLE_PASSWORD_CHANGE_BUTTON_PRESS = ({setDeleteAccountPressed,dispatch}) => {
     setDeleteAccountPressed(false);
     dispatch(setShowInput(true))
+    dispatch(setMessage(''));
+  };
+
+  export const HANDLE_USERNAME_CHANGE_BUTTON_PRESS = ({setDeleteAccountPressed,dispatch}) => {
+    setDeleteAccountPressed(false);
+    dispatch(setShowInputUsername(true))
     dispatch(setMessage(''));
   };
   

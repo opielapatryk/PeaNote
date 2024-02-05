@@ -11,6 +11,7 @@ export const signUpFirebase = async (email,password,dispatch) =>{
           .collection('users')
           .add({
             email: email,
+            username: '',
             friends: [],
             friends_requests: [],
             askBeforeStick: false,
