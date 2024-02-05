@@ -9,11 +9,8 @@ export const appleSignin = async ()=>{
       })
   
       const { identityToken, nonce } = appleAuthRequestResponse;
-      console.log(identityToken);
-      console.log(nonce);
-  
+
       const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce)
-      console.log(appleCredential);
   
       const user_sign_in = await auth().signInWithCredential(appleCredential);
 
