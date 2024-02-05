@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setEmail,setPassword } from '../../../../store/login/loginSlice';
 import * as AppleAuthentication from 'expo-apple-authentication'
 import auth from '@react-native-firebase/auth'
+import { AppleButton,appleAuth } from '@invertase/react-native-apple-authentication';
 
 const LoginHeader = () => {
   const {email,password,message} = useSelector((state)=>state.login)
@@ -33,29 +34,20 @@ const LoginHeader = () => {
     });
   }
 
-  async function signInWithApple(){
-    try {
-      const credential = await AppleAuthentication.signInAsync({
-        requestedScopes: [
-          AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
-          AppleAuthentication.AppleAuthenticationScope.EMAIL,
-        ],
-      });
-      const { identityToken } = credential;
-      if (identityToken) {
-        console.log("ID TOKEN:", identityToken); // I AM GETTING TOKEN HERE YAY!
-        const provider = new auth.OAuthProvider("apple.com");
-            provider.addScope("email");
-            provider.addScope("name");
-            const providerCredential = provider.credential({ idToken: identityToken });
-            const result = await auth().signInWithCredential(
-              providerCredential
-            );
-            console.log("GOT RESULT:", result);
-          }
-        } catch (error) {
-          console.log("CAUGHT ERROR:", error);
-        }
+  async function onAppleButtonPress() {
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation:appleAuth.Operation.LOGIN,
+      requestedScopes:[appleAuth.Scope.FULL_NAME,appleAuth.Scope.EMAIL],
+    })
+
+    const { identityToken, nonce } = appleAuthRequestResponse;
+    console.log(identityToken);
+    console.log(nonce);
+
+    const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce)
+    console.log(appleCredential);
+
+    return auth().signInWithCredential(appleCredential);
   }
 
 
@@ -87,13 +79,15 @@ const LoginHeader = () => {
         <LoginWithGoogleButton/>
 
         {isAppleLoginAvailable && 
-        <AppleAuthentication.AppleAuthenticationButton
-        buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
-        buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
-        cornerRadius={5}
-        style={styles.continuteWithGoogle}
-        onPress={signInWithApple}
-        />}
+        <AppleButton
+        buttonStyle={AppleButton.Style.BLACK}
+        buttonType={AppleButton.Type.SIGN_IN}
+        style={{
+          width: 250,
+          height: 45,
+        }}
+        onPress={() => onAppleButtonPress().then(() => console.log('Apple sign-in complete!'))}
+      />}
       </View>
        
 
