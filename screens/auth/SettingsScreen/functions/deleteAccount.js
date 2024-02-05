@@ -7,47 +7,74 @@ import { removeNote } from "../../../../store/notes/boardSlice";
 import { appleAuth } from '@invertase/react-native-apple-authentication';
 
 async function revokeSignInWithAppleToken() {
-  // Get an authorizationCode from Apple
   const { authorizationCode } = await appleAuth.performRequest({
     requestedOperation: appleAuth.Operation.REFRESH,
   });
 
-  // Ensure Apple returned an authorizationCode
   if (!authorizationCode) {
     throw new Error('Apple Revocation failed - no authorizationCode returned');
   }
 
-  // Revoke the token
   return auth().revokeToken(authorizationCode);
 }
 
+
 export const deleteAccount = async ({notes,dispatch,pendingNotes}) => {
-  // revokeSignInWithAppleToken()
-  
-  const EMAIL = auth().currentUser.email
+  if (auth().currentUser.providerData[0].providerId === 'apple.com') {
+      await auth().currentUser?.getIdToken?.(true)
+      await revokeSignInWithAppleToken();
+      const EMAIL = auth().currentUser.email
 
-  // remove this account from friends lists
-  await removeAllFriendsBeforeAccountDelete()
+      // remove this account from friends lists
+      await removeAllFriendsBeforeAccountDelete()
+    
+      // delete this account
+      const getUserByEmail = await firestore()
+      .collection('users')
+      .where('email', '==', EMAIL)
+      .get()
+    
+      const docs = getUserByEmail.docs
+    
+      if(Array.isArray(docs) && docs.length > 0) {
+        let doc = docs[0];
+    
+        await firestore()
+        .collection('users')
+        .doc(doc.id)
+        .delete()
+    
+        auth().currentUser.delete()
+        notes.forEach(sticker => dispatch(removeNote(sticker.id)));
+        pendingNotes.forEach(sticker => dispatch(removePendingNote(sticker.id)));
+        dispatch(setShowInput(false))
+      }
+  }else{
+      const EMAIL = auth().currentUser.email
 
-  // delete this account
-  const getUserByEmail = await firestore()
-  .collection('users')
-  .where('email', '==', EMAIL)
-  .get()
-
-  const docs = getUserByEmail.docs
-
-  if(Array.isArray(docs) && docs.length > 0) {
-    let doc = docs[0];
-
-    await firestore()
-    .collection('users')
-    .doc(doc.id)
-    .delete()
-
-    auth().currentUser.delete()
-    notes.forEach(sticker => dispatch(removeNote(sticker.id)));
-    pendingNotes.forEach(sticker => dispatch(removePendingNote(sticker.id)));
-    dispatch(setShowInput(false))
+      // remove this account from friends lists
+      await removeAllFriendsBeforeAccountDelete()
+    
+      // delete this account
+      const getUserByEmail = await firestore()
+      .collection('users')
+      .where('email', '==', EMAIL)
+      .get()
+    
+      const docs = getUserByEmail.docs
+    
+      if(Array.isArray(docs) && docs.length > 0) {
+        let doc = docs[0];
+    
+        await firestore()
+        .collection('users')
+        .doc(doc.id)
+        .delete()
+    
+        auth().currentUser.delete()
+        notes.forEach(sticker => dispatch(removeNote(sticker.id)));
+        pendingNotes.forEach(sticker => dispatch(removePendingNote(sticker.id)));
+        dispatch(setShowInput(false))
+      }
   }
 };
