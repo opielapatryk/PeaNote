@@ -73,7 +73,7 @@ export default function App(){
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Provider store={store}>
         <NavigationContainer>
-          <Tab.Navigator initialRouteName={!user?"Login":"Board"} screenOptions={{tabBarItemStyle:{marginTop:Constants.statusBarHeight},tabBarIndicatorStyle:{backgroundColor:'black'},tabBarLabelStyle:{letterSpacing:1.5, fontSize:12}}}>
+          <Tab.Navigator initialRouteName={!user?"Login":"Board"} screenOptions={{tabBarItemStyle:{marginTop:Constants.statusBarHeight},tabBarIndicatorStyle:{backgroundColor:'black'},tabBarLabelStyle:{letterSpacing:1, fontSize:12}}}>
               {!user?(
                 <>
                   <Tab.Screen name="Login" component={Login} options={{tabBarStyle:{display:'none'}}}></Tab.Screen>

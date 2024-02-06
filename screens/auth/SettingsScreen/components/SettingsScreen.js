@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Switch, TextInput, Pressable,Keyboard,TouchableWithoutFeedback,Image,Dimensions } from 'react-native';
+import { View, Text, Switch, TextInput, Pressable,Keyboard,TouchableWithoutFeedback,Image,Dimensions, Linking } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { styles } from '../../../../assets/styles/styles';
 import {checkIsAskBeforeStickingNoteFlagOff} from '../functions/checkIsAskBeforeStickingNoteFlagOff';
@@ -32,6 +32,8 @@ const SettingsScreen = () => {
 
   const dispatch = useDispatch();
 
+  const [status, requestPermission] = ImagePicker.useMediaLibraryPermissions();
+  
   useEffect(() => {
     if (image) {
       console.log('Image changed:', image);
@@ -42,17 +44,26 @@ const SettingsScreen = () => {
   }, [image]);
 
   const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
+    await requestPermission()
+
+    if(status.granted){
+      let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: true,
         aspect: [4,3],
         quality: 1
-    });
-    const source = {uri: result.assets[0].uri}
+      });
+      const source = {uri: result.assets[0].uri}
 
-    console.log(source);
-    setImage(source)
+      console.log(source);
+      setImage(source)
+    }
+
+    if(status.status === ImagePicker.PermissionStatus.DENIED){
+      Linking.openSettings()
+    }
 }; 
+
 
 const uploadImage = async () => {
   const EMAIL = auth().currentUser.email
