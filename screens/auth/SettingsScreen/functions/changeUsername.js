@@ -1,5 +1,5 @@
 import auth, { firebase } from '@react-native-firebase/auth';
-import { setShowInputUsername } from '../../../../store/settings/settingsSlice';
+import { setShowInputUsername,setUsername } from '../../../../store/settings/settingsSlice';
 import { setMessage } from '../../../../store/login/loginSlice';
 import firestore from '@react-native-firebase/firestore';
 
@@ -11,7 +11,6 @@ import firestore from '@react-native-firebase/firestore';
 
         getuserwiththisusername.docs.forEach(user =>{
           if(user.data().username === newUsername){
-            console.log('error');
             usernameExists = true;
           }
         })
@@ -43,6 +42,7 @@ import firestore from '@react-native-firebase/firestore';
           })
 
           friends = doc.data().friends
+          dispatch(setUsername(newUsername))
         })
 
         // for each friend change my username

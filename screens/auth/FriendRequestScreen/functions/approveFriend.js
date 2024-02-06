@@ -17,7 +17,6 @@ export const approveFriend = async (friendEmail,friendUsername,dispatch,navigati
       USERNAME = doc.data().username
       
       if(!doc.data().friends.includes({email:friendEmail,username:friendUsername})){
-        console.log('inside');
         firestore()
         .collection('users')
         .doc(doc.id)

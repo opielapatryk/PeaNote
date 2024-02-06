@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Switch, TextInput, Pressable,Keyboard,TouchableWithoutFeedback } from 'react-native';
+import { View, Text, Switch, TextInput, Pressable,Keyboard,TouchableWithoutFeedback,Image,Dimensions } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { styles } from '../../../../assets/styles/styles';
 import {checkIsAskBeforeStickingNoteFlagOff} from '../functions/checkIsAskBeforeStickingNoteFlagOff';
@@ -12,7 +12,8 @@ import { setMessage } from '../../../../store/login/loginSlice';
 import { useFocusEffect } from '@react-navigation/native';
 import { signOutAndClearReduxStore } from '../../Logout/functions/signOutAndClearReduxStore';
 import {changeUsername} from '../functions/changeUsername'
-import auth from '@react-native-firebase/auth';
+import {changeProfilePhoto} from '../functions/changeProfilePhoto'
+
 
 const SettingsScreen = () => {
   const [askBeforeStickingNoteFlag, setAskBeforeStickingNoteFlag] = useState(false);
@@ -21,7 +22,7 @@ const SettingsScreen = () => {
   const [deleteAccountPressed, setDeleteAccountPressed] = useState(false);
 
   const { notes, pendingNotes } = useSelector((state) => state.board);
-  const { showInput, showInputUsername } = useSelector((state) => state.settings);
+  const { showInput, showInputUsername,username } = useSelector((state) => state.settings);
   const { message } = useSelector((state) => state.login);
 
   const dispatch = useDispatch();
@@ -70,9 +71,13 @@ const SettingsScreen = () => {
     onPress={() => Keyboard.dismiss()}>
     <View style={styles.friendsboard}>
       <View>
-        {/* <View style={styles.friendsHeaderRequest}>
-          <Text style={styles.settingsActionText}>Hello {auth().currentUser.email}</Text>
-        </View> */}
+
+        <View style={{alignItems:'center'}}>
+          <Image source={require('../../../../assets/images/logo.png')} style={{height:Dimensions.get('window').height/5,resizeMode:'contain'}}/>
+        </View>
+        <View style={styles.friendsHeaderRequest}>
+          <Text style={styles.settingsActionText}>Hello {username}</Text>
+        </View>
         <View style={styles.switchRow}>
           <Text style={styles.settingsActionText}>ASK BEFORE STICKING NOTE</Text>
           <Switch
@@ -80,6 +85,10 @@ const SettingsScreen = () => {
             value={askBeforeStickingNoteFlag}
           />
         </View>
+
+        <Pressable style={styles.friendsHeaderRequest} onPress={changeProfilePhoto}>
+          <Text style={styles.friendsHeaderRequestText}>CHANGE PROFILE PHOTO</Text>
+        </Pressable>
 
         {showInput && (
           <TextInput

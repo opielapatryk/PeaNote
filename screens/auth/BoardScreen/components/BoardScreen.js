@@ -9,12 +9,31 @@ import { fetchNotes } from '../functions/fetchNotes';
 import { KEY_EXTRACTOR_NOTES } from '../../../constants';
 import { loadUser } from '../../FriendsScreen/functions/loadUser';
 import { clearBoardInfo } from '../../../../store/notes/boardSlice';
+import { setUsername } from '../../../../store/settings/settingsSlice';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 const BoardScreen = () => {
   const { notes } = useSelector((state) => state.board);
   const dispatch = useDispatch()
 
+  async function getUserName(){
+    const EMAIL = auth().currentUser.email
+
+    const getUserByEmail = await firestore()
+    .collection('users')
+    .where('email', '==', EMAIL)
+    .get()
+    
+    if (!getUserByEmail.empty) {
+      getUserByEmail.forEach(doc => {
+        dispatch(setUsername(doc.data().username))
+      })
+    }
+  }
+
   useEffect(()=>{
+    getUserName();
     fetchNotes(dispatch);
     loadUser(dispatch)
   },[])

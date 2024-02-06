@@ -21,13 +21,6 @@ const LoginWithAppleButton = () => {
                 ],
             });
 
-            if (!appleAuthRequestResponse.identityToken) {
-                console.log('Apple Sign-In failed - no identify token returned');
-                }
-                else{
-                    console.log('Apple Sign-In succeeded');
-                }
-
             const { identityToken, nonce } = appleAuthRequestResponse;
             const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce);
 

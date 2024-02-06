@@ -23,7 +23,6 @@ export const loadUser = async (dispatch)=>{
     })
   }
 
-  console.log(friends);
   if(friends.length>0){
     fetchAndDispatchFriends(friends, dispatch, setFriends);
   }
