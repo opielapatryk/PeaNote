@@ -9,9 +9,9 @@ import { fetchNotes } from '../functions/fetchNotes';
 import { KEY_EXTRACTOR_NOTES } from '../../../constants';
 import { loadUser } from '../../FriendsScreen/functions/loadUser';
 import { clearBoardInfo } from '../../../../store/notes/boardSlice';
-import { setUsername } from '../../../../store/settings/settingsSlice';
+import { setUsername,setMyimage } from '../../../../store/settings/settingsSlice';
 import firestore from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
+import auth, { firebase } from '@react-native-firebase/auth';
 
 const BoardScreen = () => {
   const { notes } = useSelector((state) => state.board);
@@ -32,7 +32,17 @@ const BoardScreen = () => {
     }
   }
 
+  const downloadImage = async () => {
+    const EMAIL = auth().currentUser.email
+    const fileRef = firebase.storage().ref(`/images/${EMAIL}`);
+  
+    fileRef.getDownloadURL().then((url)=>{
+      dispatch(setMyimage(url))
+    }).catch((error) => {console.log(error);});
+  }
+
   useEffect(()=>{
+    downloadImage();
     getUserName();
     fetchNotes(dispatch);
     loadUser(dispatch)

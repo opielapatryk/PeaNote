@@ -7,7 +7,7 @@ import {askBeforeStick} from '../functions/askBeforeStick';
 import {deleteAccount} from '../functions/deleteAccount';
 import {changePassword} from '../functions/changePassword';
 import { HANDLE_PASSWORD_CHANGE_BUTTON_PRESS,HANDLE_USERNAME_CHANGE_BUTTON_PRESS } from '../../../constants';
-import { setShowInput,setShowInputUsername} from '../../../../store/settings/settingsSlice';
+import { setMyimage, setShowInput,setShowInputUsername} from '../../../../store/settings/settingsSlice';
 import { setMessage } from '../../../../store/login/loginSlice';
 import { useFocusEffect } from '@react-navigation/native';
 import { signOutAndClearReduxStore } from '../../Logout/functions/signOutAndClearReduxStore';
@@ -25,12 +25,10 @@ const SettingsScreen = () => {
   const [deleteAccountPressed, setDeleteAccountPressed] = useState(false);
 
   const { notes, pendingNotes } = useSelector((state) => state.board);
-  const { showInput, showInputUsername,username } = useSelector((state) => state.settings);
+  const { showInput, showInputUsername,username,myimage } = useSelector((state) => state.settings);
   const { message } = useSelector((state) => state.login);
 
   const [image, setImage] = useState(null)
-  const [myimage, setMyimage] = useState(null)
-  const [uploading, setUploading] = useState(false)
 
   const dispatch = useDispatch();
 
@@ -38,6 +36,7 @@ const SettingsScreen = () => {
     if (image) {
       console.log('Image changed:', image);
       uploadImage()
+      dispatch(setMyimage(image.uri))
       
     }
   }, [image]);
@@ -57,7 +56,7 @@ const SettingsScreen = () => {
 
 const uploadImage = async () => {
   const EMAIL = auth().currentUser.email
-  setUploading(true);
+
 
   const { uri } = image;
   const filename = EMAIL;
@@ -72,29 +71,19 @@ const uploadImage = async () => {
     await reference.put(blob);
 
     setImage(null)
-    downloadImage()
+    // downloadImage()
     console.log('Photo uploaded!');
   } catch (error) {
     console.error('Error uploading photo:', error);
   }
-
-  setUploading(false);
 } 
 
-const downloadImage = async () => {
-  const EMAIL = auth().currentUser.email
-  const fileRef = firebase.storage().ref(`/images/${EMAIL}`);
 
-  fileRef.getDownloadURL().then((url)=>{
-    setMyimage(url)
-    setImage(null)
-  }).catch((error) => {console.log(error);});
-}
 
 
   useFocusEffect(
     React.useCallback(() => {
-      downloadImage()
+      // downloadImage()
       return ()=>{
         setDeleteAccountPressed(false)
         dispatch(setShowInput(false))
@@ -141,7 +130,7 @@ const downloadImage = async () => {
       <View>
 
         <View style={{alignItems:'center',backgroundColor:'white'}}>
-          {image && <Image source={{uri: image.uri}} style={{width:Dimensions.get('window').height/5,height:Dimensions.get('window').height/5,borderRadius:100,marginTop:10,marginBottom:10,resizeMode:'stretch'}}/>}
+          {/* {image && <Image source={{uri: image.uri}} style={{width:Dimensions.get('window').height/5,height:Dimensions.get('window').height/5,borderRadius:100,marginTop:10,marginBottom:10,resizeMode:'stretch'}}/>} */}
           {myimage && <Image source={{uri: myimage}} style={{width:Dimensions.get('window').height/5,height:Dimensions.get('window').height/5,borderRadius:100,marginTop:10,marginBottom:10,resizeMode:'stretch'}}/>}
 
           

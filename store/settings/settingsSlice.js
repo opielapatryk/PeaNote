@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     showInput:false,
     showInputUsername:false,
-    username:''
+    username:'',
+    myimage:''
 }
 
 export const settingsSlice = createSlice({
@@ -18,9 +19,15 @@ export const settingsSlice = createSlice({
         },
         setUsername: (state,action) => {
             return {...state, username:action.payload}
-        }
+        },
+        setMyimage: (state,action) => {
+            return {...state, myimage:action.payload}
+        },
+        removeMyImage: (state) => {
+            return {...state, myimage:''}
+        },
     }
 })
 
-export const {setShowInput,setShowInputUsername,setUsername} = settingsSlice.actions
+export const {setShowInput,setShowInputUsername,setUsername,setMyimage,removeMyImage} = settingsSlice.actions
 export default settingsSlice.reducer
