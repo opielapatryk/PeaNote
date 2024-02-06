@@ -9,7 +9,6 @@ export const styles = StyleSheet.create({
     backgroundColor: '#FFFDF3',
     alignItems: 'center',
     justifyContent:'space-between',
-    paddingTop:Dimensions.get('window').height/50
   },
   note: {
     backgroundColor: '#FFF5BD',

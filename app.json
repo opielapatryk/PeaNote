@@ -2,7 +2,7 @@
   "expo": {
     "name": "PeaNote",
     "slug": "stickyinreactnative",
-    "icon": "./assets/images/appicon.png",
+    "icon": "./assets/images/logo.png",
     "ios": {
       "entitlements": {
         "com.apple.developer.applesignin": ["Default"]
@@ -11,14 +11,14 @@
       "supportsTablet": true,
       "googleServicesFile": "./GoogleService-Info.plist",
       "bundleIdentifier": "com.patrykopiela.stickyinreactnativedev",
-      "buildNumber": "3"
+      "buildNumber": "4"
     },
     "extra": {
       "eas": {
         "projectId": "d99ff50f-0885-4261-9450-58f9b727b214"
       }
     },
-    "version": "1.0.2",
+    "version": "1.0.3",
     "sdkVersion": "49.0.0",
     "platforms": [
       "ios"

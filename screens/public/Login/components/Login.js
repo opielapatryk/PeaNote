@@ -1,4 +1,4 @@
-import { View,Keyboard,TouchableWithoutFeedback,Image } from 'react-native'
+import { View,Keyboard,TouchableWithoutFeedback,Image, Dimensions } from 'react-native'
 import React,{ useEffect } from 'react';
 import { styles } from '../../../../assets/styles/styles';
 import LoginBody from './LoginBody';
@@ -34,8 +34,8 @@ const Login = () => {
   return (
     <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
     <View style={styles.container}>
-      <Image source={require('../../../../assets/images/logoPeaNoteWhiteBg.png')}/>
-
+        <Image source={require('../../../../assets/images/logo.png')} style={{width:Dimensions.get('window').width/1.2,height:Dimensions.get('window').height/4,marginTop:Dimensions.get('window').height/10}}/>
+      
       {/* login screen */}
       {!createAccount && <LoginBody/>}
 
