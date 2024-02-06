@@ -22,6 +22,8 @@ export const loadUser = async (dispatch)=>{
       requests = doc.data().friends_requests;
     })
   }
+
+  console.log(friends);
   if(friends.length>0){
     fetchAndDispatchFriends(friends, dispatch, setFriends);
   }

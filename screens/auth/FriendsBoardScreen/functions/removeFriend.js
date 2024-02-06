@@ -3,9 +3,10 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import { removeFriendReducer } from '../../../../store/friends/friendsSlice';
 
-export const removeFriend = async (navigation,friendEmail,dispatch) => {
+export const removeFriend = async (navigation,friendEmail,username,dispatch) => {
   const EMAIL = auth().currentUser.email
-
+  
+  let USERNAME
   const getUserByEmail = await firestore()
       .collection('users')
       .where('email', '==', EMAIL)
@@ -13,11 +14,13 @@ export const removeFriend = async (navigation,friendEmail,dispatch) => {
 
 
   getUserByEmail.forEach(doc => {
+    USERNAME = doc.data().username
+
     firestore()
     .collection('users')
     .doc(doc.id)
     .update({
-      friends: firebase.firestore.FieldValue.arrayRemove(friendEmail),
+      friends: firebase.firestore.FieldValue.arrayRemove({email:friendEmail,username:username}),
     })
   })
 
@@ -32,7 +35,7 @@ export const removeFriend = async (navigation,friendEmail,dispatch) => {
           .collection('users')
           .doc(doc.id)
           .update({
-            friends: firebase.firestore.FieldValue.arrayRemove(EMAIL),
+            friends: firebase.firestore.FieldValue.arrayRemove({email:EMAIL,username:USERNAME}),
           })
           .then(()=>{
             dispatch(removeFriendReducer(friendEmail))

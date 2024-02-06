@@ -2,8 +2,20 @@ import { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
-export const createNote = async (content,setContent,setMessage,friendEmail) => {
+export const createNote = async (content,setContent,setMessage,friendEmail,username) => {
+
   const EMAIL = auth().currentUser.email
+  
+  let USERNAME
+  
+  const getUserByEmail = await firestore()
+      .collection('users')
+      .where('email', '==', EMAIL)
+      .get()
+
+  getUserByEmail.forEach(doc => {
+    USERNAME = doc.data().username
+  })
 
   if (content !== '') {
     const getFriendByEmail = await firestore()
@@ -20,7 +32,7 @@ export const createNote = async (content,setContent,setMessage,friendEmail) => {
           .update({
             [listKey]: firebase.firestore.FieldValue.arrayUnion({
               content: content,
-              creator: EMAIL.replace(/@.*/, ""),
+              creator: USERNAME,
             }),
           })
           

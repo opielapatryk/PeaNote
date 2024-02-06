@@ -6,7 +6,7 @@ import {styles} from '../../../../assets/styles/styles'
 import { useDispatch } from 'react-redux';
 
 const FriendsBoard = ({ route, navigation }) => {
-  const { friendEmail } = route.params;
+  const { friendEmail,name } = route.params;
   const [content, setContent] = useState('');
   const [message, setMessage] = useState('');
   const dispatch = useDispatch()
@@ -19,12 +19,12 @@ const FriendsBoard = ({ route, navigation }) => {
           <TextInput style={styles.friendsTextInput} placeholder={message?message:"NEW NOTE"} value={content} onChangeText={text=>setContent(text)} autoCapitalize="sentences"
           autoCorrect={false} maxLength={100} multiline/>
 
-          <Pressable style={styles.friendsHeaderRequest} onPress={()=>createNote(content,setContent,setMessage,friendEmail)}><Text style={styles.removeFriendText}>CREATE NOTE</Text></Pressable>
+          <Pressable style={styles.friendsHeaderRequest} onPress={()=>createNote(content,setContent,setMessage,friendEmail,name)}><Text style={styles.removeFriendText}>CREATE NOTE</Text></Pressable>
           
         </View>
 
 
-        <Pressable style={styles.deleteAccountButton} onPress={()=>removeFriend(navigation,friendEmail,dispatch)}><Text style={styles.deleteAccountText}>REMOVE FRIEND</Text></Pressable>
+        <Pressable style={styles.deleteAccountButton} onPress={()=>removeFriend(navigation,friendEmail,name,dispatch)}><Text style={styles.deleteAccountText}>REMOVE FRIEND</Text></Pressable>
       </View>
     </TouchableWithoutFeedback>
   );

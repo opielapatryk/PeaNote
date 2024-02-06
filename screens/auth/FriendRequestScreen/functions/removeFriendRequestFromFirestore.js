@@ -2,7 +2,7 @@ import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { removeRequestReducer } from '../../../../store/friends/friendsSlice';
 
-export const removeFriendRequestFromFirestore = async (friendEmail,dispatch,navigation) =>{
+export const removeFriendRequestFromFirestore = async (friendEmail,friendUsername,dispatch,navigation) =>{
   const EMAIL = auth().currentUser.email
 
   const getUserByEmail = await firestore()
@@ -11,16 +11,18 @@ export const removeFriendRequestFromFirestore = async (friendEmail,dispatch,navi
   .get()
 
   getUserByEmail.forEach(doc=>{
-    if(doc.data().friends_requests.includes(friendEmail)){
-      firestore()
-      .collection('users')
-      .doc(doc.id)
-      .update({
-        friends_requests: firebase.firestore.FieldValue.arrayRemove(friendEmail),
-      }).then(() =>{
-        dispatch(removeRequestReducer(friendEmail))
-        navigation.navigate('FriendsScreen'); // Change for some animation instead of navigation to previous screen.
-      })
-    }
+    doc.data().friends_requests.forEach(req=>{
+      if(req.email === friendEmail){
+        firestore()
+        .collection('users')
+        .doc(doc.id)
+        .update({
+          friends_requests: firebase.firestore.FieldValue.arrayRemove({email:friendEmail,username:friendUsername}),
+        }).then(() =>{
+          dispatch(removeRequestReducer(friendEmail))
+          navigation.navigate('FriendsScreen'); // Change for some animation instead of navigation to previous screen.
+        })
+      }
+    })
   })
 }

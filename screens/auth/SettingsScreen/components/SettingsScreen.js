@@ -88,6 +88,7 @@ const SettingsScreen = () => {
             onChangeText={text=>setNewPassword(text)}
             value={newPassword}
             secureTextEntry
+            maxLength={25}
           />   
         )}
 
@@ -95,17 +96,18 @@ const SettingsScreen = () => {
           <Text style={styles.friendsHeaderRequestText}>{showInput ? 'SET NEW PASSWORD' : 'CHANGE PASSWORD'}</Text>
         </Pressable>
 
-        {/* {showInputUsername && (
+        {showInputUsername && (
           <TextInput
             style={styles.friendsTextInput}
             placeholder={message?message:"USERNAME"}
             onChangeText={text=>setNewUsername(text)}
             value={newUsername}
+            maxLength={25}
           />
         )}
         <Pressable style={styles.friendsHeaderRequest} onPress={handleUsernameChange}>
           <Text style={styles.friendsHeaderRequestText}>{showInputUsername ? 'SET USERNAME' : 'CHANGE USERNAME'}</Text>
-        </Pressable> */}
+        </Pressable>
 
         <Pressable style={styles.friendsHeaderRequest} onPress={()=>signOutAndClearReduxStore(dispatch)}>
           <Text style={styles.friendsHeaderRequestText}>LOGOUT</Text>

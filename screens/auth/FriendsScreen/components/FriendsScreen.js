@@ -15,7 +15,7 @@ export const FriendsScreen = ({ navigation }) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      loadUser(dispatch,friends)
+      loadUser(dispatch)
       return ()=>{
         dispatch(setMessage(''))
         dispatch(setEmail(''))
@@ -26,7 +26,7 @@ export const FriendsScreen = ({ navigation }) => {
 
   const renderFriends = ({ item }) => {
     return (
-      <Pressable onPress={() =>navigation.navigate('FriendsBoard', {name:item, friendEmail: item})} style={styles.friendsList}><Text style={styles.firendListText}>{item}</Text></Pressable>
+      <Pressable onPress={() =>navigation.navigate('FriendsBoard', {name:item.username, friendEmail: item.email})} style={styles.friendsList}><Text style={styles.firendListText}>{item.username}</Text></Pressable>
     );
   };
 
@@ -38,7 +38,7 @@ export const FriendsScreen = ({ navigation }) => {
 
       <Pressable style={styles.friendsHeaderRequest} onPress={()=>sendFriendRequest(dispatch,email)}><Text style={styles.friendsHeaderRequestText}>ADD</Text></Pressable>
 
-      <FlatList data={friends} renderItem={renderFriends} keyExtractor={(friend) => friend}/>
+      <FlatList data={friends} renderItem={({item})=>renderFriends({item})} keyExtractor={(friend) => friend.id}/>
     </View>
   );
 }

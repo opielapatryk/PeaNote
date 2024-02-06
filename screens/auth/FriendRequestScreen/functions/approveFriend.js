@@ -2,8 +2,10 @@ import firestore from '@react-native-firebase/firestore';
 import auth, { firebase } from '@react-native-firebase/auth';
 import { removeRequestReducer, setFriends } from '../../../../store/friends/friendsSlice';
 
-export const approveFriend = async (friendEmail,dispatch,navigation) =>{
+export const approveFriend = async (friendEmail,friendUsername,dispatch,navigation) =>{
   const EMAIL = auth().currentUser.email
+
+  let USERNAME 
 
   const getUserByEmail = await firestore()
   .collection('users')
@@ -12,19 +14,22 @@ export const approveFriend = async (friendEmail,dispatch,navigation) =>{
   
   if (!getUserByEmail.empty) {
     getUserByEmail.forEach(doc => {
-      if(!doc.data().friends.includes(friendEmail)){
+      USERNAME = doc.data().username
+      
+      if(!doc.data().friends.includes({email:friendEmail,username:friendUsername})){
+        console.log('inside');
         firestore()
         .collection('users')
         .doc(doc.id)
         .update({
-          friends: firebase.firestore.FieldValue.arrayUnion(friendEmail),
+          friends: firebase.firestore.FieldValue.arrayUnion({email:friendEmail,username:friendUsername}),
         })
         .then(() => {
           firestore()
           .collection('users')
           .doc(doc.id)
           .update({
-            friends_requests: firebase.firestore.FieldValue.arrayRemove(friendEmail),
+            friends_requests: firebase.firestore.FieldValue.arrayRemove({email:friendEmail,username:friendUsername}),
           })
         });
         }
@@ -38,19 +43,19 @@ export const approveFriend = async (friendEmail,dispatch,navigation) =>{
   
   if (!getFriendByEmail.empty) {
     getFriendByEmail.forEach(doc => {
-      if(!doc.data().friends.includes(EMAIL)){
+      if(!doc.data().friends.includes({email:EMAIL,username:USERNAME})){
         firestore()
         .collection('users')
         .doc(doc.id)
         .update({
-          friends: firebase.firestore.FieldValue.arrayUnion(EMAIL),
+          friends: firebase.firestore.FieldValue.arrayUnion({email:EMAIL,username:USERNAME}),
         })
         .then(() => {
           firestore()
           .collection('users')
           .doc(doc.id)
           .update({
-            friends_requests: firebase.firestore.FieldValue.arrayRemove(EMAIL),
+            friends_requests: firebase.firestore.FieldValue.arrayRemove({email:EMAIL,username:USERNAME}),
           })
 
           dispatch(removeRequestReducer(friendEmail))

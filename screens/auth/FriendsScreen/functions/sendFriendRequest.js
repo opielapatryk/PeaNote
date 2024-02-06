@@ -32,6 +32,8 @@ export const sendFriendRequest = async (dispatch, friendEmail) => {
     return;
   }
 
+  const currentUserUsername = currentUserDoc.data().username
+
   if (currentUserDoc.data().friends.includes(friendEmail)) {
     dispatch(setMessage('YOU ARE FRIENDS ALREADY'));
   } else {
@@ -48,8 +50,11 @@ export const sendFriendRequest = async (dispatch, friendEmail) => {
         .collection('users')
         .doc(friendDoc.id)
         .update({
-          friends_requests: firebase.firestore.FieldValue.arrayUnion(currentUserEmail),
-        });
+          friends_requests: firebase.firestore.FieldValue.arrayUnion({
+            email: currentUserEmail,
+            username: currentUserUsername,
+          }),
+        })
 
       dispatch(setMessage('FRIEND REQUEST SENT SUCCESSFULLY'));
     }
