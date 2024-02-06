@@ -70,9 +70,9 @@ const SettingsScreen = () => {
     onPress={() => Keyboard.dismiss()}>
     <View style={styles.friendsboard}>
       <View>
-        <View style={styles.friendsHeaderRequest}>
+        {/* <View style={styles.friendsHeaderRequest}>
           <Text style={styles.settingsActionText}>Hello {auth().currentUser.email}</Text>
-        </View>
+        </View> */}
         <View style={styles.switchRow}>
           <Text style={styles.settingsActionText}>ASK BEFORE STICKING NOTE</Text>
           <Switch
@@ -95,7 +95,7 @@ const SettingsScreen = () => {
           <Text style={styles.friendsHeaderRequestText}>{showInput ? 'SET NEW PASSWORD' : 'CHANGE PASSWORD'}</Text>
         </Pressable>
 
-        {showInputUsername && (
+        {/* {showInputUsername && (
           <TextInput
             style={styles.friendsTextInput}
             placeholder={message?message:"USERNAME"}
@@ -105,7 +105,7 @@ const SettingsScreen = () => {
         )}
         <Pressable style={styles.friendsHeaderRequest} onPress={handleUsernameChange}>
           <Text style={styles.friendsHeaderRequestText}>{showInputUsername ? 'SET USERNAME' : 'CHANGE USERNAME'}</Text>
-        </Pressable>
+        </Pressable> */}
 
         <Pressable style={styles.friendsHeaderRequest} onPress={()=>signOutAndClearReduxStore(dispatch)}>
           <Text style={styles.friendsHeaderRequestText}>LOGOUT</Text>
