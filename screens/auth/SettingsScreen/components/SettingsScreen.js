@@ -130,7 +130,7 @@ const uploadImage = async () => {
       <View>
 
         <View style={{alignItems:'center',backgroundColor:'white'}}>
-          {/* {image && <Image source={{uri: image.uri}} style={{width:Dimensions.get('window').height/5,height:Dimensions.get('window').height/5,borderRadius:100,marginTop:10,marginBottom:10,resizeMode:'stretch'}}/>} */}
+        
           {myimage && <Image source={{uri: myimage}} style={{width:Dimensions.get('window').height/5,height:Dimensions.get('window').height/5,borderRadius:100,marginTop:10,marginBottom:10,resizeMode:'stretch'}}/>}
 
           
