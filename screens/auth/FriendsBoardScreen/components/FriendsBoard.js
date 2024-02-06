@@ -42,16 +42,12 @@ const FriendsBoard = ({ route, navigation }) => {
         
         {myimage && <Image source={{uri: myimage}} style={{width:Dimensions.get('window').height/5,height:Dimensions.get('window').height/5,borderRadius:100,marginTop:10,marginBottom:10,resizeMode:'stretch'}}/>}
 
-        
-        
-      </View>
-        <View>
-          <TextInput style={styles.friendsTextInput} placeholder={message?message:"NEW NOTE"} value={content} onChangeText={text=>setContent(text)} autoCapitalize="sentences"
+        <TextInput style={styles.friendsTextInput} placeholder={message?message:"NEW NOTE"} value={content} onChangeText={text=>setContent(text)} autoCapitalize="sentences"
           autoCorrect={false} maxLength={100} multiline/>
 
           <Pressable style={styles.friendsHeaderRequest} onPress={()=>createNote(content,setContent,setMessage,friendEmail,name)}><Text style={styles.removeFriendText}>CREATE NOTE</Text></Pressable>
-          
-        </View>
+        
+      </View>
 
 
         <Pressable style={styles.deleteAccountButton} onPress={()=>removeFriend(navigation,friendEmail,name,dispatch)}><Text style={styles.deleteAccountText}>REMOVE FRIEND</Text></Pressable>
