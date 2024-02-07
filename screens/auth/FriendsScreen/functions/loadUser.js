@@ -23,10 +23,11 @@ export const loadUser = async (dispatch)=>{
     })
   }
 
-  if(friends.length>0){
+  
+  if(friends && friends.length>0){
     fetchAndDispatchFriends(friends, dispatch, setFriends);
   }
-  if(requests.length>0){
+  if(requests && requests.length>0){
     fetchAndDispatchFriends(requests, dispatch, setRequests);
   }
   
