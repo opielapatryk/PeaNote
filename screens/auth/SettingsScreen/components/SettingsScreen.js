@@ -36,7 +36,6 @@ const SettingsScreen = () => {
   
   useEffect(() => {
     if (image) {
-      console.log('Image changed:', image);
       uploadImage()
       dispatch(setMyimage(image.uri))
       
@@ -55,7 +54,6 @@ const SettingsScreen = () => {
       });
       const source = {uri: result.assets[0].uri}
 
-      console.log(source);
       setImage(source)
     }
 
@@ -83,7 +81,6 @@ const uploadImage = async () => {
 
     setImage(null)
     // downloadImage()
-    console.log('Photo uploaded!');
   } catch (error) {
     console.error('Error uploading photo:', error);
   }

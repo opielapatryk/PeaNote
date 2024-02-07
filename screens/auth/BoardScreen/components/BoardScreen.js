@@ -38,7 +38,7 @@ const BoardScreen = () => {
   
     fileRef.getDownloadURL().then((url)=>{
       dispatch(setMyimage(url))
-    }).catch((error) => {console.log(error);});
+    });
   }
 
   useEffect(()=>{

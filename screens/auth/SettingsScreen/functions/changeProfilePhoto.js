@@ -21,12 +21,10 @@ import * as ImagePicker from 'expo-image-picker'
     const response = await fetch(source.uri)
     const blob = response.blob()
     const filename = source.uri.substring(source.uri.lastIndexOf('/')+1)
-    console.log(filename);
+
     let ref = firebase.storage().ref('gs://stickify-407810.appspot.com').child(filename).put(blob)
-    try {
-        await ref;
-    } catch (e){
-        console.log(e)
-    }
+
+    await ref;
+
     setImage(null);
   };

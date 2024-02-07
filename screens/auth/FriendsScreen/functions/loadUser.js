@@ -20,7 +20,6 @@ export const loadUser = async (dispatch)=>{
     docs.forEach((doc) => {
       friends = doc.data().friends;
       requests = doc.data().friends_requests;
-      console.log(requests);
     })
   }
 

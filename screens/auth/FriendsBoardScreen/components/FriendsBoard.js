@@ -21,7 +21,7 @@ const FriendsBoard = ({ route, navigation }) => {
   
     fileRef.getDownloadURL().then((url)=>{
       dispatch(setMyimage(url))
-    }).catch((error) => {console.log(error);});
+    })
   }
 
 

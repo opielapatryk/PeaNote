@@ -5,7 +5,7 @@ import { styles } from '../../../../assets/styles/styles'
 import { approveFriend } from './approveFriend'
 
 export const renderRequests = ({item},dispatch,navigation) =>{
-    console.log(item);
+
     return (
         <View style={styles.friendsRequestList}>
             <Pressable onPress={()=>approveFriend(item.email,item.username,dispatch,navigation)} style={{justifyContent:'center',height: Dimensions.get("window").height / 18.4}}>
