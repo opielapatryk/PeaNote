@@ -143,7 +143,7 @@ export const styles = StyleSheet.create({
     borderTopLeftRadius:10,
     borderTopRightRadius:10,
     borderColor: 'lightgray',
-    marginBottom:20
+    marginBottom:10
   },
   pressableInBottonViewLeftLogInOn:{
     padding:10,
@@ -564,4 +564,8 @@ elevation: 1,
   notesIsInfoVerticalLine:{
     height:Dimensions.get("window").height / 8,borderLeftWidth:1,alignSelf:'center'
   },
+  tabBarLabel:{
+    letterSpacing:1.5,
+    backgroundColor:'green'
+  }
 });

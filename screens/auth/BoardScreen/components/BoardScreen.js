@@ -12,6 +12,7 @@ import { clearBoardInfo } from '../../../../store/notes/boardSlice';
 import { setUsername,setMyimage } from '../../../../store/settings/settingsSlice';
 import firestore from '@react-native-firebase/firestore';
 import auth, { firebase } from '@react-native-firebase/auth';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const BoardScreen = () => {
   const { notes } = useSelector((state) => state.board);
@@ -56,9 +57,13 @@ const BoardScreen = () => {
       }
     }, [])
   );
-
+  const insets = useSafeAreaInsets();
   return (
-    <View style={styles.flexone}>
+    <View style={[{
+      paddingTop: insets.top,
+      backgroundColor:'#FFFDF3',
+      flex: 1,
+    }]}>
       <Pressable onPress={() => checkThenChangeInfo(dispatch,notes)} style={styles.board}>
       {notes.length==0&&<Text style={styles.emptyBoardText}>THIS BOARD IS EMPTY</Text>}
         <FlatList numColumns={2} data={notes} renderItem={({item})=>renderNotes({item})} keyExtractor={KEY_EXTRACTOR_NOTES}/>

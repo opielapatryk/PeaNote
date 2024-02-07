@@ -7,6 +7,7 @@ import { KEY_EXTRACTOR_NOTES } from '../../../constants';
 import { renderNotes } from '../functions/renderNotes';
 import { useFocusEffect } from '@react-navigation/native';
 import { clearPendingInfo } from '../../../../store/notes/boardSlice';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const PendingScreen = () => {
   const { pendingNotes } = useSelector((state) => state.board);
@@ -19,9 +20,13 @@ const PendingScreen = () => {
       }
     }, [])
   );
-
+  const insets = useSafeAreaInsets();
   return (
-    <View style={styles.flexone}>
+    <View style={{
+      paddingTop: insets.top,
+      flex: 1,
+      backgroundColor:'#FFFDF3'
+    }}>
       <Pressable onPress={() => onClickChangeInfo(dispatch, pendingNotes)} style={styles.board}>
       {pendingNotes.length==0&&<Text style={styles.emptyBoardText}>THIS BOARD IS EMPTY</Text>}
         <FlatList numColumns={2} data={pendingNotes} renderItem={({item})=>renderNotes({item})} keyExtractor={KEY_EXTRACTOR_NOTES} />

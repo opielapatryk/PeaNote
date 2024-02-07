@@ -18,7 +18,7 @@ const FriendRequests = ({navigation}) => {
   );
 
   return (
-    <View style={styles.board}>
+    <View style={{flex:1,backgroundColor:'#FFF'}}>
        <FlatList data={requests} renderItem={({item})=>renderRequests({item},dispatch,navigation)} keyExtractor={KEY_EXTRACTOR_FRIENDS}/>
     </View>
    

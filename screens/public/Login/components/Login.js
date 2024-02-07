@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { removeNote,removePendingNote } from '../../../../store/notes/boardSlice';
 import { useFocusEffect } from '@react-navigation/native';
 import { setMessage,setEmail } from '../../../../store/login/loginSlice';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Login = () => {
   const { notes,pendingNotes } = useSelector((state)=>state.board)
@@ -30,10 +31,10 @@ const Login = () => {
       }
     }, [])
   );
-
+  const insets = useSafeAreaInsets();
   return (
     <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
-    <View style={styles.container}>
+    <View style={[styles.container,{paddingBottom:insets.bottom-20}]}>
         <Image source={require('../../../../assets/images/logo.png')} style={{width:Dimensions.get('window').width/1.2,height:Dimensions.get('window').height/4,marginTop:Dimensions.get('window').height/10}}/>
       
       {/* login screen */}

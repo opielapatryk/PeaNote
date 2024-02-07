@@ -7,6 +7,7 @@ import {setEmail,setMessage} from '../../../../store/login/loginSlice'
 import { useFocusEffect } from '@react-navigation/native';
 import { loadUser } from '../functions/loadUser';
 import { cleanStoreFriends } from '../../../../store/friends/friendsSlice';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const FriendsScreen = ({ navigation }) => {
   const {friends} = useSelector((state) => state.friends);
@@ -26,12 +27,17 @@ export const FriendsScreen = ({ navigation }) => {
 
   const renderFriends = ({ item }) => {
     return (
-      <Pressable onPress={() =>navigation.navigate('FriendsBoard', {name:item.username, friendEmail: item.email, nickname:item.nickname})} style={styles.friendsList}><Text style={styles.firendListText}>{item.nickname?item.nickname:item.username}</Text></Pressable>
+      <Pressable onPress={() =>navigation.navigate('FriendsBoard', {name:item.username, friendEmail: item.email, oldnickname:item.nickname})} style={styles.friendsList}><Text style={styles.firendListText}>{item.nickname?item.nickname:item.username}</Text></Pressable>
     );
   };
+  const insets = useSafeAreaInsets();
 
   return (
-    <View style={styles.board}>
+    <View style={[styles.board,{
+      paddingTop: insets.top,
+      flex: 1,
+      backgroundColor:'white',
+    }]}>
       <Pressable style={styles.friendsHeaderRequest} onPress={()=>navigation.navigate('Requests')}><Text style={styles.friendsHeaderRequestText}>REQUESTS</Text></Pressable>
 
       <TextInput style={styles.friendsTextInput} placeholder={message?message:'INSERT FRIEND EMAIL'} onChangeText={text => dispatch(setEmail(text))} value={email} autoCorrect={false}/>

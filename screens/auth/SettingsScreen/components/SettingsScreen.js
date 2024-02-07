@@ -15,7 +15,7 @@ import {changeUsername} from '../functions/changeUsername'
 import {changeProfilePhoto} from '../functions/changeProfilePhoto'
 import * as ImagePicker from 'expo-image-picker'
 import auth, { firebase } from '@react-native-firebase/auth';
-
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 
 const SettingsScreen = () => {
@@ -128,11 +128,15 @@ const uploadImage = async () => {
       setDeleteAccountPressed(true);
     }
   };
-
+  const insets = useSafeAreaInsets();
   return (
     <TouchableWithoutFeedback 
     onPress={() => Keyboard.dismiss()}>
-    <View style={styles.friendsboard}>
+    <View style={[styles.friendsboard,{
+      paddingTop: insets.top,
+      flex: 1,
+      backgroundColor:'white'
+    }]}>
       <View>
       <View style={styles.ProfilePicGrandparent}>
         <View style={styles.ProfilePicParent}>

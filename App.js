@@ -19,6 +19,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as ScreenOrientation from 'expo-screen-orientation';
 import Constants from 'expo-constants';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { SafeAreaProvider,useSafeAreaInsets,initialWindowMetrics} from 'react-native-safe-area-context';
 
 
 const Stack = createNativeStackNavigator();
@@ -27,6 +28,7 @@ const Tab = createMaterialTopTabNavigator();
 
 
 export default function App(){
+
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
@@ -57,7 +59,7 @@ export default function App(){
     return (
       <Stack.Navigator initialRouteName={"FriendsScreen"}>
         <Stack.Screen name="FriendsScreen" component={FriendsScreen} options={{headerShown:false}}/>
-        <Stack.Screen name='FriendsBoard' component={FriendsBoard} options={({ route }) => ({ title: route.params.nickname?route.params.nickname:route.params.name,headerTintColor:'black'})} />
+        <Stack.Screen name='FriendsBoard' component={FriendsBoard} options={({ route }) => ({ title: route.params.oldnickname?route.params.oldnickname:route.params.name,headerTintColor:'black'})} />
         <Stack.Screen name="Requests" component={FriendRequests} options={{headerTintColor:"black",title:"REQUESTS",headerTitleStyle:{fontSize:17,
     fontWeight:'bold',
     textShadowOffset: {
@@ -73,8 +75,9 @@ export default function App(){
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Provider store={store}>
+        <SafeAreaProvider>
         <NavigationContainer>
-          <Tab.Navigator initialRouteName={!user?"Login":"Board"} screenOptions={{tabBarItemStyle:{marginTop:Constants.statusBarHeight},tabBarIndicatorStyle:{backgroundColor:'black'},tabBarLabelStyle:{letterSpacing:1, fontSize:12}}}>
+          <Tab.Navigator tabBarPosition='bottom' initialRouteName={!user?"Login":"Board"} screenOptions={{tabBarIndicatorStyle:{backgroundColor:'black',top:0},tabBarLabelStyle:{letterSpacing:1, fontSize:12},tabBarStyle:{paddingBottom:initialWindowMetrics.insets.bottom}}}>
               {!user?(
                 <>
                   <Tab.Screen name="Login" component={Login} options={{tabBarStyle:{display:'none'}}}></Tab.Screen>
@@ -89,6 +92,7 @@ export default function App(){
               )}
           </Tab.Navigator>
         </NavigationContainer>
+        </SafeAreaProvider>
       </Provider>
     </GestureHandlerRootView>
   )

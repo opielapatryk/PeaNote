@@ -10,7 +10,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
 
 const FriendsBoard = ({ route, navigation }) => {
-  const { friendEmail,name } = route.params;
+  const { friendEmail,name,oldnickname} = route.params;
   const [content, setContent] = useState('');
   const [message, setMessage] = useState('');
   const dispatch = useDispatch()
@@ -82,7 +82,9 @@ const FriendsBoard = ({ route, navigation }) => {
   return (
     <TouchableWithoutFeedback 
     onPress={() => Keyboard.dismiss()}>
-      <View style={styles.friendsboard}>
+      <View style={{flex: 1,
+    backgroundColor: '#FFF',
+    justifyContent:"space-between",}}>
       <View style={{alignItems:'center',backgroundColor:'white'}}>
         <View style={styles.ProfilePicParent}>
         {myimage && <Image source={{uri: myimage}} style={styles.ProfilePic}/>}
@@ -112,7 +114,7 @@ const FriendsBoard = ({ route, navigation }) => {
       </View>
 
       <View>
-        <Text style={[styles.removeFriendText,{marginBottom:10}]}>{friendEmail}</Text>
+        <Text style={[styles.removeFriendText,{fontSize:14,marginBottom:10}]}>{oldnickname?friendEmail:''}</Text>
         
         <Pressable style={styles.deleteAccountButton} onPress={()=>removeFriend(navigation,friendEmail,name,nickname,dispatch)}><Text style={styles.removeFriendText}>REMOVE FRIEND</Text></Pressable>
       </View>
