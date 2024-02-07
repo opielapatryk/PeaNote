@@ -80,7 +80,6 @@ const uploadImage = async () => {
     await reference.put(blob);
 
     setImage(null)
-    // downloadImage()
   } catch (error) {
     console.error('Error uploading photo:', error);
   }
@@ -91,7 +90,6 @@ const uploadImage = async () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      // downloadImage()
       return ()=>{
         setDeleteAccountPressed(false)
         dispatch(setShowInput(false))

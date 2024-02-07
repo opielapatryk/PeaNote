@@ -1,7 +1,8 @@
 import auth, { firebase } from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 import { setShowInputUsername,setUsername } from '../../../../store/settings/settingsSlice';
 import { setMessage } from '../../../../store/login/loginSlice';
-import firestore from '@react-native-firebase/firestore';
+
 
  export const changeUsername = async ({setDeleteAccountPressed,newUsername,dispatch,setNewUsername}) => {
         setDeleteAccountPressed(false);

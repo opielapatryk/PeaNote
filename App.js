@@ -57,7 +57,7 @@ export default function App(){
     return (
       <Stack.Navigator initialRouteName={"FriendsScreen"}>
         <Stack.Screen name="FriendsScreen" component={FriendsScreen} options={{headerShown:false}}/>
-        <Stack.Screen name='FriendsBoard' component={FriendsBoard} options={({ route }) => ({ title: route.params.name,headerTintColor:'black'})} />
+        <Stack.Screen name='FriendsBoard' component={FriendsBoard} options={({ route }) => ({ title: route.params.nickname?route.params.nickname:route.params.name,headerTintColor:'black'})} />
         <Stack.Screen name="Requests" component={FriendRequests} options={{headerTintColor:"black",title:"REQUESTS",headerTitleStyle:{fontSize:17,
     fontWeight:'bold',
     textShadowOffset: {

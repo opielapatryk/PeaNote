@@ -42,7 +42,7 @@ const BoardScreen = () => {
   }
 
   useEffect(()=>{
-    downloadImage();
+    // downloadImage();
     getUserName();
     fetchNotes(dispatch);
     loadUser(dispatch)

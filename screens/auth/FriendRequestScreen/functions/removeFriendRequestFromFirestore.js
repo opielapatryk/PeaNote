@@ -17,7 +17,7 @@ export const removeFriendRequestFromFirestore = async (friendEmail,friendUsernam
         .collection('users')
         .doc(doc.id)
         .update({
-          friends_requests: firebase.firestore.FieldValue.arrayRemove({email:friendEmail,username:friendUsername}),
+          friends_requests: firebase.firestore.FieldValue.arrayRemove({email:friendEmail,username:friendUsername,nickname:""}),
         }).then(() =>{
           dispatch(removeRequestReducer(friendEmail))
           navigation.navigate('FriendsScreen'); // Change for some animation instead of navigation to previous screen.

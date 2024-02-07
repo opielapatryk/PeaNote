@@ -7,6 +7,7 @@ import { useDispatch,useSelector } from 'react-redux';
 import { setMyimage } from '../../../../store/settings/settingsSlice';
 import auth, { firebase } from '@react-native-firebase/auth';
 import { useFocusEffect } from '@react-navigation/native';
+import firestore from '@react-native-firebase/firestore';
 
 const FriendsBoard = ({ route, navigation }) => {
   const { friendEmail,name } = route.params;
@@ -27,12 +28,56 @@ const FriendsBoard = ({ route, navigation }) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      downloadImage(friendEmail)
+      // downloadImage(friendEmail)
       return ()=>{
-        downloadImage(EMAIL)
+        // downloadImage(EMAIL)
       }
     }, [])
   );
+
+  const [showInput,setShowInput] = useState(false)
+  const [nickname,setNewNickName] = useState('')
+  const [nicknameMessage,setNewNickNameMessage] = useState('')
+  
+  const handleNickNameChange = async () => {
+    if (showInput) {
+
+      const getUserByEmail = await firestore()
+        .collection('users')
+        .where('email', '==', EMAIL)
+        .get()
+
+      getUserByEmail.forEach((doc)=>{
+        let friends = doc.data().friends
+
+        friends.forEach((friend)=>{
+          if(friend.email === friendEmail){
+            
+            friend['nickname'] = nickname
+
+          }
+        });
+
+        firestore()
+          .collection('users')
+          .doc(doc.id)
+          .update({
+            friends: friends,
+          }).then(()=>setNewNickNameMessage('nickname changed')).catch(()=>setNewNickNameMessage('try different nickname'))
+
+      })
+
+      setNewNickName('')
+      
+      
+      setTimeout(() => {
+        setShowInput(false)
+        setNewNickNameMessage('')
+      }, 2000);
+    } else {
+      setShowInput(true)
+    }
+  };
 
   return (
     <TouchableWithoutFeedback 
@@ -48,11 +93,30 @@ const FriendsBoard = ({ route, navigation }) => {
           autoCorrect={false} maxLength={100} multiline/>
 
           <Pressable style={styles.friendsHeaderRequest} onPress={()=>createNote(content,setContent,setMessage,friendEmail,name)}><Text style={styles.removeFriendText}>CREATE NOTE</Text></Pressable>
+
+
+          {showInput && (
+          <TextInput
+            style={styles.friendsTextInput}
+            placeholder={nicknameMessage?nicknameMessage:"NICKNAME"}
+            onChangeText={text=>setNewNickName(text)}
+            value={nickname}
+            maxLength={25}
+          />   
+        )}
+
+        <Pressable style={styles.friendsHeaderRequest} onPress={handleNickNameChange}>
+          <Text style={styles.removeFriendText}>{showInput ? 'CONFIRM' : 'SET NICKNAME'}</Text>
+        </Pressable>
         
       </View>
 
-
-        <Pressable style={styles.deleteAccountButton} onPress={()=>removeFriend(navigation,friendEmail,name,dispatch)}><Text style={styles.deleteAccountText}>REMOVE FRIEND</Text></Pressable>
+      <View>
+        <Text style={[styles.removeFriendText,{marginBottom:10}]}>{friendEmail}</Text>
+        
+        <Pressable style={styles.deleteAccountButton} onPress={()=>removeFriend(navigation,friendEmail,name,nickname,dispatch)}><Text style={styles.removeFriendText}>REMOVE FRIEND</Text></Pressable>
+      </View>
+      
       </View>
     </TouchableWithoutFeedback>
   );

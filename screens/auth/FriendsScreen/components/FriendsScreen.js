@@ -26,7 +26,7 @@ export const FriendsScreen = ({ navigation }) => {
 
   const renderFriends = ({ item }) => {
     return (
-      <Pressable onPress={() =>navigation.navigate('FriendsBoard', {name:item.username, friendEmail: item.email})} style={styles.friendsList}><Text style={styles.firendListText}>{item.username}</Text></Pressable>
+      <Pressable onPress={() =>navigation.navigate('FriendsBoard', {name:item.username, friendEmail: item.email, nickname:item.nickname})} style={styles.friendsList}><Text style={styles.firendListText}>{item.nickname?item.nickname:item.username}</Text></Pressable>
     );
   };
 

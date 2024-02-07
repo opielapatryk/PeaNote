@@ -3,5 +3,10 @@ TODO: Sort notes
 TODO: PeaNote as widget
 TODO: After clicking note, respond to your friend
 TODO: Invite friends via link
-TODO: Set your friend nickname
 TODO: TOP LEFT = BELL, TOP MIDDLE = CURRENT TAB, TOP RIGHT = CREATE NOTE BUTTON, BOTTOM = BOTTOM TABS
+TODO: GESTURES
+TODO: ANIMATIONS
+TODO: Set your friend nickname
+TODO: Double key id when friend rendering
+TODO: Problem with logout
+TODO: Cache photos - https://blog.logrocket.com/caching-images-react-native-tutorial-with-examples/

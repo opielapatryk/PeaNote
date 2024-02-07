@@ -53,6 +53,7 @@ export const sendFriendRequest = async (dispatch, friendEmail) => {
           friends_requests: firebase.firestore.FieldValue.arrayUnion({
             email: currentUserEmail,
             username: currentUserUsername,
+            nickname:''
           }),
         })
 

@@ -21,14 +21,14 @@ export const approveFriend = async (friendEmail,friendUsername,dispatch,navigati
         .collection('users')
         .doc(doc.id)
         .update({
-          friends: firebase.firestore.FieldValue.arrayUnion({email:friendEmail,username:friendUsername}),
+          friends: firebase.firestore.FieldValue.arrayUnion({email:friendEmail,username:friendUsername,nickname:''}),
         })
         .then(() => {
           firestore()
           .collection('users')
           .doc(doc.id)
           .update({
-            friends_requests: firebase.firestore.FieldValue.arrayRemove({email:friendEmail,username:friendUsername}),
+            friends_requests: firebase.firestore.FieldValue.arrayRemove({email:friendEmail,username:friendUsername,nickname:''}),
           })
         });
         }
@@ -42,19 +42,19 @@ export const approveFriend = async (friendEmail,friendUsername,dispatch,navigati
   
   if (!getFriendByEmail.empty) {
     getFriendByEmail.forEach(doc => {
-      if(!doc.data().friends.includes({email:EMAIL,username:USERNAME})){
+      if(!doc.data().friends.includes({email:EMAIL,username:USERNAME,nickname:''})){
         firestore()
         .collection('users')
         .doc(doc.id)
         .update({
-          friends: firebase.firestore.FieldValue.arrayUnion({email:EMAIL,username:USERNAME}),
+          friends: firebase.firestore.FieldValue.arrayUnion({email:EMAIL,username:USERNAME,nickname:''}),
         })
         .then(() => {
           firestore()
           .collection('users')
           .doc(doc.id)
           .update({
-            friends_requests: firebase.firestore.FieldValue.arrayRemove({email:EMAIL,username:USERNAME}),
+            friends_requests: firebase.firestore.FieldValue.arrayRemove({email:EMAIL,username:USERNAME,nickname:''}),
           })
 
           dispatch(removeRequestReducer(friendEmail))
