@@ -10,8 +10,8 @@ export const signUpFirebase = async (email,password,dispatch) =>{
           firestore()
           .collection('users')
           .add({
-            email: email,
             username: email,
+            email: email,
             friends: [],
             friends_requests: [],
             askBeforeStick: false,

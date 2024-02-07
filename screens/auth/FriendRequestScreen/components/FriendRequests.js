@@ -14,6 +14,7 @@ const FriendRequests = ({navigation}) => {
   useFocusEffect(
     React.useCallback(() => {
       loadUser(dispatch)
+      console.log(requests);
     }, [])
   );
 
