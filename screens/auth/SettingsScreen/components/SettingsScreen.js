@@ -139,16 +139,13 @@ const uploadImage = async () => {
     onPress={() => Keyboard.dismiss()}>
     <View style={styles.friendsboard}>
       <View>
-
-        <View style={{alignItems:'center',backgroundColor:'white'}}>
-        
-          {myimage && <Image source={{uri: myimage}} style={{width:Dimensions.get('window').height/5,height:Dimensions.get('window').height/5,borderRadius:100,marginTop:10,marginBottom:10,resizeMode:'stretch'}}/>}
-
-          
-          
+      <View style={styles.ProfilePicGrandparent}>
+        <View style={styles.ProfilePicParent}>
+          {myimage && <Image source={{uri: myimage}} style={styles.ProfilePic}/>}
+        </View>
         </View>
         <View style={styles.friendsHeaderRequest}>
-          <Text style={styles.settingsActionText}>Hello {username}</Text>
+          <Text style={styles.friendsHeaderRequestText}>{username}</Text>
         </View>
         <View style={styles.switchRow}>
           <Text style={styles.settingsActionText}>ASK BEFORE STICKING NOTE</Text>
@@ -163,7 +160,7 @@ const uploadImage = async () => {
         <Pressable style={styles.friendsHeaderRequest} onPress={async ()=>{
           await pickImage()
         }}>
-          <Text style={styles.friendsHeaderRequestText}>CHANGE PROFILE PHOTO</Text>
+          <Text style={styles.settingsActionText}>CHANGE PROFILE PHOTO</Text>
         </Pressable>
 
         {showInput && (
@@ -178,7 +175,7 @@ const uploadImage = async () => {
         )}
 
         <Pressable style={styles.friendsHeaderRequest} onPress={handlePasswordChange}>
-          <Text style={styles.friendsHeaderRequestText}>{showInput ? 'SET NEW PASSWORD' : 'CHANGE PASSWORD'}</Text>
+          <Text style={styles.settingsActionText}>{showInput ? 'SET NEW PASSWORD' : 'CHANGE PASSWORD'}</Text>
         </Pressable>
 
         {showInputUsername && (
@@ -191,11 +188,11 @@ const uploadImage = async () => {
           />
         )}
         <Pressable style={styles.friendsHeaderRequest} onPress={handleUsernameChange}>
-          <Text style={styles.friendsHeaderRequestText}>{showInputUsername ? 'SET USERNAME' : 'CHANGE USERNAME'}</Text>
+          <Text style={styles.settingsActionText}>{showInputUsername ? 'SET USERNAME' : 'CHANGE USERNAME'}</Text>
         </Pressable>
 
         <Pressable style={styles.friendsHeaderRequest} onPress={()=>signOutAndClearReduxStore(dispatch)}>
-          <Text style={styles.friendsHeaderRequestText}>LOGOUT</Text>
+          <Text style={styles.settingsActionText}>LOGOUT</Text>
         </Pressable>
       </View>
 

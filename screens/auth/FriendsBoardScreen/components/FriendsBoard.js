@@ -39,10 +39,12 @@ const FriendsBoard = ({ route, navigation }) => {
     onPress={() => Keyboard.dismiss()}>
       <View style={styles.friendsboard}>
       <View style={{alignItems:'center',backgroundColor:'white'}}>
+        <View style={styles.ProfilePicParent}>
+        {myimage && <Image source={{uri: myimage}} style={styles.ProfilePic}/>}
+        </View>
         
-        {myimage && <Image source={{uri: myimage}} style={{width:Dimensions.get('window').height/5,height:Dimensions.get('window').height/5,borderRadius:100,marginTop:10,marginBottom:10,resizeMode:'stretch'}}/>}
 
-        <TextInput style={styles.friendsTextInput} placeholder={message?message:"NEW NOTE"} value={content} onChangeText={text=>setContent(text)} autoCapitalize="sentences"
+        <TextInput style={[styles.friendsTextInput,{}]} placeholder={message?message:"NEW NOTE"} value={content} onChangeText={text=>setContent(text)} autoCapitalize="sentences"
           autoCorrect={false} maxLength={100} multiline/>
 
           <Pressable style={styles.friendsHeaderRequest} onPress={()=>createNote(content,setContent,setMessage,friendEmail,name)}><Text style={styles.removeFriendText}>CREATE NOTE</Text></Pressable>

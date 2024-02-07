@@ -42,7 +42,7 @@ export const styles = StyleSheet.create({
     fontSize:15
   },
   noteTextHeader:{
-    fontSize:20,
+    fontSize:16,
     fontWeight: 'bold',
     marginBottom:5
   },
@@ -258,7 +258,19 @@ elevation: 1,
     zIndex:1000,
     width: Dimensions.get("window").width,
     height:Dimensions.get("window").height / 18.4,
-    justifyContent:'center'
+    justifyContent:'center',
+    borderBottomWidth:.2,borderBottomColor:'lightgrey',
+  },
+  ProfilePic:
+    {width:Dimensions.get('window').height/5,height:Dimensions.get('window').height/5,borderRadius:100,resizeMode:'stretch',borderWidth:.3,borderColor:'gray',backgroundColor:'white'}
+  ,
+  ProfilePicParent:
+    {alignItems:'center',backgroundColor:'white',shadowColor: 'black',
+                shadowOffset: {width: 0, height: 1},
+                shadowOpacity: 0.3,width:Dimensions.get('window').height/5,height:Dimensions.get('window').height/5,borderRadius:100,backgroundColor:'white',marginTop:10,marginBottom:10}
+  ,
+  ProfilePicGrandparent:{
+    alignItems:'center',backgroundColor:'white'
   },
 
   friendsRequestList:{
@@ -280,7 +292,7 @@ elevation: 1,
     elevation: 1,
   },
   settingsActionText:{
-    fontSize:17,
+    fontSize:14,
     fontWeight:'bold',
     shadowOffset: {
       width: 0,
@@ -363,6 +375,7 @@ elevation: 1,
     shadowOpacity: 0.18,
     shadowRadius: 1.00,
     elevation: 1,
+    borderBottomWidth:.2,borderBottomColor:'lightgrey',
   },
 
   removeFriendText:{
@@ -399,7 +412,7 @@ elevation: 1,
     textAlign:'center',
     letterSpacing:.5,
     fontWeight:'bold',
-    paddingTop:10
+    borderBottomWidth:1,borderBottomColor:'lightgrey',
   },
   friendsMessage:{
     alignSelf:'center',

@@ -18,6 +18,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as ScreenOrientation from 'expo-screen-orientation';
 import Constants from 'expo-constants';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 
 const Stack = createNativeStackNavigator();
