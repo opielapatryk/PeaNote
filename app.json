@@ -5,7 +5,9 @@
     "icon": "./assets/images/logo.png",
     "ios": {
       "entitlements": {
-        "com.apple.developer.applesignin": ["Default"]
+        "com.apple.developer.applesignin": [
+          "Default"
+        ]
       },
       "usesAppleSignIn": true,
       "supportsTablet": true,
@@ -48,6 +50,17 @@
           "initialOrientation": "PORTRAIT"
         }
       ]
-    ]
+    ],
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/d99ff50f-0885-4261-9450-58f9b727b214"
+    },
+    "android": {
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
+    }
   }
 }
