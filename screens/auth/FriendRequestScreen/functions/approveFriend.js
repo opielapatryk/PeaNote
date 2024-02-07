@@ -3,6 +3,7 @@ import auth, { firebase } from '@react-native-firebase/auth';
 import { removeRequestReducer, setFriends } from '../../../../store/friends/friendsSlice';
 
 export const approveFriend = async (friendEmail,friendUsername,dispatch,navigation) =>{
+  let friendsAmmount
   const EMAIL = auth().currentUser.email
 
   let USERNAME 
@@ -15,6 +16,8 @@ export const approveFriend = async (friendEmail,friendUsername,dispatch,navigati
   if (!getUserByEmail.empty) {
     getUserByEmail.forEach(doc => {
       USERNAME = doc.data().username
+      friendsAmmount = doc.data().friends.length
+      console.log(friendsAmmount);
       
       if(!doc.data().friends.includes({email:friendEmail,username:friendUsername})){
         firestore()
@@ -58,7 +61,10 @@ export const approveFriend = async (friendEmail,friendUsername,dispatch,navigati
           })
 
           dispatch(removeRequestReducer(friendEmail))
-          dispatch(setFriends(friendEmail))
+
+          dispatch(setFriends({id:friendsAmmount + 1,email:friendEmail, username:friendUsername,nickname:undefined}))
+
+          // dispatch(setFriends(friendEmail))
           navigation.navigate('FriendsScreen');
           
         });
