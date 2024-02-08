@@ -28,7 +28,6 @@ const FriendsBoard = ({ route, navigation }) => {
     async function ensureDirExists() {
       const dirInfo = await FileSystem.getInfoAsync(imgDir);
       if (!dirInfo.exists) {
-        console.log("Images directory doesn't exist, creating…");
         await FileSystem.makeDirectoryAsync(imgDir, { intermediates: true });
       }
     }
@@ -42,7 +41,6 @@ const FriendsBoard = ({ route, navigation }) => {
       const fileInfo = await FileSystem.getInfoAsync(fileUri);
 
       if (!fileInfo.exists) {
-        console.log("Img isn't cached locally. Downloading…");
         await FileSystem.downloadAsync(imgUrl, fileUri);
       }
 
