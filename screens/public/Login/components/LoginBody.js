@@ -54,7 +54,7 @@ const LoginHeader = () => {
       <View style={{gap:Dimensions.get('window').height/50,alignItems:'center'}}>
       
       <Text style={{fontSize:20,fontWeight:'600',letterSpacing:.5}}>Log In</Text>
-      <Text style={{letterSpacing:.5}}>Provide your credentials by filling out the form below.</Text>
+      <Text style={{letterSpacing:.5,fontSize:13}}>Provide your credentials by filling out the form below.</Text>
 
       {<Text style={styles.errorMessage}>{message}</Text>}
 
@@ -67,7 +67,7 @@ const LoginHeader = () => {
         <LoginButton/>
         
                
-      <Text style={[styles.paragraph,{fontWeight:'600'}]}>
+      <Text style={[styles.paragraph,{fontWeight:'500'}]}>
         Or sign up with
       </Text>
         <LoginWithGoogleButton/>

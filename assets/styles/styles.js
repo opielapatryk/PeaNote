@@ -87,7 +87,7 @@ export const styles = StyleSheet.create({
   },
   roundTextInput:{
     borderRadius:5,
-    borderWidth: 1,
+    borderWidth: 1.3,
     padding:10,
     borderColor: 'lightgrey',
     width:Dimensions.get('window').width/1.5,
@@ -202,7 +202,8 @@ export const styles = StyleSheet.create({
     borderLeftWidth: 1
   },
   errorMessage:{
-    color:'red'
+    color:'red',
+    fontSize:13
   },
   containerboard: {
     flex: 1,
