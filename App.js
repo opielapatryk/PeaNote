@@ -7,6 +7,7 @@ import Login from './screens/public/Login/components/Login'
 import BoardScreen from './screens/auth/BoardScreen/components/BoardScreen';
 import FriendsScreen from './screens/auth/FriendsScreen/components/FriendsScreen';
 import FriendsBoard from './screens/auth/FriendsBoardScreen/components/FriendsBoard';
+import UserBoard from './screens/auth/UserBoardScreen/components/UserBoard';
 import SettingsScreen from './screens/auth/SettingsScreen/components/SettingsScreen';
 import PendingScreen from './screens/auth/PendingScreen/components/PendingScreen';
 import FriendRequests from './screens/auth/FriendRequestScreen/components/FriendRequests';
@@ -60,6 +61,7 @@ export default function App(){
       <Stack.Navigator initialRouteName={"FriendsScreen"}>
         <Stack.Screen name="FriendsScreen" component={FriendsScreen} options={{headerShown:false}}/>
         <Stack.Screen name='FriendsBoard' component={FriendsBoard} options={({ route }) => ({ title: route.params.oldnickname?route.params.oldnickname:route.params.name,headerTintColor:'black'})} />
+        <Stack.Screen name='UserBoard' component={UserBoard} options={({ route }) => ({ title: route.params.oldnickname?route.params.oldnickname:route.params.name,headerTintColor:'black'})} />
         <Stack.Screen name="Requests" component={FriendRequests} options={{headerTintColor:"black",title:"REQUESTS",}} />
       </Stack.Navigator>
     );
