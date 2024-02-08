@@ -38,11 +38,11 @@ export const FriendsScreen = ({ navigation }) => {
       flex: 1,
       backgroundColor:'white',
     }]}>
-      <Pressable style={styles.friendsHeaderRequest} onPress={()=>navigation.navigate('Requests')}><Text style={styles.friendsHeaderRequestText}>REQUESTS</Text></Pressable>
+      <Pressable style={styles.friendsHeaderRequest} onPress={()=>navigation.navigate('Requests')}><Text style={styles.removeFriendText}>REQUESTS</Text></Pressable>
 
       <TextInput style={styles.friendsTextInput} placeholder={message?message:'INSERT FRIEND EMAIL'} onChangeText={text => dispatch(setEmail(text))} value={email} autoCorrect={false}/>
 
-      <Pressable style={styles.friendsHeaderRequest} onPress={()=>sendFriendRequest(dispatch,email)}><Text style={styles.friendsHeaderRequestText}>ADD</Text></Pressable>
+      <Pressable style={styles.friendsHeaderRequest} onPress={()=>sendFriendRequest(dispatch,email)}><Text style={styles.removeFriendText}>ADD</Text></Pressable>
 
       <FlatList data={friends} renderItem={({item})=>renderFriends({item})} keyExtractor={(friend) => friend.id}/>
     </View>

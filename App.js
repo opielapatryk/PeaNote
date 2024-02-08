@@ -60,14 +60,7 @@ export default function App(){
       <Stack.Navigator initialRouteName={"FriendsScreen"}>
         <Stack.Screen name="FriendsScreen" component={FriendsScreen} options={{headerShown:false}}/>
         <Stack.Screen name='FriendsBoard' component={FriendsBoard} options={({ route }) => ({ title: route.params.oldnickname?route.params.oldnickname:route.params.name,headerTintColor:'black'})} />
-        <Stack.Screen name="Requests" component={FriendRequests} options={{headerTintColor:"black",title:"REQUESTS",headerTitleStyle:{fontSize:17,
-    fontWeight:'bold',
-    textShadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    textShadowRadius: 1,
-    letterSpacing:2}}} />
+        <Stack.Screen name="Requests" component={FriendRequests} options={{headerTintColor:"black",title:"REQUESTS",}} />
       </Stack.Navigator>
     );
   }
@@ -77,7 +70,7 @@ export default function App(){
       <Provider store={store}>
         <SafeAreaProvider>
         <NavigationContainer>
-          <Tab.Navigator tabBarPosition='bottom' initialRouteName={!user?"Login":"Board"} screenOptions={{tabBarIndicatorStyle:{backgroundColor:'black',top:0},tabBarLabelStyle:{letterSpacing:1, fontSize:12},tabBarStyle:{paddingBottom:initialWindowMetrics.insets.bottom}}}>
+          <Tab.Navigator tabBarPosition='bottom' initialRouteName={!user?"Login":"Board"} screenOptions={{tabBarIndicatorStyle:{backgroundColor:'#c99c1f',top:0},tabBarLabelStyle:{letterSpacing:.5, fontSize:13},tabBarStyle:{paddingBottom:initialWindowMetrics.insets.bottom,borderTopWidth:.17,borderTopColor:'lightgray'}}}>
               {!user?(
                 <>
                   <Tab.Screen name="Login" component={Login} options={{tabBarStyle:{display:'none'}}}></Tab.Screen>

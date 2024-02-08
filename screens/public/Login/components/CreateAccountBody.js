@@ -22,7 +22,9 @@ const CreateAccountHeader = () => {
 
     return (
 <>
-<View style={{gap:Dimensions.get('window').height/30,alignItems:'center'}}>
+<View style={{gap:Dimensions.get('window').height/50,alignItems:'center'}}>
+<Text style={{fontSize:20,fontWeight:'600',letterSpacing:.5}}>Create Account</Text>
+<Text style={{letterSpacing:.5}}>Let's get started by filling out the form below.</Text>
 {<Text style={styles.errorMessage}>{message}</Text>}
         <TextInput style={styles.roundTextInput} placeholder='Email' onChangeText={text=>dispatch(setEmail(text))} value={email}/>
       <TextInput style={styles.roundTextInput} placeholder='Password' secureTextEntry onChangeText={text=>dispatch(setPassword(text))} value={password}/>   

@@ -35,7 +35,7 @@ export const Note = ({ id, isInfo,content,creator }) => {
           <Pressable style={styles.noteIsInfoTrueRightButton} onPress={() => {
               answerToNote();
             }}>
-          {isLoadingRight?<ActivityIndicator size={'large'} color={'black'}/>:<Text style={styles.noteIsInfoTrueButtonsText}>Click{"\n"}here{"\n"}to{"\n"}answer</Text>}
+          {/* {isLoadingRight?<ActivityIndicator size={'large'} color={'black'}/>:<Text style={styles.noteIsInfoTrueButtonsText}>Click{"\n"}here{"\n"}to{"\n"}answer</Text>} */}
           </Pressable>
       </>}
     </Pressable>

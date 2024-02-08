@@ -11,14 +11,14 @@ export const styles = StyleSheet.create({
     justifyContent:'space-between',
   },
   note: {
-    backgroundColor: '#FFF5BD',
+    backgroundColor: '#f9e889',
     width: Dimensions.get("window").width / 2.20,
     height: Dimensions.get("window").height / 5,
     shadowOffset: {
-      height: .5,
+      height: 1,
     },
     shadowOpacity: 0.25,
-    shadowRadius: 1,
+    shadowRadius: 2,
     paddingTop:10,
     paddingLeft:10,
     paddingRight:10,
@@ -36,14 +36,14 @@ export const styles = StyleSheet.create({
     margin: 8,
     borderRadius:5,
     flexDirection:'row',
-    backgroundColor:'#DAD097',
+    backgroundColor:'#d7c667',
   },
   noteText:{
     fontSize:15
   },
   noteTextHeader:{
     fontSize:16,
-    fontWeight: 'bold',
+    fontWeight: '600',
     marginBottom:5
   },
   board:{
@@ -69,7 +69,7 @@ export const styles = StyleSheet.create({
   button_text_clicked: {
     fontSize:12,
     letterSpacing:2,
-    fontWeight: '900'
+    fontWeight: '600'
   },
   modal:{
     flex: 1,
@@ -79,14 +79,14 @@ export const styles = StyleSheet.create({
   },
   header:{
     fontSize:22,
-    fontWeight: '500',
+    fontWeight: '600',
     letterSpacing:.5
   },
   paragraph:{
-    fontSize:12,color:'gray',fontWeight:'700'
+    fontSize:12,color:'gray',fontWeight:'700',
   },
   roundTextInput:{
-    borderRadius:10,
+    borderRadius:5,
     borderWidth: 1,
     padding:10,
     borderColor: 'lightgrey',
@@ -98,11 +98,11 @@ export const styles = StyleSheet.create({
   },
   confirmButton:{
     height:Dimensions.get('window').height /20,
-    backgroundColor:'#fff2ba',
-    borderRadius:10,
+    backgroundColor:'#c99c1f',
+    borderRadius:5,
     borderWidth: 1,
     padding:10,
-    borderColor: '#e6c019',
+    borderColor: '#c99c1f',
     width:Dimensions.get('window').width/1.5,
     alignItems:'center',
     justifyContent:'center',
@@ -117,7 +117,7 @@ export const styles = StyleSheet.create({
   },
   continuteWithGoogle:{
     height:Dimensions.get('window').height /20,
-    borderRadius:10,
+    borderRadius:5,
     borderWidth: 1,
     paddingLeft:10,
     borderColor: 'lightgray',
@@ -160,10 +160,10 @@ export const styles = StyleSheet.create({
     marginTop:5,
     alignItems:'center',
     borderBottomWidth:2,
-    borderBottomLeftRadius:30,
-    borderBottomRightRadius:30,
-    borderBottomColor:'#e6c019',
-    shadowColor: "#e6c019",
+    borderBottomLeftRadius:20,
+    borderBottomRightRadius:20,
+    borderBottomColor:'#c99c1f',
+    shadowColor: "#c99c1f",
     backgroundColor: '#FFFDF3',
     shadowOffset: {
       width: 0,
@@ -180,10 +180,10 @@ export const styles = StyleSheet.create({
     marginTop:5,
     alignItems:'center',
     borderBottomWidth:2,
-    borderBottomLeftRadius:30,
-    borderBottomRightRadius:30,
-    borderBottomColor:'#e6c019',
-    shadowColor: "#e6c019",
+    borderBottomLeftRadius:20,
+    borderBottomRightRadius:20,
+    borderBottomColor:'#c99c1f',
+    shadowColor: "#c99c1f",
     backgroundColor: '#FFFDF3',
     shadowOffset: {
       width: 0,
@@ -267,7 +267,7 @@ elevation: 1,
   ProfilePicParent:
     {alignItems:'center',backgroundColor:'white',shadowColor: 'black',
                 shadowOffset: {width: 0, height: 1},
-                shadowOpacity: 0.3,width:Dimensions.get('window').height/5,height:Dimensions.get('window').height/5,borderRadius:100,backgroundColor:'white',marginTop:10,marginBottom:10}
+                shadowOpacity: 0.3,width:Dimensions.get('window').height/5,height:Dimensions.get('window').height/5,borderRadius:100,backgroundColor:'white',marginTop:Dimensions.get('window').height/40,marginBottom:Dimensions.get('window').height/40}
   ,
   ProfilePicGrandparent:{
     alignItems:'center',backgroundColor:'white'
@@ -293,7 +293,7 @@ elevation: 1,
   },
   settingsActionText:{
     fontSize:14,
-    fontWeight:'bold',
+    fontWeight:'600',
     shadowOffset: {
       width: 0,
       height: 1,
@@ -303,11 +303,23 @@ elevation: 1,
     elevation: 1,
     letterSpacing:2,
     alignSelf:'center',
-    paddingRight:10
+  },
+  removeFriendText:{
+    fontSize:14,
+    fontWeight:'600',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.00,
+    elevation: 1,
+    letterSpacing:2,
+    alignSelf:'center',
   },
   friendsHeaderRequestText:{
     fontSize:17,
-    fontWeight:'bold',
+    fontWeight:'600',
     shadowOffset: {
       width: 0,
       height: 1,
@@ -347,7 +359,7 @@ elevation: 1,
 
   deleteAccountText:{
     fontSize:17,
-    fontWeight:'bold',
+    fontWeight:'600',
     shadowOffset: {
       width: 0,
       height: 1,
@@ -378,28 +390,16 @@ elevation: 1,
     borderBottomWidth:.2,borderBottomColor:'lightgrey',
   },
 
-  removeFriendText:{
-    fontSize:17,
-    fontWeight:'bold',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.18,
-    shadowRadius: 1.00,
-    elevation: 1,
-    letterSpacing:1,
-    alignSelf:'center'
-  },
+
   friendsFriendsHeader:{
     fontSize:20,
-    fontWeight:"bold",
+    fontWeight:"600",
     alignSelf:'center',
     marginTop:15,
     marginBottom:15
   },
   friendsTextInput:{
-    fontSize:17,
+    fontSize:14,
     backgroundColor:'#FFF',
     shadowOffset: {
       width: 0,
@@ -411,7 +411,7 @@ elevation: 1,
     height:Dimensions.get("window").height / 18.6,
     textAlign:'center',
     letterSpacing:.5,
-    fontWeight:'bold',
+    fontWeight:'600',
     borderBottomWidth:1,
     borderBottomColor:'lightgrey',
   },
@@ -477,7 +477,7 @@ elevation: 1,
     elevation: 1,
   },
   createNoteButtonText:{
-    fontWeight:'bold',
+    fontWeight:'600',
     fontSize:12,
     letterSpacing:.5,
   },
@@ -489,7 +489,7 @@ elevation: 1,
   emptyBoardText:{
     textAlign:'center',
     fontSize:30,
-    fontWeight:'bold',
+    fontWeight:'600',
     marginTop:Dimensions.get('window').height / 10,
     opacity: .5,
     letterSpacing:.5
@@ -514,7 +514,7 @@ elevation: 1,
     elevation: 5
   },
   modalPasswordResetHeader:{
-    fontWeight:'bold',
+    fontWeight:'600',
     fontSize:20,
     marginBottom:10
   },
@@ -532,23 +532,23 @@ elevation: 1,
     backgroundColor:'black',
     padding:10,
     width:100,
-    borderRadius:10,
+    borderRadius:5,
   },
   modalPasswordResetButtonNextText:{
     color:'white',
     textAlign:'center',
-    fontWeight:'bold',
+    fontWeight:'600',
     letterSpacing:1
   },
   modalPasswordResetButtonBack:{
     padding:10,
     width:100,
-    borderRadius:10,
+    borderRadius:5,
     borderWidth:1
   },
   modalPasswordResetButtonBackText:{
     textAlign:'center',
-    fontWeight:'bold',
+    fontWeight:'600',
     letterSpacing:1
   },
   noteIsInfoTrueLeftButton:{
@@ -558,7 +558,7 @@ elevation: 1,
     height:Dimensions.get("window").height / 5,width:Dimensions.get('window').width / 4.4,justifyContent:'center',paddingLeft:Dimensions.get('window').width / 25
   },
   noteIsInfoTrueButtonsText:{
-    fontWeight:'bold',
+    fontWeight:'600',
     fontSize:20
   },
   notesIsInfoVerticalLine:{

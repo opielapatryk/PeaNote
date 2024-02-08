@@ -34,15 +34,15 @@ const Login = () => {
   const insets = useSafeAreaInsets();
   return (
     <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
-    <View style={[styles.container,{paddingBottom:insets.bottom-20}]}>
-        <Image source={require('../../../../assets/images/logo.png')} style={{width:Dimensions.get('window').width/1.2,height:Dimensions.get('window').height/4,marginTop:Dimensions.get('window').height/10}}/>
-      
-      {/* login screen */}
-      {!createAccount && <LoginBody/>}
+      <View style={[styles.container,{paddingBottom:insets.bottom-20}]}>
+        <Image source={require('../../../../assets/images/logo.png')} style={{width:Dimensions.get('window').width/1.2,height:Dimensions.get('window').height/4,marginTop:Dimensions.get('window').height/50}}/>
+        
+        {/* login screen */}
+        {!createAccount && <LoginBody/>}
 
-      {/* create account screen */}
-      {createAccount && <CreateAccountBody/>}
-    </View>
+        {/* create account screen */}
+        {createAccount && <CreateAccountBody/>}
+      </View>
 
 
 

@@ -147,7 +147,7 @@ const uploadImage = async () => {
           <Text style={styles.friendsHeaderRequestText}>{username}</Text>
         </View>
         <View style={styles.switchRow}>
-          <Text style={styles.settingsActionText}>ASK BEFORE STICKING NOTE</Text>
+          <Text style={[styles.settingsActionText,{paddingRight:10}]}>ASK BEFORE STICKING NOTE</Text>
           <Switch
             onValueChange={() => askBeforeStick({ setAskBeforeStickingNoteFlag })}
             value={askBeforeStickingNoteFlag}
@@ -196,7 +196,7 @@ const uploadImage = async () => {
       </View>
 
       <Pressable style={styles.deleteAccountButton} onPress={handleDeleteAccount}>
-        <Text style={styles.deleteAccountText}>
+        <Text style={styles.removeFriendText}>
           {deleteAccountPressed ? 'CONFIRM ACCOUNT DELETE' : 'DELETE ACCOUNT'}
         </Text>
       </Pressable>

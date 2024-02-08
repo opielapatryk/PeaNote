@@ -51,16 +51,25 @@ const LoginHeader = () => {
             </View>
           </View>
         </Modal>
-      <View style={{gap:Dimensions.get('window').height/30,alignItems:'center'}}>
+      <View style={{gap:Dimensions.get('window').height/50,alignItems:'center'}}>
       
+      <Text style={{fontSize:20,fontWeight:'600',letterSpacing:.5}}>Log In</Text>
+      <Text style={{letterSpacing:.5}}>Provide your credentials by filling out the form below.</Text>
+
       {<Text style={styles.errorMessage}>{message}</Text>}
 
         <TextInput style={styles.roundTextInput} placeholder='Email' onChangeText={text=>dispatch(setEmail(text))} value={email}/>
+        <View>
         <TextInput style={styles.roundTextInput} placeholder='Password' secureTextEntry onChangeText={text=>dispatch(setPassword(text))} value={password}/>   
+        <Pressable onPress={() => setModalVisible(true)}><Text style={[styles.paragraph,{marginLeft:5}]}>Forgotten Password?</Text></Pressable>
+        </View>
 
         <LoginButton/>
-        <Pressable onPress={() => setModalVisible(true)}><Text style={styles.paragraph}>Forgotten Password?</Text></Pressable>
+        
                
+      <Text style={styles.paragraph}>
+        Or sign up with
+      </Text>
         <LoginWithGoogleButton/>
 
         {isAppleLoginAvailable && 
