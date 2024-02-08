@@ -13,14 +13,14 @@ import { setUsername,setMyimage } from '../../../../store/settings/settingsSlice
 import firestore from '@react-native-firebase/firestore';
 import auth, { firebase } from '@react-native-firebase/auth';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import * as FileSystem from 'expo-file-system';
 
 const BoardScreen = () => {
   const { notes } = useSelector((state) => state.board);
   const dispatch = useDispatch()
+  const EMAIL = auth().currentUser.email
 
   async function getUserName(){
-    const EMAIL = auth().currentUser.email
-
     const getUserByEmail = await firestore()
     .collection('users')
     .where('email', '==', EMAIL)
@@ -34,16 +34,97 @@ const BoardScreen = () => {
   }
 
   const downloadImage = async () => {
-    const EMAIL = auth().currentUser.email
-    const fileRef = firebase.storage().ref(`/images/${EMAIL}`);
-  
-    fileRef.getDownloadURL().then((url)=>{
-      dispatch(setMyimage(url))
-    });
+    const imgDir = FileSystem.cacheDirectory + 'images/';
+    const imgFileUri = imgDir + EMAIL;
+    const imgUrl = await firebase.storage().ref(EMAIL).getDownloadURL() 
+
+    // Checks if img directory exists. If not, creates it
+    async function ensureDirExists() {
+      const dirInfo = await FileSystem.getInfoAsync(imgDir);
+      if (!dirInfo.exists) {
+        console.log("Images directory doesn't exist, creating…");
+        await FileSystem.makeDirectoryAsync(imgDir, { intermediates: true });
+      }
+    }
+
+    // Downloads all imgs for each friend
+    // async function addMultipleImgs() {
+    //   try {
+        //Check if dir exists
+        // await ensureDirExists();
+
+        // //Take friends list
+        // let friends
+      
+        // const getUserByEmail = await firestore()
+        //   .collection('users')
+        //   .where('email', '==', EMAIL)
+        //   .get()
+        
+        // const docs = getUserByEmail.docs
+      
+        // if (Array.isArray(docs) && docs.length > 0) {
+        //   docs.forEach((doc) => {
+        //     friends = doc.data().friends;
+        //   })
+        // }
+    
+        // let emails = []
+        // friends.forEach((friend) => {
+        //   emails.push(friend.email)
+        // })
+        //Iterate over emails list
+        //Check if file for friend exists already
+        //If file not, then download
+
+
+        
+        // const imgUrl = await firebase.storage().ref(EMAIL).getDownloadURL() 
+        // friends.forEach((friend) => {
+        //   const imgUrl = async (friend) => await firebase.storage().ref(friend.email).getDownloadURL() 
+        //   const imgDir = FileSystem.cacheDirectory + 'images/';
+        //   const imgFileUri = imgDir + friend.email;
+        //   emails.push(imgUrl)
+        // })
+
+        // console.log('emails: ',emails);
+    
+        // console.log('Downloading img files…');
+        // await Promise.all(friends.map(friend => {
+
+        //   FileSystem.downloadAsync(imgUrl, imgFileUri);
+        // }))
+    //   } catch (e) {
+    //     console.error("Couldn't download gif files:", e);
+    //   }
+    // }
+
+    // addMultipleImgs()
+
+
+    // Returns URI to our local img file
+    // If our img doesn't exist locally, it downloads it
+    async function getSingleImg() {
+      await ensureDirExists();
+
+      const fileUri = imgFileUri;
+      const fileInfo = await FileSystem.getInfoAsync(fileUri);
+
+      if (!fileInfo.exists) {
+        console.log("Img isn't cached locally. Downloading…");
+        await FileSystem.downloadAsync(imgUrl, fileUri);
+      }
+
+      dispatch(setMyimage(fileUri));
+    }
+    
+    getSingleImg()
   }
 
+  
+
   useEffect(()=>{
-    // downloadImage();
+    downloadImage();
     getUserName();
     fetchNotes(dispatch);
     loadUser(dispatch)

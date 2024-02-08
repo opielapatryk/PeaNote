@@ -68,8 +68,8 @@ const uploadImage = async () => {
 
 
   const { uri } = image;
-  const filename = EMAIL;
-  const path = `images/${filename}`;
+
+  const path = `${EMAIL}`;
 
   const reference = firebase.storage().ref(path);
 

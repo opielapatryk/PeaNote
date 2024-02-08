@@ -8,6 +8,7 @@ import { setMyimage } from '../../../../store/settings/settingsSlice';
 import auth, { firebase } from '@react-native-firebase/auth';
 import { useFocusEffect } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
+import * as FileSystem from 'expo-file-system';
 
 const FriendsBoard = ({ route, navigation }) => {
   const { friendEmail,name,oldnickname} = route.params;
@@ -17,20 +18,46 @@ const FriendsBoard = ({ route, navigation }) => {
   const { myimage } = useSelector((state) => state.settings);
 
   const EMAIL = auth().currentUser.email
+
   const downloadImage = async (email) => {
-    const fileRef = firebase.storage().ref(`/images/${email}`);
-  
-    fileRef.getDownloadURL().then((url)=>{
-      dispatch(setMyimage(url))
-    })
+    const imgDir = FileSystem.cacheDirectory + 'images/';
+    const imgFileUri = imgDir + email;
+    const imgUrl = await firebase.storage().ref(email).getDownloadURL() 
+
+    // Checks if img directory exists. If not, creates it
+    async function ensureDirExists() {
+      const dirInfo = await FileSystem.getInfoAsync(imgDir);
+      if (!dirInfo.exists) {
+        console.log("Images directory doesn't exist, creating…");
+        await FileSystem.makeDirectoryAsync(imgDir, { intermediates: true });
+      }
+    }
+
+    // Returns URI to our local img file
+    // If our img doesn't exist locally, it downloads it
+    async function getSingleImg() {
+      await ensureDirExists();
+
+      const fileUri = imgFileUri;
+      const fileInfo = await FileSystem.getInfoAsync(fileUri);
+
+      if (!fileInfo.exists) {
+        console.log("Img isn't cached locally. Downloading…");
+        await FileSystem.downloadAsync(imgUrl, fileUri);
+      }
+
+      dispatch(setMyimage(fileUri));
+    }
+    
+    getSingleImg()
   }
 
 
   useFocusEffect(
     React.useCallback(() => {
-      // downloadImage(friendEmail)
+      downloadImage(friendEmail)
       return ()=>{
-        // downloadImage(EMAIL)
+        downloadImage(EMAIL)
       }
     }, [])
   );
