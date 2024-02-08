@@ -13,14 +13,14 @@
       "supportsTablet": true,
       "googleServicesFile": "./GoogleService-Info.plist",
       "bundleIdentifier": "com.patrykopiela.stickyinreactnativedev",
-      "buildNumber": "7"
+      "buildNumber": "8"
     },
     "extra": {
       "eas": {
         "projectId": "d99ff50f-0885-4261-9450-58f9b727b214"
       }
     },
-    "version": "1.0.6",
+    "version": "1.0.7",
     "sdkVersion": "49.0.0",
     "platforms": [
       "ios"
