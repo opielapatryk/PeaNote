@@ -568,5 +568,29 @@ elevation: 1,
   tabBarLabel:{
     letterSpacing:1.5,
     backgroundColor:'green'
-  }
+  },
+  editNote:{
+    backgroundColor:'black',
+    padding:10,
+    width:100,
+    borderRadius:5,
+    alignItems:'center',
+    
+  },
+  editNoteText:{
+    color:'white',
+    fontWeight:'600',
+    letterSpacing:.5
+  },
+  editNoteBackText:{
+    fontWeight:'600',
+    letterSpacing:.5
+  },
+  editNoteBack:{
+    padding:10,
+    width:100,
+    borderRadius:5,
+    borderWidth:1,
+    alignItems:'center'
+  },
 });

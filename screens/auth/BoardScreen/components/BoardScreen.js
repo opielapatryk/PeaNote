@@ -89,7 +89,9 @@ const BoardScreen = () => {
       backgroundColor:'#FFFDF3',
       flex: 1,
     }]}>
-      <Pressable onPress={() => checkThenChangeInfo(dispatch,notes)} style={styles.board}>
+      <Pressable onPress={() => {
+        checkThenChangeInfo(dispatch,notes)
+        }} style={styles.board}>
       {notes.length==0&&<Text style={styles.emptyBoardText}>THIS BOARD IS EMPTY</Text>}
         <FlatList numColumns={2} data={notes} renderItem={({item})=>renderNotes({item})} keyExtractor={KEY_EXTRACTOR_NOTES}/>
       </Pressable>
