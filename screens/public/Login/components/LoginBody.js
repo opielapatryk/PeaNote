@@ -67,7 +67,7 @@ const LoginHeader = () => {
         <LoginButton/>
         
                
-      <Text style={styles.paragraph}>
+      <Text style={[styles.paragraph,{fontWeight:'600'}]}>
         Or sign up with
       </Text>
         <LoginWithGoogleButton/>
