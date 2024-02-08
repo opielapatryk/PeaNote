@@ -24,7 +24,8 @@ export const appleSignin = async ()=>{
           friends_requests: [],
           askBeforeStick: false,
           stickersOnBoard: [],
-          pending: []
+          pending: [],
+          description: 'I love Peanotes!',
         })
       }
 }

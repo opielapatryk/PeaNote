@@ -11,6 +11,7 @@ import firestore from '@react-native-firebase/firestore';
 import * as FileSystem from 'expo-file-system';
 
 const FriendsBoard = ({ route, navigation }) => {
+  const [description, newDescription] = useState('I love Peanotes!');
   const { friendEmail,name,oldnickname} = route.params;
   const [content, setContent] = useState('');
   const [message, setMessage] = useState('');
@@ -53,12 +54,24 @@ const FriendsBoard = ({ route, navigation }) => {
 
   useFocusEffect(
     React.useCallback(() => {
+      const getEmailByUsername = async () =>{
+        const usernameSnapshot = await firestore()
+          .collection('users')
+          .where('username', '==', friendEmail)
+          .get();
+    
+          newDescription(usernameSnapshot.docs[0].data().description)
+      }
+
+      getEmailByUsername()
+
       downloadImage(friendEmail)
       return ()=>{
         downloadImage(EMAIL)
       }
     }, [])
   );
+
 
   const [showInput,setShowInput] = useState(false)
   const [nickname,setNewNickName] = useState('')
@@ -114,9 +127,13 @@ const FriendsBoard = ({ route, navigation }) => {
         <View style={styles.ProfilePicParent}>
         {myimage && <Image source={{uri: myimage}} style={styles.ProfilePic}/>}
         </View>
+
+        <View style={[styles.friendsHeaderRequest,{height:50}]}>
+          <Text style={{textAlign:'center',fontStyle:'italic'}}>{description}</Text>
+        </View>
         
 
-        <TextInput style={[styles.friendsTextInput,{}]} placeholder={message?message:"NEW NOTE"} value={content} onChangeText={text=>setContent(text)} autoCapitalize="sentences"
+        <TextInput style={[styles.friendsTextInput,{paddingTop:10}]} placeholder={message?message:"NEW NOTE"} value={content} onChangeText={text=>setContent(text)} autoCapitalize="sentences"
           autoCorrect={false} maxLength={100} multiline/>
 
           <Pressable style={styles.friendsHeaderRequest} onPress={()=>createNote(content,setContent,setMessage,friendEmail,name)}><Text style={styles.removeFriendText}>CREATE NOTE</Text></Pressable>

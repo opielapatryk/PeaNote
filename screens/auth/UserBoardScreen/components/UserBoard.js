@@ -14,7 +14,7 @@ const UserBoard = ({ route, navigation }) => {
   const dispatch = useDispatch()
   const { myimage } = useSelector((state) => state.settings);
   const { message } = useSelector((state) => state.login);
-
+  const [description, newDescription] = useState('I love Peanotes!');
   const EMAIL = auth().currentUser.email
 
   const downloadImage = async (email) => {
@@ -57,6 +57,8 @@ const UserBoard = ({ route, navigation }) => {
           .where('username', '==', friendEmail)
           .get();
 
+          newDescription(usernameSnapshot.docs[0].data().description)
+
         return usernameSnapshot.docs[0].data().email
       }
 
@@ -85,7 +87,7 @@ const UserBoard = ({ route, navigation }) => {
         
         </View>
 
-            <Text>Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description </Text>
+            <Text style={{textAlign:'center',fontStyle:'italic'}}>{description}</Text>
 
         <Pressable style={[styles.deleteAccountButton,{borderTopWidth:.17,borderColor:'lightgrey', marginTop:30,padding:10}]} onPress={()=>sendFriendRequest(dispatch,friendEmail,navigation)}><Text style={styles.removeFriendText}>{message?message:'ADD FRIEND'}</Text></Pressable>
         

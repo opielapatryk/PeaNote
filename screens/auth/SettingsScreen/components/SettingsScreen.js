@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Switch, TextInput, Pressable,Keyboard,TouchableWithoutFeedback,Image,Dimensions, Linking } from 'react-native';
+import { View, Text, Switch, TextInput, Pressable,Keyboard,TouchableWithoutFeedback,Image,Dimensions, Linking,Modal } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { styles } from '../../../../assets/styles/styles';
 import {checkIsAskBeforeStickingNoteFlagOff} from '../functions/checkIsAskBeforeStickingNoteFlagOff';
@@ -16,18 +16,18 @@ import {changeProfilePhoto} from '../functions/changeProfilePhoto'
 import * as ImagePicker from 'expo-image-picker'
 import auth, { firebase } from '@react-native-firebase/auth';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
+import firestore from '@react-native-firebase/firestore';
 
 const SettingsScreen = () => {
   const [askBeforeStickingNoteFlag, setAskBeforeStickingNoteFlag] = useState(false);
   const [newPassword, setNewPassword] = useState('');
   const [newUsername, setNewUsername] = useState('');
   const [deleteAccountPressed, setDeleteAccountPressed] = useState(false);
-
+  const [modalVisible, setModalVisible] = useState(false);
   const { notes, pendingNotes } = useSelector((state) => state.board);
   const { showInput, showInputUsername,username,myimage } = useSelector((state) => state.settings);
   const { message } = useSelector((state) => state.login);
-
+  const [description, newDescription] = useState('I love Peanotes!');
   const [image, setImage] = useState(null)
 
   const dispatch = useDispatch();
@@ -129,6 +129,25 @@ const uploadImage = async () => {
     }
   };
   const insets = useSafeAreaInsets();
+
+  const changeDescription = async ()=>{
+    const EMAIL = auth().currentUser.email
+
+    const getUserByEmail = await firestore()
+      .collection('users')
+      .where('email', '==', EMAIL)
+      .get()
+    
+      getUserByEmail.forEach((doc)=>{
+        firestore()
+        .collection('users')
+        .doc(doc.id)
+        .update({
+          description: description,
+        })
+      })
+  }
+
   return (
     <TouchableWithoutFeedback 
     onPress={() => Keyboard.dismiss()}>
@@ -139,12 +158,15 @@ const uploadImage = async () => {
     }]}>
       <View>
       <View style={styles.ProfilePicGrandparent}>
+      <Text style={[styles.friendsHeaderRequestText,{marginTop:20}]}>{username}</Text>
         <View style={styles.ProfilePicParent}>
+          
           {myimage && <Image source={{uri: myimage}} style={styles.ProfilePic}/>}
         </View>
         </View>
-        <View style={styles.friendsHeaderRequest}>
-          <Text style={styles.friendsHeaderRequestText}>{username}</Text>
+        <View style={[styles.friendsHeaderRequest,{height:50}]}>
+          <Text style={{textAlign:'center',fontStyle:'italic'}}>{description}</Text>
+          
         </View>
         <View style={styles.switchRow}>
           <Text style={[styles.settingsActionText,{paddingRight:10}]}>ASK BEFORE STICKING NOTE</Text>
@@ -155,6 +177,26 @@ const uploadImage = async () => {
         </View>
 
         
+        <Modal animationType="slide" transparent={true} visible={modalVisible}>
+          <View style={styles.modalPasswordResetView}>
+            <View style={styles.modalPasswordResetViewChild}>
+              <TextInput style={styles.modalPasswordResetTextInput} placeholder='' onChangeText={text=>newDescription(text)} multiline={true} maxLength={50}/>
+              <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                <Pressable onPress={()=>{
+                  changeDescription()
+                  setModalVisible(false)
+                }} style={styles.editNote}><Text style={styles.editNoteText}>Edit</Text></Pressable>
+                <Pressable onPress={()=>{
+                  setModalVisible(false)
+                }} style={styles.editNoteBack}><Text style={styles.editNoteBackText}>Back</Text></Pressable>
+              </View> 
+            </View>
+          </View>
+        </Modal>
+
+        <Pressable style={styles.friendsHeaderRequest} onPress={()=>setModalVisible(true)}>
+          <Text style={styles.settingsActionText}>CHANGE DESCRIPTION</Text>
+        </Pressable>
 
         <Pressable style={styles.friendsHeaderRequest} onPress={async ()=>{
           await pickImage()
