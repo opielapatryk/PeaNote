@@ -1,7 +1,7 @@
 import { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
-import { removeFriendReducer } from '../../../../store/friends/friendsSlice';
+import { removeFriendReducer,cleanStoreFriends } from '../../../../store/friends/friendsSlice';
 
 export const removeFriend = async (navigation,friendEmail,username,nickname,dispatch) => {
   const EMAIL = auth().currentUser.email
@@ -63,6 +63,7 @@ export const removeFriend = async (navigation,friendEmail,username,nickname,disp
           })
           .then(()=>{
             dispatch(removeFriendReducer(friendEmail))
+            dispatch(cleanStoreFriends())
             navigation.navigate('FriendsScreen');
           })
         })

@@ -89,7 +89,9 @@ const BoardScreen = () => {
       }
     }, [])
   );
+
   const insets = useSafeAreaInsets();
+  
   return (
     <View style={[{
       paddingTop: insets.top,

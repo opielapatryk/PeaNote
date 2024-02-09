@@ -1,5 +1,5 @@
 import { Text,View, Pressable, TextInput,FlatList } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import {sendFriendRequest} from '../functions/sendFriendRequest'
 import {styles} from '../../../../assets/styles/styles'
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,16 +20,22 @@ export const FriendsScreen = ({ navigation }) => {
       return ()=>{
         dispatch(setMessage(''))
         dispatch(setEmail(''))
-        dispatch(cleanStoreFriends())
       }
     }, [])
   );
 
-  const renderFriends = ({ item }) => {
+  useEffect(()=>{
+    loadUser(dispatch)
+  },[])
+
+  const RenderFriendsMemoized = React.memo(({ item }) => {
     return (
       <Pressable onPress={() =>navigation.navigate('FriendsBoard', {name:item.username, friendEmail: item.email, oldnickname:item.nickname})} style={styles.friendsList}><Text style={styles.firendListText}>{item.nickname?item.nickname:item.username}</Text></Pressable>
     );
-  };
+  });
+
+  const renderFriends = ({ item }) => <RenderFriendsMemoized item={item} />;
+
   const insets = useSafeAreaInsets();
 
   return (
