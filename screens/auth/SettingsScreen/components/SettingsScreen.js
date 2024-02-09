@@ -8,7 +8,7 @@ import {deleteAccount} from '../functions/deleteAccount';
 import {changePassword} from '../functions/changePassword';
 import { HANDLE_PASSWORD_CHANGE_BUTTON_PRESS,HANDLE_USERNAME_CHANGE_BUTTON_PRESS } from '../../../constants';
 import { setMyimage, setShowInput,setShowInputUsername} from '../../../../store/settings/settingsSlice';
-import { setMessage } from '../../../../store/login/loginSlice';
+import { setDescription, setMessage } from '../../../../store/login/loginSlice';
 import { useFocusEffect } from '@react-navigation/native';
 import { signOutAndClearReduxStore } from '../../Logout/functions/signOutAndClearReduxStore';
 import {changeUsername} from '../functions/changeUsername'
@@ -81,7 +81,7 @@ const uploadImage = async () => {
   const reference = firebase.storage().ref(path);
 
   try {
-    const response = await fetch(compressedImageData);
+    const response = await fetch(uri);
     const blob = await response.blob();
 
     await reference.put(blob);
@@ -153,6 +153,8 @@ const uploadImage = async () => {
           description: description,
         })
       })
+
+      dispatch(setDescription(description))
   }
 
   return (
@@ -187,7 +189,7 @@ const uploadImage = async () => {
         <Modal animationType="slide" transparent={true} visible={modalVisible}>
           <View style={styles.modalPasswordResetView}>
             <View style={styles.modalPasswordResetViewChild}>
-              <TextInput style={styles.modalPasswordResetTextInput} placeholder='' onChangeText={text=>newDescription(text)} multiline={true} maxLength={50}/>
+              <TextInput style={styles.modalPasswordResetTextInput} value={description} onChangeText={text=>newDescription(text)} multiline={true} maxLength={50}/>
               <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                 <Pressable onPress={()=>{
                   changeDescription()

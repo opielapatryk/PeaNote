@@ -14,6 +14,7 @@ Overwrite snapshots: npm test -- -u
 
 ## Build
 Device: eas build --profile development --platform ios
+Simulator: eas build --profile development-simulator --platform ios
 
 ## Update build app store
 eas build --platform ios
