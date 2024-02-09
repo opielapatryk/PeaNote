@@ -11,19 +11,26 @@ import firestore from '@react-native-firebase/firestore';
 import * as FileSystem from 'expo-file-system';
 
 const FriendsBoard = ({ route, navigation }) => {
-  const [description, newDescription] = useState('I love Peanotes!');
+  const [description, newDescription] = useState(reduxdescription);
   const { friendEmail,name,oldnickname} = route.params;
   const [content, setContent] = useState('');
   const [message, setMessage] = useState('');
   const dispatch = useDispatch()
   const { myimage } = useSelector((state) => state.settings);
+  const { reduxdescription } = useSelector((state) => state.login);
 
   const EMAIL = auth().currentUser.email
 
   const downloadImage = async (email) => {
     const imgDir = FileSystem.cacheDirectory + 'images/';
     const imgFileUri = imgDir + email;
-    const imgUrl = await firebase.storage().ref(email).getDownloadURL() 
+    let imgUrl 
+    try {
+      imgUrl = await firebase.storage().ref(email).getDownloadURL()
+    } catch (error) {
+      imgUrl = await firebase.storage().ref('default.jpeg').getDownloadURL()
+    }
+    
 
     // Checks if img directory exists. If not, creates it
     async function ensureDirExists() {
@@ -57,7 +64,7 @@ const FriendsBoard = ({ route, navigation }) => {
       const getEmailByUsername = async () =>{
         const usernameSnapshot = await firestore()
           .collection('users')
-          .where('username', '==', friendEmail)
+          .where('email', '==', friendEmail)
           .get();
     
           newDescription(usernameSnapshot.docs[0].data().description)

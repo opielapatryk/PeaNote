@@ -26,8 +26,8 @@ const SettingsScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const { notes, pendingNotes } = useSelector((state) => state.board);
   const { showInput, showInputUsername,username,myimage } = useSelector((state) => state.settings);
-  const { message } = useSelector((state) => state.login);
-  const [description, newDescription] = useState('I love Peanotes!');
+  const { message,reduxdescription } = useSelector((state) => state.login);
+  const [description, newDescription] = useState(reduxdescription);
   const [image, setImage] = useState(null)
 
   const dispatch = useDispatch();
@@ -165,7 +165,7 @@ const uploadImage = async () => {
         </View>
         </View>
         <View style={[styles.friendsHeaderRequest,{height:50}]}>
-          <Text style={{textAlign:'center',fontStyle:'italic'}}>{description}</Text>
+          <Text style={{textAlign:'center',fontStyle:'italic'}}>{reduxdescription}</Text>
           
         </View>
         <View style={styles.switchRow}>

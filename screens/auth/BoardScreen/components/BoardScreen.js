@@ -14,6 +14,7 @@ import firestore from '@react-native-firebase/firestore';
 import auth, { firebase } from '@react-native-firebase/auth';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as FileSystem from 'expo-file-system';
+import { setDescription } from '../../../../store/login/loginSlice';
 
 const BoardScreen = () => {
   const { notes } = useSelector((state) => state.board);
@@ -29,6 +30,7 @@ const BoardScreen = () => {
     if (!getUserByEmail.empty) {
       getUserByEmail.forEach(doc => {
         dispatch(setUsername(doc.data().username))
+        dispatch(setDescription(doc.data().description))
       })
     }
   }
