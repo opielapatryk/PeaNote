@@ -99,6 +99,9 @@ const uploadImage = async () => {
 
   useFocusEffect(
     React.useCallback(() => {
+
+
+      
       return ()=>{
         setDeleteAccountPressed(false)
         dispatch(setShowInput(false))

@@ -73,6 +73,7 @@ const FriendsBoard = ({ route, navigation }) => {
       getEmailByUsername()
 
       downloadImage(friendEmail)
+      
       return ()=>{
         downloadImage(EMAIL)
       }

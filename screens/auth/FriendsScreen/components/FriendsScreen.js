@@ -8,6 +8,9 @@ import { useFocusEffect } from '@react-navigation/native';
 import { loadUser } from '../functions/loadUser';
 import { cleanStoreFriends } from '../../../../store/friends/friendsSlice';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import * as FileSystem from 'expo-file-system';
+import auth, { firebase } from '@react-native-firebase/auth';
+import { setMyimage } from '../../../../store/settings/settingsSlice';
 
 export const FriendsScreen = ({ navigation }) => {
   const {friends} = useSelector((state) => state.friends);
@@ -28,9 +31,49 @@ export const FriendsScreen = ({ navigation }) => {
     loadUser(dispatch)
   },[])
 
+  const downloadImage = async (email) => {
+    const imgDir = FileSystem.cacheDirectory + 'images/';
+    const imgFileUri = imgDir + email;
+    let imgUrl 
+    try {
+      imgUrl = await firebase.storage().ref(email).getDownloadURL()
+    } catch (error) {
+      imgUrl = await firebase.storage().ref('default.jpeg').getDownloadURL()
+    }
+    
+
+    // Checks if img directory exists. If not, creates it
+    async function ensureDirExists() {
+      const dirInfo = await FileSystem.getInfoAsync(imgDir);
+      if (!dirInfo.exists) {
+        await FileSystem.makeDirectoryAsync(imgDir, { intermediates: true });
+      }
+    }
+
+    // Returns URI to our local img file
+    // If our img doesn't exist locally, it downloads it
+    async function getSingleImg() {
+      await ensureDirExists();
+
+      const fileUri = imgFileUri;
+      const fileInfo = await FileSystem.getInfoAsync(fileUri);
+
+      if (!fileInfo.exists) {
+        await FileSystem.downloadAsync(imgUrl, fileUri);
+      }
+
+      dispatch(setMyimage(fileUri));
+    }
+    
+    getSingleImg()
+  }
+
   const RenderFriendsMemoized = React.memo(({ item }) => {
     return (
-      <Pressable onPress={() =>navigation.navigate('FriendsBoard', {name:item.username, friendEmail: item.email, oldnickname:item.nickname})} style={styles.friendsList}><Text style={styles.firendListText}>{item.nickname?item.nickname:item.username}</Text></Pressable>
+      <Pressable onPress={async () =>{
+        await downloadImage(item.email)
+        navigation.navigate('FriendsBoard', {name:item.username, friendEmail: item.email, oldnickname:item.nickname})
+      }} style={styles.friendsList}><Text style={styles.firendListText}>{item.nickname?item.nickname:item.username}</Text></Pressable>
     );
   });
 
