@@ -4,7 +4,8 @@ const initialState = {
     showInput:false,
     showInputUsername:false,
     username:'',
-    myimage:''
+    myimage:'',
+    friendimage:'',
 }
 
 export const settingsSlice = createSlice({
@@ -23,11 +24,14 @@ export const settingsSlice = createSlice({
         setMyimage: (state,action) => {
             return {...state, myimage:action.payload}
         },
+        setFriendimage: (state,action) => {
+            return {...state, friendimage:action.payload}
+        },
         removeMyImage: (state) => {
             return {...state, myimage:''}
         },
     }
 })
 
-export const {setShowInput,setShowInputUsername,setUsername,setMyimage,removeMyImage} = settingsSlice.actions
+export const {setShowInput,setShowInputUsername,setUsername,setMyimage,removeMyImage,setFriendimage} = settingsSlice.actions
 export default settingsSlice.reducer

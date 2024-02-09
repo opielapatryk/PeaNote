@@ -1,6 +1,6 @@
 import { Text,View, Pressable, TextInput,FlatList } from 'react-native'
 import React, { useEffect } from 'react'
-import {sendFriendRequest} from '../functions/sendFriendRequest'
+import {findUser} from '../functions/findUser'
 import {styles} from '../../../../assets/styles/styles'
 import { useDispatch, useSelector } from 'react-redux';
 import {setEmail,setMessage} from '../../../../store/login/loginSlice'
@@ -10,7 +10,7 @@ import { cleanStoreFriends } from '../../../../store/friends/friendsSlice';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as FileSystem from 'expo-file-system';
 import auth, { firebase } from '@react-native-firebase/auth';
-import { setMyimage } from '../../../../store/settings/settingsSlice';
+import { setFriendimage } from '../../../../store/settings/settingsSlice';
 
 export const FriendsScreen = ({ navigation }) => {
   const {friends} = useSelector((state) => state.friends);
@@ -62,7 +62,7 @@ export const FriendsScreen = ({ navigation }) => {
         await FileSystem.downloadAsync(imgUrl, fileUri);
       }
 
-      dispatch(setMyimage(fileUri));
+      dispatch(setFriendimage(fileUri));
     }
     
     getSingleImg()
@@ -91,7 +91,8 @@ export const FriendsScreen = ({ navigation }) => {
 
       <TextInput style={styles.friendsTextInput} placeholder={message?message:'SEARCH BY EMAIL OR USERNAME'} onChangeText={text => dispatch(setEmail(text))} value={email} autoCorrect={false}/>
 
-      <Pressable style={styles.friendsHeaderRequest} onPress={()=>sendFriendRequest(dispatch,email,navigation)}><Text style={styles.removeFriendText}>SEARCH</Text></Pressable>
+      <Pressable style={styles.friendsHeaderRequest} onPress={()=>{
+        findUser(dispatch,email,navigation)}}><Text style={styles.removeFriendText}>SEARCH</Text></Pressable>
 
       <FlatList data={friends} renderItem={({item})=>renderFriends({item})} keyExtractor={(friend) => friend.id}/>
     </View>

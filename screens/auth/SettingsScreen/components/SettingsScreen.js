@@ -31,16 +31,13 @@ const SettingsScreen = () => {
   const { message,reduxdescription } = useSelector((state) => state.login);
   const [description, newDescription] = useState(reduxdescription);
   const [image, setImage] = useState(null)
-
   const dispatch = useDispatch();
-
   const [status, requestPermission] = ImagePicker.useMediaLibraryPermissions();
   
   useEffect(() => {
     if (image) {
       uploadImage()
-      dispatch(setMyimage(image.uri))
-      
+      dispatch(setMyimage(image.uri)) 
     }
   }, [image]);
 
@@ -69,9 +66,7 @@ const SettingsScreen = () => {
 const uploadImage = async () => {
   const EMAIL = auth().currentUser.email
 
-
   const { uri } = image;
-
 
   const compressedImageData = (await ImageManipulator.manipulateAsync(uri,[{resize:{
     height: 300, 
@@ -94,14 +89,8 @@ const uploadImage = async () => {
   }
 } 
 
-
-
-
   useFocusEffect(
     React.useCallback(() => {
-
-
-      
       return ()=>{
         setDeleteAccountPressed(false)
         dispatch(setShowInput(false))
@@ -110,8 +99,6 @@ const uploadImage = async () => {
       }
     }, [])
   );
-
-
 
   useEffect(() => {
     checkIsAskBeforeStickingNoteFlagOff({ setAskBeforeStickingNoteFlag });

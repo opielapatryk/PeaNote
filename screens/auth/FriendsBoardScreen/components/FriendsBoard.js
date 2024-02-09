@@ -4,7 +4,7 @@ import {createNote} from '../functions/createNote'
 import {removeFriend} from '../functions/removeFriend'
 import {styles} from '../../../../assets/styles/styles'
 import { useDispatch,useSelector } from 'react-redux';
-import { setMyimage } from '../../../../store/settings/settingsSlice';
+import { setFriendimage } from '../../../../store/settings/settingsSlice';
 import auth, { firebase } from '@react-native-firebase/auth';
 import { useFocusEffect } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
@@ -16,7 +16,7 @@ const FriendsBoard = ({ route, navigation }) => {
   const [content, setContent] = useState('');
   const [message, setMessage] = useState('');
   const dispatch = useDispatch()
-  const { myimage } = useSelector((state) => state.settings);
+  const { friendimage } = useSelector((state) => state.settings);
   const { reduxdescription } = useSelector((state) => state.login);
 
   const EMAIL = auth().currentUser.email
@@ -52,7 +52,7 @@ const FriendsBoard = ({ route, navigation }) => {
         await FileSystem.downloadAsync(imgUrl, fileUri);
       }
 
-      dispatch(setMyimage(fileUri));
+      dispatch(setFriendimage(fileUri));
     }
     
     getSingleImg()
@@ -74,9 +74,6 @@ const FriendsBoard = ({ route, navigation }) => {
 
       downloadImage(friendEmail)
       
-      return ()=>{
-        downloadImage(EMAIL)
-      }
     }, [])
   );
 
@@ -133,7 +130,7 @@ const FriendsBoard = ({ route, navigation }) => {
     justifyContent:"space-between",}}>
       <View style={{alignItems:'center',backgroundColor:'white'}}>
         <View style={styles.ProfilePicParent}>
-        {myimage && <Image source={{uri: myimage}} style={styles.ProfilePic}/>}
+        {friendimage && <Image source={{uri: friendimage}} style={styles.ProfilePic}/>}
         </View>
 
         <View style={[styles.friendsHeaderRequest,{height:50}]}>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Text, TextInput, View, Pressable, Keyboard,  TouchableWithoutFeedback,Image,Dimensions } from 'react-native';
 import {styles} from '../../../../assets/styles/styles'
 import { useDispatch,useSelector } from 'react-redux';
-import { setMyimage } from '../../../../store/settings/settingsSlice';
+import { setFriendimage } from '../../../../store/settings/settingsSlice';
 import auth, { firebase } from '@react-native-firebase/auth';
 import { useFocusEffect } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
@@ -12,7 +12,7 @@ import { sendFriendRequest } from '../functions/sendFriendRequest';
 const UserBoard = ({ route, navigation }) => {
   const { friendEmail,name,oldnickname} = route.params;
   const dispatch = useDispatch()
-  const { myimage } = useSelector((state) => state.settings);
+  const { friendimage } = useSelector((state) => state.settings);
   const { message,reduxdescription } = useSelector((state) => state.login);
   const [description, newDescription] = useState(reduxdescription);
   const EMAIL = auth().currentUser.email
@@ -47,7 +47,7 @@ const UserBoard = ({ route, navigation }) => {
         await FileSystem.downloadAsync(imgUrl, fileUri);
       }
 
-      dispatch(setMyimage(fileUri));
+      dispatch(setFriendimage(fileUri));
     }
     
     getSingleImg()
@@ -62,19 +62,29 @@ const UserBoard = ({ route, navigation }) => {
           .where('username', '==', friendEmail)
           .get();
 
-          newDescription(usernameSnapshot.docs[0].data().description)
+          if (usernameSnapshot.empty) {
+            // If no user is found by email, try searching by username
+            const emailSnapshot = await firestore()
+              .collection('users')
+              .where('email', '==', friendEmail)
+              .get();
+        
+            if (usernameSnapshot.empty) {
+              return null;
+            }
 
-        return usernameSnapshot.docs[0].data().email
+            newDescription(emailSnapshot.docs[0].data().description)
+            return emailSnapshot.docs[0].data().email
+          }else{
+            newDescription(usernameSnapshot.docs[0].data().description)
+            return usernameSnapshot.docs[0].data().email
+          }
+
+          
       }
 
-      getEmailByUsername().then(emailByUsername => {
-        downloadImage(emailByUsername)
-      });
+      getEmailByUsername()
 
-
-      return ()=>{
-        downloadImage(EMAIL)
-      }
     }, [])
   );
 
@@ -87,7 +97,7 @@ const UserBoard = ({ route, navigation }) => {
     justifyContent:"space-between",}}>
       <View style={{alignItems:'center',backgroundColor:'white'}}>
         <View style={styles.ProfilePicParent}>
-        {myimage && <Image source={{uri: myimage}} style={styles.ProfilePic}/>}
+        {friendimage && <Image source={{uri: friendimage}} style={styles.ProfilePic}/>}
        
         
         </View>
