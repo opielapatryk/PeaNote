@@ -25,7 +25,7 @@ export const appleSignin = async ()=>{
           askBeforeStick: false,
           stickersOnBoard: [],
           pending: [],
-          description: 'I love Peanotes!',
+          description: '',
         })
       }
 }

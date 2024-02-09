@@ -17,6 +17,7 @@ import * as ImagePicker from 'expo-image-picker'
 import auth, { firebase } from '@react-native-firebase/auth';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import firestore from '@react-native-firebase/firestore';
+import { manipulateAsync, FlipType, SaveFormat } from 'expo-image-manipulator';
 
 const SettingsScreen = () => {
   const [askBeforeStickingNoteFlag, setAskBeforeStickingNoteFlag] = useState(false);
@@ -49,10 +50,11 @@ const SettingsScreen = () => {
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: true,
-        aspect: [4,3],
-        quality: 1
+        aspect: [4,4],
+        quality: 0.1,
       });
       const source = {uri: result.assets[0].uri}
+
 
       setImage(source)
     }
@@ -69,12 +71,17 @@ const uploadImage = async () => {
 
   const { uri } = image;
 
+  const compressedImageData = (await manipulateAsync(uri,[{resize:{
+    height: 300, 
+    width: 300
+  }}],{compress:0.1,format: SaveFormat.JPEG}))
+
   const path = `${EMAIL}`;
 
   const reference = firebase.storage().ref(path);
 
   try {
-    const response = await fetch(uri);
+    const response = await fetch(compressedImageData);
     const blob = await response.blob();
 
     await reference.put(blob);

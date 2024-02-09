@@ -17,7 +17,7 @@ export const signUpFirebase = async (email,password,dispatch) =>{
             askBeforeStick: false,
             stickersOnBoard: [],
             pending: [],
-            description: 'I love Peanotes!',
+            description: '',
           })
       }
     } catch (err) {

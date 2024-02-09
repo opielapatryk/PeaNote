@@ -18,7 +18,7 @@ export const signIn = async ()=>{
       askBeforeStick: false,
       stickersOnBoard: [],
       pending: [],
-      description: 'I love Peanotes!',
+      description: '',
     })
   }
 }

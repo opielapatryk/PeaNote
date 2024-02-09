@@ -38,7 +38,12 @@ const BoardScreen = () => {
   const downloadImage = async () => {
     const imgDir = FileSystem.cacheDirectory + 'images/';
     const imgFileUri = imgDir + EMAIL;
-    const imgUrl = await firebase.storage().ref(EMAIL).getDownloadURL() 
+    let imgUrl 
+    try {
+      imgUrl = await firebase.storage().ref(EMAIL).getDownloadURL() 
+    } catch (error) {
+      imgUrl = await firebase.storage().ref('default.jpeg').getDownloadURL()
+    }
 
     // Checks if img directory exists. If not, creates it
     async function ensureDirExists() {

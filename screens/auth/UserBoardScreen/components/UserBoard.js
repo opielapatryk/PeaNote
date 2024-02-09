@@ -13,14 +13,19 @@ const UserBoard = ({ route, navigation }) => {
   const { friendEmail,name,oldnickname} = route.params;
   const dispatch = useDispatch()
   const { myimage } = useSelector((state) => state.settings);
-  const { message } = useSelector((state) => state.login);
-  const [description, newDescription] = useState('I love Peanotes!');
+  const { message,reduxdescription } = useSelector((state) => state.login);
+  const [description, newDescription] = useState(reduxdescription);
   const EMAIL = auth().currentUser.email
 
   const downloadImage = async (email) => {
     const imgDir = FileSystem.cacheDirectory + 'images/';
     const imgFileUri = imgDir + email;
-    const imgUrl = await firebase.storage().ref(email).getDownloadURL() 
+    let imgUrl 
+    try {
+      imgUrl = await firebase.storage().ref(email).getDownloadURL()
+    } catch (error) {
+      imgUrl = await firebase.storage().ref('default.jpeg').getDownloadURL()
+    }
 
     // Checks if img directory exists. If not, creates it
     async function ensureDirExists() {
