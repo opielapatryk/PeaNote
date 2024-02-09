@@ -37,7 +37,9 @@
     "expo-constants": "~14.4.2",
     "expo-crypto": "~12.4.1",
     "expo-dev-client": "~2.4.12",
+    "expo-file-system": "~15.4.5",
     "expo-firebase": "^0.0.0-alpha.0",
+    "expo-image-manipulator": "~11.3.0",
     "expo-image-picker": "~14.3.2",
     "expo-linear-gradient": "~12.3.0",
     "expo-linking": "~5.0.2",
@@ -57,6 +59,7 @@
     "react-native-design-system": "^2.0.5",
     "react-native-draggable-flatlist": "^4.0.1",
     "react-native-gesture-handler": "~2.12.0",
+    "react-native-image-resizer": "^1.4.5",
     "react-native-pager-view": "6.2.0",
     "react-native-paper": "^5.12.3",
     "react-native-reanimated": "~3.3.0",
@@ -69,9 +72,7 @@
     "react-redux": "^8.1.3",
     "redux": "^4.2.1",
     "redux-mock-store": "^1.5.4",
-    "typescript": "^5.1.3",
-    "expo-file-system": "~15.4.5",
-    "expo-image-manipulator": "~11.3.0"
+    "typescript": "^5.1.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
