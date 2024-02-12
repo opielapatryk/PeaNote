@@ -7,3 +7,10 @@ TODO: Historia notatek
 TODO: Widok czy zaproszenie do przyjaciół było wysłane
 TODO: Logowanie przez username
 TODO: DarkMode
+TODO: Accessibility
+TODO: Better friend search, using first name and last name
+TODO: Jezeli wpisze zly email i dam search to nic sie nie dzieje
+TODO: Dodawanie notatek na swoja tablice
+TODO: Usunalem 2 notatki z 3 wszedlem na friends => friend => z friend na board i notatka sie powielila
+TODO: Lepszy rendering notatek po przeniesieniu z pending, jak friends
+TODO: Ignoruj wielkosc liter przy zmienianiu username, szukaniu friends
