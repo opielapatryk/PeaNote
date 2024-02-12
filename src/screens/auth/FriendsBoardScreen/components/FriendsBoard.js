@@ -66,7 +66,7 @@ const FriendsBoard = ({ route, navigation }) => {
           .collection('users')
           .where('email', '==', friendEmail)
           .get();
-    
+          
           newDescription(usernameSnapshot.docs[0].data().description)
       }
 
