@@ -1,9 +1,6 @@
 import { StyleSheet,StatusBar,Dimensions } from 'react-native';
 
 export const styles = StyleSheet.create({
-  flexone:{
-    flex: 1,
-  },
   container: {
     flex: 1,
     backgroundColor: '#FFFDF3',
@@ -55,32 +52,11 @@ export const styles = StyleSheet.create({
     backgroundColor: '#FFFDF3',
     justifyContent:"space-between",
   },
-  menu:{
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    marginTop:40,
-    marginBottom:20
-  },
-  button_text: {
-    fontSize:12,
-    letterSpacing:2,
-  },
-  button_text_clicked: {
-    fontSize:12,
-    letterSpacing:2,
-    fontWeight: '600'
-  },
   modal:{
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 22,
-  },
-  header:{
-    fontSize:22,
-    fontWeight: '600',
-    letterSpacing:.5
   },
   paragraph:{
     fontSize:12,color:'gray',fontWeight:'700',
@@ -205,49 +181,6 @@ export const styles = StyleSheet.create({
     color:'red',
     fontSize:13
   },
-  containerboard: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
-  },
-  settingButton:{
-    backgroundColor:'#FFF5BD',
-    borderWidth:1,
-    borderRadius:20,
-    width:300,
-    padding:10,
-    alignSelf:'center',
-    alignItems:'center',
-    marginBottom:20,
-    shadowColor: "#000",
-shadowOffset: {
-	width: 0,
-	height: 1,
-},
-shadowOpacity: 0.18,
-shadowRadius: 1.00,
-
-elevation: 1,
-  },
-
-
-  settingsText:{
-    fontSize:12,
-    letterSpacing:.5,
-  },
-  settingsTextInput:{
-    alignSelf:'center',
-    marginBottom:20,
-    width:300,
-    borderWidth:1,
-    padding:3,
-    borderRadius:5,
-    padding:5
-  },
-  settingsMessage:{
-    alignSelf:'center',
-    fontStyle:'italic',
-    margin:10
-  },
   friendsHeaderRequest:{
     backgroundColor:'#FFF',
     shadowOffset: {
@@ -345,32 +278,6 @@ elevation: 1,
     justifyContent:'center',
     paddingBottom:Dimensions.get("window").height / 100,
   },
-  removeFriendButton:{
-    backgroundColor:'#FFF',
-    shadowOffset: {
-      width: 0,
-      height: .5,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: .5,
-    width: Dimensions.get("window").width,
-    height:Dimensions.get("window").height / 20,
-    justifyContent:'center'
-  },
-
-  deleteAccountText:{
-    fontSize:17,
-    fontWeight:'600',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.18,
-    shadowRadius: 1.00,
-    elevation: 1,
-    letterSpacing:2,
-    alignSelf:'center',
-  },
   switchRow:{
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height / 18.4,
@@ -390,15 +297,6 @@ elevation: 1,
     elevation: 1,
     borderBottomWidth:.2,borderBottomColor:'lightgrey',
   },
-
-
-  friendsFriendsHeader:{
-    fontSize:20,
-    fontWeight:"600",
-    alignSelf:'center',
-    marginTop:15,
-    marginBottom:15
-  },
   friendsTextInput:{
     fontSize:14,
     backgroundColor:'#FFF',
@@ -416,11 +314,6 @@ elevation: 1,
     borderBottomWidth:1,
     borderBottomColor:'lightgrey',
   },
-  friendsMessage:{
-    alignSelf:'center',
-    marginTop:15,
-    fontStyle:'italic',
-  },
   friendsList:{
     backgroundColor:'#FFF',
     shadowOffset: {
@@ -437,55 +330,6 @@ elevation: 1,
   firendListText:{
     fontSize:12,
     letterSpacing:1.5,
-  },
-  requestItem:{
-    flexDirection: 'row',
-    width:300,
-    alignSelf:'center',
-    alignItems:'center',
-    marginBottom:10,
-    padding:10,
-    shadowColor: "#000",
-    backgroundColor: '#FFFDF3',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.18,
-    shadowRadius: 1.00,
-    elevation: 1,
-    justifyContent:'space-around',
-    borderBottomWidth:1
-  },
-  createNoteButton:{
-    backgroundColor:'#FFF5BD',
-    borderWidth:1,
-    borderRadius:20,
-    width:100,
-    padding:10,
-    alignSelf:'center',
-    alignItems:'center',
-    marginBottom:20,
-    marginTop:20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.18,
-    shadowRadius: 1.00,
-    
-    elevation: 1,
-  },
-  createNoteButtonText:{
-    fontWeight:'600',
-    fontSize:12,
-    letterSpacing:.5,
-  },
-  renderFriends:{
-    flex: 1,
-    padding: 10,
-    backgroundColor: '#FFFDF3',
   },
   emptyBoardText:{
     textAlign:'center',
@@ -565,10 +409,6 @@ elevation: 1,
   notesIsInfoVerticalLine:{
     height:Dimensions.get("window").height / 8,borderLeftWidth:1,alignSelf:'center'
   },
-  tabBarLabel:{
-    letterSpacing:1.5,
-    backgroundColor:'green'
-  },
   editNote:{
     backgroundColor:'black',
     padding:10,
@@ -593,4 +433,7 @@ elevation: 1,
     borderWidth:1,
     alignItems:'center'
   },
+  tabBarIndicatorStyle:{backgroundColor:'#c99c1f',top:0},
+  tabBarLabelStyle:{letterSpacing:.5, fontSize:13},
+  tabBarStyle:{borderTopWidth:.17,borderTopColor:'lightgray'},
 });

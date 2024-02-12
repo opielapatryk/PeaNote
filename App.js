@@ -1,16 +1,16 @@
 import React, {useEffect,useState} from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import store from './store/store'
+import store from './src/store/store'
 import { Provider } from 'react-redux';
-import Login from './screens/public/Login/components/Login'
-import BoardScreen from './screens/auth/BoardScreen/components/BoardScreen';
-import FriendsScreen from './screens/auth/FriendsScreen/components/FriendsScreen';
-import FriendsBoard from './screens/auth/FriendsBoardScreen/components/FriendsBoard';
-import UserBoard from './screens/auth/UserBoardScreen/components/UserBoard';
-import SettingsScreen from './screens/auth/SettingsScreen/components/SettingsScreen';
-import PendingScreen from './screens/auth/PendingScreen/components/PendingScreen';
-import FriendRequests from './screens/auth/FriendRequestScreen/components/FriendRequests';
+import Login from './src/screens/public/Login/components/Login'
+import BoardScreen from './src/screens/auth/BoardScreen/components/BoardScreen';
+import FriendsScreen from './src/screens/auth/FriendsScreen/components/FriendsScreen';
+import FriendsBoard from './src/screens/auth/FriendsBoardScreen/components/FriendsBoard';
+import UserBoard from './src/screens/auth/UserBoardScreen/components/UserBoard';
+import SettingsScreen from './src/screens/auth/SettingsScreen/components/SettingsScreen';
+import PendingScreen from './src/screens/auth/PendingScreen/components/PendingScreen';
+import FriendRequests from './src/screens/auth/FriendRequestScreen/components/FriendRequests';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin} from '@react-native-google-signin/google-signin';
 import 'expo-dev-client'
@@ -18,18 +18,13 @@ import { WEB_CLIENT_ID, IOS_CLIENT_ID} from './FIrebaseConfig';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as ScreenOrientation from 'expo-screen-orientation';
-import Constants from 'expo-constants';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { SafeAreaProvider,useSafeAreaInsets,initialWindowMetrics} from 'react-native-safe-area-context';
-
+import { SafeAreaProvider,initialWindowMetrics} from 'react-native-safe-area-context';
+import { styles } from './src/assets/styles/styles';
 
 const Stack = createNativeStackNavigator();
-
 const Tab = createMaterialTopTabNavigator();
 
-
 export default function App(){
-
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
@@ -47,14 +42,12 @@ export default function App(){
     setUser(user);
     if (initializing) setInitializing(false);
   }
-
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChangedd);
     return subscriber
   }, []);
 
   if (initializing) return null;
-
 
   function FriendStack() {
     return (
@@ -72,7 +65,7 @@ export default function App(){
       <Provider store={store}>
         <SafeAreaProvider>
         <NavigationContainer>
-          <Tab.Navigator tabBarPosition='bottom' initialRouteName={!user?"Login":"Board"} screenOptions={{tabBarIndicatorStyle:{backgroundColor:'#c99c1f',top:0},tabBarLabelStyle:{letterSpacing:.5, fontSize:13},tabBarStyle:{paddingBottom:initialWindowMetrics.insets.bottom,borderTopWidth:.17,borderTopColor:'lightgray'}}}>
+          <Tab.Navigator tabBarPosition='bottom' initialRouteName={!user?"Login":"Board"} screenOptions={{tabBarIndicatorStyle:styles.tabBarIndicatorStyle,tabBarLabelStyle:styles.tabBarLabelStyle,tabBarStyle:[styles.tabBarStyle,{paddingBottom:initialWindowMetrics.insets.bottom}]}}>
               {!user?(
                 <>
                   <Tab.Screen name="Login" component={Login} options={{tabBarStyle:{display:'none'}}}></Tab.Screen>

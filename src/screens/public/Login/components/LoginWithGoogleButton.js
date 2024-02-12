@@ -6,7 +6,7 @@ import {signIn} from '../functions/signIn'
 
 const LoginWithGoogleButton = () => {
     return (
-        <Pressable style={styles.continuteWithGoogle} onPress={signIn}>
+      <Pressable style={styles.continuteWithGoogle} onPress={signIn}>
         <Ionicons name="md-logo-google" size={14} color="black" />
         <Text style={{fontWeight:'600'}}>
           Continue with Google
