@@ -1,6 +1,6 @@
 import {changeInfo} from '../../../../store/notes/boardSlice';
 
-export const checkThenChangeInfo = (dispatch, notes) => {
+export const checkIsInfo = (dispatch, notes) => {
     notes.map((note) => {
       if(note.isInfo === true)
       {

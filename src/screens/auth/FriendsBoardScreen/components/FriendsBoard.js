@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { Text, TextInput, View, Pressable, Keyboard,  TouchableWithoutFeedback,Image,Dimensions } from 'react-native';
+import React, { useState } from 'react';
+import { Text, TextInput, View, Pressable, Keyboard,  TouchableWithoutFeedback,Image } from 'react-native';
 import {createNote} from '../functions/createNote'
 import {removeFriend} from '../functions/removeFriend'
 import {styles} from '../../../../assets/styles/styles'
 import { useDispatch,useSelector } from 'react-redux';
 import { setFriendimage } from '../../../../store/settings/settingsSlice';
-import auth, { firebase } from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { useFocusEffect } from '@react-navigation/native';
-
-import * as FileSystem from 'expo-file-system';
+import {ensureDirExists} from "../../BoardScreen/functions/ensureDirExists";
+import {getSingleImg} from '../../BoardScreen/functions/getSingleImg';
 
 const FriendsBoard = ({ route, navigation }) => {
   const [description, newDescription] = useState(reduxdescription);
@@ -22,43 +22,13 @@ const FriendsBoard = ({ route, navigation }) => {
 
   const EMAIL = auth().currentUser.email
 
-  const downloadImage = async (email) => {
-    const imgDir = FileSystem.cacheDirectory + 'images/';
-    const imgFileUri = imgDir + email;
-    let imgUrl 
-    try {
-      imgUrl = await firebase.storage().ref(email).getDownloadURL()
-    } catch (error) {
-      imgUrl = await firebase.storage().ref('default.jpeg').getDownloadURL()
-    }
-    
+  const downloadImage = async () => {
+    await ensureDirExists();
 
-    // Checks if img directory exists. If not, creates it
-    async function ensureDirExists() {
-      const dirInfo = await FileSystem.getInfoAsync(imgDir);
-      if (!dirInfo.exists) {
-        await FileSystem.makeDirectoryAsync(imgDir, { intermediates: true });
-      }
-    }
+    const fileUri = await getSingleImg(friendEmail)
 
-    // Returns URI to our local img file
-    // If our img doesn't exist locally, it downloads it
-    async function getSingleImg() {
-      await ensureDirExists();
-
-      const fileUri = imgFileUri;
-      const fileInfo = await FileSystem.getInfoAsync(fileUri);
-
-      if (!fileInfo.exists) {
-        await FileSystem.downloadAsync(imgUrl, fileUri);
-      }
-
-      dispatch(setFriendimage(fileUri));
-    }
-    
-    getSingleImg()
+    dispatch(setFriendimage(fileUri));
   }
-
 
   useFocusEffect(
     React.useCallback(() => {
@@ -73,7 +43,7 @@ const FriendsBoard = ({ route, navigation }) => {
 
       getEmailByUsername()
 
-      downloadImage(friendEmail)
+      downloadImage()
       
     }, [])
   );

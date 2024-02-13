@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Switch, TextInput, Pressable,Keyboard,TouchableWithoutFeedback,Image,Dimensions, Linking,Modal } from 'react-native';
+import { View, Text, Switch, TextInput, Pressable,Keyboard,TouchableWithoutFeedback,Image, Linking,Modal } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { styles } from '../../../../assets/styles/styles';
 import {checkIsAskBeforeStickingNoteFlagOff} from '../functions/checkIsAskBeforeStickingNoteFlagOff';
@@ -12,9 +12,9 @@ import { setDescription, setMessage } from '../../../../store/login/loginSlice';
 import { useFocusEffect } from '@react-navigation/native';
 import { signOutAndClearReduxStore } from '../../Logout/functions/signOutAndClearReduxStore';
 import {changeUsername} from '../functions/changeUsername'
-import {changeProfilePhoto} from '../functions/changeProfilePhoto'
 import * as ImagePicker from 'expo-image-picker'
-import auth, { firebase } from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth';
+import {firebase} from '@react-native-firebase/storage'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import firestore from '@react-native-firebase/firestore';
 import * as ImageManipulator from 'expo-image-manipulator';

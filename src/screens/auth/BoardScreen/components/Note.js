@@ -43,6 +43,7 @@ export const Note = ({ id, isInfo,content,creator }) => {
             </View>
           </View>
         </Modal>
+        
       {!isInfo&&<>
         <Text style={styles.noteTextHeader}>{localNotes.find((item) => item.id === id)?.creator}</Text>
         <Text style={styles.noteText}>{localNotes.find((item) => item.id === id)?.text}</Text>

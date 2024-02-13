@@ -1,47 +1,19 @@
 import firestore from '@react-native-firebase/firestore';
 import { setEmail, setMessage } from '../../../../store/login/loginSlice';
 import { Keyboard } from 'react-native';
-import * as FileSystem from 'expo-file-system';
-import auth, { firebase } from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth';
 import { setFriendimage } from '../../../../store/settings/settingsSlice';
+import {ensureDirExists} from "../../BoardScreen/functions/ensureDirExists";
+import {getSingleImg} from '../../BoardScreen/functions/getSingleImg';
 
 export const findUser = async (dispatch, friendEmailOrUsername,navigation) => {
 
   const downloadImage = async (email) => {
-    const imgDir = FileSystem.cacheDirectory + 'images/';
-    const imgFileUri = imgDir + email;
-    let imgUrl 
-    try {
-      imgUrl = await firebase.storage().ref(email).getDownloadURL()
-    } catch (error) {
-      imgUrl = await firebase.storage().ref('default.jpeg').getDownloadURL()
-    }
-    
+    await ensureDirExists();
 
-    // Checks if img directory exists. If not, creates it
-    async function ensureDirExists() {
-      const dirInfo = await FileSystem.getInfoAsync(imgDir);
-      if (!dirInfo.exists) {
-        await FileSystem.makeDirectoryAsync(imgDir, { intermediates: true });
-      }
-    }
+    const fileUri = await getSingleImg(email)
 
-    // Returns URI to our local img file
-    // If our img doesn't exist locally, it downloads it
-    async function getSingleImg() {
-      await ensureDirExists();
-
-      const fileUri = imgFileUri;
-      const fileInfo = await FileSystem.getInfoAsync(fileUri);
-
-      if (!fileInfo.exists) {
-        await FileSystem.downloadAsync(imgUrl, fileUri);
-      }
-
-      dispatch(setFriendimage(fileUri));
-    }
-    
-    getSingleImg()
+    dispatch(setFriendimage(fileUri));
   }
 
   const currentUserEmail = auth().currentUser.email;
@@ -53,7 +25,6 @@ export const findUser = async (dispatch, friendEmailOrUsername,navigation) => {
       .get();
 
       if (userSnapshot.empty) {
-        // If no user is found by email, try searching by username
         const usernameSnapshot = await firestore()
           .collection('users')
           .where('username', '==', email)
@@ -106,18 +77,6 @@ export const findUser = async (dispatch, friendEmailOrUsername,navigation) => {
 
       await downloadImage(friendemail)
       navigation.navigate('UserBoard', {name:friendusername, friendEmail: friendemail, oldnickname:''})
-      // await firestore()
-      //   .collection('users')
-      //   .doc(friendDoc.id)
-      //   .update({
-      //     friends_requests: firebase.firestore.FieldValue.arrayUnion({
-      //       email: currentUserEmail,
-      //       username: currentUserUsername,
-      //       nickname:''
-      //     }),
-      //   })
-
-      // dispatch(setMessage('FRIEND REQUEST SENT SUCCESSFULLY'));
     }
   }
 

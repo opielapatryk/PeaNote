@@ -1,9 +1,4 @@
-import auth, { firebase } from '@react-native-firebase/auth';
-import { setShowInputUsername } from '../../../../store/settings/settingsSlice';
-import { setMessage } from '../../../../store/login/loginSlice';
-import firestore from '@react-native-firebase/firestore';
-import storage from '@react-native-firebase/storage';
-import { utils } from '@react-native-firebase/app';
+import { firebase } from '@react-native-firebase/storage';
 import * as ImagePicker from 'expo-image-picker'
 
  export const changeProfilePhoto = async (setImage,image) => {

@@ -1,5 +1,6 @@
 import * as FileSystem from 'expo-file-system';
-import { firebase } from '@react-native-firebase/auth';
+// import { firebase } from '@react-native-firebase/auth';
+import {firebase} from '@react-native-firebase/storage'
 
 export async function getSingleImg(email) {
     const imgDir = FileSystem.cacheDirectory + 'images/';
@@ -12,7 +13,7 @@ export async function getSingleImg(email) {
     } catch (error) {
       imgUrl = await firebase.storage().ref('default.jpeg').getDownloadURL()
     }
-    
+
     if (!fileInfo.exists) {
       await FileSystem.downloadAsync(imgUrl, fileUri);
     }
