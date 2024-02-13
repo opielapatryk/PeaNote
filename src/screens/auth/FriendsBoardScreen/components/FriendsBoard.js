@@ -6,8 +6,9 @@ import {styles} from '../../../../assets/styles/styles'
 import { useDispatch,useSelector } from 'react-redux';
 import { setFriendimage } from '../../../../store/settings/settingsSlice';
 import auth, { firebase } from '@react-native-firebase/auth';
-import { useFocusEffect } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
+import { useFocusEffect } from '@react-navigation/native';
+
 import * as FileSystem from 'expo-file-system';
 
 const FriendsBoard = ({ route, navigation }) => {

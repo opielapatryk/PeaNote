@@ -31,42 +31,45 @@ exports[`Note renders correctly. 1`] = `
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
+  style={
+    {
+      "backgroundColor": "#f9e889",
+      "borderRadius": 5,
+      "height": 266.8,
+      "margin": 8,
+      "paddingLeft": 10,
+      "paddingRight": 10,
+      "paddingTop": 10,
+      "shadowOffset": {
+        "height": 1,
+      },
+      "shadowOpacity": 0.25,
+      "shadowRadius": 2,
+      "width": 340.9090909090909,
+    }
+  }
 >
-  <View
+  <Modal
+    animationType="slide"
+    hardwareAccelerated={false}
+    transparent={true}
+    visible={false}
+  />
+  <Text
     style={
       {
-        "backgroundColor": "#FFF5BD",
-        "borderRadius": 5,
-        "height": 266.8,
-        "margin": 8,
-        "paddingLeft": 10,
-        "paddingRight": 10,
-        "paddingTop": 10,
-        "shadowOffset": {
-          "height": 0.5,
-        },
-        "shadowOpacity": 0.25,
-        "shadowRadius": 1,
-        "width": 340.9090909090909,
+        "fontSize": 16,
+        "fontWeight": "600",
+        "marginBottom": 5,
       }
     }
-  >
-    <Text
-      style={
-        {
-          "fontSize": 20,
-          "fontWeight": "bold",
-          "marginBottom": 5,
-        }
+  />
+  <Text
+    style={
+      {
+        "fontSize": 15,
       }
-    />
-    <Text
-      style={
-        {
-          "fontSize": 15,
-        }
-      }
-    />
-  </View>
+    }
+  />
 </View>
 `;

@@ -3,8 +3,8 @@ import { Text, View, Pressable, Keyboard,  TouchableWithoutFeedback,Image } from
 import {styles} from '../../../../assets/styles/styles'
 import { useDispatch,useSelector } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
-import firestore from '@react-native-firebase/firestore';
 import { sendFriendRequest } from '../functions/sendFriendRequest';
+import { getDescription } from '../functions/getDescription';
 
 const UserBoard = ({ route, navigation }) => {
   const [description, newDescription] = useState(reduxdescription);
@@ -13,27 +13,9 @@ const UserBoard = ({ route, navigation }) => {
   const { friendimage } = useSelector((state) => state.settings);
   const { message,reduxdescription } = useSelector((state) => state.login);
   
-
   useFocusEffect(
     React.useCallback(() => {
-      const getEmailByUsername = async () =>{
-        const usernameSnapshot = await firestore()
-          .collection('users')
-          .where('username', '==', friendEmail)
-          .get();
-
-          if (usernameSnapshot.empty) {
-            const emailSnapshot = await firestore()
-              .collection('users')
-              .where('email', '==', friendEmail)
-              .get();
-
-            newDescription(emailSnapshot.docs[0].data().description)
-          }else{
-            newDescription(usernameSnapshot.docs[0].data().description)
-          }
-      }
-      getEmailByUsername()
+      getDescription(friendEmail).then((description)=>newDescription(description))
     }, [])
   );
 

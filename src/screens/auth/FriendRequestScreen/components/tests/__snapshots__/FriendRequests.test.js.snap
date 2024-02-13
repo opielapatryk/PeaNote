@@ -4,7 +4,7 @@ exports[`Friend requests screen renders correctly. 1`] = `
 <View
   style={
     {
-      "backgroundColor": "#FFFDF3",
+      "backgroundColor": "#FFF",
       "flex": 1,
     }
   }

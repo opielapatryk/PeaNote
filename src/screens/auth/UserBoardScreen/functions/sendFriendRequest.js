@@ -13,7 +13,6 @@ export const sendFriendRequest = async (dispatch, friendEmailOrUsername,navigati
       .get();
 
       if (userSnapshot.empty) {
-        // If no user is found by email, try searching by username
         const usernameSnapshot = await firestore()
           .collection('users')
           .where('username', '==', email)

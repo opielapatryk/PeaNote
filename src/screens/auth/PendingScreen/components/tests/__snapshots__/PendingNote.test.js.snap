@@ -35,7 +35,7 @@ exports[`Pending note renders correctly. 1`] = `
   <View
     style={
       {
-        "backgroundColor": "#FFF5BD",
+        "backgroundColor": "#f9e889",
         "borderRadius": 5,
         "height": 266.8,
         "margin": 8,
@@ -43,10 +43,10 @@ exports[`Pending note renders correctly. 1`] = `
         "paddingRight": 10,
         "paddingTop": 10,
         "shadowOffset": {
-          "height": 0.5,
+          "height": 1,
         },
         "shadowOpacity": 0.25,
-        "shadowRadius": 1,
+        "shadowRadius": 2,
         "width": 340.9090909090909,
       }
     }
@@ -54,8 +54,8 @@ exports[`Pending note renders correctly. 1`] = `
     <Text
       style={
         {
-          "fontSize": 20,
-          "fontWeight": "bold",
+          "fontSize": 16,
+          "fontWeight": "600",
           "marginBottom": 5,
         }
       }

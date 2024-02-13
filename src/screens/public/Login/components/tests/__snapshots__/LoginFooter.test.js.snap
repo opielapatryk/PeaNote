@@ -11,7 +11,7 @@ exports[`Login footer renders correctly. 1`] = `
       "borderTopRightRadius": 10,
       "borderTopWidth": 1,
       "flexDirection": "row",
-      "marginBottom": 20,
+      "marginBottom": 10,
     }
   }
 >
@@ -94,15 +94,15 @@ exports[`Login footer renders correctly. 1`] = `
       {
         "alignItems": "center",
         "backgroundColor": "#FFFDF3",
-        "borderBottomColor": "#e6c019",
-        "borderBottomLeftRadius": 30,
-        "borderBottomRightRadius": 30,
+        "borderBottomColor": "#c99c1f",
+        "borderBottomLeftRadius": 20,
+        "borderBottomRightRadius": 20,
         "borderBottomWidth": 2,
         "borderColor": "lightgray",
         "elevation": 1,
         "marginTop": 5,
         "padding": 10,
-        "shadowColor": "#e6c019",
+        "shadowColor": "#c99c1f",
         "shadowOffset": {
           "height": 1,
           "width": 0,

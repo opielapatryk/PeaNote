@@ -1,16 +1,24 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import FriendsBoard from '../FriendsBoard';
 import { Provider } from 'react-redux';  
 import store from '../../../../../store/store'; 
+import Login from '../../../../public/Login/components/Login';
+import { SafeAreaProvider} from 'react-native-safe-area-context';
 
-jest.mock('@react-native-firebase/auth', () => () => {
-    return {
-        currentUser: {
-            email:'test@example.com'
-        }
-    }
-  })
+jest.mock('@react-native-firebase/auth', () => ({
+    signInWithEmailAndPassword: jest.fn(),
+    createUserWithEmailAndPassword: jest.fn(),
+    signOut: jest.fn(),
+}));
+
+jest.mock('@react-native-google-signin/google-signin', () => ({
+    signIn: jest.fn(),
+}));
+
+
+jest.mock('@invertase/react-native-apple-authentication', () => ({
+  AppleButton: jest.fn(),
+}));
 
 jest.mock('@react-native-firebase/firestore', () => ({
     collection: jest.fn(),
@@ -18,20 +26,16 @@ jest.mock('@react-native-firebase/firestore', () => ({
     get: jest.fn(),
 }));
 
-test('FriendsBoard screen renders correctly.', async () => {
-    const route = {
-      params: {
-        friendEmail: 'test@example.com',
-      },
-    };
-    const navigation = {
-      navigate: jest.fn(),
-    };
 
-    const tree = renderer.create(
-      <Provider store={store}>
-        <FriendsBoard route={route} navigation={navigation} />
-      </Provider>
-      ).toJSON();
-    expect(tree).toMatchSnapshot();
-})
+test('Login screen renders correctly.', () => {
+  const tree = renderer.create(
+    <Provider store={store}>
+      <SafeAreaProvider>
+
+      <Login />
+      </SafeAreaProvider>
+
+    </Provider>
+  ).toJSON();
+  expect(tree).toMatchSnapshot();
+});

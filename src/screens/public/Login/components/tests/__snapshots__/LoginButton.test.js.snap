@@ -34,13 +34,13 @@ exports[`Login button renders correctly. 1`] = `
   style={
     {
       "alignItems": "center",
-      "backgroundColor": "#fff2ba",
-      "borderColor": "#e6c019",
-      "borderRadius": 20,
+      "backgroundColor": "#c99c1f",
+      "borderColor": "#c99c1f",
+      "borderRadius": 5,
       "borderWidth": 1,
       "elevation": 1,
-      "marginBottom": 5,
-      "marginTop": 5,
+      "height": 66.7,
+      "justifyContent": "center",
       "padding": 10,
       "shadowColor": "#000",
       "shadowOffset": {
@@ -49,11 +49,17 @@ exports[`Login button renders correctly. 1`] = `
       },
       "shadowOpacity": 0.18,
       "shadowRadius": 1,
-      "width": 200,
+      "width": 500,
     }
   }
 >
-  <Text>
+  <Text
+    style={
+      {
+        "fontWeight": "600",
+      }
+    }
+  >
     Log In
   </Text>
 </View>
