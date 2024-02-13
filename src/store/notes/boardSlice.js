@@ -33,20 +33,6 @@ export const boardSlice = createSlice({
                 pendingNotes: state.pendingNotes.filter(note => note.id !== action.payload)
             };
         },
-        editNoteReducer:(state, action) => {
-            return {
-                ...state,
-                notes: state.notes.map((note) =>{
-                    if(note.id === action.payload.id){
-                        return {
-                            ...note,
-                            text: action.payload.newContent,
-                        }
-                    }
-                    return note;
-                })
-            }
-        },
         changeInfo: (state, action) => {
             return {
                 ...state,
@@ -107,5 +93,5 @@ export const boardSlice = createSlice({
     }
 })
 
-export const {addNote, removeNote,changeInfo,addPendingNote,removePendingNote,changePendingInfo,cleanStoreNotes,clearPendingInfo,clearBoardInfo,editNoteReducer} = boardSlice.actions
+export const {addNote, removeNote,changeInfo,addPendingNote,removePendingNote,changePendingInfo,cleanStoreNotes,clearPendingInfo,clearBoardInfo} = boardSlice.actions
 export default boardSlice.reducer

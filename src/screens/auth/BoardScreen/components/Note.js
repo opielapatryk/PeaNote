@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { styles } from '../../../../../assets/styles/styles';
 import { useDispatch, useSelector} from 'react-redux';
 import { handlePress } from '../functions/handlePress';
-import { removeNote,editNoteReducer, changeInfo } from '../../../../store/notes/boardSlice';
+import { removeNote, changeInfo } from '../../../../store/notes/boardSlice';
 import {editNote} from '../functions/editNote'
 import { deleteNote } from '../functions/deleteNote';
 
@@ -26,7 +26,6 @@ export const Note = ({ id, isInfo,content,creator }) => {
               <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                 <Pressable onPress={()=>{
                   editNote(newContent,notes.find((item) => item.id === id)?.text,notes.find((item) => item.id === id)?.creator)
-                  dispatch(editNoteReducer(newContent,id))
                   dispatch(changeInfo(id))
                   setLocalNotes((prevNotes) =>
                     prevNotes.map((note) =>

@@ -1,15 +1,16 @@
 import React from 'react';
 import {View, Pressable,Text} from 'react-native';
-import { styles } from '../../../../../assets/styles/styles';
+import { styles } from '../../../../assets/styles/styles';
 import { useDispatch } from 'react-redux';
-import { setEmail,setPassword,setCreateAccount,setMessage } from '../../../../store/login/loginSlice';
+import { setEmail,setPassword,setCreateAccount,setMessage } from '../../../store/login/loginSlice';
 
-const CreateAccountFooter = () => {
+const LoginFooter = () => {
   const dispatch = useDispatch()
     return (
-<>
+      <>
         <View style={styles.bottomView}>
-          <Pressable style={styles.pressableInBottonViewLeftCreateAccountOn} onPress={()=>{
+
+          <Pressable style={styles.pressableInBottonViewLeftLogInOn} onPress={()=>{
             dispatch(setCreateAccount(true))
             dispatch(setEmail(''))
             dispatch(setPassword(''))
@@ -20,7 +21,7 @@ const CreateAccountFooter = () => {
             </Text>
           </Pressable>  
 
-          <Pressable style={styles.pressableInBottonViewRightCreateAccountOn} onPress={()=>{
+          <Pressable style={styles.pressableInBottonViewRightLogInOn} onPress={()=>{
             dispatch(setCreateAccount(false))
             dispatch(setEmail(''))
             dispatch(setPassword(''))
@@ -36,4 +37,4 @@ const CreateAccountFooter = () => {
     );
 }
 
-export default CreateAccountFooter;
+export default LoginFooter;

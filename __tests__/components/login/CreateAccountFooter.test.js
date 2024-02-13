@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { Provider } from 'react-redux';  
-import CreateAccountFooter from '../../../src/screens/public/Login/components/CreateAccountFooter';
+import CreateAccountFooter from '../../../src/screens/login/components/CreateAccountFooter';
 import store from '../../../src/store/store'; 
 import { SafeAreaProvider} from 'react-native-safe-area-context';
 

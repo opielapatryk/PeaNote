@@ -1,11 +1,11 @@
 import React,{useState,useEffect} from 'react';
 import { Pressable, Text,TextInput,Modal,View, Dimensions} from 'react-native';
-import { styles } from '../../../../../assets/styles/styles';
+import { styles } from '../../../../assets/styles/styles';
 import LoginButton from './LoginButton';
 import LoginWithGoogleButton from './LoginWithGoogleButton';
 import LoginFooter from './LoginFooter';
 import { useDispatch, useSelector } from 'react-redux';
-import { setEmail,setPassword } from '../../../../store/login/loginSlice';
+import { setEmail,setPassword } from '../../../store/login/loginSlice';
 import * as AppleAuthentication from 'expo-apple-authentication'
 import auth from '@react-native-firebase/auth'
 import { AppleButton } from '@invertase/react-native-apple-authentication';

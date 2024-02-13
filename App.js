@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import store from './src/store/store'
 import { Provider } from 'react-redux';
-import Login from './src/screens/public/Login/components/Login'
+import Login from './src/screens/login/components/Login'
 import BoardScreen from './src/screens/auth/BoardScreen/components/BoardScreen';
 import FriendsScreen from './src/screens/auth/FriendsScreen/components/FriendsScreen';
 import FriendsBoard from './src/screens/auth/FriendsBoardScreen/components/FriendsBoard';

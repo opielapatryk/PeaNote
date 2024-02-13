@@ -2,7 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import { Provider } from 'react-redux';  
 import store from '../../src/store/store'; 
-import Login from '../../src/screens/public/Login/components/Login';
+import Login from '../../src/screens/login/components/Login';
 import { SafeAreaProvider} from 'react-native-safe-area-context';
 
 jest.mock('@react-native-firebase/auth', () => ({
