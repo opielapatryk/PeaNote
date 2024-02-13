@@ -19,7 +19,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import firestore from '@react-native-firebase/firestore';
 import * as ImageManipulator from 'expo-image-manipulator';
 
-
 const SettingsScreen = () => {
   const [askBeforeStickingNoteFlag, setAskBeforeStickingNoteFlag] = useState(false);
   const [newPassword, setNewPassword] = useState('');
@@ -33,76 +32,8 @@ const SettingsScreen = () => {
   const [image, setImage] = useState(null)
   const dispatch = useDispatch();
   const [status, requestPermission] = ImagePicker.useMediaLibraryPermissions();
-  
-  useEffect(() => {
-    if (image) {
-      uploadImage()
-      dispatch(setMyimage(image.uri)) 
-    }
-  }, [image]);
-
-  const pickImage = async () => {
-    await requestPermission()
-
-    if(status.granted){
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4,4],
-        quality: 0.1,
-      });
-      const source = {uri: result.assets[0].uri}
-
-
-      setImage(source)
-    }
-
-    if(status.status === ImagePicker.PermissionStatus.DENIED){
-      Linking.openSettings()
-    }
-}; 
-
-
-const uploadImage = async () => {
   const EMAIL = auth().currentUser.email
-
-  const { uri } = image;
-
-  const compressedImageData = (await ImageManipulator.manipulateAsync(uri,[{resize:{
-    height: 300, 
-    width: 300
-  }}],{compress:0.1,format: ImageManipulator.SaveFormat.JPEG}))
-
-  const path = `${EMAIL}`;
-
-  const reference = firebase.storage().ref(path);
-
-  try {
-    const response = await fetch(compressedImageData.uri);
-    const blob = await response.blob();
-
-    await reference.put(blob);
-
-    setImage(null)
-  } catch (error) {
-    console.error('Error uploading photo:', error);
-  }
-} 
-
-  useFocusEffect(
-    React.useCallback(() => {
-      return ()=>{
-        setDeleteAccountPressed(false)
-        dispatch(setShowInput(false))
-        dispatch(setShowInputUsername(false))
-        dispatch(setMessage(''))
-      }
-    }, [])
-  );
-
-  useEffect(() => {
-    checkIsAskBeforeStickingNoteFlagOff({ setAskBeforeStickingNoteFlag });
-  }, []);
+  const insets = useSafeAreaInsets();
 
   const handlePasswordChange = () => {
     if (showInput) {
@@ -127,11 +58,8 @@ const uploadImage = async () => {
       setDeleteAccountPressed(true);
     }
   };
-  const insets = useSafeAreaInsets();
 
   const changeDescription = async ()=>{
-    const EMAIL = auth().currentUser.email
-
     const getUserByEmail = await firestore()
       .collection('users')
       .where('email', '==', EMAIL)
@@ -148,6 +76,71 @@ const uploadImage = async () => {
 
       dispatch(setDescription(description))
   }
+
+  const pickImage = async () => {
+    await requestPermission()
+
+    if(status.granted){
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4,4],
+        quality: 0.1,
+      });
+      const source = {uri: result.assets[0].uri}
+
+      setImage(source)
+    }
+
+    if(status.status === ImagePicker.PermissionStatus.DENIED){
+      Linking.openSettings()
+    }
+  }; 
+
+  const uploadImage = async () => {
+    const { uri } = image;
+
+    const compressedImageData = (await ImageManipulator.manipulateAsync(uri,[{resize:{
+      height: 300, 
+      width: 300
+    }}],{compress:0.1,format: ImageManipulator.SaveFormat.JPEG}))
+
+    const path = `${EMAIL}`;
+
+    const reference = firebase.storage().ref(path);
+
+    const response = await fetch(compressedImageData.uri);
+
+    const blob = await response.blob();
+
+    await reference.put(blob);
+
+    setImage(null)
+  } 
+
+  useFocusEffect(
+    React.useCallback(() => {
+      return ()=>{
+        setDeleteAccountPressed(false)
+        dispatch(setShowInput(false))
+        dispatch(setShowInputUsername(false))
+        dispatch(setMessage(''))
+      }
+    }, [])
+  );
+
+  useEffect(() => {
+    if (image) {
+      uploadImage()
+      dispatch(setMyimage(image.uri)) 
+    }
+  }, [image]);
+
+  useEffect(() => {
+    checkIsAskBeforeStickingNoteFlagOff().then((resp)=>{
+      setAskBeforeStickingNoteFlag(resp)
+    })
+  }, []);
 
   return (
     <TouchableWithoutFeedback 
@@ -195,7 +188,9 @@ const uploadImage = async () => {
           </View>
         </Modal>
 
-        <Pressable style={styles.friendsHeaderRequest} onPress={()=>setModalVisible(true)}>
+        <Pressable style={styles.friendsHeaderRequest} onPress={()=>{
+          newDescription(reduxdescription)
+          setModalVisible(true)}}>
           <Text style={styles.settingsActionText}>CHANGE DESCRIPTION</Text>
         </Pressable>
 

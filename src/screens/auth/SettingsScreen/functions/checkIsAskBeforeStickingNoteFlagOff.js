@@ -1,7 +1,7 @@
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
-export const checkIsAskBeforeStickingNoteFlagOff = async ({setAskBeforeStickingNoteFlag}) => {
+export const checkIsAskBeforeStickingNoteFlagOff = async () => {
   const EMAIL = auth().currentUser.email
 
   let data 
@@ -19,5 +19,5 @@ export const checkIsAskBeforeStickingNoteFlagOff = async ({setAskBeforeStickingN
     })
   }
 
-  setAskBeforeStickingNoteFlag(data ? true : false);
+  return data ? true : false
 };
