@@ -1,6 +1,6 @@
 import React from 'react';
 import {Pressable,Text} from 'react-native';
-import { styles } from '../../../../assets/styles/styles';
+import { styles } from '../../../../../assets/styles/styles';
 import {signInFirebase} from '../functions/signInFirebase';
 import { useSelector,useDispatch } from 'react-redux';
 

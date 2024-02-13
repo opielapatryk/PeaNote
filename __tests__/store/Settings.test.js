@@ -1,4 +1,4 @@
-import reducer, { setShowInput } from './settingsSlice';
+import reducer, { setShowInput } from '../../src/store/settings/settingsSlice';
 
 test('should change showInput boolean', () => {
     // dispatch the action using the reducer

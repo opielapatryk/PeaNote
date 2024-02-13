@@ -1,6 +1,6 @@
 import { View,Keyboard,TouchableWithoutFeedback,Image, Dimensions } from 'react-native'
 import React,{ useEffect } from 'react';
-import { styles } from '../../../../assets/styles/styles';
+import { styles } from '../../../../../assets/styles/styles';
 import LoginBody from './LoginBody';
 import CreateAccountBody from './CreateAccountBody';
 import { useDispatch, useSelector } from 'react-redux';
@@ -35,7 +35,7 @@ const Login = () => {
   return (
     <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
       <View style={[styles.container,{paddingBottom:insets.bottom-20}]}>
-        <Image source={require('../../../../assets/images/logo.png')} style={{width:Dimensions.get('window').width/1.2,height:Dimensions.get('window').height/4,marginTop:Dimensions.get('window').height/50}}/>
+        <Image source={require('../../../../../assets/images/logo.png')} style={{width:Dimensions.get('window').width/1.2,height:Dimensions.get('window').height/4,marginTop:Dimensions.get('window').height/50}}/>
         
         {!createAccount && <LoginBody/>}
 

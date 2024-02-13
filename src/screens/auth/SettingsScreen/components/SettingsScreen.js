@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Switch, TextInput, Pressable,Keyboard,TouchableWithoutFeedback,Image, Linking,Modal } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { styles } from '../../../../assets/styles/styles';
+import { styles } from '../../../../../assets/styles/styles';
 import {checkIsAskBeforeStickingNoteFlagOff} from '../functions/checkIsAskBeforeStickingNoteFlagOff';
 import {askBeforeStick} from '../functions/askBeforeStick';
 import {deleteAccount} from '../functions/deleteAccount';
@@ -10,7 +10,7 @@ import { HANDLE_PASSWORD_CHANGE_BUTTON_PRESS,HANDLE_USERNAME_CHANGE_BUTTON_PRESS
 import { setMyimage, setShowInput,setShowInputUsername} from '../../../../store/settings/settingsSlice';
 import { setDescription, setMessage } from '../../../../store/login/loginSlice';
 import { useFocusEffect } from '@react-navigation/native';
-import { signOutAndClearReduxStore } from '../../Logout/functions/signOutAndClearReduxStore';
+import { signOutAndClearReduxStore } from '../functions/signOutAndClearReduxStore'
 import {changeUsername} from '../functions/changeUsername'
 import * as ImagePicker from 'expo-image-picker'
 import auth from '@react-native-firebase/auth';

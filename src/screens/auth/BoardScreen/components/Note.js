@@ -1,6 +1,6 @@
 import { Text, Pressable,View,ActivityIndicator,Modal,TextInput } from 'react-native';
 import React, { useState } from 'react';
-import { styles } from '../../../../assets/styles/styles';
+import { styles } from '../../../../../assets/styles/styles';
 import { useDispatch, useSelector} from 'react-redux';
 import { handlePress } from '../functions/handlePress';
 import { removeNote,editNoteReducer, changeInfo } from '../../../../store/notes/boardSlice';

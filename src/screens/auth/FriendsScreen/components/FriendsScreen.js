@@ -1,7 +1,7 @@
 import { Text,View, Pressable, TextInput,FlatList } from 'react-native'
 import React, { useEffect } from 'react'
 import {findUser} from '../functions/findUser'
-import {styles} from '../../../../assets/styles/styles'
+import {styles} from '../../../../../assets/styles/styles'
 import { useDispatch, useSelector } from 'react-redux';
 import {setEmail,setMessage} from '../../../../store/login/loginSlice'
 import { useFocusEffect } from '@react-navigation/native';

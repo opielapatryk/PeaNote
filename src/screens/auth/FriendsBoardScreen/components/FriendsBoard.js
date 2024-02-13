@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Text, TextInput, View, Pressable, Keyboard,  TouchableWithoutFeedback,Image } from 'react-native';
 import {createNote} from '../functions/createNote'
 import {removeFriend} from '../functions/removeFriend'
-import {styles} from '../../../../assets/styles/styles'
+import {styles} from '../../../../../assets/styles/styles'
 import { useDispatch,useSelector } from 'react-redux';
 import { setFriendimage } from '../../../../store/settings/settingsSlice';
 import auth from '@react-native-firebase/auth';

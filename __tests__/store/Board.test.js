@@ -1,4 +1,4 @@
-import reducer, { addNote, removeNote,changeInfo,addPendingNote,removePendingNote,changePendingInfo } from './boardSlice';
+import reducer, { addNote, removeNote,changeInfo,addPendingNote,removePendingNote,changePendingInfo } from '../../src/store/notes/boardSlice';
 
 test('should add new note to state', () => {
     const newState = reducer({ notes: [{ id: 1, text: 'foo', isInfo: false }]}, addNote({ id: 2, text: 'bar', isInfo: false }));

@@ -1,8 +1,8 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { Provider } from 'react-redux';  
-import store from '../../../../../store/store'; 
-import CreateAccountButton from '../CreateAccountButton';
+import store from '../../../src/store/store'; 
+import CreateAccountButton from '../../../src/screens/public/Login/components/CreateAccountButton';
 
 jest.mock('@react-native-firebase/auth', () => ({
     auth: {

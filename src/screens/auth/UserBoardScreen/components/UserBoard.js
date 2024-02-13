@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Text, View, Pressable, Keyboard,  TouchableWithoutFeedback,Image } from 'react-native';
-import {styles} from '../../../../assets/styles/styles'
+import {styles} from '../../../../../assets/styles/styles'
 import { useDispatch,useSelector } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
 import { sendFriendRequest } from '../functions/sendFriendRequest';

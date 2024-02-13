@@ -2,7 +2,7 @@ import React,{ useEffect } from 'react';
 import { Pressable,View,FlatList,Text } from 'react-native';
 import { renderNotes } from '../functions/renderNotes';
 import { useDispatch, useSelector } from 'react-redux';
-import { styles } from '../../../../assets/styles/styles';
+import { styles } from '../../../../../assets/styles/styles';
 import { checkIsInfo } from '../functions/checkIsInfo';
 import { useFocusEffect } from '@react-navigation/native';
 import { fetchNotes } from '../functions/fetchNotes';

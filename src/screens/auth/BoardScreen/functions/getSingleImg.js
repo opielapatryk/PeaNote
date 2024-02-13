@@ -1,5 +1,4 @@
 import * as FileSystem from 'expo-file-system';
-// import { firebase } from '@react-native-firebase/auth';
 import {firebase} from '@react-native-firebase/storage'
 
 export async function getSingleImg(email) {

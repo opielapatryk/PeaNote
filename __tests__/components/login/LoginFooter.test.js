@@ -1,8 +1,8 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { Provider } from 'react-redux';  
-import LoginFooter from '../LoginFooter';
-import store from '../../../../../store/store'; 
+import LoginFooter from '../../../src/screens/public/Login/components/LoginFooter';
+import store from '../../../src/store/store'; 
 
 test('Login footer renders correctly.', () => {
 

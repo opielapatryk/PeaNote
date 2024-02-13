@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import LoginWithGoogleButton from '../LoginWithGoogleButton';
+import LoginWithGoogleButton from '../../../src/screens/public/Login/components/LoginWithGoogleButton';
 
 jest.mock('@react-native-firebase/auth', () => ({
     auth: {

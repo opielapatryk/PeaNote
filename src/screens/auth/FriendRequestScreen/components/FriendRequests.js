@@ -2,7 +2,6 @@ import { FlatList,View } from 'react-native'
 import React from 'react'
 import { renderRequests } from '../functions/renderRequests';
 import { KEY_EXTRACTOR_FRIENDS } from '../../../constants';
-import { styles } from '../../../../assets/styles/styles';
 import { useDispatch, useSelector } from "react-redux";
 import { useFocusEffect } from '@react-navigation/native';
 import { loadUser } from '../../FriendsScreen/functions/loadUser';

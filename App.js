@@ -19,7 +19,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { SafeAreaProvider,initialWindowMetrics} from 'react-native-safe-area-context';
-import { styles } from './src/assets/styles/styles';
+import { styles } from './assets/styles/styles';
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialTopTabNavigator();
