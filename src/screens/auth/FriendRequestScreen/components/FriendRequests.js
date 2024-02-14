@@ -1,7 +1,6 @@
 import { FlatList,View } from 'react-native'
 import React from 'react'
 import { renderRequests } from '../functions/renderRequests';
-import { KEY_EXTRACTOR_FRIENDS } from '../../../constants';
 import { useDispatch, useSelector } from "react-redux";
 import { useFocusEffect } from '@react-navigation/native';
 import { loadUser } from '../../FriendsScreen/functions/loadUser';
@@ -18,7 +17,7 @@ const FriendRequests = ({navigation}) => {
 
   return (
     <View style={{flex:1,backgroundColor:'#FFF'}}>
-       <FlatList data={requests} renderItem={({item})=>renderRequests({item},dispatch,navigation)} keyExtractor={KEY_EXTRACTOR_FRIENDS}/>
+       <FlatList data={requests} renderItem={({item})=>renderRequests({item},dispatch,navigation)} keyExtractor={(friend, index) => friend.id || index.toString()}/>
     </View>
    
   );

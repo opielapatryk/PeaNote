@@ -6,7 +6,6 @@ import { styles } from '../../../../../assets/styles/styles';
 import { checkIsInfo } from '../functions/checkIsInfo';
 import { useFocusEffect } from '@react-navigation/native';
 import { fetchNotes } from '../functions/fetchNotes';
-import { KEY_EXTRACTOR_NOTES } from '../../../constants';
 import { loadUser } from '../../FriendsScreen/functions/loadUser';
 import { clearBoardInfo } from '../../../../store/notes/boardSlice';
 import { setUsername,setMyimage } from '../../../../store/settings/settingsSlice';
@@ -52,7 +51,7 @@ const BoardScreen = () => {
 
         }} style={styles.board}>
         {notes.length==0&&<Text style={styles.emptyBoardText}>THIS BOARD IS EMPTY</Text>}
-        <FlatList numColumns={2} data={notes} renderItem={({item})=>renderNotes({item})} keyExtractor={KEY_EXTRACTOR_NOTES}/>
+        <FlatList numColumns={2} data={notes} renderItem={({item})=>renderNotes({item})} keyExtractor={(note) => note.id}/>
       </Pressable>
     </View>
   );

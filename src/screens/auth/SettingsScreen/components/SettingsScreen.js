@@ -6,8 +6,7 @@ import {checkIsAskBeforeStickingNoteFlagOff} from '../functions/checkIsAskBefore
 import {askBeforeStick} from '../functions/askBeforeStick';
 import {deleteAccount} from '../functions/deleteAccount';
 import {changePassword} from '../functions/changePassword';
-import { HANDLE_PASSWORD_CHANGE_BUTTON_PRESS,HANDLE_USERNAME_CHANGE_BUTTON_PRESS } from '../../../constants';
-import { setMyimage, setShowInput,setShowInputUsername,removeMyImage} from '../../../../store/settings/settingsSlice';
+import { setMyimage, setShowInput,setShowInputUsername} from '../../../../store/settings/settingsSlice';
 import { setDescription, setMessage } from '../../../../store/login/loginSlice';
 import { useFocusEffect } from '@react-navigation/native';
 import { signOutAndClearReduxStore } from '../functions/signOutAndClearReduxStore'
@@ -40,7 +39,9 @@ const SettingsScreen = () => {
     if (showInput) {
       changePassword({ setDeleteAccountPressed, newPassword, dispatch,setNewPassword });
     } else {
-      HANDLE_PASSWORD_CHANGE_BUTTON_PRESS({ setDeleteAccountPressed, dispatch });
+      setDeleteAccountPressed(false);
+      dispatch(setShowInput(true))
+      dispatch(setMessage(''));
     }
   };
 
@@ -48,7 +49,9 @@ const SettingsScreen = () => {
     if (showInputUsername) {
       changeUsername({ setDeleteAccountPressed, newUsername, dispatch,setNewUsername });
     } else {
-      HANDLE_USERNAME_CHANGE_BUTTON_PRESS({ setDeleteAccountPressed, dispatch });
+      setDeleteAccountPressed(false);
+      dispatch(setShowInputUsername(true))
+      dispatch(setMessage(''));
     }
   };
 
