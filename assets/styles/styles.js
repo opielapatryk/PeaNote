@@ -436,4 +436,12 @@ export const styles = StyleSheet.create({
   tabBarIndicatorStyle:{backgroundColor:'#c99c1f',top:0},
   tabBarLabelStyle:{letterSpacing:.5, fontSize:13},
   tabBarStyle:{borderTopWidth:.17,borderTopColor:'lightgray'},
+  createAccountBodyContainer:{gap:Dimensions.get('window').height/50,alignItems:'center'},
+  createAccountBodyHeader:{fontSize:20,fontWeight:'600',letterSpacing:.5},
+  createAccountBodyParagraph:{letterSpacing:.5,fontSize:13},
+  appleButton:{
+    width:Dimensions.get('window').width/1.5,
+    height: 45,
+  },
+
 });

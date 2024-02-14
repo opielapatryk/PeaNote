@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react';
-import {Text,TextInput,View,Dimensions} from 'react-native';
+import {Text,TextInput,View} from 'react-native';
 import { styles } from '../../../../assets/styles/styles';
 import CreateAccountButton from './CreateAccountButton';
 import CreateAccountFooter from './CreateAccountFooter';
@@ -10,7 +10,7 @@ import * as AppleAuthentication from 'expo-apple-authentication'
 import { AppleButton } from '@invertase/react-native-apple-authentication';
 import { appleSignin } from '../functions/appleSignin';
 
-const CreateAccountHeader = () => {
+const CreateAccountBody = () => {
   const {email,password,message} = useSelector((state)=>state.login)
   const dispatch = useDispatch()
   const [isAppleLoginAvailable, setIsAppleLoginAvailable] = useState(false);
@@ -19,37 +19,39 @@ const CreateAccountHeader = () => {
     AppleAuthentication.isAvailableAsync().then(setIsAppleLoginAvailable);
 }, []);
 
-    return (
-<>
-<View style={{gap:Dimensions.get('window').height/50,alignItems:'center'}}>
-<Text style={{fontSize:20,fontWeight:'600',letterSpacing:.5}}>Create Account</Text>
-<Text style={{letterSpacing:.5,fontSize:13}}>Let's get started by filling out the form below.</Text>
-{<Text style={styles.errorMessage}>{message}</Text>}
+return (
+    <>
+      <View style={styles.createAccountBodyContainer}>
+
+        <Text style={styles.createAccountBodyHeader}>Create Account</Text>
+
+        <Text style={styles.createAccountBodyParagraph}>Let's get started by filling out the form below.</Text>
+        
+        { <Text style={styles.errorMessage}>{message}</Text>}
+        
         <TextInput style={styles.roundTextInput} placeholder='Email' onChangeText={text=>dispatch(setEmail(text))} value={email}/>
-      <TextInput style={styles.roundTextInput} placeholder='Password' secureTextEntry onChangeText={text=>dispatch(setPassword(text))} value={password}/>   
-      
-      <CreateAccountButton/>
+        
+        <TextInput style={styles.roundTextInput} placeholder='Password' secureTextEntry onChangeText={text=>dispatch(setPassword(text))} value={password}/>   
 
-      <Text style={[styles.paragraph,{fontWeight:'500'}]}>
-        Or sign up with
-      </Text>
-      <LoginWithGoogleButton/>
+        <CreateAccountButton/>
 
-      {isAppleLoginAvailable && 
-        <AppleButton
-        buttonStyle={AppleButton.Style.BLACK}
-        buttonType={AppleButton.Type.SIGN_IN}
-        style={{
-          width:Dimensions.get('window').width/1.5,
-          height: 45,
-        }}
-        onPress={appleSignin}
-      />}
+        <Text style={[styles.paragraph,{fontWeight:'500'}]}>
+          Or sign up with
+        </Text>
+
+        <LoginWithGoogleButton/>
+
+        {isAppleLoginAvailable && 
+          <AppleButton
+          buttonStyle={AppleButton.Style.BLACK}
+          buttonType={AppleButton.Type.SIGN_IN}
+          style={styles.appleButton}
+          onPress={appleSignin}
+        />}
       </View>
 
       <CreateAccountFooter/>
-      </>
-    );
+    </>
+  );
 }
-
-export default CreateAccountHeader;
+export default CreateAccountBody;

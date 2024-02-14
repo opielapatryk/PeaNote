@@ -11,7 +11,7 @@ import auth from '@react-native-firebase/auth'
 import { AppleButton } from '@invertase/react-native-apple-authentication';
 import { appleSignin } from '../functions/appleSignin';
 
-const LoginHeader = () => {
+const LoginBody = () => {
   const {email,password,message} = useSelector((state)=>state.login)
   const dispatch = useDispatch()
   const [modalVisible, setModalVisible] = useState(false);
@@ -90,4 +90,4 @@ const LoginHeader = () => {
     );
 }
 
-export default LoginHeader;
+export default LoginBody;
