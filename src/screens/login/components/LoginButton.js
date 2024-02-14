@@ -7,15 +7,14 @@ import { useSelector,useDispatch } from 'react-redux';
 const LoginButton = () => {
   const { email,password } = useSelector((state)=>state.login)
   const dispatch = useDispatch()
-    return (
-<>
-        <Pressable style={styles.confirmButton} onPress={()=>signInFirebase(email,password,dispatch)}>
-        <Text style={{fontWeight:'600'}}>
-            Log In
-          </Text>
-        </Pressable>  
-      </>
-    );
+    
+  return (
+    <>
+      <Pressable style={styles.confirmButton} onPress={()=>signInFirebase(email,password,dispatch)}>
+        <Text style={{fontWeight:'600'}}>Log In</Text>
+      </Pressable>  
+    </>
+  );
 }
 
 export default LoginButton;

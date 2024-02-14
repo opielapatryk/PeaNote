@@ -6,17 +6,15 @@ import { useSelector,useDispatch } from 'react-redux';
 
 const CreateAccountButton = () => {
   const { email,password } = useSelector((state)=>state.login)
-const dispatch = useDispatch()
+  const dispatch = useDispatch()
 
-    return (
-<>
-        <Pressable style={styles.confirmButton} onPress={()=>signUpFirebase(email,password,dispatch)}> 
-        <Text style={{fontWeight:'600'}}>
-            Get Started
-          </Text>
-        </Pressable>  
-      </>
-    );
+  return (
+    <>
+      <Pressable style={styles.confirmButton} onPress={()=>signUpFirebase(email,password,dispatch)}> 
+        <Text style={{fontWeight:'600'}}>Get Started</Text>
+      </Pressable>  
+    </>
+  );
 }
 
 export default CreateAccountButton;

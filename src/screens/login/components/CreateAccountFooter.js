@@ -7,7 +7,7 @@ import { setEmail,setPassword,setCreateAccount,setMessage } from '../../../store
 const CreateAccountFooter = () => {
   const dispatch = useDispatch()
     return (
-<>
+      <>
         <View style={styles.bottomView}>
           <Pressable style={styles.pressableInBottonViewLeftCreateAccountOn} onPress={()=>{
             dispatch(setCreateAccount(true))

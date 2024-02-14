@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoginWithApple button renders correctly. 1`] = `
+<ViewManagerAdapter_ExpoAppleAuthentication
+  buttonStyle={2}
+  buttonType={0}
+  cornerRadius={5}
+  onButtonPress={[Function]}
+  style={
+    {
+      "alignItems": "center",
+      "backgroundColor": "#FFFDF3",
+      "borderColor": "lightgray",
+      "borderRadius": 5,
+      "borderWidth": 1,
+      "elevation": 1,
+      "flexDirection": "row",
+      "height": 66.7,
+      "justifyContent": "center",
+      "paddingLeft": 10,
+      "shadowColor": "#000",
+      "shadowOffset": {
+        "height": 1,
+        "width": 0,
+      },
+      "shadowOpacity": 0.18,
+      "shadowRadius": 1,
+      "width": 500,
+    }
+  }
+/>
+`;

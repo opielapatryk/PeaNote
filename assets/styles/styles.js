@@ -443,5 +443,5 @@ export const styles = StyleSheet.create({
     width:Dimensions.get('window').width/1.5,
     height: 45,
   },
-
+  logo:{width:Dimensions.get('window').width/1.2,height:Dimensions.get('window').height/4,marginTop:Dimensions.get('window').height/50},
 });
