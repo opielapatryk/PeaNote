@@ -11,7 +11,7 @@ import { clearBoardInfo } from '../../../../store/notes/boardSlice';
 import { setUsername,setMyimage } from '../../../../store/settings/settingsSlice';
 import auth from '@react-native-firebase/auth';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { setDescription } from '../../../../store/login/loginSlice';
+import { setDescription,setMessage,setEmail } from '../../../../store/login/loginSlice';
 import {getUserDocs} from '../functions/getUserDocs'
 import {downloadImage} from '../functions/downloadImage'
 
@@ -33,6 +33,8 @@ const BoardScreen = () => {
     })
     fetchNotes(dispatch);
     loadUser(dispatch)
+    dispatch(setMessage(''))
+    dispatch(setEmail(''))
   },[])
 
   useFocusEffect(
