@@ -14,26 +14,18 @@ import auth from '@react-native-firebase/auth';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { setDescription } from '../../../../store/login/loginSlice';
 import {getUserDocs} from '../functions/getUserDocs'
-import {ensureDirExists} from "../functions/ensureDirExists";
-import {getSingleImg} from '../functions/getSingleImg'
+import {downloadImage} from '../functions/downloadImage'
 
 const BoardScreen = () => {
   const insets = useSafeAreaInsets();
   const { notes } = useSelector((state) => state.board);
   const dispatch = useDispatch()
-  
-  const downloadImage = async () => {
-    const EMAIL = auth().currentUser.email
-    
-    await ensureDirExists();
-
-    const fileUri = await getSingleImg(EMAIL)
-
-    dispatch(setMyimage(fileUri));
-  }
+  const EMAIL = auth().currentUser.email
 
   useEffect(()=>{
-    downloadImage()
+    downloadImage(EMAIL).then((fileUri)=>{
+      dispatch(setMyimage(fileUri));
+    })
     getUserDocs().then((docs)=>{
       docs.forEach(doc => {
         dispatch(setUsername(doc.data().username))

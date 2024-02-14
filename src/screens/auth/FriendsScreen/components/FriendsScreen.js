@@ -8,8 +8,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { loadUser } from '../functions/loadUser';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { setFriendimage } from '../../../../store/settings/settingsSlice';
-import {ensureDirExists} from "../../BoardScreen/functions/ensureDirExists";
-import {getSingleImg} from '../../BoardScreen/functions/getSingleImg';
+import { downloadImage } from '../../BoardScreen/functions/downloadImage';
 
 export const FriendsScreen = ({ navigation }) => {
   const {friends} = useSelector((state) => state.friends);
@@ -30,18 +29,13 @@ export const FriendsScreen = ({ navigation }) => {
     loadUser(dispatch)
   },[])
 
-  const downloadImage = async (email) => {
-    await ensureDirExists();
-
-    const fileUri = await getSingleImg(email)
-
-    dispatch(setFriendimage(fileUri));
-  }
 
   const RenderFriendsMemoized = React.memo(({ item }) => {
     return (
       <Pressable onPress={async () =>{
-        await downloadImage(item.email)
+        await downloadImage(item.email).then((fileUri)=>{
+          dispatch(setFriendimage(fileUri));
+        })
         navigation.navigate('FriendsBoard', {name:item.username, friendEmail: item.email, oldnickname:item.nickname})
       }} style={styles.friendsList}><Text style={styles.firendListText}>{item.nickname?item.nickname:item.username}</Text></Pressable>
     );

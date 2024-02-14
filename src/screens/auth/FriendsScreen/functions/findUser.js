@@ -3,19 +3,9 @@ import { setEmail, setMessage } from '../../../../store/login/loginSlice';
 import { Keyboard } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import { setFriendimage } from '../../../../store/settings/settingsSlice';
-import {ensureDirExists} from "../../BoardScreen/functions/ensureDirExists";
-import {getSingleImg} from '../../BoardScreen/functions/getSingleImg';
+import { downloadImage } from '../../BoardScreen/functions/downloadImage';
 
 export const findUser = async (dispatch, friendEmailOrUsername,navigation) => {
-
-  const downloadImage = async (email) => {
-    await ensureDirExists();
-
-    const fileUri = await getSingleImg(email)
-
-    dispatch(setFriendimage(fileUri));
-  }
-
   const currentUserEmail = auth().currentUser.email;
 
   const getUserDetails = async (email) => {
@@ -75,7 +65,10 @@ export const findUser = async (dispatch, friendEmailOrUsername,navigation) => {
       const friendemail = friendDoc.data().email
       const friendusername = friendDoc.data().username
 
-      await downloadImage(friendemail)
+      await downloadImage(friendemail).then((fileUri)=>{
+        dispatch(setFriendimage(fileUri));
+      })
+      
       navigation.navigate('UserBoard', {name:friendusername, friendEmail: friendemail, oldnickname:''})
     }
   }

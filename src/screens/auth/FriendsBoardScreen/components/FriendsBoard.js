@@ -8,8 +8,7 @@ import { setFriendimage } from '../../../../store/settings/settingsSlice';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { useFocusEffect } from '@react-navigation/native';
-import {ensureDirExists} from "../../BoardScreen/functions/ensureDirExists";
-import {getSingleImg} from '../../BoardScreen/functions/getSingleImg';
+import { downloadImage } from '../../BoardScreen/functions/downloadImage';
 
 const FriendsBoard = ({ route, navigation }) => {
   const [description, newDescription] = useState(reduxdescription);
@@ -21,14 +20,6 @@ const FriendsBoard = ({ route, navigation }) => {
   const { reduxdescription } = useSelector((state) => state.login);
 
   const EMAIL = auth().currentUser.email
-
-  const downloadImage = async () => {
-    await ensureDirExists();
-
-    const fileUri = await getSingleImg(friendEmail)
-
-    dispatch(setFriendimage(fileUri));
-  }
 
   useFocusEffect(
     React.useCallback(() => {
@@ -43,7 +34,9 @@ const FriendsBoard = ({ route, navigation }) => {
 
       getEmailByUsername()
 
-      downloadImage()
+      downloadImage(friendEmail).then((fileUri)=>{
+        dispatch(setFriendimage(fileUri));
+      })
       
     }, [])
   );

@@ -1,4 +1,4 @@
-import auth, { firebase } from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 export const editNote = async (newContent, oldContent, creator) => {

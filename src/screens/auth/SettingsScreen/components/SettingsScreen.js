@@ -7,7 +7,7 @@ import {askBeforeStick} from '../functions/askBeforeStick';
 import {deleteAccount} from '../functions/deleteAccount';
 import {changePassword} from '../functions/changePassword';
 import { HANDLE_PASSWORD_CHANGE_BUTTON_PRESS,HANDLE_USERNAME_CHANGE_BUTTON_PRESS } from '../../../constants';
-import { setMyimage, setShowInput,setShowInputUsername} from '../../../../store/settings/settingsSlice';
+import { setMyimage, setShowInput,setShowInputUsername,removeMyImage} from '../../../../store/settings/settingsSlice';
 import { setDescription, setMessage } from '../../../../store/login/loginSlice';
 import { useFocusEffect } from '@react-navigation/native';
 import { signOutAndClearReduxStore } from '../functions/signOutAndClearReduxStore'
@@ -18,6 +18,7 @@ import {firebase} from '@react-native-firebase/storage'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import firestore from '@react-native-firebase/firestore';
 import * as ImageManipulator from 'expo-image-manipulator';
+import * as FileSystem from 'expo-file-system';
 
 const SettingsScreen = () => {
   const [askBeforeStickingNoteFlag, setAskBeforeStickingNoteFlag] = useState(false);
@@ -131,6 +132,7 @@ const SettingsScreen = () => {
 
   useEffect(() => {
     if (image) {
+      FileSystem.deleteAsync(FileSystem.cacheDirectory + `images/${EMAIL}`);
       uploadImage()
       dispatch(setMyimage(image.uri)) 
     }
@@ -194,8 +196,8 @@ const SettingsScreen = () => {
           <Text style={styles.settingsActionText}>CHANGE DESCRIPTION</Text>
         </Pressable>
 
-        <Pressable style={styles.friendsHeaderRequest} onPress={async ()=>{
-          await pickImage()
+        <Pressable style={styles.friendsHeaderRequest} onPress={()=>{
+          pickImage()
         }}>
           <Text style={styles.settingsActionText}>CHANGE PROFILE PHOTO</Text>
         </Pressable>
