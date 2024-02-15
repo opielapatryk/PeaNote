@@ -8,7 +8,7 @@ import { loadUser } from '../../FriendsScreen/functions/loadUser';
 const FriendRequests = ({navigation}) => {
   const {requests} = useSelector((state)=>state.friends)
   const dispatch = useDispatch()
-      
+
   useFocusEffect(
     React.useCallback(() => {
       loadUser(dispatch)

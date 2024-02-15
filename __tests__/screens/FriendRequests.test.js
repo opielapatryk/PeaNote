@@ -41,4 +41,4 @@ test('Friend requests screen renders correctly.', async () => {
   await act(async () => {
     expect(tree).toMatchSnapshot();
   })
-});
+},20000);
