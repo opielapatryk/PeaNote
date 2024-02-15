@@ -1,33 +1,26 @@
-import { Text,Dimensions } from "react-native"
+import { Text,Animated,Dimensions } from "react-native"
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { removeFriendRequestFromFirestore } from './removeFriendRequestFromFirestore';
 import { approveFriend } from './approveFriend'
 import { styles } from '../../../../../assets/styles/styles'
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import Animated, { Easing } from 'react-native-reanimated';
 import { downloadImage } from '../../BoardScreen/functions/downloadImage';
 import { setFriendimage } from "../../../../store/settings/settingsSlice";
-import {
-    TouchableHighlight,
-    TouchableOpacity,
-    TouchableWithoutFeedback,
-  } from 'react-native-gesture-handler';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-export const renderRequests = ({item},dispatch,navigation) =>{
-    
-
+export const renderRequests = ({item},dispatch,navigation,translation) =>{
     const rightActions = () => {
         return (
-            <Animated.View style={{backgroundColor:'red',justifyContent:'center',width:Dimensions.get('window').width,alignItems:'flex-end'}}>
-                <FontAwesome5 name="trash-alt" size={24} color="black"  />
+            <Animated.View style={[styles.rightAction,{transform: [{ translateX: translation }],}]}>
+                <FontAwesome5 name="trash-alt" size={16} color="white"/>
             </Animated.View>
         );
       };
 
-      const leftActions = (progress, dragX) => {
+      const leftActions = () => {
         return (
-            <Animated.View style={{backgroundColor:'green',justifyContent:'center',width:Dimensions.get('window').width}}>
-                <Animated.Text>Accept</Animated.Text>
+            <Animated.View style={[styles.leftActions,{transform: [{ translateX: translation }],}]}>
+                <Animated.Text style={{color:'white',fontSize:16}}>Accept</Animated.Text>
             </Animated.View>
         );
       };
@@ -36,8 +29,16 @@ export const renderRequests = ({item},dispatch,navigation) =>{
         <Swipeable renderRightActions={rightActions} renderLeftActions={leftActions} onSwipeableOpen={ 
             (direction)=>{
             if(direction==='left'){
+                Animated.timing(translation, {
+                    toValue: Dimensions.get('window').width,
+                    useNativeDriver: true,
+                  }).start();
                 approveFriend(item.email,item.username,dispatch)
             }else{
+                Animated.timing(translation, {
+                    toValue: -Dimensions.get('window').width,
+                    useNativeDriver: true,
+                  }).start();
                 removeFriendRequestFromFirestore(item.email,item.username,dispatch)
             }
         }}>
