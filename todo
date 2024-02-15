@@ -14,7 +14,3 @@ TODO: Dodawanie notatek na swoja tablice
 TODO: Usunalem 2 notatki z 3 wszedlem na friends => friend => z friend na board i notatka sie powielila
 TODO: Lepszy rendering notatek po przeniesieniu z pending, jak friends
 TODO: Fix nickname
-
-TODO: Wyszukac mozna kazdego uzytkownika, nastepnie mozesz go dodac jezeli nie jestescie jeszcze znajomymi lub zostawic notatke jezeli jestescie
-
-TODO: Popraw walidacje wyszukiwania uzytkownika

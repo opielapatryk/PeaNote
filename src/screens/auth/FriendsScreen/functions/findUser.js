@@ -26,16 +26,19 @@ export const findUser = async (dispatch, friendEmailOrUsername,navigation) => {
     myfriend.email === friend.email);
 
   if (isFriend) {
-    dispatch(setMessage('YOU ARE FRIENDS ALREADY'));
+    const fileUri = await downloadImage(friend.email)
+    dispatch(setFriendimage(fileUri));
+    navigation.navigate('FriendsBoard', {name:friend.username, friendEmail: friend.email, oldnickname:''})
   } else {
-    if (!friend) {
+    if (friend.email == null) {
       dispatch(setMessage('USER NOT FOUND'));
       console.log('user not found');
     }
     if (friend.email === currentUserEmail) {
       dispatch(setMessage('YOU CANNOT ADD YOURSELF TO FRIENDS'));
       console.log('YOU CANNOT ADD YOURSELF TO FRIENDS');
-    } else {
+    } 
+    if(friend.email !== null && friend.email !== currentUserEmail) {
       console.log('friend searched');
       const fileUri = await downloadImage(friend.email)
       dispatch(setFriendimage(fileUri));
