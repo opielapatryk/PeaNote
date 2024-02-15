@@ -444,4 +444,6 @@ export const styles = StyleSheet.create({
     height: 45,
   },
   logo:{width:Dimensions.get('window').width/1.2,height:Dimensions.get('window').height/4,marginTop:Dimensions.get('window').height/50},
+  leftActions:{backgroundColor:'green',justifyContent:'center',width:Dimensions.get('window').width,paddingLeft:16},
+  rightAction:{backgroundColor:'red',justifyContent:'center',width:Dimensions.get('window').width,alignItems:'flex-end',paddingRight:16},
 });
