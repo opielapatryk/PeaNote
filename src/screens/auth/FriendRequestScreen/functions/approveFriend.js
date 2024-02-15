@@ -2,7 +2,7 @@ import firestore from '@react-native-firebase/firestore';
 import auth, { firebase } from '@react-native-firebase/auth';
 import { removeRequestReducer, setFriends } from '../../../../store/friends/friendsSlice';
 
-export const approveFriend = async (friendEmail,friendUsername,dispatch,navigation) =>{
+export const approveFriend = async (friendEmail,friendUsername,dispatch) =>{
   let friendsAmmount
   const EMAIL = auth().currentUser.email
 
@@ -62,10 +62,6 @@ export const approveFriend = async (friendEmail,friendUsername,dispatch,navigati
           dispatch(removeRequestReducer(friendEmail))
 
           dispatch(setFriends({id:friendsAmmount + 1,email:friendEmail, username:friendUsername,nickname:undefined}))
-
-          // dispatch(setFriends(friendEmail))
-          navigation.navigate('FriendsScreen');
-          
         });
         }
       })

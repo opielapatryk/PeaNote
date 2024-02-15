@@ -2,7 +2,7 @@ import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { removeRequestReducer } from '../../../../store/friends/friendsSlice';
 
-export const removeFriendRequestFromFirestore = async (friendEmail,friendUsername,dispatch,navigation) =>{
+export const removeFriendRequestFromFirestore = async (friendEmail,friendUsername,dispatch) =>{
   const EMAIL = auth().currentUser.email
 
   const getUserByEmail = await firestore()
@@ -20,7 +20,6 @@ export const removeFriendRequestFromFirestore = async (friendEmail,friendUsernam
           friends_requests: firebase.firestore.FieldValue.arrayRemove({email:friendEmail,username:friendUsername,nickname:""}),
         }).then(() =>{
           dispatch(removeRequestReducer(friendEmail))
-          navigation.navigate('FriendsScreen'); // Change for some animation instead of navigation to previous screen.
         })
       }
     })
