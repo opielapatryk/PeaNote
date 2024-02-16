@@ -3,13 +3,29 @@ TODO: Sort notes
 TODO: Notifications, TOP LEFT = BELL, TOP MIDDLE = CURRENT TAB, TOP RIGHT = CREATE NOTE BUTTON
 TODO: Invite friends via link
 TODO: Historia notatek 
-TODO: Widok czy zaproszenie do przyjaciół było wysłane
 TODO: Logowanie przez username
 TODO: DarkMode
 TODO: Accessibility
 TODO: Better friend search, using first name and last name
-TODO: Jezeli wpisze zly email i dam search to nic sie nie dzieje
 TODO: Dodawanie notatek na swoja tablice
 TODO: Usunalem 2 notatki z 3 wszedlem na friends => friend => z friend na board i notatka sie powielila
 TODO: Lepszy rendering notatek po przeniesieniu z pending, jak friends
 TODO: Fix nicknames
+
+TODO: ZADANIE GŁOWNE
+TODO: !Widok czy zaproszenie do przyjaciół było wysłane!
+
+TODO: po dodaniu friend do znajomych wrzucacsz go u siebie do pending requests
+
+TODO: sprawdz po wejsciu na userboard czy friendemail jest w pendingrequests
+
+TODO: jezeli jest to zmien invited na true, powinno zmienic sie wtedy add friend na remove request, funkcja rowniez powinna sie zmienic
+
+
+TODO: ZADANIE Z GWIAZDKA
+TODO: test user board 
+      getDescription(friendEmail).then((description)=>newDescription(description))
+
+      on render screen ta funkcja powinna byc odpalona i powinna przyjac email przyjaciela a zwrocic jego opis
+
+      mock user object 

@@ -15,6 +15,7 @@ export const signIn = async ()=>{
       username:user_sign_in.user.email,
       friends: [],
       friends_requests: [],
+      pending_requests: [],
       askBeforeStick: false,
       stickersOnBoard: [],
       pending: [],

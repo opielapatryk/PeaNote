@@ -33,7 +33,7 @@ const RequestUserScreen = ({ route, navigation }) => {
 
           <Pressable style={[styles.deleteAccountButton,{borderTopWidth:.17,borderColor:'lightgrey', marginTop:30,padding:10}]} onPress={async ()=>{
             await approveFriend(friendEmail,name,dispatch)
-            navigation.navigate('Requests')
+            navigation.goBack()
             }}>
           <Text style={styles.removeFriendText}>{message?message:'Approve'}</Text>
           </Pressable>  
