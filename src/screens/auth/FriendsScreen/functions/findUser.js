@@ -18,25 +18,32 @@ export const findUser = async (dispatch, friendEmailOrUsername,navigation) => {
 
   const currentUserDoc = currentUser.docs[0]
 
-  const currentUserUsername = currentUserDoc.data().username
-
   const currentUserFriends = currentUserDoc.data().friends;
+  const currentUserRequests = currentUserDoc.data().friends_requests;
 
   const isFriend = currentUserFriends.some(myfriend => 
     myfriend.email === friend.email);
 
+  const sendYouRequest = currentUserRequests.some(request => 
+    request.email === friend.email);
+  
   if (isFriend) {
     const fileUri = await downloadImage(friend.email)
     dispatch(setFriendimage(fileUri));
     navigation.navigate('FriendsBoard', {name:friend.username, friendEmail: friend.email, oldnickname:''})
   } else {
+    if(sendYouRequest){
+      const fileUri = await downloadImage(friend.email)
+      dispatch(setFriendimage(fileUri));
+      navigation.navigate('RequestUserScreen', {name:friend.username, friendEmail: friend.email, oldnickname:''})
+    }
     if (friend.email == null) {
       dispatch(setMessage('USER NOT FOUND'));
     }
     if (friend.email === currentUserEmail) {
       dispatch(setMessage('YOU CANNOT ADD YOURSELF TO FRIENDS'));
     } 
-    if(friend.email !== null && friend.email !== currentUserEmail) {
+    if((friend.email !== null && friend.email !== currentUserEmail) && !sendYouRequest) {
       const fileUri = await downloadImage(friend.email)
       dispatch(setFriendimage(fileUri));
       navigation.navigate('UserBoard', {name:friend.username, friendEmail: friend.email, oldnickname:''})

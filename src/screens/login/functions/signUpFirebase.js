@@ -13,6 +13,7 @@ export const signUpFirebase = async (email,password,dispatch) =>{
             email: email,
             friends: [],
             friends_requests: [],
+            pending_requests: [],
             askBeforeStick: false,
             stickersOnBoard: [],
             pending: [],

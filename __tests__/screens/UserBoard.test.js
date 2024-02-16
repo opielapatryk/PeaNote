@@ -27,7 +27,7 @@ jest.mock('@react-native-firebase/firestore', () => ({
 }));
 
 
-test('Login screen renders correctly.', () => {
+it('Login screen renders correctly.', () => {
   const tree = renderer.create(
     <Provider store={store}>
       <SafeAreaProvider>

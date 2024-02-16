@@ -5,6 +5,8 @@ import { useDispatch,useSelector } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
 import { sendFriendRequest } from '../functions/sendFriendRequest';
 import { getDescription } from '../functions/getDescription';
+import auth,{ firebase } from '@react-native-firebase/auth';
+import {firestore} from '@react-native-firebase/firestore'
 
 const UserBoard = ({ route, navigation }) => {
   const [description, newDescription] = useState(reduxdescription);
@@ -12,10 +14,17 @@ const UserBoard = ({ route, navigation }) => {
   const dispatch = useDispatch()
   const { friendimage } = useSelector((state) => state.settings);
   const { message,reduxdescription } = useSelector((state) => state.login);
+  const [invited, setInvited] = useState(false)
   
   useFocusEffect(
     React.useCallback(() => {
       getDescription(friendEmail).then((description)=>newDescription(description))
+
+      // const currentEmail = auth().currentUser.email
+
+      // const currentUserDocs = await 
+
+
     }, [])
   );
 
@@ -30,7 +39,7 @@ const UserBoard = ({ route, navigation }) => {
           <Text style={{textAlign:'center',fontStyle:'italic'}}>{description}</Text>
 
           <Pressable style={[styles.deleteAccountButton,{borderTopWidth:.17,borderColor:'lightgrey', marginTop:30,padding:10}]} onPress={()=>sendFriendRequest(dispatch,friendEmail,navigation)}>
-          <Text style={styles.removeFriendText}>{message?message:'ADD FRIEND'}</Text>
+          <Text style={styles.removeFriendText}>{message?message:(invited?'REMOVE REQUEST':'ADD FRIEND')}</Text>
           </Pressable>  
        </View>
       </View>
