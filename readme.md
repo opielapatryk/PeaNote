@@ -1,5 +1,6 @@
 # PeaNote <br>
-is a user-friendly application designed to streamline the process of leaving and sharing notes with friends, providing a centralized space for collecting important information. Whether it's a quick reminder, a to-do list, or a shared idea, PeaNote ensures that all your notes are conveniently stored in one accessible place. </br> You should setup your own firebase config.
+PeaNote is a user-friendly application designed to streamline the process of leaving and sharing notes/tasks with friends, providing a centralized space for collecting important information. Whether it's a quick reminder or a shared idea, PeaNote ensures that all your notes are conveniently stored in one accessible place. </br> 
+You should setup your own firebase config.
 
 
 # Useful commands
