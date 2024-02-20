@@ -137,5 +137,4 @@ it('renders props correctly',()=>{
     navigation: ''
   }
   const component = render(<UserBoard {...mockedParams}/>).toJSON()
-  console.log(component);
 })
