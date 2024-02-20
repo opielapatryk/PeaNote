@@ -40,9 +40,23 @@ export const friendsSlice = createSlice({
                 friends:[],
                 requests:[]
             }
-        }  
+        },
+        setNickname: (state,action)=>{
+            return{
+                ...state,
+                friends: state.friends.map((friend) => {
+                    if(friend.email === action.payload.friendEmail){
+                        return {
+                            ...friend,
+                            nickname: action.payload.nickname,
+                        };
+                    }
+                    return friend;
+                })
+            }
+        }
     }
 })
 
-export const {setFriends,setRequests,removeFriendReducer,removeRequestReducer,cleanStoreFriends} = friendsSlice.actions
+export const {setFriends,setRequests,removeFriendReducer,removeRequestReducer,cleanStoreFriends,setNickname} = friendsSlice.actions
 export default friendsSlice.reducer

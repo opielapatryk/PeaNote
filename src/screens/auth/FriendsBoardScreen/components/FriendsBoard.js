@@ -9,6 +9,7 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { useFocusEffect } from '@react-navigation/native';
 import { downloadImage } from '../../BoardScreen/functions/downloadImage';
+import { setNickname } from '../../../../store/friends/friendsSlice';
 
 const FriendsBoard = ({ route, navigation }) => {
   const [description, newDescription] = useState(reduxdescription);
@@ -70,12 +71,14 @@ const FriendsBoard = ({ route, navigation }) => {
           .doc(doc.id)
           .update({
             friends: friends,
-          }).then(()=>setNewNickNameMessage('nickname changed')).catch(()=>setNewNickNameMessage('try different nickname'))
+          }).then(()=>{
+            dispatch(setNickname({friendEmail,nickname}))
+            navigation.navigate('FriendsScreen')
+          }).catch(()=>setNewNickNameMessage('try different nickname'))
 
       })
 
       setNewNickName('')
-      
       
       setTimeout(() => {
         setShowInput(false)
@@ -105,7 +108,7 @@ const FriendsBoard = ({ route, navigation }) => {
         <TextInput style={[styles.friendsTextInput,{paddingTop:10}]} placeholder={message?message:"NEW NOTE"} value={content} onChangeText={text=>setContent(text)} autoCapitalize="sentences"
           autoCorrect={false} maxLength={100} multiline/>
 
-          <Pressable style={styles.friendsHeaderRequest} onPress={()=>createNote(content,setContent,setMessage,friendEmail,name)}><Text style={styles.removeFriendText}>CREATE NOTE</Text></Pressable>
+          <Pressable style={styles.friendsHeaderRequest} onPress={()=>createNote(content,setContent,setMessage,friendEmail)}><Text style={styles.removeFriendText}>CREATE NOTE</Text></Pressable>
 
 
           {showInput && (

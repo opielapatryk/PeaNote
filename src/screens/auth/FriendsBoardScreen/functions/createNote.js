@@ -2,7 +2,7 @@ import { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
-export const createNote = async (content,setContent,setMessage,friendEmail,username) => {
+export const createNote = async (content,setContent,setMessage,friendEmail) => {
 
   const EMAIL = auth().currentUser.email
   
