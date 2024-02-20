@@ -13,6 +13,5 @@ TODO: Lepszy rendering notatek po przeniesieniu z pending, jak friends
 TODO: write and test more custom hooks
 TODO: if user create account and hide email, ask for providing email or username, that will help friends to find him
 TODO: show info to relogin if user want to delete account 
-TODO: change logo
 TODO: write some custom hooks
 TODO: improve rendering (real-time db and local db)

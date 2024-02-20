@@ -2,7 +2,7 @@
   "expo": {
     "name": "PeaNote",
     "slug": "stickyinreactnative",
-    "icon": "./assets/images/logo.png",
+    "icon": "./assets/images/app.png",
     "ios": {
       "entitlements": {
         "com.apple.developer.applesignin": [
