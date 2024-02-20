@@ -1,9 +1,8 @@
 import { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
-import { setEmail, setMessage } from '../../../../store/login/loginSlice';
 
-export const sendFriendRequest = async (dispatch, friendEmailOrUsername,navigation) => {
+export const sendFriendRequest = async (friendEmail) => {
   const currentUserEmail = auth().currentUser.email;
 
   const getUserDetails = async (email) => {
@@ -35,20 +34,13 @@ export const sendFriendRequest = async (dispatch, friendEmailOrUsername,navigati
 
   const currentUserUsername = currentUserDoc.data().username
 
-
-
-
-
-
-    const friendDoc = await getUserDetails(friendEmailOrUsername);
+    const friendDoc = await getUserDetails(friendEmail);
     const friendUsername = friendDoc.data().username
-    const friendEmail = friendDoc.data().email
 
     if (!friendDoc) {
       return;
     }
 
-  
     await firestore()
     .collection('users')
     .doc(friendDoc.id)
@@ -70,13 +62,4 @@ export const sendFriendRequest = async (dispatch, friendEmailOrUsername,navigati
         nickname:''
         }),
     })
-
-    dispatch(setMessage('FRIEND REQUEST SENT SUCCESSFULLY')); 
-    
-
-    setTimeout(() => {
-        navigation.navigate('FriendsScreen');
-        dispatch(setEmail(''));
-        dispatch(setMessage(''));
-    }, 2000);
 };

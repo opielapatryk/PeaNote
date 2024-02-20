@@ -14,22 +14,22 @@ TODO: Fix nicknames
 
 TODO: write and test more custom hooks
 
-TODO: ZADANIE GŁOWNE
-TODO: Sprawdź czy zaproszenie do przyjaciół było wysłane
-
-TODO: sprawdz po wejsciu na userboard czy friendemail jest w pendingrequests
-
-TODO: jezeli jest to zmien invited na true, powinno zmienic sie wtedy add friend na remove request, funkcja rowniez powinna sie zmienic
-
-Napisz custom hook który..
-- w useFocusEffect, sprawdza czy friendEmail jest w pendingRequests
-- 
-
-
-TODO: po dodaniu friend do znajomych wrzucacsz go u siebie do pending requests
-
 TODO: if user create account and hide email, ask for providing email or username, that will help friends to find him
 
 TODO: show info to relogin if user want to delete account 
 
-TODO: jak usuniesz konto przy pomocy apple, i stworzysz nowe to email: null, username: null
+TODO: change logo
+
+TODO: ZADANIE GŁOWNE
+TODO: Sprawdź czy zaproszenie do przyjaciół było wysłane
+
+TODO: sprawdz po wejsciu na userboard czy friendemail/username jest w pendingrequests
+
+Napisz custom hook który..
+- przyjmuje friendemail jako argument
+- sprawdza w usefocuseffect czy friendEmail jest w pendingRequests
+- jezeli jest to setState invited na true
+- return state
+
+W userBoard screen
+- jezeli useRequest zwraca true, powinno zmienic sie add friend na remove request, funkcja rowniez powinna sie zmienic w przeciwnym wypadku zostanie add friend i funkcja send friend request
