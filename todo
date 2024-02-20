@@ -29,3 +29,5 @@ TODO: test user board
       on render screen ta funkcja powinna byc odpalona i powinna przyjac email przyjaciela a zwrocic jego opis
 
       mock user object 
+
+TODO: write unit test for useDescription hook
