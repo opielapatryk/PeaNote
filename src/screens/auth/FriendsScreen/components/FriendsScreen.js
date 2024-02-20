@@ -30,7 +30,7 @@ export const FriendsScreen = ({ navigation }) => {
   },[])
 
 
-  const RenderFriendsMemoized = React.memo(({ item }) => {
+  const renderFriends = ({ item }) => {
     return (
       <Pressable onPress={async () =>{
         await downloadImage(item.email).then((fileUri)=>{
@@ -39,9 +39,7 @@ export const FriendsScreen = ({ navigation }) => {
         navigation.navigate('FriendsBoard', {name:item.username, friendEmail: item.email, oldnickname:item.nickname})
       }} style={styles.friendsList}><Text style={styles.firendListText}>{item.nickname?item.nickname:item.username}</Text></Pressable>
     );
-  });
-
-  const renderFriends = ({ item }) => <RenderFriendsMemoized item={item} />;
+  };
 
   const insets = useSafeAreaInsets();
 

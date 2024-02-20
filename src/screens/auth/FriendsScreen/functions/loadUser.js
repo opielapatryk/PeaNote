@@ -30,5 +30,4 @@ export const loadUser = async (dispatch)=>{
   if(requests && requests.length>0){
     fetchAndDispatchFriends(requests, dispatch, setRequests);
   }
-  
 }
