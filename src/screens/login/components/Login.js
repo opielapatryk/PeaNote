@@ -13,8 +13,6 @@ const Login = () => {
   return (
     <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
       <View style={[styles.container,{paddingBottom:insets.bottom-20}]}>
-        <Image source={require('../../../../assets/images/Logo8.png')} style={styles.logo} resizeMode='contain'/>
-        
         {!createAccount && <LoginBody/>}
 
         {createAccount && <CreateAccountBody/>}

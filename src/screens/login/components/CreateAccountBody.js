@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react';
-import {Text,TextInput,View} from 'react-native';
+import {Text,TextInput,View,Image} from 'react-native';
 import { styles } from '../../../../assets/styles/styles';
 import CreateAccountButton from './CreateAccountButton';
 import CreateAccountFooter from './CreateAccountFooter';
@@ -22,7 +22,7 @@ const CreateAccountBody = () => {
 return (
     <>
       <View style={styles.createAccountBodyContainer}>
-
+      <Image source={require('../../../../assets/images/Logo8.png')} style={styles.logo} resizeMode='contain'/>
         <Text style={styles.createAccountBodyHeader}>Create Account</Text>
 
         <Text style={styles.createAccountBodyParagraph}>Let's get started by filling out the form below.</Text>
