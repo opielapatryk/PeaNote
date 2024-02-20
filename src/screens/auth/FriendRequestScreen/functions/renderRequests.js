@@ -1,7 +1,7 @@
 import { Text,Animated,Dimensions } from "react-native"
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { removeFriendRequestFromFirestore } from './removeFriendRequestFromFirestore';
-import { approveFriend } from './approveFriend'
+import { approveFriend } from '../../RequestUserScreen/functions/approveFriend';
 import { styles } from '../../../../../assets/styles/styles'
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { downloadImage } from '../../BoardScreen/functions/downloadImage';

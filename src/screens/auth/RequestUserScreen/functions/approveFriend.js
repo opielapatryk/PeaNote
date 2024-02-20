@@ -50,6 +50,13 @@ export const approveFriend = async (friendEmail,friendUsername,dispatch) =>{
         .doc(doc.id)
         .update({
           friends: firebase.firestore.FieldValue.arrayUnion({email:EMAIL,username:USERNAME,nickname:''}),
+        }).then(()=>{
+          firestore()
+          .collection('users')
+          .doc(doc.id)
+          .update({
+            pending_requests: firebase.firestore.FieldValue.arrayRemove({email:EMAIL,username:USERNAME,nickname:''}),
+          })
         })
         .then(() => {
           firestore()
