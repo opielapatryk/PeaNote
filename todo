@@ -10,26 +10,10 @@ TODO: Better friend search, using first name and last name
 TODO: Dodawanie notatek na swoja tablice
 TODO: Usunalem 2 notatki z 3 wszedlem na friends => friend => z friend na board i notatka sie powielila
 TODO: Lepszy rendering notatek po przeniesieniu z pending, jak friends
-TODO: Fix nicknames
-
 TODO: write and test more custom hooks
-
 TODO: if user create account and hide email, ask for providing email or username, that will help friends to find him
-
 TODO: show info to relogin if user want to delete account 
-
 TODO: change logo
-
-TODO: ZADANIE GŁOWNE
-TODO: Sprawdź czy zaproszenie do przyjaciół było wysłane
-
-TODO: sprawdz po wejsciu na userboard czy friendemail/username jest w pendingrequests
-
-Napisz custom hook który..
-- przyjmuje friendemail jako argument
-- sprawdza w usefocuseffect czy friendEmail jest w pendingRequests
-- jezeli jest to setState invited na true
-- return state
-
-W userBoard screen
-- jezeli useRequest zwraca true, powinno zmienic sie add friend na remove request, funkcja rowniez powinna sie zmienic w przeciwnym wypadku zostanie add friend i funkcja send friend request
+TODO: write some custom hooks
+TODO: improve rendering (real-time db and local db)
+TODO: Fix nicknames

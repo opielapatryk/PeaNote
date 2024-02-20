@@ -3,6 +3,8 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
 export const sendFriendRequest = async (friendEmail) => {
+  let isFriend = false;
+
   const currentUserEmail = auth().currentUser.email;
 
   const getUserDetails = async (email) => {
@@ -25,6 +27,7 @@ export const sendFriendRequest = async (friendEmail) => {
 
     return userSnapshot.docs[0];
   };
+  
 
   const currentUserDoc = await getUserDetails(currentUserEmail);
 
@@ -32,7 +35,16 @@ export const sendFriendRequest = async (friendEmail) => {
     return;
   }
 
-  const currentUserUsername = currentUserDoc.data().username
+  currentUserDoc.data().friends.every((friend)=>{
+    if(friend.email === friendEmail){
+      isFriend = true
+      return false
+    }
+    return true
+  })
+
+  if(!isFriend){
+    const currentUserUsername = currentUserDoc.data().username
 
     const friendDoc = await getUserDetails(friendEmail);
     const friendUsername = friendDoc.data().username
@@ -62,4 +74,6 @@ export const sendFriendRequest = async (friendEmail) => {
         nickname:''
         }),
     })
+  }
+  
 };
