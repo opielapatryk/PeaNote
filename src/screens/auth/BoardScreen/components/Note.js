@@ -6,6 +6,8 @@ import { handlePress } from '../functions/handlePress';
 import { removeNote, changeInfo } from '../../../../store/notes/boardSlice';
 import {editNote} from '../functions/editNote'
 import { deleteNote } from '../functions/deleteNote';
+import firestore from '@react-native-firebase/firestore'
+import auth, {firebase} from '@react-native-firebase/auth'
 
 export const Note = ({ id, isInfo,content,creator }) => {
   const { notes } = useSelector((state) => state.board);
@@ -15,6 +17,30 @@ export const Note = ({ id, isInfo,content,creator }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [newContent, setNewContent] = useState(notes.find((item) => item.id === id)?.text);
   const [localNotes, setLocalNotes] = useState(notes);
+  const [nickname, setNickname] = useState()
+
+const getNickname = async () => {
+  const EMAIL = auth().currentUser.email
+  const currentUser = await firestore().collection('users').where('email', '==', EMAIL).get()
+
+  if (currentUser.docs && currentUser.docs.length > 0) {
+    const friend = currentUser.docs[0].data().friends.find(
+      (friend) => friend.username === creator || friend.email === creator
+    );
+
+    if (friend === undefined) {
+      return creator;
+    }
+
+    return friend.nickname;
+  } else {
+    return creator; // Handle the case where docs array is undefined or empty
+  }
+}
+
+  getNickname().then((nickname)=>{
+    setNickname(nickname)
+  })
 
 
   return (
@@ -44,7 +70,9 @@ export const Note = ({ id, isInfo,content,creator }) => {
         </Modal>
         
       {!isInfo&&<>
-        <Text style={styles.noteTextHeader}>{localNotes.find((item) => item.id === id)?.creator}</Text>
+        <Text style={styles.noteTextHeader}>
+          {nickname?nickname:localNotes.find((item) => item.id === id)?.creator}
+        </Text>
         <Text style={styles.noteText}>{localNotes.find((item) => item.id === id)?.text}</Text>
         </>}
       
