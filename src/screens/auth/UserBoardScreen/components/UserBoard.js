@@ -22,7 +22,7 @@ const UserBoard = ({ route, navigation }) => {
 
           <Text style={{textAlign:'center',fontStyle:'italic'}}>{useDescription(friendEmail)}</Text>
 
-          <Pressable style={[styles.deleteAccountButton,{borderTopWidth:.17,borderColor:'lightgrey', marginTop:30,padding:10}]} onPress={()=>sendFriendRequest(dispatch,friendEmail,navigation)}>
+          <Pressable style={styles.addFriendButton} onPress={()=>sendFriendRequest(dispatch,friendEmail,navigation)}>
           <Text style={styles.removeFriendText}>{message?message:(invited?'REMOVE REQUEST':'ADD FRIEND')}</Text>
           </Pressable>  
        </View>

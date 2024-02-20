@@ -278,6 +278,21 @@ export const styles = StyleSheet.create({
     justifyContent:'center',
     paddingBottom:Dimensions.get("window").height / 100,
   },
+  addFriendButton:{
+    backgroundColor:'#FFF',
+    shadowOffset: {
+      width: 0,
+      height: .5,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: .5,
+    zIndex:1000,
+    width: Dimensions.get("window").width,
+    height:Dimensions.get("window").height / 12.4,
+    justifyContent:'center',
+    paddingBottom:Dimensions.get("window").height / 100,
+    borderTopWidth:.17,borderColor:'lightgrey', marginTop:30,padding:10
+  },
   switchRow:{
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height / 18.4,

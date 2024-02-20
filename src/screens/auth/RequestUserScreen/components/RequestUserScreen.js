@@ -31,7 +31,7 @@ const RequestUserScreen = ({ route, navigation }) => {
 
           <Text style={{textAlign:'center',fontStyle:'italic'}}>{description}</Text>
 
-          <Pressable style={[styles.deleteAccountButton,{borderTopWidth:.17,borderColor:'lightgrey', marginTop:30,padding:10}]} onPress={async ()=>{
+          <Pressable style={styles.addFriendButton} onPress={async ()=>{
             await approveFriend(friendEmail,name,dispatch)
             navigation.goBack()
             }}>
