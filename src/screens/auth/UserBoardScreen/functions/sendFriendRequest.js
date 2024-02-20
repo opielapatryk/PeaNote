@@ -41,6 +41,8 @@ export const sendFriendRequest = async (dispatch, friendEmailOrUsername,navigati
 
 
     const friendDoc = await getUserDetails(friendEmailOrUsername);
+    const friendUsername = friendDoc.data().username
+    const friendEmail = friendDoc.data().email
 
     if (!friendDoc) {
       return;
@@ -54,6 +56,17 @@ export const sendFriendRequest = async (dispatch, friendEmailOrUsername,navigati
         friends_requests: firebase.firestore.FieldValue.arrayUnion({
         email: currentUserEmail,
         username: currentUserUsername,
+        nickname:''
+        }),
+    })
+
+    await firestore()
+    .collection('users')
+    .doc(currentUserDoc.id)
+    .update({
+        pending_requests: firebase.firestore.FieldValue.arrayUnion({
+        email: friendEmail,
+        username: friendUsername,
         nickname:''
         }),
     })

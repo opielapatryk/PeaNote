@@ -3,7 +3,6 @@ import { Text, View, Pressable, Keyboard,  TouchableWithoutFeedback,Image } from
 import {styles} from '../../../../../assets/styles/styles'
 import { useDispatch,useSelector } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
-import { sendFriendRequest } from '../functions/sendFriendRequest';
 import { getDescription } from '../functions/getDescription';
 import { removeFriendRequestFromFirestore } from '../functions/removeFriendRequestFromFirestore';
 import { approveFriend } from '../functions/approveFriend'
