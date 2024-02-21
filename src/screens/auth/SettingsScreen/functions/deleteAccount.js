@@ -20,7 +20,8 @@ async function revokeSignInWithAppleToken() {
 
 
 export const deleteAccount = async ({notes,dispatch,pendingNotes}) => {
-  if (auth().currentUser.providerData[0].providerId === 'apple.com') {
+  try {
+    if (auth().currentUser.providerData[0].providerId === 'apple.com') {
       await auth().currentUser?.getIdToken?.(true)
       await revokeSignInWithAppleToken();
       const EMAIL = auth().currentUser.email
@@ -76,5 +77,10 @@ export const deleteAccount = async ({notes,dispatch,pendingNotes}) => {
         pendingNotes.forEach(sticker => dispatch(removePendingNote(sticker.id)));
         dispatch(setShowInput(false))
       }
+  }
+  } catch (error) {
+    if(error.code !== "1001"){
+      alert('Log out and log in again, to delete account') 
+    }
   }
 };

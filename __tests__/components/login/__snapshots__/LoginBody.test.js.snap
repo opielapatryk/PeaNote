@@ -16,6 +16,17 @@ exports[`Login body renders correctly. 1`] = `
       }
     }
   >
+    <Image
+      resizeMode="contain"
+      source={1}
+      style={
+        {
+          "height": 333.5,
+          "marginTop": 26.68,
+          "width": 625,
+        }
+      }
+    />
     <Text
       style={
         {

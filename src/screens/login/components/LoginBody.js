@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import { Pressable, Text,TextInput,View} from 'react-native';
+import { Pressable, Text,TextInput,View,Image} from 'react-native';
 import { styles } from '../../../../assets/styles/styles';
 import LoginButton from './LoginButton';
 import LoginWithGoogleButton from './LoginWithGoogleButton';
@@ -26,6 +26,7 @@ const LoginBody = () => {
     <ResetPasswordModal modalVisible={modalVisible} setModalVisible={setModalVisible}/>
     
     <View style={styles.createAccountBodyContainer}>
+    <Image source={require('../../../../assets/images/Logo8.png')} style={styles.logo} resizeMode='contain'/>
     
       <Text style={styles.createAccountBodyHeader}>Log In</Text>
       <Text style={styles.createAccountBodyParagraph}>Provide your credentials by filling out the form below.</Text>

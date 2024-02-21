@@ -1,17 +1,12 @@
 TODO: PeaNote as widget
 TODO: Sort notes
-TODO: Notifications, TOP LEFT = BELL, TOP MIDDLE = CURRENT TAB, TOP RIGHT = CREATE NOTE BUTTON
 TODO: Invite friends via link
-TODO: Historia notatek 
-TODO: Logowanie przez username
-TODO: DarkMode
 TODO: Accessibility
-TODO: Better friend search, using first name and last name
-TODO: Dodawanie notatek na swoja tablice
-TODO: Usunalem 2 notatki z 3 wszedlem na friends => friend => z friend na board i notatka sie powielila
-TODO: Lepszy rendering notatek po przeniesieniu z pending, jak friends
-TODO: write and test more custom hooks
-TODO: if user create account and hide email, ask for providing email or username, that will help friends to find him
-TODO: show info to relogin if user want to delete account 
-TODO: write some custom hooks
-TODO: improve rendering (real-time db and local db)
+TODO: Notifications in Settings TOP RIGHT = BELL
+TODO: Add notes on your own board TOP RIGHT = CREATE NOTE BUTTON
+TODO: Write and test more custom hooks
+TODO: Improve rendering (real-time db and local db)
+TODO: Better friend search mechanizm, using first name and last name
+TODO: If user create account and hide email, ask for providing email or username, that will help friends to find him
+TODO: Added notes history 
+TODO: Login using username instead of email
