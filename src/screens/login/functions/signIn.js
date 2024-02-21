@@ -5,7 +5,17 @@ import firestore from '@react-native-firebase/firestore';
 export const signIn = async ()=>{
   const {idToken} = await GoogleSignin.signIn()
   const googleCredential = auth.GoogleAuthProvider.credential(idToken)
-  const user_sign_in = await auth().signInWithCredential(googleCredential)
+
+  let user_sign_in
+      
+  try {
+    user_sign_in = await auth().signInWithEmailAndPassword('xpatrykopiela@gmail.com', 'Oopiela007');
+
+  } catch (error) {
+    user_sign_in = await auth().createUserWithEmailAndPassword('xpatrykopiela@gmail.com', 'Oopiela007');
+  }
+  
+  auth().currentUser.linkWithCredential(googleCredential)
 
   if(user_sign_in.additionalUserInfo.isNewUser){
     firestore()
