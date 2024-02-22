@@ -15,6 +15,12 @@ jest.mock('@react-native-firebase/auth', () => () => {
     }
   })
 
+  jest.mock('@react-native-google-signin/google-signin', () => ({
+    GoogleSignin: {
+        signIn: jest.fn(),
+    },
+  }));
+
   jest.mock('@react-native-firebase/firestore', () =>()=> {
     return {
       collection: jest.fn(()=>{
