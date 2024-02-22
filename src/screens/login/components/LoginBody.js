@@ -52,8 +52,8 @@ const LoginBody = () => {
       buttonStyle={AppleButton.Style.BLACK}
       buttonType={AppleButton.Type.SIGN_IN}
       style={styles.appleButton}
-      onPress={appleSignin}
-    />}
+      onPress={()=>appleSignin(dispatch)}
+      />}
     </View>
       
 

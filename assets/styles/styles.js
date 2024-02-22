@@ -359,6 +359,17 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 22
   },
+  modalSetPassword:{
+    backgroundColor:'white',
+    height:Dimensions.get('window').height,
+    justifyContent:'center'
+  },
+  modalSetPasswordChild:{
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+  },
   modalPasswordResetViewChild:{
     margin: 20,
     backgroundColor: 'white',
