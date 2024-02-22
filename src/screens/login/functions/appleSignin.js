@@ -10,18 +10,10 @@ export const appleSignin = async ()=>{
       let { identityToken, nonce } = appleAuthRequestResponse;
       let appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce)
 
-      let user_sign_in
-      
-      try {
-        user_sign_in = await auth().signInWithEmailAndPassword('xpatrykopiela@gmail.com', 'Oopiela007');
-
-      } catch (error) {
-        user_sign_in = await auth().createUserWithEmailAndPassword('xpatrykopiela@gmail.com', 'Oopiela007');
-      }
-
-      auth().currentUser.linkWithCredential(appleCredential)
+      let user_sign_in = await auth().signInWithCredential(appleCredential)
 
       if(user_sign_in.additionalUserInfo.isNewUser){
+        user_sign_in.user.updatePassword('password')
         firestore()
         .collection('users')
         .add({
