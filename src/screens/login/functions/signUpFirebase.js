@@ -1,25 +1,35 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import { setMessage } from '../../../store/login/loginSlice';
+import { setMessage,setEmail,setPassword,setCreateAccount } from '../../../store/login/loginSlice';
 
 export const signUpFirebase = async (email,password,dispatch) =>{
     try {
-      const user = await auth().createUserWithEmailAndPassword(email, password);
-      if(user.additionalUserInfo.isNewUser){
-          firestore()
-          .collection('users')
-          .add({
-            username: email,
-            email: email,
-            friends: [],
-            friends_requests: [],
-            pending_requests: [],
-            askBeforeStick: false,
-            stickersOnBoard: [],
-            pending: [],
-            description: '',
-          })
-      }
+      const user = await auth().createUserWithEmailAndPassword(email, password)
+
+      await user.user.sendEmailVerification()
+
+      await firestore()
+      .collection('users')
+      .add({
+        username: email,
+        email: email,
+        friends: [],
+        friends_requests: [],
+        pending_requests: [],
+        askBeforeStick: false,
+        stickersOnBoard: [],
+        pending: [],
+        description: '',
+      })
+
+      auth().signOut()
+
+      await dispatch(setCreateAccount(false))
+      await dispatch(setEmail(''))
+      await dispatch(setPassword(''))
+      await dispatch(setMessage(''))
+
+      alert('Confirm email before login')
     } catch (err) {
       if(err.code === "auth/weak-password"){
         dispatch(setMessage('The given password is invalid.'))

@@ -46,7 +46,7 @@ const FriendsBoard = ({ route, navigation }) => {
   const [showInput,setShowInput] = useState(false)
   const [nickname,setNewNickName] = useState('')
   const [nicknameMessage,setNewNickNameMessage] = useState('')
-  
+
   const handleNickNameChange = async () => {
     if (showInput) {
 
@@ -105,16 +105,16 @@ const FriendsBoard = ({ route, navigation }) => {
         </View>
         
 
-        <TextInput style={[styles.friendsTextInput,{paddingTop:10}]} placeholder={message?message:"NEW NOTE"} value={content} onChangeText={text=>setContent(text)} autoCapitalize="sentences"
+        <TextInput style={[styles.friendsTextInput,{paddingTop:10}]} placeholder={message?message:"New note"} value={content} onChangeText={text=>setContent(text)} autoCapitalize="sentences"
           autoCorrect={false} maxLength={100} multiline/>
 
-          <Pressable style={styles.friendsHeaderRequest} onPress={()=>createNote(content,setContent,setMessage,friendEmail)}><Text style={styles.removeFriendText}>CREATE NOTE</Text></Pressable>
+          <Pressable style={styles.friendsHeaderRequest} onPress={()=>createNote(content,setContent,setMessage,friendEmail)}><Text style={styles.removeFriendText}>Create note</Text></Pressable>
 
 
           {showInput && (
           <TextInput
             style={styles.friendsTextInput}
-            placeholder={nicknameMessage?nicknameMessage:"NICKNAME"}
+            placeholder={nicknameMessage?nicknameMessage:"Nick"}
             onChangeText={text=>setNewNickName(text)}
             value={nickname}
             maxLength={25}
@@ -122,7 +122,13 @@ const FriendsBoard = ({ route, navigation }) => {
         )}
 
         <Pressable style={styles.friendsHeaderRequest} onPress={handleNickNameChange}>
-          <Text style={styles.removeFriendText}>{showInput ? 'CONFIRM' : 'SET NICKNAME'}</Text>
+          <Text style={styles.removeFriendText}>{showInput ? 'Confirm' : 'Set nickname'}</Text>
+        </Pressable>
+
+        <Pressable style={styles.friendsHeaderRequest} onPress={()=>navigation.navigate('HistoryScreen',{friendEmail:friendEmail})}>
+          <Text style={styles.removeFriendText}>
+            Your notes
+          </Text>
         </Pressable>
         
       </View>
@@ -130,7 +136,7 @@ const FriendsBoard = ({ route, navigation }) => {
       <View>
         <Text style={[styles.removeFriendText,{fontSize:14,marginBottom:10}]}>{oldnickname?friendEmail:''}</Text>
         
-        <Pressable style={styles.deleteAccountButton} onPress={()=>removeFriend(navigation,friendEmail,name,nickname,dispatch)}><Text style={styles.removeFriendText}>REMOVE FRIEND</Text></Pressable>
+        <Pressable style={styles.deleteAccountButton} onPress={()=>removeFriend(navigation,friendEmail,name,nickname,dispatch)}><Text style={styles.removeFriendText}>Remove friend</Text></Pressable>
       </View>
       
       </View>

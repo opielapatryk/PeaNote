@@ -3,7 +3,13 @@ import {setMessage} from '../../../store/login/loginSlice'
 
 export const signInFirebase = (email,password,dispatch) =>{
   try {
-    auth().signInWithEmailAndPassword(email,password).catch((err) => {
+    auth().signInWithEmailAndPassword(email,password).then((user)=>{
+      if(!user.user.emailVerified){
+        user.user.sendEmailVerification()
+        auth().signOut()
+        alert('Please check mailbox and verify your email')
+      }
+    }).catch((err) => {
       if(err.code === "auth/wrong-password"){
         dispatch(setMessage('Please enter a valid password.'))
         setTimeout(() => {

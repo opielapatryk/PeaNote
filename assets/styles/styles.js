@@ -225,6 +225,17 @@ export const styles = StyleSheet.create({
     shadowRadius: 1.00,
     elevation: 1,
   },
+  noteHistoryList:{
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height / 18.4,
+    flexDirection: 'row',
+    backgroundColor:'#FFF',
+    alignSelf:'center',
+    alignItems:'center',
+    paddingLeft:20,
+    borderBottomWidth:.2,
+    borderBottomColor:'lightgray'
+  },
   settingsActionText:{
     fontSize:14,
     fontWeight:'600',
