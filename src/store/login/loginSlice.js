@@ -29,7 +29,7 @@ export const loginSlice = createSlice({
             return {...state, reduxdescription:action.payload}
         },
         showModal: (state,action) => {
-            return {...state, modal:action.action}
+            return {...state, modal:action.payload}
         }
     }
 })
