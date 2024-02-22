@@ -30,8 +30,6 @@ export const signInFirebase = (email,password,dispatch) =>{
         setTimeout(() => {
           dispatch(setMessage(''))
         }, 2000);
-      }else{
-        console.log(err);
       }
     })
   } catch (error) {

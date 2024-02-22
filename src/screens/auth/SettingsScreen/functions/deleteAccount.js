@@ -24,13 +24,10 @@ export const deleteAccount = async ({notes,dispatch,pendingNotes}) => {
   const EMAIL = auth().currentUser.email
   
   try {
-    console.log('try');
     if (auth().currentUser.providerData[0].providerId === 'apple.com') {
-      console.log('apple');
       await auth().currentUser?.getIdToken?.(true)
       await revokeSignInWithAppleToken();
     }else if(auth().currentUser.providerData[0].providerId === 'google.com'){
-      console.log('google');
       const {idToken} = await GoogleSignin.signIn()
       const googleCredential = auth.GoogleAuthProvider.credential(idToken)
       await auth().currentUser.reauthenticateWithCredential(googleCredential)

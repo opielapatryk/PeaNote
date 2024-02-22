@@ -5,6 +5,7 @@ import store from './src/store/store'
 import { Provider } from 'react-redux';
 import Login from './src/screens/login/components/Login'
 import BoardScreen from './src/screens/auth/BoardScreen/components/BoardScreen';
+import HistoryScreen from './src/screens/auth/HistoryScreen/components/HistoryScreen';
 import FriendsScreen from './src/screens/auth/FriendsScreen/components/FriendsScreen';
 import FriendsBoard from './src/screens/auth/FriendsBoardScreen/components/FriendsBoard';
 import UserBoard from './src/screens/auth/UserBoardScreen/components/UserBoard';
@@ -58,6 +59,7 @@ export default function App(){
         <Stack.Screen name='UserBoard' component={UserBoard} options={({ route }) => ({ title: route.params.oldnickname?route.params.oldnickname:route.params.name,headerTintColor:'black'})} />
         <Stack.Screen name='RequestUserScreen' component={RequestUserScreen} options={({ route }) => ({ title: route.params.oldnickname?route.params.oldnickname:route.params.name,headerTintColor:'black'})} />
         <Stack.Screen name="Requests" component={FriendRequests} options={{headerTintColor:"black",title:"REQUESTS",}} />
+        <Stack.Screen name="HistoryScreen" component={HistoryScreen} options={{title:null,headerTintColor:'black'}} />
       </Stack.Navigator>
     );
   }
