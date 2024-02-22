@@ -6,7 +6,7 @@ import {checkIsAskBeforeStickingNoteFlagOff} from '../functions/checkIsAskBefore
 import {askBeforeStick} from '../functions/askBeforeStick';
 import {deleteAccount} from '../functions/deleteAccount';
 import {changePassword} from '../functions/changePassword';
-import { setMyimage, setShowInput,setShowInputUsername} from '../../../../store/settings/settingsSlice';
+import { setMyimage, setShowInput,setShowInputUsername,showModal} from '../../../../store/settings/settingsSlice';
 import { setDescription, setMessage } from '../../../../store/login/loginSlice';
 import { useFocusEffect } from '@react-navigation/native';
 import { signOutAndClearReduxStore } from '../functions/signOutAndClearReduxStore'
@@ -18,6 +18,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import firestore from '@react-native-firebase/firestore';
 import * as ImageManipulator from 'expo-image-manipulator';
 import * as FileSystem from 'expo-file-system';
+import GivePasswordModal from './GivePasswordModal';
+
 
 const SettingsScreen = () => {
   const [askBeforeStickingNoteFlag, setAskBeforeStickingNoteFlag] = useState(false);
@@ -34,6 +36,8 @@ const SettingsScreen = () => {
   const [status, requestPermission] = ImagePicker.useMediaLibraryPermissions();
   const EMAIL = auth().currentUser.email
   const insets = useSafeAreaInsets();
+  const {modal} = useSelector((state)=>state.settings)
+
 
   const handlePasswordChange = () => {
     if (showInput) {
@@ -151,14 +155,18 @@ const SettingsScreen = () => {
   }, []);
 
   return (
+    
     <TouchableWithoutFeedback 
     onPress={() => Keyboard.dismiss()}>
+      
     <View style={[styles.friendsboard,{
       paddingTop: insets.top,
       flex: 1,
       backgroundColor:'white'
     }]}>
+            <GivePasswordModal modalVisible={modal} setModalVisible={showModal}/>  
       <View>
+      
       <View style={styles.ProfilePicGrandparent}>
       <Text style={[styles.friendsHeaderRequestText,{marginTop:20}]}>{username}</Text>
         <View style={styles.ProfilePicParent}>
