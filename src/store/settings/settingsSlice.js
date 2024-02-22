@@ -6,6 +6,7 @@ const initialState = {
     username:'',
     myimage:'',
     friendimage:'',
+    modal:false
 }
 
 export const settingsSlice = createSlice({
@@ -30,8 +31,11 @@ export const settingsSlice = createSlice({
         removeMyImage: (state) => {
             return {...state, myimage:''}
         },
+        showModal: (state,action) => {
+            return {...state, modal:action.payload}
+        }
     }
 })
 
-export const {setShowInput,setShowInputUsername,setUsername,setMyimage,removeMyImage,setFriendimage} = settingsSlice.actions
+export const {setShowInput,setShowInputUsername,setUsername,setMyimage,removeMyImage,setFriendimage,showModal} = settingsSlice.actions
 export default settingsSlice.reducer
