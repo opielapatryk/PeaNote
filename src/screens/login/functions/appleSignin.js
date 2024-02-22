@@ -14,7 +14,7 @@ export const appleSignin = async (dispatch)=>{
       let user_sign_in = await auth().signInWithCredential(appleCredential)
 
       if(user_sign_in.additionalUserInfo.isNewUser){
-        dispatch(showModal(true))
+        await dispatch(showModal(true))
         
         firestore()
         .collection('users')

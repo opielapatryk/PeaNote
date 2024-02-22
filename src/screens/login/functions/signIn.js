@@ -10,7 +10,7 @@ export const signIn = async (dispatch)=>{
   
 
   if(user_sign_in.additionalUserInfo.isNewUser){
-    dispatch(showModal(true))
+    await dispatch(showModal(true))
 
     firestore()
     .collection('users')

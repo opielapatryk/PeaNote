@@ -39,12 +39,12 @@ export default function App(){
     iosClientId:IOS_CLIENT_ID
   })
 
-  function onAuthStateChangedd(user) {
+  function onAuthStateChanged(user) {
     setUser(user);
     if (initializing) setInitializing(false);
   }
   useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChangedd);
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber
   }, []);
 
@@ -68,7 +68,7 @@ export default function App(){
         <SafeAreaProvider>
         <NavigationContainer>
           <Tab.Navigator tabBarPosition='bottom' initialRouteName={!user?"Login":"Board"} screenOptions={{tabBarIndicatorStyle:styles.tabBarIndicatorStyle,tabBarLabelStyle:styles.tabBarLabelStyle,tabBarStyle:[styles.tabBarStyle,{paddingBottom:initialWindowMetrics.insets.bottom}]}}>
-              {!user?(
+              {!user || !user.emailVerified?(
                 <>
                   <Tab.Screen name="Login" component={Login} options={{tabBarStyle:{display:'none'}}}></Tab.Screen>
                 </>
