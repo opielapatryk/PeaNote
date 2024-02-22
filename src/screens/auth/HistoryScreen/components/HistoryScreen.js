@@ -35,7 +35,6 @@ const HistoryScreen = ({route}) => {
                 }
             });
             
-            console.log(notes);
             setNotes(notes)
         }
         getNotes()

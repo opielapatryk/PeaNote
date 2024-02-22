@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     notes:[],
     pendingNotes: [],
+    addNoteModal:false
 }
 
 export const boardSlice = createSlice({
@@ -62,8 +63,9 @@ export const boardSlice = createSlice({
                 })
             };
         },
-        cleanStoreNotes: () =>{
+        cleanStoreNotes: (state) =>{
             return {
+                ...state,
                 notes:[],
                 pendingNotes: [],
             }
@@ -90,8 +92,14 @@ export const boardSlice = createSlice({
                 })
             }
         },
+        showAddNoteModal:(state,action)=>{
+            return{
+                ...state,
+                addNoteModal: action.payload
+            }
+        }
     }
 })
 
-export const {addNote, removeNote,changeInfo,addPendingNote,removePendingNote,changePendingInfo,cleanStoreNotes,clearPendingInfo,clearBoardInfo} = boardSlice.actions
+export const {addNote, removeNote,changeInfo,addPendingNote,removePendingNote,changePendingInfo,cleanStoreNotes,clearPendingInfo,clearBoardInfo,showAddNoteModal} = boardSlice.actions
 export default boardSlice.reducer

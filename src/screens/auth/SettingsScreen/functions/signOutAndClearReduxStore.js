@@ -1,4 +1,4 @@
-import {cleanStoreNotes} from '../../../../store/notes/boardSlice';
+import {cleanStoreNotes,showAddNoteModal} from '../../../../store/notes/boardSlice';
 import auth from '@react-native-firebase/auth';
 import { removeMyImage, setShowInput, setShowInputUsername } from '../../../../store/settings/settingsSlice';
 import { setEmail,setPassword,setCreateAccount,setMessage } from '../../../../store/login/loginSlice';
@@ -10,6 +10,8 @@ export const signOutAndClearReduxStore = async (dispatch) => {
     await dispatch(setShowInput(false))
     await dispatch(setShowInputUsername(false))
     await dispatch(setCreateAccount(false))
+    await dispatch(showAddNoteModal(false))
+
     await dispatch(setEmail(''))
     await dispatch(setPassword(''))
     await dispatch(setMessage(''))

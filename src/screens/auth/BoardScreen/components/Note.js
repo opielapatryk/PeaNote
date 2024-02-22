@@ -8,6 +8,7 @@ import {editNote} from '../functions/editNote'
 import { deleteNote } from '../functions/deleteNote';
 import firestore from '@react-native-firebase/firestore'
 import auth, {firebase} from '@react-native-firebase/auth'
+// import { fetchNotes } from '../functions/fetchNotes';
 
 export const Note = ({ id, isInfo,content,creator }) => {
   const { notes } = useSelector((state) => state.board);
@@ -58,6 +59,7 @@ const getNickname = async () => {
                       note.id === id ? { ...note, text: newContent,isInfo:false } : note
                     )
                   );
+                  // fetchNotes(dispatch);
                   setModalVisible(false)
                   }} style={styles.editNote}><Text style={styles.editNoteText}>Edit</Text></Pressable>
                 <Pressable onPress={()=>{

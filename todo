@@ -3,8 +3,9 @@ TODO: Sort notes
 TODO: Invite friends via link
 TODO: Accessibility
 TODO: Notifications in new card
-TODO: Add notes on your own board BOTTOM RIGHT = CREATE NOTE BUTTON
 TODO: Write and test more custom hooks
 TODO: Improve rendering (real-time db and local db)
 TODO: Better friend search mechanizm, using first name and last name
-TODO: Added notes history
+TODO: Add notes on your own board BOTTOM RIGHT = CREATE NOTE BUTTON
+TODO: Create functions for getting your board etc.
+TODO: Fix board bugs
