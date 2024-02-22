@@ -14,12 +14,16 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { setDescription,setMessage,setEmail } from '../../../../store/login/loginSlice';
 import {getUserDocs} from '../functions/getUserDocs'
 import {downloadImage} from '../functions/downloadImage'
+import { showModal } from '../../../../store/login/loginSlice';
+import SetPasswordModal from './SetPasswordModal';
 
 const BoardScreen = () => {
   const insets = useSafeAreaInsets();
   const { notes } = useSelector((state) => state.board);
   const dispatch = useDispatch()
   const EMAIL = auth().currentUser.email
+  const {modal} = useSelector((state)=>state.login)
+
 
   useEffect(()=>{
     downloadImage(EMAIL).then((fileUri)=>{
@@ -48,6 +52,8 @@ const BoardScreen = () => {
   
   return (
     <View style={{paddingTop: insets.top,backgroundColor:'#FFFDF3',flex: 1}}>
+    <SetPasswordModal modalVisible={modal} setModalVisible={showModal}/>
+
       <Pressable onPress={() => {
         checkIsInfo(dispatch,notes)
 

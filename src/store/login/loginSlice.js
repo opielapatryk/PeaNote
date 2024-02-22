@@ -6,6 +6,7 @@ const initialState = {
     password:'',
     message:'',
     reduxdescription:'',
+    modal:false
 }
 
 export const loginSlice = createSlice({
@@ -27,8 +28,11 @@ export const loginSlice = createSlice({
         setDescription: (state,action) => {
             return {...state, reduxdescription:action.payload}
         },
+        showModal: (state,action) => {
+            return {...state, modal:action.action}
+        }
     }
 })
 
-export const {setCreateAccount,setEmail,setPassword,setMessage,setDescription} = loginSlice.actions
+export const {setCreateAccount,setEmail,setPassword,setMessage,setDescription,showModal} = loginSlice.actions
 export default loginSlice.reducer

@@ -7,15 +7,14 @@ TODO: Add notes on your own board BOTTOM RIGHT = CREATE NOTE BUTTON
 TODO: Write and test more custom hooks
 TODO: Improve rendering (real-time db and local db)
 TODO: Better friend search mechanizm, using first name and last name
-TODO: If user create account and hide email, ask for providing email or username, that will help friends to find him
 TODO: Added notes history 
 
-TODO: Login using username/email and password
 
-TODO: Contiunue with Apple/Google => Create your account => provide your email and password
 
 TODO: Reauthenticate before deleting account
 
 TODO: After creating account, send confirmation email and navigate to login screen
 
 TODO: You can login only after confirmation
+
+TODO: Login using username
