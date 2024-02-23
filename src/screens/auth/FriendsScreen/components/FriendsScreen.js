@@ -49,12 +49,12 @@ export const FriendsScreen = ({ navigation }) => {
       flex: 1,
       backgroundColor:'white',
     }]}>
-      <Pressable style={styles.friendsHeaderRequest} onPress={()=>navigation.navigate('Requests')}><Text style={styles.removeFriendText}>REQUESTS</Text></Pressable>
+      <Pressable style={styles.friendsHeaderRequest} onPress={()=>navigation.navigate('Requests')}><Text style={styles.removeFriendText}>Requests</Text></Pressable>
 
-      <TextInput style={styles.friendsTextInput} placeholder={message?message:'SEARCH BY EMAIL OR USERNAME'} onChangeText={text => dispatch(setEmail(text))} value={email} autoCorrect={false}/>
+      <TextInput style={styles.friendsTextInput} placeholder={message?message:'Search by email or username'} onChangeText={text => dispatch(setEmail(text))} value={email} autoCorrect={false}/>
 
       <Pressable style={styles.friendsHeaderRequest} onPress={()=>{
-        findUser(dispatch,email,navigation)}}><Text style={styles.removeFriendText}>SEARCH</Text></Pressable>
+        findUser(dispatch,email,navigation)}}><Text style={styles.removeFriendText}>Search</Text></Pressable>
 
       <FlatList data={friends} renderItem={({item})=>renderFriends({item})} keyExtractor={(friend) => friend.id}/>
     </View>

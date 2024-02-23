@@ -30,7 +30,7 @@ const UserBoard = ({ route }) => {
             sendFriendRequest(friendEmail)
             setInvite(true)
             }}>
-          <Text style={styles.removeFriendText}>{invited||invite?'REMOVE FRIEND REQUEST':'SEND FRIEND REQUEST'}</Text>
+          <Text style={styles.removeFriendText}>{invited||invite?'Remove friend request':'Send friend request'}</Text>
           </Pressable>  
        </View>
       </View>

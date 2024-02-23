@@ -242,7 +242,8 @@ export const styles = StyleSheet.create({
     shadowRadius: 1.00,
     elevation: 1,
     letterSpacing:2,
-    alignSelf:'center',
+    paddingLeft:20
+    // alignSelf:'center',
   },
   removeFriendText:{
     fontSize:14,
@@ -304,10 +305,8 @@ export const styles = StyleSheet.create({
     height: Dimensions.get("window").height / 18.4,
     flexDirection: 'row',
     backgroundColor:'#FFF',
-    alignSelf:'center',
     alignItems:'center',
-    justifyContent:'center',
-    padding:8,
+    justifyContent:'space-between',
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -316,7 +315,9 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.18,
     shadowRadius: 1.00,
     elevation: 1,
-    borderBottomWidth:.2,borderBottomColor:'lightgrey',
+    borderBottomWidth:.2,
+    borderBottomColor:'lightgrey',
+    paddingRight:20
   },
   friendsTextInput:{
     fontSize:14,
