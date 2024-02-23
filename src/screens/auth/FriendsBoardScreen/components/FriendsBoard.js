@@ -96,9 +96,8 @@ const FriendsBoard = ({ route, navigation }) => {
     backgroundColor: '#FFF',
     justifyContent:"space-between",}}>
       <View style={{alignItems:'center',backgroundColor:'white'}}>
-        <View style={styles.ProfilePicParent}>
+
         {friendimage && <Image source={{uri: friendimage}} style={styles.ProfilePic}/>}
-        </View>
 
         <View style={[styles.friendsHeaderRequest,{height:50}]}>
           <Text style={{textAlign:'center',fontStyle:'italic'}}>{description}</Text>

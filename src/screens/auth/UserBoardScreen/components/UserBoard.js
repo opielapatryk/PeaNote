@@ -17,9 +17,9 @@ const UserBoard = ({ route }) => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={{flex: 1,backgroundColor: '#FFF',justifyContent:"space-between"}}>
         <View style={{alignItems:'center'}}>
-          <View style={styles.ProfilePicParent}>
+
             {friendimage && <Image source={{uri: friendimage}} style={styles.ProfilePic}/>}
-          </View>
+
 
           <Text style={{textAlign:'center',fontStyle:'italic'}}>{useDescription(friendEmail)}</Text>
 

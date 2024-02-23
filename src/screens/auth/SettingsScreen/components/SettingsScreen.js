@@ -169,10 +169,8 @@ const SettingsScreen = () => {
       
       <View style={styles.ProfilePicGrandparent}>
       <Text style={[styles.friendsHeaderRequestText,{marginTop:20}]}>{username}</Text>
-        <View style={styles.ProfilePicParent}>
           
           {myimage && <Image source={{uri: myimage}} style={styles.ProfilePic}/>}
-        </View>
         </View>
         <View style={[styles.friendsHeaderRequest,{height:50}]}>
           <Text style={{textAlign:'center',fontStyle:'italic'}}>{reduxdescription}</Text>

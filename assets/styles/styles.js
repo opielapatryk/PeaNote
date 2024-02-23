@@ -196,12 +196,7 @@ export const styles = StyleSheet.create({
     borderBottomWidth:.2,borderBottomColor:'lightgrey',
   },
   ProfilePic:
-    {width:Dimensions.get('window').height/5,height:Dimensions.get('window').height/5,borderRadius:100,resizeMode:'stretch',borderWidth:.3,borderColor:'gray',backgroundColor:'white'}
-  ,
-  ProfilePicParent:
-    {alignItems:'center',backgroundColor:'white',shadowColor: 'black',
-                shadowOffset: {width: 0, height: 1},
-                shadowOpacity: 0.3,width:Dimensions.get('window').height/5,height:Dimensions.get('window').height/5,borderRadius:100,backgroundColor:'white',marginTop:Dimensions.get('window').height/40,marginBottom:Dimensions.get('window').height/40}
+    {width:Dimensions.get('window').height/5,height:Dimensions.get('window').height/5,borderRadius:200,backgroundColor:'white',marginTop:Dimensions.get('window').height/40,marginBottom:Dimensions.get('window').height/40}
   ,
   ProfilePicGrandparent:{
     alignItems:'center',backgroundColor:'white'
