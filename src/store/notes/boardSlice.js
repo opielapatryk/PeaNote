@@ -9,6 +9,20 @@ export const boardSlice = createSlice({
     name:'board',
     initialState,
     reducers:{
+        editNoteRedux: (state,action) =>{
+            return {
+                ...state,
+                notes: state.notes.map((note) => {
+                    if (note.id === action.payload.id) {
+                        return {
+                            ...note,
+                            text: action.payload.newContent,
+                        };
+                    }
+                    return note;
+                })
+            };
+        },
         addNote: (state, action) => {
             const existingNote = state.notes.find(note => note.id === action.payload.id);
             if(!existingNote){
@@ -101,5 +115,5 @@ export const boardSlice = createSlice({
     }
 })
 
-export const {addNote, removeNote,changeInfo,addPendingNote,removePendingNote,changePendingInfo,cleanStoreNotes,clearPendingInfo,clearBoardInfo,showAddNoteModal} = boardSlice.actions
+export const {addNote, removeNote,changeInfo,addPendingNote,removePendingNote,changePendingInfo,cleanStoreNotes,clearPendingInfo,clearBoardInfo,showAddNoteModal,editNoteRedux} = boardSlice.actions
 export default boardSlice.reducer

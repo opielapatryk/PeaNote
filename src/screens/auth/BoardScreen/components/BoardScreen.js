@@ -1,5 +1,5 @@
-import React,{ useEffect,useState } from 'react';
-import { Pressable,View,FlatList,Text,Dimensions,Modal} from 'react-native';
+import React,{ useEffect } from 'react';
+import { Pressable,View,FlatList,Text,Dimensions} from 'react-native';
 import { renderNotes } from '../functions/renderNotes';
 import { useDispatch, useSelector } from 'react-redux';
 import { styles } from '../../../../../assets/styles/styles';
@@ -64,9 +64,6 @@ const BoardScreen = () => {
         }} style={styles.board}>
         {notes.length==0&&<Text style={styles.emptyBoardText}>THIS BOARD IS EMPTY</Text>}
         <FlatList numColumns={2} data={notes} renderItem={({item})=>renderNotes({item})} keyExtractor={(note) => note.id}/>
-
-          
-          
       </Pressable>
 
       <View style={{ position: 'absolute', bottom: Dimensions.get('window').width / 20, right: Dimensions.get('window').width / 20 }}>
@@ -86,7 +83,6 @@ const BoardScreen = () => {
           <AntDesign name="pluscircle" size={Dimensions.get('window').width / 10} color="black" />
         </Pressable>
       </View>
-
     </View>
   );
 };

@@ -1,4 +1,4 @@
-import reducer, { addNote, removeNote,changeInfo,addPendingNote,removePendingNote,changePendingInfo, editNoteReducer, cleanStoreNotes, clearPendingInfo, clearBoardInfo } from '../../src/store/notes/boardSlice';
+import reducer, { addNote, removeNote,changeInfo,addPendingNote,removePendingNote,changePendingInfo, editNoteRedux, cleanStoreNotes, clearPendingInfo, clearBoardInfo } from '../../src/store/notes/boardSlice';
 
 test('should add new note to state', () => {
     const newState = reducer({ notes: [{ id: 1, text: 'foo', isInfo: false }]}, addNote({ id: 2, text: 'bar', isInfo: false }));
@@ -54,3 +54,9 @@ test('Should clear each note info in board screen', () => {
 
     expect(newState).toEqual({ notes: [{ id: 1, text: 'foo', isInfo: false },{ id: 2, text: 'baz', isInfo: false },{ id: 3, text: 'bar', isInfo: false }]});
 });
+
+test('Should edit note content', () => {
+    const newState = reducer({ notes: [{ id: 1, text: 'foo', isInfo: true },{ id: 2, text: 'baz', isInfo: true },{ id: 3, text: 'bar', isInfo: true }]}, editNoteRedux({id:1,newContent:'edit'}));
+
+    expect(newState).toEqual({ notes: [{ id: 1, text: 'edit', isInfo: true },{ id: 2, text: 'baz', isInfo: true },{ id: 3, text: 'bar', isInfo: true }]});
+})
