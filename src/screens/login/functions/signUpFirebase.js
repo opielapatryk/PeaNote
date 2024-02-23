@@ -1,5 +1,5 @@
 import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
+import {firebase} from '@react-native-firebase/database'
 import { setMessage,setEmail,setPassword,setCreateAccount } from '../../../store/login/loginSlice';
 
 export const signUpFirebase = async (email,password,dispatch) =>{
@@ -8,18 +8,14 @@ export const signUpFirebase = async (email,password,dispatch) =>{
 
       await user.user.sendEmailVerification()
 
-      await firestore()
-      .collection('users')
-      .add({
-        username: email,
-        email: email,
-        friends: [],
-        friends_requests: [],
-        pending_requests: [],
-        askBeforeStick: false,
-        stickersOnBoard: [],
-        pending: [],
-        description: '',
+      const ref = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('/users').push();
+
+      await ref
+      .set({
+        email:email,
+        username:email,
+        description:'',
+        askBeforeStick:false,
       })
 
       auth().signOut()
