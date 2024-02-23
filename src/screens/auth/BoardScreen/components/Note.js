@@ -34,7 +34,7 @@ const getNickname = async () => {
 
     return friend.nickname;
   } else {
-    return creator; // Handle the case where docs array is undefined or empty
+    return creator; 
   }
 }
 
@@ -52,13 +52,11 @@ const getNickname = async () => {
               <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                 <Pressable onPress={()=>{
                   editNote(newContent,notes.find((item) => item.id === id)?.text,notes.find((item) => item.id === id)?.creator)
-                  dispatch(changeInfo(id))
                   setLocalNotes((prevNotes) =>
                     prevNotes.map((note) =>
                       note.id === id ? { ...note, text: newContent,isInfo:false } : note
                     )
                   );
-                  // redux edit note
                   dispatch(editNoteRedux({id:id,newContent:newContent}))
                   setModalVisible(false)
                   }} style={styles.editNote}><Text style={styles.editNoteText}>Edit</Text></Pressable>
@@ -92,6 +90,7 @@ const getNickname = async () => {
           
           <Pressable style={styles.noteIsInfoTrueRightButton} onPress={() => {
               setModalVisible(true)
+              dispatch(changeInfo(id))
             }}>
           {isLoadingRight?<ActivityIndicator size={'large'} color={'black'}/>:<Text style={styles.noteIsInfoTrueButtonsText}>Click{"\n"}here{"\n"}to{"\n"}edit</Text>}
           </Pressable>

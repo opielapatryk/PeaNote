@@ -1,13 +1,99 @@
-TODO: PeaNote as widget
-TODO: Sort notes
-TODO: Invite friends via link
-TODO: Accessibility
-TODO: Notifications in new card
-TODO: Improve rendering (real-time db and local db)
-TODO: Better friend search mechanizm, using first name and last name
-TODO: Add notes on your own board BOTTOM RIGHT = CREATE NOTE BUTTON
+// TODO: PeaNote as widget
+// TODO: Sort notes
+// TODO: Invite friends via link
+// TODO: Accessibility
+// TODO: Better friend search mechanizm, using first name and last name
+// TODO: Notifications in new card
+// TODO: Improve rendering (real-time db and local db)
 
 
-TODO: Write and test more custom hooks
-TODO: Create functions for getting your board etc.
-TODO: Fix board bugs
+// When user create account, 
+// create node in realtime database...
+
+
+
+// const reference = database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/')
+//   .ref('/users/123');
+
+
+// PUSH (create new key and save data):
+// const newReference = database().ref('/users').push();
+
+// console.log('Auto generated key: ', newReference.key);
+
+// newReference
+//   .set({
+//     age: 32,
+//   })
+//   .then(() => console.log('Data updated.'));
+
+
+
+// OVERWRITTING ALL DATA:
+// import database from '@react-native-firebase/database';
+
+// database()
+//   .ref('/users/123')
+//   .set({
+//     name: 'Ada Lovelace',
+//     age: 31,
+//   })
+//   .then(() => console.log('Data set.'));
+
+
+
+
+
+
+// W board screenie nasłuchuj w useEffect na dodanie nowego childa w galezi aktualnego usera w polu notatki:
+
+// LISTEN:
+// import React, { useEffect } from 'react';
+// import database from '@react-native-firebase/database';
+
+// function User({ userId }) {
+//   useEffect(() => {
+//     const onChildAdd = database()
+//       .ref('/users')
+//       .on('child_added', snapshot => {
+//         console.log('A new node has been added', snapshot.val());
+//       });
+
+//     // Stop listening for updates when no longer required
+//     return () => database().ref('/users').off('child_added', onChildAdd);
+//   }, [userId]);
+// }
+
+
+
+// UPDATING ONLY SPECIFIC DATA:
+// import database from '@react-native-firebase/database';
+
+// database()
+//   .ref('/users/123')
+//   .update({
+//     age: 32,
+//   })
+//   .then(() => console.log('Data updated.'));
+
+
+// REMOVE:
+// await database().ref('/users/123').remove();
+
+// TRANSACTION:
+// import database from '@react-native-firebase/database';
+
+// function onPostLike(postId) {
+//   const reference = database().ref(`/likes/${postId}`);
+
+//   // Execute transaction
+//   return reference.transaction(currentLikes => {
+//     if (currentLikes === null) return 1;
+//     return currentLikes + 1;
+//   });
+// }
+
+// // When post "567" is liked
+// onPostLike('567').then(transaction => {
+//   console.log('New post like count: ', transaction.snapshot.val());
+// });

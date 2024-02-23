@@ -1,7 +1,7 @@
 import auth from '@react-native-firebase/auth';
 import { appleAuth } from '@invertase/react-native-apple-authentication';
-import firestore from '@react-native-firebase/firestore';
 import { showModal } from '../../../store/login/loginSlice';
+import {firebase} from '@react-native-firebase/database'
 
 export const appleSignin = async (dispatch)=>{
       let appleAuthRequestResponse = await appleAuth.performRequest({
@@ -16,18 +16,14 @@ export const appleSignin = async (dispatch)=>{
       if(user_sign_in.additionalUserInfo.isNewUser){
         await dispatch(showModal(true))
         
-        firestore()
-        .collection('users')
-        .add({
-          email: user_sign_in.user.email,
+        const ref = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('/users').push();
+
+        await ref
+        .set({
+          email:user_sign_in.user.email,
           username:user_sign_in.user.email,
-          friends: [],
-          friends_requests: [],
-          pending_requests: [],
-          askBeforeStick: false,
-          stickersOnBoard: [],
-          pending: [],
-          description: '',
+          description:'',
+          askBeforeStick:false,
         })
       }
 }

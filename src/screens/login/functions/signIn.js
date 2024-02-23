@@ -1,7 +1,8 @@
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin} from '@react-native-google-signin/google-signin';
-import firestore from '@react-native-firebase/firestore';
 import { showModal } from '../../../store/login/loginSlice';
+import {firebase} from '@react-native-firebase/database'
+
 
 export const signIn = async (dispatch)=>{
   const {idToken} = await GoogleSignin.signIn()
@@ -12,18 +13,14 @@ export const signIn = async (dispatch)=>{
   if(user_sign_in.additionalUserInfo.isNewUser){
     await dispatch(showModal(true))
 
-    firestore()
-    .collection('users')
-    .add({
-      email: user_sign_in.user.email,
+    const ref = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('/users').push();
+
+    await ref
+    .set({
+      email:user_sign_in.user.email,
       username:user_sign_in.user.email,
-      friends: [],
-      friends_requests: [],
-      pending_requests: [],
-      askBeforeStick: false,
-      stickersOnBoard: [],
-      pending: [],
-      description: '',
+      description:'',
+      askBeforeStick:false,
     })
   }
 }
