@@ -7,6 +7,7 @@ TODO: Improve rendering (real-time db and local db)
 TODO: Better friend search mechanizm, using first name and last name
 TODO: Add notes on your own board BOTTOM RIGHT = CREATE NOTE BUTTON
 
+
 TODO: Write and test more custom hooks
 TODO: Create functions for getting your board etc.
 TODO: Fix board bugs

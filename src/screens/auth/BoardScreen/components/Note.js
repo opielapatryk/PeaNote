@@ -3,12 +3,11 @@ import React, { useState } from 'react';
 import { styles } from '../../../../../assets/styles/styles';
 import { useDispatch, useSelector} from 'react-redux';
 import { handlePress } from '../functions/handlePress';
-import { removeNote, changeInfo } from '../../../../store/notes/boardSlice';
+import { removeNote, changeInfo,editNoteRedux } from '../../../../store/notes/boardSlice';
 import {editNote} from '../functions/editNote'
 import { deleteNote } from '../functions/deleteNote';
 import firestore from '@react-native-firebase/firestore'
-import auth, {firebase} from '@react-native-firebase/auth'
-// import { fetchNotes } from '../functions/fetchNotes';
+import auth from '@react-native-firebase/auth'
 
 export const Note = ({ id, isInfo,content,creator }) => {
   const { notes } = useSelector((state) => state.board);
@@ -59,7 +58,8 @@ const getNickname = async () => {
                       note.id === id ? { ...note, text: newContent,isInfo:false } : note
                     )
                   );
-                  // fetchNotes(dispatch);
+                  // redux edit note
+                  dispatch(editNoteRedux({id:id,newContent:newContent}))
                   setModalVisible(false)
                   }} style={styles.editNote}><Text style={styles.editNoteText}>Edit</Text></Pressable>
                 <Pressable onPress={()=>{
