@@ -17,9 +17,9 @@ const UserBoard = ({ route }) => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={{flex: 1,backgroundColor: '#FFF',justifyContent:"space-between"}}>
         <View style={{alignItems:'center'}}>
-          <View style={styles.ProfilePicParent}>
+
             {friendimage && <Image source={{uri: friendimage}} style={styles.ProfilePic}/>}
-          </View>
+
 
           <Text style={{textAlign:'center',fontStyle:'italic'}}>{useDescription(friendEmail)}</Text>
 
@@ -30,7 +30,7 @@ const UserBoard = ({ route }) => {
             sendFriendRequest(friendEmail)
             setInvite(true)
             }}>
-          <Text style={styles.removeFriendText}>{invited||invite?'REMOVE FRIEND REQUEST':'SEND FRIEND REQUEST'}</Text>
+          <Text style={styles.removeFriendText}>{invited||invite?'Remove friend request':'Send friend request'}</Text>
           </Pressable>  
        </View>
       </View>

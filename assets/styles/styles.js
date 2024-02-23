@@ -196,12 +196,7 @@ export const styles = StyleSheet.create({
     borderBottomWidth:.2,borderBottomColor:'lightgrey',
   },
   ProfilePic:
-    {width:Dimensions.get('window').height/5,height:Dimensions.get('window').height/5,borderRadius:100,resizeMode:'stretch',borderWidth:.3,borderColor:'gray',backgroundColor:'white'}
-  ,
-  ProfilePicParent:
-    {alignItems:'center',backgroundColor:'white',shadowColor: 'black',
-                shadowOffset: {width: 0, height: 1},
-                shadowOpacity: 0.3,width:Dimensions.get('window').height/5,height:Dimensions.get('window').height/5,borderRadius:100,backgroundColor:'white',marginTop:Dimensions.get('window').height/40,marginBottom:Dimensions.get('window').height/40}
+    {width:Dimensions.get('window').height/5,height:Dimensions.get('window').height/5,borderRadius:200,backgroundColor:'white',marginTop:Dimensions.get('window').height/40,marginBottom:Dimensions.get('window').height/40}
   ,
   ProfilePicGrandparent:{
     alignItems:'center',backgroundColor:'white'
@@ -247,7 +242,8 @@ export const styles = StyleSheet.create({
     shadowRadius: 1.00,
     elevation: 1,
     letterSpacing:2,
-    alignSelf:'center',
+    paddingLeft:20
+    // alignSelf:'center',
   },
   removeFriendText:{
     fontSize:14,
@@ -309,10 +305,8 @@ export const styles = StyleSheet.create({
     height: Dimensions.get("window").height / 18.4,
     flexDirection: 'row',
     backgroundColor:'#FFF',
-    alignSelf:'center',
     alignItems:'center',
-    justifyContent:'center',
-    padding:8,
+    justifyContent:'space-between',
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -321,7 +315,9 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.18,
     shadowRadius: 1.00,
     elevation: 1,
-    borderBottomWidth:.2,borderBottomColor:'lightgrey',
+    borderBottomWidth:.2,
+    borderBottomColor:'lightgrey',
+    paddingRight:20
   },
   friendsTextInput:{
     fontSize:14,

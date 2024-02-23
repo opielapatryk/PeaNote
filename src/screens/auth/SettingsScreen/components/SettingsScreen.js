@@ -169,17 +169,15 @@ const SettingsScreen = () => {
       
       <View style={styles.ProfilePicGrandparent}>
       <Text style={[styles.friendsHeaderRequestText,{marginTop:20}]}>{username}</Text>
-        <View style={styles.ProfilePicParent}>
           
           {myimage && <Image source={{uri: myimage}} style={styles.ProfilePic}/>}
-        </View>
         </View>
         <View style={[styles.friendsHeaderRequest,{height:50}]}>
           <Text style={{textAlign:'center',fontStyle:'italic'}}>{reduxdescription}</Text>
           
         </View>
         <View style={styles.switchRow}>
-          <Text style={[styles.settingsActionText,{paddingRight:10}]}>ASK BEFORE STICKING NOTE</Text>
+          <Text style={[styles.settingsActionText,{paddingRight:10}]}>Ask before sticking note</Text>
           <Switch
             onValueChange={() => askBeforeStick({ setAskBeforeStickingNoteFlag })}
             value={askBeforeStickingNoteFlag}
@@ -207,19 +205,19 @@ const SettingsScreen = () => {
         <Pressable style={styles.friendsHeaderRequest} onPress={()=>{
           newDescription(reduxdescription)
           setModalVisible(true)}}>
-          <Text style={styles.settingsActionText}>CHANGE DESCRIPTION</Text>
+          <Text style={styles.settingsActionText}>Change description</Text>
         </Pressable>
 
         <Pressable style={styles.friendsHeaderRequest} onPress={()=>{
           pickImage()
         }}>
-          <Text style={styles.settingsActionText}>CHANGE PROFILE PHOTO</Text>
+          <Text style={styles.settingsActionText}>Change profile photo</Text>
         </Pressable>
 
         {showInput && (
           <TextInput
             style={styles.friendsTextInput}
-            placeholder={message?message:"NEW PASSWORD"}
+            placeholder={message?message:"New password"}
             onChangeText={text=>setNewPassword(text)}
             value={newPassword}
             secureTextEntry
@@ -228,32 +226,34 @@ const SettingsScreen = () => {
         )}
 
         <Pressable style={styles.friendsHeaderRequest} onPress={handlePasswordChange}>
-          <Text style={styles.settingsActionText}>{showInput ? 'SET NEW PASSWORD' : 'CHANGE PASSWORD'}</Text>
+          <Text style={styles.settingsActionText}>{showInput ? 'Set new password' : 'Change password'}</Text>
         </Pressable>
 
         {showInputUsername && (
           <TextInput
             style={styles.friendsTextInput}
-            placeholder={message?message:"USERNAME"}
+            placeholder={message?message:"Username"}
             onChangeText={text=>setNewUsername(text)}
             value={newUsername}
             maxLength={25}
           />
         )}
         <Pressable style={styles.friendsHeaderRequest} onPress={handleUsernameChange}>
-          <Text style={styles.settingsActionText}>{showInputUsername ? 'SET USERNAME' : 'CHANGE USERNAME'}</Text>
+          <Text style={styles.settingsActionText}>{showInputUsername ? 'Set username' : 'Change username'}</Text>
         </Pressable>
 
-        <Pressable style={styles.friendsHeaderRequest} onPress={()=>signOutAndClearReduxStore(dispatch)}>
-          <Text style={styles.settingsActionText}>LOGOUT</Text>
-        </Pressable>
-      </View>
-
-      <Pressable style={styles.deleteAccountButton} onPress={handleDeleteAccount}>
-        <Text style={styles.removeFriendText}>
-          {deleteAccountPressed ? 'CONFIRM ACCOUNT DELETE' : 'DELETE ACCOUNT'}
+        <Pressable style={styles.friendsHeaderRequest} onPress={handleDeleteAccount}>
+        <Text style={styles.settingsActionText}>
+          {deleteAccountPressed ? 'Confirm' : 'Delete account'}
         </Text>
       </Pressable>
+
+        
+      </View>
+
+      <Pressable style={styles.deleteAccountButton} onPress={()=>signOutAndClearReduxStore(dispatch)}>
+          <Text style={[styles.settingsActionText,{alignSelf:'center'}]}>Logout</Text>
+        </Pressable>
     </View>
     </TouchableWithoutFeedback>
   );

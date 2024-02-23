@@ -58,7 +58,7 @@ export default function App(){
         <Stack.Screen name='FriendsBoard' component={FriendsBoard} options={({ route }) => ({ title: route.params.oldnickname?route.params.oldnickname:route.params.name,headerTintColor:'black'})} />
         <Stack.Screen name='UserBoard' component={UserBoard} options={({ route }) => ({ title: route.params.oldnickname?route.params.oldnickname:route.params.name,headerTintColor:'black'})} />
         <Stack.Screen name='RequestUserScreen' component={RequestUserScreen} options={({ route }) => ({ title: route.params.oldnickname?route.params.oldnickname:route.params.name,headerTintColor:'black'})} />
-        <Stack.Screen name="Requests" component={FriendRequests} options={{headerTintColor:"black",title:"REQUESTS",}} />
+        <Stack.Screen name="Requests" component={FriendRequests} options={{headerTintColor:"black",title:"Requests",}} />
         <Stack.Screen name="HistoryScreen" component={HistoryScreen} options={{title:null,headerTintColor:'black'}} />
       </Stack.Navigator>
     );
