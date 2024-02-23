@@ -18,17 +18,21 @@ export default ({board}) => {
 
     return (
         <Modal animationType="slide" transparent={true} visible={modall}>
-            <View style={styles.modalSetPassword}>
+            <View style={styles.modalPasswordResetView}>
             <View style={styles.modalSetPasswordChild}>
                 <Text style={styles.modalPasswordResetHeader}>Write whatever you want, it's your board</Text>
                 <TextInput style={styles.modalPasswordResetTextInput} placeholder={'Note'} value={content} onChangeText={text=>setContent(text)}/>
                 <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                <Pressable onPress={async ()=>{
-                    await addNoteToMyBoard(content,board)
-                    fetchNotes(dispatch);
-                    setContent('')
+                    <Pressable onPress={async ()=>{
+                        await addNoteToMyBoard(content,board)
+                        fetchNotes(dispatch);
+                        setContent('')
+                        dispatch(showAddNoteModal(false))
+                        }} style={styles.modalPasswordResetButtonNext}><Text style={styles.modalPasswordResetButtonNextText}>Add</Text></Pressable>
+                    
+                    <Pressable onPress={()=>{
                     dispatch(showAddNoteModal(false))
-                    }} style={styles.modalPasswordResetButtonNext}><Text style={styles.modalPasswordResetButtonNextText}>Add</Text></Pressable>
+                    }} style={styles.editNoteBack}><Text style={styles.editNoteBackText}>Back</Text></Pressable>
                 </View>
             </View>
             </View>
