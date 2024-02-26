@@ -2,6 +2,8 @@ import { Text,View, Pressable, TextInput,FlatList } from 'react-native'
 import React, { useEffect } from 'react'
 import {findUser} from '../functions/findUser'
 import {styles} from '../../../../../assets/styles/styles'
+import auth from '@react-native-firebase/auth'
+import {firebase} from '@react-native-firebase/database'
 import { useDispatch, useSelector } from 'react-redux';
 import {setEmail,setMessage} from '../../../../store/login/loginSlice'
 import { useFocusEffect } from '@react-navigation/native';
@@ -14,11 +16,39 @@ export const FriendsScreen = ({ navigation }) => {
   const {friends} = useSelector((state) => state.friends);
   const {message,email} = useSelector((state) => state.login)
   const dispatch = useDispatch()
+  const EMAIL = auth().currentUser.email
 
   useFocusEffect(
     React.useCallback(() => {
       loadUser(dispatch)
+      const onChildAdd = () => loadUser(dispatch);
+
+      const listen = async ()=>{
+        const usersRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('users')
+        const snapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
+        const userData = snapshot.val();
+        const userId = Object.keys(userData)[0];
+      
+        const friendsRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref(`users/${userId}/friends`);
+
+        friendsRef.on('child_added', onChildAdd);
+      }
+
+      listen()
       return ()=>{
+        const listenOff = async () => {
+          const usersRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('users');
+          const snapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
+          const userData = snapshot.val();
+          const userId = Object.keys(userData)[0];
+          const friendsRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref(`users/${userId}/friends`);
+  
+          // Remove the 'child_added' listener when the component unmounts
+          friendsRef.off('child_added', onChildAdd);
+        }
+
+        listenOff()
+        
         dispatch(setMessage(''))
         dispatch(setEmail(''))
       }

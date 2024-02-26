@@ -10,6 +10,7 @@ import { loadUser } from '../../FriendsScreen/functions/loadUser';
 import { clearBoardInfo,showAddNoteModal } from '../../../../store/notes/boardSlice';
 import { setUsername,setMyimage } from '../../../../store/settings/settingsSlice';
 import auth from '@react-native-firebase/auth';
+import {firebase} from '@react-native-firebase/database'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { setDescription,setMessage,setEmail } from '../../../../store/login/loginSlice';
 import {getUserDocs} from '../functions/getUserDocs'
@@ -49,8 +50,37 @@ const BoardScreen = () => {
   useFocusEffect(
     React.useCallback(() => {
       fetchNotes(dispatch);
+
+      const onChildAdd = () => fetchNotes(dispatch);
+
+      const listen = async ()=>{
+        const usersRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('users')
+        const snapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
+        const userData = snapshot.val();
+        const userId = Object.keys(userData)[0];
+      
+        const notesRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref(`users/${userId}/notes`);
+
+        notesRef.on('child_added', onChildAdd);
+      }
+
+      listen()
+      
       return ()=>{
         dispatch(clearBoardInfo());
+        
+        const listenOff = async () => {
+          const usersRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('users');
+          const snapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
+          const userData = snapshot.val();
+          const userId = Object.keys(userData)[0];
+          const notesRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref(`users/${userId}/notes`);
+  
+          // Remove the 'child_added' listener when the component unmounts
+          notesRef.off('child_added', onChildAdd);
+        }
+
+        listenOff()
       }
     }, [])
   );
