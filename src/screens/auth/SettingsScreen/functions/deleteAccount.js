@@ -1,11 +1,11 @@
-import firestore from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
 import { setShowInput, showModal } from "../../../../store/settings/settingsSlice";
 setShowInput
 import {removeAllFriendsBeforeAccountDelete} from './removeAllFriendsBeforeAccountDelete'
 import { removeNote } from "../../../../store/notes/boardSlice";
 import { appleAuth } from '@invertase/react-native-apple-authentication';
 import { GoogleSignin} from '@react-native-google-signin/google-signin';
+import auth from '@react-native-firebase/auth';
+import { firebase } from '@react-native-firebase/database';
 
 async function revokeSignInWithAppleToken() {
   const { authorizationCode } = await appleAuth.performRequest({
@@ -37,26 +37,23 @@ export const deleteAccount = async ({notes,dispatch,pendingNotes}) => {
     await removeAllFriendsBeforeAccountDelete()
   
     // delete this account
-    const getUserByEmail = await firestore()
-    .collection('users')
-    .where('email', '==', EMAIL)
-    .get()
+    const database = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/');
+    const usersRef = database.ref('users');
   
-    const docs = getUserByEmail.docs
-  
-    if(Array.isArray(docs) && docs.length > 0) {
-      let doc = docs[0];
-  
-      await firestore()
-      .collection('users')
-      .doc(doc.id)
-      .delete()
-  
-      auth().currentUser.delete()
-      notes.forEach(sticker => dispatch(removeNote(sticker.id)));
-      pendingNotes.forEach(sticker => dispatch(removePendingNote(sticker.id)));
-      dispatch(setShowInput(false))
+    const snapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
+    const userData = snapshot.val();
+
+    if (userData) {
+      const userId = Object.keys(userData)[0];
+
+      await usersRef.child(userId).remove();
     }
+
+    // Delete the user from authentication
+    await auth().currentUser.delete();
+    notes.forEach(sticker => dispatch(removeNote(sticker.id)));
+    pendingNotes.forEach(sticker => dispatch(removePendingNote(sticker.id)));
+    dispatch(setShowInput(false))
   } catch (error) {
     if(error.code === 'auth/user-mismatch'){
       alert('The supplied credentials do not correspond to the previously signed in user.') 

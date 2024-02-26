@@ -39,7 +39,7 @@ export const renderRequests = ({item},dispatch,navigation,translation) =>{
                     toValue: -Dimensions.get('window').width,
                     useNativeDriver: true,
                   }).start();
-                removeFriendRequestFromFirestore(item.email,item.username,dispatch)
+                removeFriendRequestFromFirestore(item.email,dispatch)
             }
         }}>
             <TouchableWithoutFeedback style={styles.friendsRequestList} onPress={async()=>{

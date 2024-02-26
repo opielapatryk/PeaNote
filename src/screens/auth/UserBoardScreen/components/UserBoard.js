@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Text, View, Pressable, Keyboard,  TouchableWithoutFeedback,Image } from 'react-native';
 import {styles} from '../../../../../assets/styles/styles'
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import { sendFriendRequest } from '../functions/sendFriendRequest';
-import {removeFriendRequest} from '../functions/removeFriendRequest';
+import {removeFriendRequestFromFirestore} from '../../FriendRequestScreen/functions/removeFriendRequestFromFirestore';
 import { useDescription } from './useDescription';
 import { useRequest } from './useRequest';
 
@@ -11,6 +11,7 @@ const UserBoard = ({ route }) => {
   const { friendEmail,name,oldnickname} = route.params;
   const { friendimage } = useSelector((state) => state.settings);
   const [invite,setInvite] = useState();
+  const dispatch = useDispatch()
   let invited = useRequest(friendEmail)
 
   return (
@@ -24,7 +25,7 @@ const UserBoard = ({ route }) => {
           <Text style={{textAlign:'center',fontStyle:'italic'}}>{useDescription(friendEmail)}</Text>
 
           <Pressable style={styles.addFriendButton} onPress={invited||invite?()=>{
-            removeFriendRequest(friendEmail)
+            removeFriendRequestFromFirestore(friendEmail,dispatch)
             setInvite(false)
           }:()=>{
             sendFriendRequest(friendEmail)

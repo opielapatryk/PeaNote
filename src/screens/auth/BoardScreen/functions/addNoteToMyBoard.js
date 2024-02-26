@@ -1,4 +1,3 @@
-import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 import { firebase } from '@react-native-firebase/database';
 
@@ -11,7 +10,6 @@ export default async (content,board) => {
   
     const userData = snapshot.val();
     const userId = Object.keys(userData)[0];
-    // const newNoteKey = usersRef.child(`${userId}/notes`).push().key;
     const notesArray = userData[userId].notes || [];
 
 
@@ -23,9 +21,6 @@ export default async (content,board) => {
             pending: false
           };
 
-        // const updates = {};
-        // updates[`${userId}/notes/${newNoteKey}`] = newNoteData;
-        // await usersRef.update(updates);
         notesArray.push(newNoteData);
         await usersRef.child(`${userId}/notes`).set(notesArray);
     } else {
@@ -35,9 +30,6 @@ export default async (content,board) => {
             pending: true
           };
 
-        //   const updates = {};
-        //   updates[`${userId}/notes/${newNoteKey}`] = newNoteData;
-        //   await usersRef.update(updates);
         notesArray.push(newNoteData);
         await usersRef.child(`${userId}/notes`).set(notesArray);
     }

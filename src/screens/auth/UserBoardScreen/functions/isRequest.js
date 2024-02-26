@@ -1,20 +1,22 @@
 import auth from "@react-native-firebase/auth";
-import firestore from '@react-native-firebase/firestore';
+import { firebase } from '@react-native-firebase/database';
 
 export const isRequest = async (friendEmail) => {
     const EMAIL = auth().currentUser.email;
-    const currentUser = await firestore().collection('users').where('email', '==', EMAIL).get();
+    const database = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/');
+    const usersRef = database.ref('users');
+    const userSnapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
+    const userData = userSnapshot.val();
     let invited = false;
 
-    const pending_requests = currentUser.docs[0].data().pending_requests;
+    if (userData) {
+      const userId = Object.keys(userData)[0];
+      const pending_requests = (userData[userId].friends || []).filter((f)=>f.pending === true && (f.email === friendEmail || f.username === friendEmail));
 
-    pending_requests.every((request)=>{
-        if(request.email === friendEmail || request.username === friendEmail){
-            invited = true;
-            return false
-        }
-        return true
-    })
+      if(pending_requests.length > 0){
+        invited = true;
+      }
+    }
 
     return invited
 }

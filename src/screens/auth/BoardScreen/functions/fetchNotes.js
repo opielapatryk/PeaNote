@@ -18,13 +18,16 @@ export const fetchNotes = async (dispatch) => {
   let stickersonboard = []
   let pending = []
 
-  notes.forEach(note => {
-    if(note.pending){
-      pending.push(note)
-    }else{
-      stickersonboard.push(note)
-    }
-  });
+  if(notes && notes.length > 0) {
+    notes.forEach(note => {
+      if(note.pending){
+        pending.push(note)
+      }else{
+        stickersonboard.push(note)
+      }
+    });
+  }
+
   
   fetchAndDispatchStickers(stickersonboard, dispatch, addNote);
   fetchAndDispatchStickers(pending, dispatch, addPendingNote);

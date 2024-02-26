@@ -1,77 +1,65 @@
-import auth, { firebase } from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
 import { setShowInputUsername,setUsername } from '../../../../store/settings/settingsSlice';
 import { setMessage } from '../../../../store/login/loginSlice';
-
+import auth from '@react-native-firebase/auth';
+import { firebase } from '@react-native-firebase/database';
 
  export const changeUsername = async ({setDeleteAccountPressed,newUsername,dispatch,setNewUsername}) => {
-        setDeleteAccountPressed(false);
-        let usernameExists = false;
+    setDeleteAccountPressed(false);
 
-        const getuserwiththisusername = await firestore().collection('users').get()
+    const database = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/');
+    const usersRef = database.ref('users');
+    const isUsernameTaken = (await usersRef.orderByChild('username').equalTo(newUsername).once('value')).exists();
 
-        getuserwiththisusername.docs.forEach(user =>{
-          if(user.data().username === newUsername){
-            usernameExists = true;
-          }
-        })
-
-        if (usernameExists) {
-          setNewUsername('')
-          dispatch(setMessage('USERNAME IS TAKEN'));
-          setTimeout(() => {
-            dispatch(setShowInputUsername(false))
-            dispatch(setMessage(''))
-          }, 2000);
-          return; 
-        }
-        
-        const EMAIL = auth().currentUser.email
-        let friends
-
-        const getUserByEmail = await firestore()
-        .collection('users')
-        .where('email', '==', EMAIL)
-        .get()
-      
-        getUserByEmail.forEach((doc)=>{
-          firestore()
-          .collection('users')
-          .doc(doc.id)
-          .update({
-            username: newUsername,
-          })
-
-          friends = doc.data().friends
-          dispatch(setUsername(newUsername))
-        })
-
-        // for each friend change my username
-        friends.forEach(async (friend)=>{
-          let friendEmail = friend.email
-          // get document where email == friend email
-          const getfriendByEmail = await firestore().collection('users').where('email', '==', friendEmail).get()
-
-          getfriendByEmail.forEach(async (doc)=>{
-            // get friends field
-            const updatedFriends = doc.data().friends.map((friendData) => {
-              if (friendData.email === EMAIL) {
-                // if friend email === email update username
-                return { email: EMAIL, username: newUsername };
-              }
-              return friendData;
-            });
-
-            // update the document with the modified friends array
-            await firestore().collection('users').doc(doc.id).update({
-              friends: updatedFriends,
-            });
-        })});
-
+    if(isUsernameTaken){
       setNewUsername('')
-      dispatch(setMessage('USERNAME UPDATED'));
+      dispatch(setMessage('USERNAME IS TAKEN'));
       setTimeout(() => {
         dispatch(setShowInputUsername(false))
         dispatch(setMessage(''))
       }, 2000);
+      return; 
+    }
+
+    const EMAIL = auth().currentUser.email
+    const userSnapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
+    const userData = userSnapshot.val();
+
+    if (userData) {
+      const userId = Object.keys(userData)[0];
+      const friends = userData[userId].friends || [];
+  
+      // Update current user's username
+      await usersRef.child(`${userId}/username`).set(newUsername);
+  
+      // Update usernames for each friend
+      await Promise.all(
+        friends.map(async (friend) => {
+          const friendSnapshot = await usersRef.orderByChild('email').equalTo(friend.email).once('value');
+          const friendData = friendSnapshot.val();
+  
+          if (friendData) {
+            const friendUserId = Object.keys(friendData)[0];
+            const friendFriends = friendData[friendUserId].friends || [];
+  
+            // Find myself in the friend's friends list
+            const index = friendFriends.findIndex((f) => f.email === EMAIL);
+            if (index !== -1) {
+              friendFriends[index].username = newUsername;
+            }
+  
+            // Update friend's friends list
+            await usersRef.child(`${friendUserId}/friends`).set(friendFriends);
+          }
+        })
+      );
+    }
+
+    await dispatch(setUsername(newUsername))
+
+    setNewUsername('')
+    dispatch(setMessage('USERNAME UPDATED'));
+    setTimeout(() => {
+      dispatch(setShowInputUsername(false))
+      dispatch(setMessage(''))
+    }, 2000);
   };

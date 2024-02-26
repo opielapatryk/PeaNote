@@ -1,23 +1,24 @@
-import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import { firebase } from '@react-native-firebase/database';
 
 export const checkIsAskBeforeStickingNoteFlagOff = async () => {
-  const EMAIL = auth().currentUser.email
+  const EMAIL = auth().currentUser.email;
 
-  let data 
-  
-  const getUserByEmail = await firestore()
-  .collection('users')
-  .where('email', '==', EMAIL)
-  .get()
+  const database = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/');
+  const usersRef = database.ref('users');
 
-  const docs = getUserByEmail.docs;
+  try {
+    const snapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
+    const userData = snapshot.val();
 
-  if (Array.isArray(docs) && docs.length > 0) {
-    docs.forEach((doc) => {
-      data = doc.data().askBeforeStick
-    })
+    if (userData) {
+      const userId = Object.keys(userData)[0];
+      const askBeforeStick = userData[userId].askBeforeStick;
+
+      return askBeforeStick ? true : false;
+    }
+  } catch (error) {
+    console.error('Error checking askBeforeStick flag:', error);
+    return false;
   }
-
-  return data ? true : false
 };

@@ -1,70 +1,24 @@
-import { firebase } from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
+import { firebase } from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
 import { removeFriendReducer,cleanStoreFriends } from '../../../../store/friends/friendsSlice';
 
 export const removeFriend = async (navigation,friendEmail,username,nickname,dispatch) => {
   const EMAIL = auth().currentUser.email
+  const database = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/');
+  const usersRef = database.ref('users');
+  const userSnapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
+  const userData = userSnapshot.val();
+  const userId = Object.keys(userData)[0];
+  const friends = userData[userId].friends.filter((f) => f.email !== friendEmail);
+  await usersRef.child(`${userId}/friends`).set(friends);
   
-  let USERNAME
-  let FRIEND_NICKNAME
-  let MY_NICKNAME_IN_MY_FRIEND_TABLE
-
-  //remove friend from current user table
-  const getUserByEmail = await firestore()
-      .collection('users')
-      .where('email', '==', EMAIL)
-      .get()
-
+  const friendSnapshot = await usersRef.orderByChild('email').equalTo(friendEmail).once('value');
+  const friendData = friendSnapshot.val();
+  const friendId = Object.keys(friendData)[0];
+  const myFriendFriends = friendData[friendId].friends.filter((f) => f.email !== EMAIL);
+  await usersRef.child(`${friendId}/friends`).set(myFriendFriends);
   
-  getUserByEmail.forEach(doc => {
-    let friends = doc.data().friends
-
-    friends.forEach((friend)=>{
-      if(friend.email === friendEmail){
-        FRIEND_NICKNAME = friend['nickname']
-      }
-    });
-
-
-    USERNAME = doc.data().username
-
-
-    firestore()
-    .collection('users')
-    .doc(doc.id)
-    .update({
-      friends: firebase.firestore.FieldValue.arrayRemove({email:friendEmail,username:username,nickname:FRIEND_NICKNAME}),
-    })
-  })
-
-
-  //remove current user from friend table
-  const getFriendByEmail = await firestore()
-    .collection('users')
-    .where('email', '==', friendEmail)
-    .get()
-
-
-    getFriendByEmail.forEach(doc => {
-        let friends = doc.data().friends
-
-        friends.forEach((friend)=>{
-          if(friend.email === EMAIL){
-            MY_NICKNAME_IN_MY_FRIEND_TABLE = friend['nickname']
-          }
-        });
-
-          firestore()
-          .collection('users')
-          .doc(doc.id)
-          .update({
-            friends: firebase.firestore.FieldValue.arrayRemove({email:EMAIL,username:USERNAME,nickname:MY_NICKNAME_IN_MY_FRIEND_TABLE}),
-          })
-          .then(()=>{
-            dispatch(removeFriendReducer(friendEmail))
-            dispatch(cleanStoreFriends())
-            navigation.navigate('FriendsScreen');
-          })
-        })
+  dispatch(removeFriendReducer(friendEmail))
+  dispatch(cleanStoreFriends())
+  navigation.navigate('FriendsScreen');
   };

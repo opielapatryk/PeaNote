@@ -17,7 +17,7 @@ export const loadUser = async (dispatch)=>{
   const friendsArray = userData[userId].friends || [];
 
   const requests = friendsArray.filter(friend => friend.request);
-  const approvedFriends = friendsArray.filter(friend => !friend.pending);
+  const approvedFriends = friendsArray.filter(friend => !friend.pending && !friend.request);
 
   if(approvedFriends && approvedFriends.length>0){
     fetchAndDispatchFriends(approvedFriends, dispatch, setFriends);

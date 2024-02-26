@@ -1,38 +1,20 @@
 import auth, { firebase } from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
 
 export async function sendNoteToBoard(content,creator){
   const EMAIL = auth().currentUser.email
+  const database = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/');
+  const usersRef = database.ref('users');
+  const userSnapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
+  const userData = userSnapshot.val();
+  const userId = Object.keys(userData)[0];
+  const notes = userData[userId].notes
 
-  // get current user collection to take action on in next step
-  const getUserByEmail = await firestore()
-  .collection('users')
-  .where('email', '==', EMAIL)
-  .get()
+  const updatedNotes = notes.map((note) => {
+    if (note.content === content && note.creator === creator) {
+      return { ...note, pending: false };
+    }
+    return note;
+  });
 
-  // ADD STICKER TO BOARD 
-  getUserByEmail.forEach(doc => {
-    firestore()
-    .collection('users')
-    .doc(doc.id)
-    .update({
-      stickersOnBoard: firebase.firestore.FieldValue.arrayUnion({
-        content: content,
-        creator: creator,
-      }),
-    })
-  })
-  
-  // REMOVE STICKER FROM PENDING 
-  getUserByEmail.forEach(doc => {
-    firestore()
-    .collection('users')
-    .doc(doc.id)
-    .update({
-      pending: firebase.firestore.FieldValue.arrayRemove({
-        content: content,
-        creator: creator,
-      }),
-    })
-  })
+  await usersRef.child(`${userId}/notes`).set(updatedNotes);
 }

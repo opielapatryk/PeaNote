@@ -1,20 +1,31 @@
 import { isEmail } from "./isEmail";
-import firestore from '@react-native-firebase/firestore';
+import { firebase } from '@react-native-firebase/database';
 
 export const getDescription = async (email) =>{
-    if(isEmail(email)){
-      const emailSnapshot = await firestore()
-      .collection('users')
-      .where('email', '==', email)
-      .get();
+  const database = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/');
+  const usersRef = database.ref('users');
 
-      return emailSnapshot.docs[0].data().description
-    }else{
-      const usernameSnapshot = await firestore()
-      .collection('users')
-      .where('username', '==', email)
-      .get();
+  try {
+    let snapshot;
 
-      return usernameSnapshot.docs[0].data().description
+    if (isEmail(email)) {
+      // Search by email
+      snapshot = await usersRef.orderByChild('email').equalTo(email).once('value');
+    } else {
+      // Search by username
+      snapshot = await usersRef.orderByChild('username').equalTo(email).once('value');
     }
+
+    const userData = snapshot.val();
+
+    if (userData) {
+      const userId = Object.keys(userData)[0];
+      return userData[userId].description;
+    }
+
+    return null; // Return null if no user found with the given email or username
+  } catch (error) {
+    console.error('Error getting description:', error);
+    throw error;
   }
+}

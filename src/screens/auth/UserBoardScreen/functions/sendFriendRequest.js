@@ -1,79 +1,48 @@
-import { firebase } from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
+import { firebase } from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
 
 export const sendFriendRequest = async (friendEmail) => {
-  let isFriend = false;
-
   const currentUserEmail = auth().currentUser.email;
+  const database = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/');
+  const usersRef = database.ref('users');
 
-  const getUserDetails = async (email) => {
-    const userSnapshot = await firestore()
-      .collection('users')
-      .where('email', '==', email)
-      .get();
+  try {
+    const currentUserSnapshot = await usersRef.orderByChild('email').equalTo(currentUserEmail).once('value');
+    const currentUserData = currentUserSnapshot.val();
 
-      if (userSnapshot.empty) {
-        const usernameSnapshot = await firestore()
-          .collection('users')
-          .where('username', '==', email)
-          .get();
-    
-        if (usernameSnapshot.empty) {
-          return null;
-        }
-        return usernameSnapshot.docs[0];
+    if (!currentUserData) {
+      throw new Error('Current user not found.');
+    }
+
+    const currentUserId = Object.keys(currentUserData)[0];
+    const currentUserFriends = currentUserData[currentUserId].friends || [];
+    const currentUserUsername = currentUserData[currentUserId].username
+
+    // Check if already friends
+    const isAlreadyFriend = currentUserFriends.some((friend) => friend.email === friendEmail);
+
+    if (!isAlreadyFriend) {
+      const friendSnapshot = await usersRef.orderByChild('email').equalTo(friendEmail).once('value');
+      const friendData = friendSnapshot.val();
+
+      if (!friendData) {
+        throw new Error('Friend not found.');
       }
 
-    return userSnapshot.docs[0];
-  };
-  
+      const friendUserId = Object.keys(friendData)[0];
+      const friendUsername = friendData[friendUserId].username;
+      const friendFriends = friendData[friendUserId].friends || [];
 
-  const currentUserDoc = await getUserDetails(currentUserEmail);
+      // Add friend request to friend's friends list
+      await usersRef.child(`${friendUserId}/friends`).set([...friendFriends, { email: currentUserEmail, username: currentUserUsername, nickname: '', request:true, pending:false }]);
 
-  if (!currentUserDoc) {
-    return;
-  }
-
-  currentUserDoc.data().friends.every((friend)=>{
-    if(friend.email === friendEmail){
-      isFriend = true
-      return false
+      // Add pending request to current user's friends list
+      await usersRef.child(`${currentUserId}/friends`).set([...currentUserFriends, { email: friendEmail, username: friendUsername, nickname: '', request:false, pending: true }]);
+    } else {
+      console.log('Already friends.');
     }
-    return true
-  })
-
-  if(!isFriend){
-    const currentUserUsername = currentUserDoc.data().username
-
-    const friendDoc = await getUserDetails(friendEmail);
-    const friendUsername = friendDoc.data().username
-
-    if (!friendDoc) {
-      return;
-    }
-
-    await firestore()
-    .collection('users')
-    .doc(friendDoc.id)
-    .update({
-        friends_requests: firebase.firestore.FieldValue.arrayUnion({
-        email: currentUserEmail,
-        username: currentUserUsername,
-        nickname:''
-        }),
-    })
-
-    await firestore()
-    .collection('users')
-    .doc(currentUserDoc.id)
-    .update({
-        pending_requests: firebase.firestore.FieldValue.arrayUnion({
-        email: friendEmail,
-        username: friendUsername,
-        nickname:''
-        }),
-    })
+  } catch (error) {
+    console.error('Error sending friend request:', error);
+    throw error;
   }
-  
 };

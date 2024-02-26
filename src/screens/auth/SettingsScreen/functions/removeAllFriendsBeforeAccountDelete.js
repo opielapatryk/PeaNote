@@ -1,39 +1,31 @@
-import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import { firebase } from '@react-native-firebase/database';
 
 export const removeAllFriendsBeforeAccountDelete = async () => {
     const EMAIL = auth().currentUser.email
+    const database = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/');
+    const usersRef = database.ref('users');
+    const userSnapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
+    const userData = userSnapshot.val();
 
-    const getUserByEmail = await firestore()
-        .collection('users')
-        .where('email', '==', EMAIL)
-        .get();
-
-    let friendsList;
-
-    getUserByEmail.forEach(doc => {
-        friendsList = doc.data().friends;
-    });
-
-    if (friendsList) {
-        for (const friendEmail of friendsList) {
-            const getFriendByEmail = await firestore()
-            .collection('users')
-            .where('email', '==', friendEmail)
-            .get();
-
-            getFriendByEmail.forEach(doc => {
-                let updatedFriendsList = doc.data().friends;
-
-                updatedFriendsList = updatedFriendsList.filter(item => item !== EMAIL);
-
-                firestore()
-                .collection('users')
-                .doc(doc.id)
-                .update({
-                    friends: updatedFriendsList
-                });
-            });
-        }
+    if (userData) {
+      const userId = Object.keys(userData)[0];
+      const friends = userData[userId].friends || [];
+  
+      // Update usernames for each friend
+      await Promise.all(
+        friends.map(async (friend) => {
+          const friendSnapshot = await usersRef.orderByChild('email').equalTo(friend.email).once('value');
+          const friendData = friendSnapshot.val();
+  
+          if (friendData) {
+            const friendUserId = Object.keys(friendData)[0];
+            const updatedFriendFriendsList = (friendData[friendUserId].friends || []).filter((f)=> f.email !== EMAIL);
+  
+            // Update friend's friends list
+            await usersRef.child(`${friendUserId}/friends`).set(updatedFriendFriendsList);
+          }
+        })
+      );
     }
 };
