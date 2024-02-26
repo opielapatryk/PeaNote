@@ -6,8 +6,8 @@ import { handlePress } from '../functions/handlePress';
 import { removeNote, changeInfo,editNoteRedux } from '../../../../store/notes/boardSlice';
 import {editNote} from '../functions/editNote'
 import { deleteNote } from '../functions/deleteNote';
-import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
+import { firebase } from '@react-native-firebase/database';
 
 export const Note = ({ id, isInfo,content,creator }) => {
   const { notes } = useSelector((state) => state.board);
@@ -21,21 +21,26 @@ export const Note = ({ id, isInfo,content,creator }) => {
 
 const getNickname = async () => {
   const EMAIL = auth().currentUser.email
-  const currentUser = await firestore().collection('users').where('email', '==', EMAIL).get()
 
-  if (currentUser.docs && currentUser.docs.length > 0) {
-    const friend = currentUser.docs[0].data().friends.find(
-      (friend) => friend.username === creator || friend.email === creator
-    );
+  const usersRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('users');
 
-    if (friend === undefined) {
-      return creator;
-    }
+  const snapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
 
-    return friend.nickname;
-  } else {
-    return creator; 
+  const userData = snapshot.val();
+
+  const userId = Object.keys(userData)[0];
+
+  const friendsArray = userData[userId].friends || [];
+
+  const approvedFriends = friendsArray.filter(friend => !friend.pending && !friend.request);
+
+  const friend = approvedFriends.find((friend) => friend.username === creator || friend.email === creator);
+
+  if (friend === undefined) {
+    return creator;
   }
+
+  return friend.nickname;
 }
 
   getNickname().then((nickname)=>{

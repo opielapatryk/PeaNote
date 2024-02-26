@@ -31,11 +31,13 @@ const BoardScreen = () => {
       dispatch(setMyimage(fileUri));
     })
 
-    getUserDocs().then((docs)=>{
-      docs.forEach(doc => {
-        dispatch(setUsername(doc.data().username))
-        dispatch(setDescription(doc.data().description))
-      })
+    getUserDocs().then((user)=>{
+      const userId = Object.keys(user)[0];
+      const username = user[userId].username;
+      const description = user[userId].description;
+
+      dispatch(setUsername(username))
+      dispatch(setDescription(description))
     })
 
     fetchNotes(dispatch);

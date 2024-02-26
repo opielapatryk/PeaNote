@@ -5,15 +5,19 @@
 // TODO: Better friend search mechanizm, using first name and last name
 // TODO: Notifications in new card
 // TODO: Improve rendering (real-time db and local db)
-
+// TODO: When user is trying to change username, keyboard hide textinput
+// TODO: When user sign in with apple and hide email, then invite somebody to friend without setting username, then he will be not visible in requests list
+//solutions:
+// - Ask for username when first time sign in with apple
+//TODO: I added note, then check is this note in "your notes" and it wasn't, find out why
+//TODO: Create note input, press enter to send note and hide keyboard (same in other textinputs)
+//TODO: Create note, modal insted of this textinput
 
 // When user create account, 
 // create node in realtime database...
 
+// const ref = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('/users')
 
-
-// const reference = database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/')
-//   .ref('/users/123');
 
 
 // PUSH (create new key and save data):

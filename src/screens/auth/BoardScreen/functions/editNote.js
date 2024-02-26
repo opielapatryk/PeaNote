@@ -1,28 +1,34 @@
 import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
+import { firebase } from '@react-native-firebase/database';
 
 export const editNote = async (newContent, oldContent, creator) => {
-    const EMAIL = auth().currentUser.email;
+  const EMAIL = auth().currentUser.email;
 
-    const userQuerySnapshot = await firestore()
-        .collection('users')
-        .where('email', '==', EMAIL)
-        .get();
+  const usersRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('users');
 
-    const userDoc = userQuerySnapshot.docs[0];
-    const userRef = firestore().collection('users').doc(userDoc.id);
+  try {
+    const snapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
 
-    const stickersOnBoard = userDoc.data().stickersOnBoard || [];
+    if (snapshot.exists()) {
+      const userData = snapshot.val();
+      const userId = Object.keys(userData)[0];
 
-    const indexToUpdate = stickersOnBoard.findIndex(
-        (sticker) => sticker.content === oldContent && sticker.creator === creator
-    );
+      // EDIT NOTE IN REALTIME DATABASE
+      await usersRef.child(`${userId}/notes`).orderByChild('content').equalTo(oldContent).once('value', (snapshot) => {
+        snapshot.forEach((childSnapshot) => {
+          const note = childSnapshot.val();
 
-    if (indexToUpdate !== -1) {
-        stickersOnBoard[indexToUpdate].content = newContent;
-
-        await userRef.update({
-            stickersOnBoard: stickersOnBoard,
+          // Check if the note has the matching creator
+          if (note.creator === creator) {
+            childSnapshot.ref.update({ content: newContent });
+          }
         });
+      });
+    } else {
+      console.warn('User not found.');
     }
+  } catch (error) {
+    console.error('Error editing note:', error);
+    throw error;
+  }
 };

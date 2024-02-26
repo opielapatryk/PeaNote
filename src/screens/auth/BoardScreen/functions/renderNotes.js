@@ -20,7 +20,7 @@ export const renderNotes = ({item}) => {
       
       return friend.nickname;
     } else {
-      return item.creator; // Handle the case where docs array is undefined or empty
+      return item.creator; 
     }
   }
 
