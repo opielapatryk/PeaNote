@@ -9,8 +9,7 @@ export const approveFriend = async (friendEmail, friendUsername, dispatch) => {
   let USERNAME;
 
   try {
-    const database = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/');
-    const usersRef = database.ref('users');
+    const usersRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('users');
 
     // Get user by email
     const userSnapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
@@ -22,18 +21,20 @@ export const approveFriend = async (friendEmail, friendUsername, dispatch) => {
       USERNAME = userData[userId].username;
 
       // my friends length
-      friendsAmmount = userData[userId].friends.length;
+      friendsAmmount = userData[userId].friends?.length;
+      const friends = userData[userId].friends
 
-      const friendExists = userData[userId].friends.some(friend => friend.email === friendEmail || friend.username === friendUsername);
+      const friendExists = friends?.some(friend => (friend.email === friendEmail || friend.username === friendUsername) && (!friend.request && !friend.pending));
 
       // add approved friend to my friends list and remove approved friend from my friend requests list, by turning request attribute to false
-      const updatedFriendsList = userData[userId].friends.map((friend)=>{
-        if(friend.email === friendEmail || friend.username === friendUsername){
-          friend.request = false;
-        }
-      })
-
       if (!friendExists) {
+        const updatedFriendsList = friends?.map((friend)=>{
+          if(friend.email === friendEmail || friend.username === friendUsername){
+            return { ...friend, request: false };
+          }
+          return friend
+        })
+
         await usersRef.child(`${userId}/friends`).set(updatedFriendsList);
       }
     }
@@ -44,17 +45,20 @@ export const approveFriend = async (friendEmail, friendUsername, dispatch) => {
 
     if (friendData) {
       const friendId = Object.keys(friendData)[0];
+      const friends = friendData[friendId].friends
 
-      const currentUserExists = friendData[friendId].friends.some(f => f.email === EMAIL || f.username === USERNAME);
+      const currentUserExists = friends?.some(friend => (friend.email === EMAIL || friend.username === USERNAME) && (!friend.request && !friend.pending));
 
       // add current user to my friend friends list and remove from my friend pending list, by turning pending attribute to false
-      const updatedFriendsList = friendData[friendId].friends.map((friend)=>{
-        if(friend.email === friendEmail || friend.username === friendUsername){
-          friend.pending = false;
-        }
-      })
 
       if (!currentUserExists) {
+        const updatedFriendsList = await friends?.map((friend)=>{
+          if(friend.email === EMAIL || friend.username === USERNAME){
+            return {...friend, pending:false};
+          }
+          return friend
+        })
+
         await usersRef.child(`${friendId}/friends`).set(updatedFriendsList);
 
         dispatch(removeRequestReducer(friendEmail));

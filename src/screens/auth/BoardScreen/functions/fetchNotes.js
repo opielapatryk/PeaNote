@@ -20,9 +20,9 @@ export const fetchNotes = async (dispatch) => {
 
   if(notes && notes.length > 0) {
     notes.forEach(note => {
-      if(note.pending){
+      if(note && note.pending){
         pending.push(note)
-      }else{
+      }else if(note){
         stickersonboard.push(note)
       }
     });

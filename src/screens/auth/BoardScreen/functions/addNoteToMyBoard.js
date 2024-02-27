@@ -10,7 +10,7 @@ export default async (content,board) => {
   
     const userData = snapshot.val();
     const userId = Object.keys(userData)[0];
-    const notesArray = userData[userId].notes || [];
+    let notesArray = userData[userId].notes || [];
 
 
     // ADD STICKER TO BOARD

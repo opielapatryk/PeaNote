@@ -58,10 +58,7 @@ const BoardScreen = () => {
         const snapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
         const userData = snapshot.val();
         const userId = Object.keys(userData)[0];
-      
-        const notesRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref(`users/${userId}/notes`);
-
-        notesRef.on('child_added', onChildAdd);
+        firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref(`users/${userId}/notes`).on('child_added', onChildAdd); 
       }
 
       listen()
@@ -74,10 +71,7 @@ const BoardScreen = () => {
           const snapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
           const userData = snapshot.val();
           const userId = Object.keys(userData)[0];
-          const notesRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref(`users/${userId}/notes`);
-  
-          // Remove the 'child_added' listener when the component unmounts
-          notesRef.off('child_added', onChildAdd);
+          firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref(`users/${userId}/notes`).off('child_added', onChildAdd); 
         }
 
         listenOff()

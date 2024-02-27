@@ -5,11 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useFocusEffect } from '@react-navigation/native';
 import { loadUser } from '../../FriendsScreen/functions/loadUser';
 import {firebase} from '@react-native-firebase/database'
+import auth from '@react-native-firebase/auth'
 
 const FriendRequests = ({navigation}) => {
   const {requests} = useSelector((state)=>state.friends)
   const dispatch = useDispatch()
   const translation = useRef(new Animated.Value(0)).current;
+  const EMAIL = auth().currentUser.email
 
   useFocusEffect(
     React.useCallback(() => {
