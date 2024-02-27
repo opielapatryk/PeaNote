@@ -31,8 +31,7 @@ export const friendsSlice = createSlice({
         removeRequestReducer: (state, action) => {
             return {
                 ...state,
-                requests: state.requests.filter(request => request.email !== action.payload)
-                
+                requests: state.requests.filter(request => request.email !== action.payload)  
             };
         },      
         cleanStoreFriends: () => {

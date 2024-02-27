@@ -62,15 +62,6 @@ export const approveFriend = async (friendEmail, friendUsername, dispatch) => {
         await usersRef.child(`${friendId}/friends`).set(updatedFriendsList);
 
         dispatch(removeRequestReducer(friendEmail));
-
-        dispatch(
-          setFriends({
-            id: friendsAmmount + 1,
-            email: friendEmail,
-            username: friendUsername,
-            nickname: undefined,
-          })
-        );
       }
     }
   } catch (error) {

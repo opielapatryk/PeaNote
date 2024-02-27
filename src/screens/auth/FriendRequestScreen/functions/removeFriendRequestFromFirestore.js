@@ -20,7 +20,6 @@ export const removeFriendRequestFromFirestore = async (friendEmail, dispatch) =>
       const updatedFriendsRequests = userData[userId].friends.filter(req => req.email !== friendEmail);
 
       await usersRef.child(`${userId}/friends`).set(updatedFriendsRequests);
-      dispatch(removeRequestReducer(friendEmail));
 
       // Remove pending request from friend's collection
       const friendSnapshot = await usersRef.orderByChild('email').equalTo(friendEmail).once('value');
@@ -28,11 +27,13 @@ export const removeFriendRequestFromFirestore = async (friendEmail, dispatch) =>
 
       if (friendData) {
         const friendUserId = Object.keys(friendData)[0];
-        const updatedPendingRequests = friendData[friendUserId].friends.filter(req => req.email !== EMAIL);
+        const updatedPendingRequests = friendData[friendUserId].friends?.filter(req => req.email !== EMAIL);
 
         await usersRef.child(`${friendUserId}/friends`).set(updatedPendingRequests);
       }
     }
+
+    dispatch(removeRequestReducer(friendEmail));
   } catch (error) {
     console.error('Error removing friend request:', error);
   }

@@ -6,6 +6,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { loadUser } from '../../FriendsScreen/functions/loadUser';
 import {firebase} from '@react-native-firebase/database'
 import auth from '@react-native-firebase/auth'
+import { cleanStoreFriends } from '../../../../store/friends/friendsSlice';
 
 const FriendRequests = ({navigation}) => {
   const {requests} = useSelector((state)=>state.friends)
@@ -15,8 +16,14 @@ const FriendRequests = ({navigation}) => {
 
   useFocusEffect(
     React.useCallback(() => {
+      console.log(requests);
+      
       loadUser(dispatch)
       const onChildAdd = () => loadUser(dispatch);
+      const onChildRemove = () => {
+        dispatch(cleanStoreFriends())
+        loadUser(dispatch);
+      };
 
       const listen = async ()=>{
         const usersRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('users')
@@ -27,6 +34,7 @@ const FriendRequests = ({navigation}) => {
         const friendsRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref(`users/${userId}/friends`);
 
         friendsRef.on('child_added', onChildAdd);
+        friendsRef.on('child_removed', onChildRemove);
       }
 
       listen()
@@ -41,6 +49,7 @@ const FriendRequests = ({navigation}) => {
   
           // Remove the 'child_added' listener when the component unmounts
           friendsRef.off('child_added', onChildAdd);
+          friendsRef.off('child_removed', onChildRemove);
         }
 
         listenOff()

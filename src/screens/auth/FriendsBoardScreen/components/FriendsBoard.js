@@ -39,6 +39,40 @@ const FriendsBoard = ({ route, navigation }) => {
       downloadImage(friendEmail).then((fileUri)=>{
         dispatch(setFriendimage(fileUri));
       })
+
+
+      const onChildRemove = () => {
+        navigation.navigate('FriendsScreen')
+        navigation.navigate('UserBoard', {name:name, friendEmail:friendEmail , oldnickname:oldnickname})
+      };
+
+      const listen = async ()=>{
+        const usersRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('users')
+        const snapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
+        const userData = snapshot.val();
+        const userId = Object.keys(userData)[0];
+      
+        const friendsRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref(`users/${userId}/friends`);
+
+        friendsRef.on('child_removed', onChildRemove);
+      }
+
+      listen()
+      
+      return ()=>{
+        const listenOff = async () => {
+          const usersRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('users');
+          const snapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
+          const userData = snapshot.val();
+          const userId = Object.keys(userData)[0];
+          const friendsRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref(`users/${userId}/friends`);
+  
+          // Remove the 'child_added' listener when the component unmounts
+          friendsRef.off('child_removed', onChildRemove);
+        }
+
+        listenOff()
+      }
       
     }, [])
   );
@@ -126,7 +160,11 @@ const FriendsBoard = ({ route, navigation }) => {
       <View>
         <Text style={[styles.removeFriendText,{fontSize:14,marginBottom:10}]}>{oldnickname?friendEmail:''}</Text>
         
-        <Pressable style={styles.deleteAccountButton} onPress={()=>removeFriend(navigation,friendEmail,name,nickname,dispatch)}><Text style={styles.removeFriendText}>Remove friend</Text></Pressable>
+        <Pressable style={styles.deleteAccountButton} onPress={()=>{
+          removeFriend(navigation,friendEmail,name,nickname,dispatch)
+          navigation.navigate('FriendsScreen')
+          navigation.navigate('UserBoard', {name:name, friendEmail:friendEmail , oldnickname:oldnickname})
+          }}><Text style={styles.removeFriendText}>Remove friend</Text></Pressable>
       </View>
       
       </View>

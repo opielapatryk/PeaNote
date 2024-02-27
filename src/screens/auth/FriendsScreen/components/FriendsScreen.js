@@ -11,6 +11,7 @@ import { loadUser } from '../functions/loadUser';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { setFriendimage } from '../../../../store/settings/settingsSlice';
 import { downloadImage } from '../../BoardScreen/functions/downloadImage';
+import { cleanStoreFriends, removeFriendReducer } from '../../../../store/friends/friendsSlice'
 
 export const FriendsScreen = ({ navigation }) => {
   const {friends} = useSelector((state) => state.friends);
@@ -22,6 +23,10 @@ export const FriendsScreen = ({ navigation }) => {
     React.useCallback(() => {
       loadUser(dispatch)
       const onChildAdd = () => loadUser(dispatch);
+      const onChildRemove = () => {
+        dispatch(cleanStoreFriends())
+        loadUser(dispatch);
+      };
 
       const listen = async ()=>{
         const usersRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('users')
@@ -31,7 +36,8 @@ export const FriendsScreen = ({ navigation }) => {
       
         const friendsRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref(`users/${userId}/friends`);
 
-        friendsRef.on('child_added', onChildAdd);
+        friendsRef.on('child_changed', onChildAdd);
+        friendsRef.on('child_removed', onChildRemove);
       }
 
       listen()
@@ -44,7 +50,8 @@ export const FriendsScreen = ({ navigation }) => {
           const friendsRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref(`users/${userId}/friends`);
   
           // Remove the 'child_added' listener when the component unmounts
-          friendsRef.off('child_added', onChildAdd);
+          friendsRef.off('child_changed', onChildAdd);
+          friendsRef.off('child_removed', onChildRemove);
         }
 
         listenOff()

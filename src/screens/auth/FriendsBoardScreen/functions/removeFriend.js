@@ -1,6 +1,6 @@
 import { firebase } from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
-import { removeFriendReducer,cleanStoreFriends } from '../../../../store/friends/friendsSlice';
+import { removeFriendReducer } from '../../../../store/friends/friendsSlice';
 
 export const removeFriend = async (navigation,friendEmail,username,nickname,dispatch) => {
   const EMAIL = auth().currentUser.email
@@ -19,6 +19,4 @@ export const removeFriend = async (navigation,friendEmail,username,nickname,disp
   await usersRef.child(`${friendId}/friends`).set(myFriendFriends);
   
   dispatch(removeFriendReducer(friendEmail))
-  dispatch(cleanStoreFriends())
-  navigation.navigate('FriendsScreen');
   };
