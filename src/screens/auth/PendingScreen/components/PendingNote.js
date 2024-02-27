@@ -23,7 +23,8 @@ export function PendingNote({ id, isInfo, content,creator }) {
     const userSnapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
     const userData = userSnapshot.val();
     const userId = Object.keys(userData)[0];
-    const friend = userData[userId].friends.find(
+    const friends = userData[userId].friends
+    const friend = friends?.find(
       (friend) => friend.username === creator || friend.email === creator
     );
 

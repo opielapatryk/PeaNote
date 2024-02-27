@@ -34,7 +34,7 @@ const getNickname = async () => {
 
   const approvedFriends = friendsArray.filter(friend => !friend.pending && !friend.request);
 
-  const friend = approvedFriends.find((friend) => friend.username === creator || friend.email === creator);
+  const friend = approvedFriends?.find((friend) => friend.username === creator || friend.email === creator);
 
   if (friend === undefined) {
     return creator;
