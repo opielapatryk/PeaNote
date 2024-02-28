@@ -25,7 +25,7 @@ const ResetPasswordModal = ({modalVisible,setModalVisible}) => {
                 <View style={styles.modalPasswordResetViewChild}>
                     <Text style={styles.modalPasswordResetHeader}>Where should we send a reset link?</Text>
                     <Text style={styles.modalPasswordResetParagraph}>Enter the email associated with your account to reset your password.</Text>
-                    <TextInput style={styles.modalPasswordResetTextInput} placeholder={resetPasswordLog} value={resetEmail} onChangeText={text=>setResetEmail(text)}/>
+                    <TextInput style={styles.modalPasswordResetTextInput} placeholder={resetPasswordLog} value={resetEmail} onChangeText={text=>setResetEmail(text)} onSubmitEditing={()=>checkIfEmailExist()}/>
                     <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                     <Pressable onPress={()=>checkIfEmailExist()} style={styles.modalPasswordResetButtonNext}><Text style={styles.modalPasswordResetButtonNextText}>Send</Text></Pressable>
                     <Pressable onPress={()=>setModalVisible(false)} style={styles.modalPasswordResetButtonBack}><Text style={styles.modalPasswordResetButtonBackText}>Back</Text></Pressable>

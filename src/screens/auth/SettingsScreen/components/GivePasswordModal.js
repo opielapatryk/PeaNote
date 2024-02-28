@@ -29,7 +29,7 @@ const GivePasswordModal = () => {
             <View style={styles.modalSetPasswordChild}>
                 <Text style={styles.modalPasswordResetHeader}>Set new password</Text>
                 <Text style={styles.modalPasswordResetParagraph}>Provide password to delete account</Text>
-                <TextInput style={styles.modalPasswordResetTextInput} placeholder={'Password'} value={password} secureTextEntry onChangeText={text=>setPassword(text)}/>
+                <TextInput style={styles.modalPasswordResetTextInput} placeholder={'Password'} value={password} secureTextEntry onChangeText={text=>setPassword(text)} onSubmitEditing={()=>updatePassword()}/>
                 <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                 <Pressable onPress={()=>updatePassword()} style={styles.modalPasswordResetButtonNext}><Text style={styles.modalPasswordResetButtonNextText}>Accept</Text></Pressable>
                 </View>

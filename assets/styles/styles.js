@@ -243,7 +243,6 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.18,
     shadowRadius: 1.00,
     elevation: 1,
-    letterSpacing:2,
     paddingLeft:20
     // alignSelf:'center',
   },
@@ -257,7 +256,6 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.18,
     shadowRadius: 1.00,
     elevation: 1,
-    letterSpacing:2,
     alignSelf:'center',
   },
   friendsHeaderRequestText:{
@@ -270,7 +268,6 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.18,
     shadowRadius: 1.00,
     elevation: 1,
-    letterSpacing:2,
     alignSelf:'center',
   },
   deleteAccountButton:{
@@ -333,7 +330,6 @@ export const styles = StyleSheet.create({
     width: Dimensions.get("window").width,
     height:Dimensions.get("window").height / 18.6,
     textAlign:'center',
-    letterSpacing:.5,
     fontWeight:'600',
     borderBottomWidth:1,
     borderBottomColor:'lightgrey',
@@ -353,7 +349,6 @@ export const styles = StyleSheet.create({
   },
   firendListText:{
     fontSize:12,
-    letterSpacing:1.5,
   },
   emptyBoardText:{
     textAlign:'center',
@@ -361,7 +356,6 @@ export const styles = StyleSheet.create({
     fontWeight:'600',
     marginTop:Dimensions.get('window').height / 10,
     opacity: .5,
-    letterSpacing:.5
   },
   modalPasswordResetView:{    
     flex: 1,
@@ -418,7 +412,6 @@ export const styles = StyleSheet.create({
     color:'white',
     textAlign:'center',
     fontWeight:'600',
-    letterSpacing:1
   },
   modalPasswordResetButtonBack:{
     padding:10,
@@ -429,7 +422,6 @@ export const styles = StyleSheet.create({
   modalPasswordResetButtonBackText:{
     textAlign:'center',
     fontWeight:'600',
-    letterSpacing:1
   },
   noteIsInfoTrueLeftButton:{
     height:Dimensions.get("window").height / 5,width:Dimensions.get('window').width / 4.4,justifyContent:'center',paddingLeft:Dimensions.get('window').width / 20
@@ -455,11 +447,9 @@ export const styles = StyleSheet.create({
   editNoteText:{
     color:'white',
     fontWeight:'600',
-    letterSpacing:.5
   },
   editNoteBackText:{
     fontWeight:'600',
-    letterSpacing:.5
   },
   editNoteBack:{
     padding:10,
@@ -469,11 +459,11 @@ export const styles = StyleSheet.create({
     alignItems:'center'
   },
   tabBarIndicatorStyle:{backgroundColor:'#c99c1f',top:0},
-  tabBarLabelStyle:{letterSpacing:.5, fontSize:13},
+  tabBarLabelStyle:{ fontSize:13},
   tabBarStyle:{borderTopWidth:.17,borderTopColor:'lightgray'},
   createAccountBodyContainer:{gap:Dimensions.get('window').height/50,alignItems:'center'},
-  createAccountBodyHeader:{fontSize:20,fontWeight:'600',letterSpacing:.5},
-  createAccountBodyParagraph:{letterSpacing:.5,fontSize:13},
+  createAccountBodyHeader:{fontSize:20,fontWeight:'600'},
+  createAccountBodyParagraph:{fontSize:13},
   appleButton:{
     width:Dimensions.get('window').width/1.5,
     height: 45,

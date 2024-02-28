@@ -11,4 +11,3 @@
 // - Ask for username when first time sign in with apple
 //TODO: I added note, then check is this note in "your notes" and it wasn't, find out why
 //TODO: Create note input, press enter to send note and hide keyboard (same in other textinputs)
-//TODO: Create note, modal insted of this textinput

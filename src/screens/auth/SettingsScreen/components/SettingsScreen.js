@@ -180,7 +180,10 @@ const SettingsScreen = () => {
         <Modal animationType="slide" transparent={true} visible={modalVisible}>
           <View style={styles.modalPasswordResetView}>
             <View style={styles.modalPasswordResetViewChild}>
-              <TextInput style={styles.modalPasswordResetTextInput} value={description} onChangeText={text=>newDescription(text)} multiline={true} maxLength={50}/>
+              <TextInput style={styles.modalPasswordResetTextInput} value={description} onChangeText={text=>newDescription(text)} maxLength={50} onSubmitEditing={()=>{
+                changeDescription()
+                setModalVisible(false)
+              }}/>
               <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                 <Pressable onPress={()=>{
                   changeDescription()
@@ -214,6 +217,7 @@ const SettingsScreen = () => {
             value={newPassword}
             secureTextEntry
             maxLength={25}
+            onSubmitEditing={handlePasswordChange}
           />   
         )}
 
@@ -228,6 +232,7 @@ const SettingsScreen = () => {
             onChangeText={text=>setNewUsername(text)}
             value={newUsername}
             maxLength={25}
+            onSubmitEditing={handleUsernameChange}
           />
         )}
         <Pressable style={styles.friendsHeaderRequest} onPress={handleUsernameChange}>

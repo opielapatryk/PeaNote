@@ -8,9 +8,13 @@ const CreateAccountButton = () => {
   const { email,password } = useSelector((state)=>state.login)
   const dispatch = useDispatch()
 
+  const onPress = () => {
+    signUpFirebase(email, password, dispatch);
+  };
+
   return (
     <>
-      <Pressable style={styles.confirmButton} onPress={()=>signUpFirebase(email,password,dispatch)}> 
+      <Pressable style={styles.confirmButton} onPress={onPress}> 
         <Text style={{fontWeight:'600'}}>Get Started</Text>
       </Pressable>  
     </>

@@ -10,6 +10,7 @@ import * as AppleAuthentication from 'expo-apple-authentication'
 import { AppleButton } from '@invertase/react-native-apple-authentication';
 import { appleSignin } from '../functions/appleSignin';
 import ResetPasswordModal from './ResetPasswordModal';
+import {signInFirebase} from '../functions/signInFirebase';
 
 const LoginBody = () => {
   const {email,password,message} = useSelector((state)=>state.login)
@@ -33,9 +34,10 @@ const LoginBody = () => {
 
       {<Text style={styles.errorMessage}>{message}</Text>}
 
-      <TextInput style={styles.roundTextInput} placeholder='Email' onChangeText={text=>dispatch(setEmail(text))} value={email}/>
+      <TextInput style={styles.roundTextInput} placeholder='Email' onChangeText={text=>dispatch(setEmail(text))} value={email} onSubmitEditing={() => { passwordTextInput.focus()}}/>
       <View>
-      <TextInput style={styles.roundTextInput} placeholder='Password' secureTextEntry onChangeText={text=>dispatch(setPassword(text))} value={password}/>   
+      <TextInput ref={(input) => { passwordTextInput = input}} style={styles.roundTextInput} placeholder='Password' secureTextEntry onChangeText={text=>dispatch(setPassword(text))} value={password} onSubmitEditing={()=>signInFirebase(email,password,dispatch)}/>   
+
       <Pressable onPress={() => {
         setModalVisible(true)
         }}><Text style={[styles.paragraph,{marginLeft:5}]}>Forgotten Password?</Text></Pressable>

@@ -32,7 +32,6 @@ exports[`Login body renders correctly. 1`] = `
         {
           "fontSize": 20,
           "fontWeight": "600",
-          "letterSpacing": 0.5,
         }
       }
     >
@@ -42,7 +41,6 @@ exports[`Login body renders correctly. 1`] = `
       style={
         {
           "fontSize": 13,
-          "letterSpacing": 0.5,
         }
       }
     >
@@ -58,6 +56,7 @@ exports[`Login body renders correctly. 1`] = `
     />
     <TextInput
       onChangeText={[Function]}
+      onSubmitEditing={[Function]}
       placeholder="Email"
       style={
         {
@@ -77,6 +76,7 @@ exports[`Login body renders correctly. 1`] = `
     <View>
       <TextInput
         onChangeText={[Function]}
+        onSubmitEditing={[Function]}
         placeholder="Password"
         secureTextEntry={true}
         style={

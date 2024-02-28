@@ -21,7 +21,12 @@ export default ({board}) => {
             <View style={styles.modalPasswordResetView}>
             <View style={styles.modalSetPasswordChild}>
                 <Text style={styles.modalPasswordResetHeader}>Write whatever you want, it's your board</Text>
-                <TextInput style={styles.modalPasswordResetTextInput} placeholder={'Note'} value={content} onChangeText={text=>setContent(text)}/>
+                <TextInput style={styles.modalPasswordResetTextInput} placeholder={'Note'} value={content} onChangeText={text=>setContent(text)} onSubmitEditing={async ()=>{
+                    await addNoteToMyBoard(content,board)
+                    fetchNotes(dispatch);
+                    setContent('')
+                    dispatch(showAddNoteModal(false))
+                }}/>
                 <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                     <Pressable onPress={async ()=>{
                         await addNoteToMyBoard(content,board)
