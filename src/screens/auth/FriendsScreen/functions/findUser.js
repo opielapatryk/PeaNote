@@ -36,7 +36,7 @@ export const findUser = async (dispatch, friendEmailOrUsername,navigation) => {
   const currentUserFriendsRequests = userData[userId].friends?.filter((f)=>f.request)
 
   const isFriend = currentUserFriends?.some(myfriend => 
-    myfriend.email === friendEmail);
+    myfriend.email === friendEmail && (!myfriend.pending && !myfriend.request));
   const sendYouRequest = currentUserFriendsRequests?.some(request => 
     request.email === friendEmail);
   

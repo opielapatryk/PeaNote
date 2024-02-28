@@ -13,22 +13,22 @@ import { useFocusEffect } from '@react-navigation/native';
 const UserBoard = ({ route,navigation }) => {
   const { friendEmail,name,oldnickname} = route.params;
   const { friendimage } = useSelector((state) => state.settings);
-  const [invite,setInvite] = useState();
+  let [invite,setInvited] = useRequest(friendEmail)
   const dispatch = useDispatch()
   const EMAIL = auth().currentUser.email
-  let invited = useRequest(friendEmail)
+  // let invited = useRequest(friendEmail)
 
   useFocusEffect(
     React.useCallback(() => {
+      // check if there is pending request
       const onChildChange = () => {
         navigation.navigate('FriendsScreen')
         navigation.navigate('FriendsBoard', {name:name, friendEmail:friendEmail , oldnickname:oldnickname})
       };
 
-      const onChildAdd = () => {
-        navigation.navigate('FriendsScreen')
-        navigation.navigate('FriendsBoard', {name:name, friendEmail:friendEmail , oldnickname:oldnickname})
-      };
+      const onChildRemoved = () => {
+        setInvited(false)
+      }
 
 
 
@@ -41,6 +41,7 @@ const UserBoard = ({ route,navigation }) => {
         const friendsRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref(`users/${userId}/friends`);
 
         friendsRef.on('child_changed', onChildChange);
+        friendsRef.on('child_removed', onChildRemoved);
       }
 
       listen()
@@ -55,6 +56,7 @@ const UserBoard = ({ route,navigation }) => {
   
           // Remove the 'child_added' listener when the component unmounts
           friendsRef.off('child_changed', onChildChange);
+          friendsRef.off('child_removed', onChildRemoved);
         }
 
         listenOff()
@@ -72,14 +74,14 @@ const UserBoard = ({ route,navigation }) => {
 
           <Text style={{textAlign:'center',fontStyle:'italic'}}>{useDescription(friendEmail)}</Text>
 
-          <Pressable style={styles.addFriendButton} onPress={invited||invite?()=>{
+          <Pressable style={styles.addFriendButton} onPress={invite?()=>{
             removeFriendRequestFromFirestore(friendEmail,dispatch)
-            setInvite(false)
+            setInvited(false)
           }:()=>{
-            sendFriendRequest(friendEmail)
-            setInvite(true)
+            sendFriendRequest(friendEmail,dispatch)
+            setInvited(true)
             }}>
-          <Text style={styles.removeFriendText}>{invited||invite?'Remove friend request':'Send friend request'}</Text>
+          <Text style={styles.removeFriendText}>{invite?'Remove friend request':'Send friend request'}</Text>
           </Pressable>  
        </View>
       </View>

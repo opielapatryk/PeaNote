@@ -9,7 +9,9 @@ import auth from '@react-native-firebase/auth';
 import {firebase} from '@react-native-firebase/database'
 import { useFocusEffect } from '@react-navigation/native';
 import { downloadImage } from '../../BoardScreen/functions/downloadImage';
-import { setNickname } from '../../../../store/friends/friendsSlice';
+import { setNickname,cleanStoreFriends } from '../../../../store/friends/friendsSlice';
+import { loadUser } from '../../FriendsScreen/functions/loadUser';
+
 
 const FriendsBoard = ({ route, navigation }) => {
   const [description, newDescription] = useState(reduxdescription);
@@ -44,6 +46,8 @@ const FriendsBoard = ({ route, navigation }) => {
       const onChildRemove = () => {
         navigation.navigate('FriendsScreen')
         navigation.navigate('UserBoard', {name:name, friendEmail:friendEmail , oldnickname:oldnickname})
+        dispatch(cleanStoreFriends())
+        loadUser(dispatch);
       };
 
       const listen = async ()=>{
