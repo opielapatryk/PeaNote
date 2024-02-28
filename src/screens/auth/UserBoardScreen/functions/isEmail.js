@@ -1,11 +1,16 @@
-import firestore from '@react-native-firebase/firestore';
+import { firebase } from '@react-native-firebase/database';
 
 export const isEmail = async (friendEmail) =>{
-    const emailSnapshot = await firestore().collection('users').where('email','==',friendEmail).get()
+  const database = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/');
+  const usersRef = database.ref('users');
 
-    if(emailSnapshot.empty){
-      return false;
-    }else{
-      return true;
-    }
+  try {
+    const snapshot = await usersRef.orderByChild('email').equalTo(friendEmail).once('value');
+    const userData = snapshot.val();
+
+    return userData !== null; // Returns true if the user with the specified email exists, otherwise false
+  } catch (error) {
+    console.error('Error checking user existence:', error);
+    throw error;
+  }
   }

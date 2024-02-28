@@ -1,31 +1,26 @@
-import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import {setFriends, setRequests} from '../../../../store/friends/friendsSlice'
 import { fetchAndDispatchFriends } from './fetchAndDispatchFriendsAndRequests';
+import { firebase } from '@react-native-firebase/database';
 
 export const loadUser = async (dispatch)=>{
   const EMAIL = auth().currentUser.email
 
-  let friends
-  let requests
+  const usersRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('users');
 
-  const getUserByEmail = await firestore()
-    .collection('users')
-    .where('email', '==', EMAIL)
-    .get()
-  
-  const docs = getUserByEmail.docs
+  const snapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
 
-  if (Array.isArray(docs) && docs.length > 0) {
-    docs.forEach((doc) => {
-      friends = doc.data().friends;
-      requests = doc.data().friends_requests;
-    })
-  }
+  const userData = snapshot.val();
 
-  
-  if(friends && friends.length>0){
-    fetchAndDispatchFriends(friends, dispatch, setFriends);
+  const userId = Object.keys(userData)[0];
+
+  const friendsArray = userData[userId].friends || [];
+
+  const requests = friendsArray.filter(friend => friend.request);
+  const approvedFriends = friendsArray.filter(friend => !friend.pending && !friend.request);
+
+  if(approvedFriends && approvedFriends.length>0){
+    fetchAndDispatchFriends(approvedFriends, dispatch, setFriends);
   }
   if(requests && requests.length>0){
     fetchAndDispatchFriends(requests, dispatch, setRequests);

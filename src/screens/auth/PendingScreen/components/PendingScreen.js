@@ -9,17 +9,47 @@ import { clearPendingInfo,showAddNoteModal } from '../../../../store/notes/board
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AntDesign } from '@expo/vector-icons';
 import AddNoteModal from '../../BoardScreen/components/AddNoteModal';
-
+import auth from '@react-native-firebase/auth'
+import {firebase} from '@react-native-firebase/database'
+import { fetchNotes } from '../../BoardScreen/functions/fetchNotes';
 
 const PendingScreen = () => {
   const { pendingNotes,addNoteModal } = useSelector((state) => state.board);
+  const EMAIL = auth().currentUser.email
 
   const dispatch = useDispatch();
 
   useFocusEffect(
     React.useCallback(() => {
+      const onChildAdd = () => fetchNotes(dispatch);
+
+      const listen = async ()=>{
+        const usersRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('users')
+        const snapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
+        const userData = snapshot.val();
+        const userId = Object.keys(userData)[0];
+      
+        const notesRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref(`users/${userId}/notes`);
+
+        notesRef.on('child_added', onChildAdd);
+      }
+
+      listen()
       return ()=>{
         dispatch(clearPendingInfo());
+
+      const listenOff = async () => {
+        const usersRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('users');
+        const snapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
+        const userData = snapshot.val();
+        const userId = Object.keys(userData)[0];
+        const notesRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref(`users/${userId}/notes`);
+
+        // Remove the 'child_added' listener when the component unmounts
+        notesRef.off('child_added', onChildAdd);
+      }
+
+      listenOff()
       }
     }, [])
   );

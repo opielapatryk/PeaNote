@@ -15,7 +15,7 @@ import * as ImagePicker from 'expo-image-picker'
 import auth from '@react-native-firebase/auth';
 import {firebase} from '@react-native-firebase/storage'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import firestore from '@react-native-firebase/firestore';
+import { firebase as firebasedb} from '@react-native-firebase/database';
 import * as ImageManipulator from 'expo-image-manipulator';
 import * as FileSystem from 'expo-file-system';
 import GivePasswordModal from './GivePasswordModal';
@@ -71,21 +71,13 @@ const SettingsScreen = () => {
   };
 
   const changeDescription = async ()=>{
-    const getUserByEmail = await firestore()
-      .collection('users')
-      .where('email', '==', EMAIL)
-      .get()
-    
-      getUserByEmail.forEach((doc)=>{
-        firestore()
-        .collection('users')
-        .doc(doc.id)
-        .update({
-          description: description,
-        })
-      })
-
-      dispatch(setDescription(description))
+    const database = firebasedb.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/');
+    const usersRef = database.ref('users');
+    const userSnapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
+    const userData = userSnapshot.val();
+    const userId = Object.keys(userData)[0];
+    await usersRef.child(`${userId}/description`).set(description);
+    dispatch(setDescription(description))
   }
 
   const pickImage = async () => {

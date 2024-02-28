@@ -1,7 +1,7 @@
 import { FlatList,View,Text} from 'react-native'
 import React, { useState } from 'react'
 import { useFocusEffect } from '@react-navigation/native';
-import firestore from '@react-native-firebase/firestore'
+import {firebase} from '@react-native-firebase/database'
 import auth from '@react-native-firebase/auth'
 import { styles } from '../../../../../assets/styles/styles';
 
@@ -14,22 +14,16 @@ const HistoryScreen = ({route}) => {
         const getNotes = async ()=>{
             const EMAIL = auth().currentUser.email
 
-            const friend = await firestore().collection('users').where('email','==',friendEmail).get()
-
-            const friendData = friend.docs[0].data()
+            const database = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/');
+            const usersRef = database.ref('users');
+            const friendSnapshot = await usersRef.orderByChild('email').equalTo(friendEmail).once('value');
+            const friendData = friendSnapshot.val();
+            const friendId = Object.keys(friendData)[0];
+            const friendNotes = friendData[friendId].notes
 
             let notes = []
 
-            const notesOnBoard = friendData.stickersOnBoard
-            const notesPending = friendData.pending
-
-            notesOnBoard.forEach((note) => {
-                if(note.creator===EMAIL){
-                    notes.push(note)
-                }
-            });
-
-            notesPending.forEach((note) => {
+            friendNotes.forEach((note) => {
                 if(note.creator===EMAIL){
                     notes.push(note)
                 }
@@ -37,6 +31,7 @@ const HistoryScreen = ({route}) => {
             
             setNotes(notes)
         }
+
         getNotes()
     }, [])
   );

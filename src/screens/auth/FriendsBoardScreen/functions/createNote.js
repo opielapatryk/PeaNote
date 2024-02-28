@@ -1,52 +1,32 @@
 import { firebase } from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
 export const createNote = async (content,setContent,setMessage,friendEmail) => {
-
   const EMAIL = auth().currentUser.email
-  
-  let USERNAME
-  
-  const getUserByEmail = await firestore()
-      .collection('users')
-      .where('email', '==', EMAIL)
-      .get()
-
-  getUserByEmail.forEach(doc => {
-    USERNAME = doc.data().username
-  })
+  const database = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/');
+  const usersRef = database.ref('users');
+  const userSnapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
+  const userData = userSnapshot.val();
+  const userId = Object.keys(userData)[0];
+  const USERNAME = userData[userId].username;
 
   if (content !== '') {
-    const getFriendByEmail = await firestore()
-      .collection('users')
-      .where('email', '==', friendEmail)
-      .get()
-      
-      getFriendByEmail.forEach(doc => {
-          listKey = doc.data().askBeforeStick ? 'pending' : 'stickersOnBoard'
+    const friendSnapshot = await usersRef.orderByChild('email').equalTo(friendEmail).once('value');
+    const friendData = friendSnapshot.val();
+    const friendId = Object.keys(friendData)[0];
+    const pending = friendData[friendId].askBeforeStick;
+    const friendNotes = friendData[friendId].notes || [];
+    await usersRef.child(`${friendId}/notes`).set([...friendNotes, { content: content, creator: USERNAME, pending:pending }]);
 
-          firestore()
-          .collection('users')
-          .doc(doc.id)
-          .update({
-            [listKey]: firebase.firestore.FieldValue.arrayUnion({
-              content: content,
-              creator: USERNAME,
-            }),
-          })
-          
-        })
-
-      setMessage('NOTE SENT CORRECTLY');
-      setContent('');
-      setTimeout(() => {
-        setMessage('')
-      }, 2000);
-    }else {
-      setMessage('NOTE CANNOT BE EMPTY');
-      setTimeout(() => {
-        setMessage('')
-      }, 2000);
-    }
-  };
+    setMessage('NOTE SENT CORRECTLY');
+    setContent('');
+    setTimeout(() => {
+      setMessage('')
+    }, 2000);
+  }else {
+    setMessage('NOTE CANNOT BE EMPTY');
+    setTimeout(() => {
+      setMessage('')
+    }, 2000);
+  }
+};

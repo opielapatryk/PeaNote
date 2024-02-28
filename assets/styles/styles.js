@@ -211,6 +211,8 @@ export const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent:'space-around',
     padding:8,
+    borderBottomWidth:1,
+    borderBottomColor:'lightgrey',
     shadowColor: "#000",
     shadowOffset: {
       width: 0,

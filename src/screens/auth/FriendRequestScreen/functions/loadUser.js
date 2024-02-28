@@ -1,19 +1,26 @@
-import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import { firebase } from '@react-native-firebase/database';
 
 export const loadUser = async (setFriends) => {
-    const EMAIL = auth().currentUser.email
+  const EMAIL = auth().currentUser.email;
 
-    let friendRequests
-        
-    const getUserByEmail = await firestore().collection('users').where('email', '==', EMAIL).get();
+  try {
+    const database = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/');
+    const usersRef = database.ref('users');
+
+    const snapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
+
+    const userData = snapshot.val();
     
-    const docs = getUserByEmail.docs;
+    if (userData) {
+      const userId = Object.keys(userData)[0];
+      const user = userData[userId];
 
-    if (Array.isArray(docs) && docs.length > 0) {
-        docs.forEach((doc) => {
-            friendRequests = doc.data().friends_requests;
-            setFriends(friendRequests);
-        })
-      }
-}
+      const friendRequests = (user.friends || []).filter(friend => friend.request);
+
+      setFriends(friendRequests);
+    }
+  } catch (error) {
+    console.error('Error loading user:', error);
+  }
+};

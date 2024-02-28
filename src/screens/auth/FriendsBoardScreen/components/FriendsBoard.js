@@ -6,10 +6,12 @@ import {styles} from '../../../../../assets/styles/styles'
 import { useDispatch,useSelector } from 'react-redux';
 import { setFriendimage } from '../../../../store/settings/settingsSlice';
 import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
+import {firebase} from '@react-native-firebase/database'
 import { useFocusEffect } from '@react-navigation/native';
 import { downloadImage } from '../../BoardScreen/functions/downloadImage';
-import { setNickname } from '../../../../store/friends/friendsSlice';
+import { setNickname,cleanStoreFriends } from '../../../../store/friends/friendsSlice';
+import { loadUser } from '../../FriendsScreen/functions/loadUser';
+
 
 const FriendsBoard = ({ route, navigation }) => {
   const [description, newDescription] = useState(reduxdescription);
@@ -24,20 +26,57 @@ const FriendsBoard = ({ route, navigation }) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      const getEmailByUsername = async () =>{
-        const usernameSnapshot = await firestore()
-          .collection('users')
-          .where('email', '==', friendEmail)
-          .get();
-          
-          newDescription(usernameSnapshot.docs[0].data().description)
+      const getDescriptionByUsername = async () =>{
+        const database = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/');
+        const usersRef = database.ref('users');
+        const userSnapshot = await usersRef.orderByChild('email').equalTo(friendEmail).once('value');
+        const userData = userSnapshot.val();
+        const userId = Object.keys(userData)[0];
+        const description = userData[userId].description;
+        newDescription(description)
       }
 
-      getEmailByUsername()
+      getDescriptionByUsername()
 
       downloadImage(friendEmail).then((fileUri)=>{
         dispatch(setFriendimage(fileUri));
       })
+
+
+      const onChildRemove = () => {
+        navigation.navigate('FriendsScreen')
+        navigation.navigate('UserBoard', {name:name, friendEmail:friendEmail , oldnickname:oldnickname})
+        dispatch(cleanStoreFriends())
+        loadUser(dispatch);
+      };
+
+      const listen = async ()=>{
+        const usersRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('users')
+        const snapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
+        const userData = snapshot.val();
+        const userId = Object.keys(userData)[0];
+      
+        const friendsRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref(`users/${userId}/friends`);
+
+        friendsRef.on('child_removed', onChildRemove);
+      }
+
+      listen()
+      
+      return ()=>{
+        const listenOff = async () => {
+          const usersRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('users');
+          const snapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
+          const userData = snapshot.val();
+          const userId = Object.keys(userData)[0];
+          const friendsRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref(`users/${userId}/friends`);
+  
+          // Remove the 'child_added' listener when the component unmounts
+          friendsRef.off('child_removed', onChildRemove);
+        }
+
+        listenOff()
+      }
       
     }, [])
   );
@@ -50,33 +89,23 @@ const FriendsBoard = ({ route, navigation }) => {
   const handleNickNameChange = async () => {
     if (showInput) {
 
-      const getUserByEmail = await firestore()
-        .collection('users')
-        .where('email', '==', EMAIL)
-        .get()
+      const database = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/');
+      const usersRef = database.ref('users');
+      const userSnapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
+      const userData = userSnapshot.val();
+      const userId = Object.keys(userData)[0];
+      const friends = userData[userId].friends;
 
-      getUserByEmail.forEach((doc)=>{
-        let friends = doc.data().friends
+      friends.forEach((friend)=>{
+        if(friend.email === friendEmail){
+          friend['nickname'] = nickname
+        }
+      });
 
-        friends.forEach((friend)=>{
-          if(friend.email === friendEmail){
-            
-            friend['nickname'] = nickname
-
-          }
-        });
-
-        firestore()
-          .collection('users')
-          .doc(doc.id)
-          .update({
-            friends: friends,
-          }).then(()=>{
-            dispatch(setNickname({friendEmail,nickname}))
-            navigation.navigate('FriendsScreen')
-          }).catch(()=>setNewNickNameMessage('try different nickname'))
-
-      })
+      await usersRef.child(`${userId}/friends`).set(friends).then(()=>{
+        dispatch(setNickname({friendEmail,nickname}))
+        navigation.navigate('FriendsScreen')
+      }).catch(()=>setNewNickNameMessage('try different nickname'));
 
       setNewNickName('')
       
@@ -135,7 +164,11 @@ const FriendsBoard = ({ route, navigation }) => {
       <View>
         <Text style={[styles.removeFriendText,{fontSize:14,marginBottom:10}]}>{oldnickname?friendEmail:''}</Text>
         
-        <Pressable style={styles.deleteAccountButton} onPress={()=>removeFriend(navigation,friendEmail,name,nickname,dispatch)}><Text style={styles.removeFriendText}>Remove friend</Text></Pressable>
+        <Pressable style={styles.deleteAccountButton} onPress={()=>{
+          removeFriend(navigation,friendEmail,name,nickname,dispatch)
+          navigation.navigate('FriendsScreen')
+          navigation.navigate('UserBoard', {name:name, friendEmail:friendEmail , oldnickname:oldnickname})
+          }}><Text style={styles.removeFriendText}>Remove friend</Text></Pressable>
       </View>
       
       </View>
