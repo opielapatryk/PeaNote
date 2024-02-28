@@ -16,7 +16,6 @@ const UserBoard = ({ route,navigation }) => {
   let [invite,setInvited] = useRequest(friendEmail)
   const dispatch = useDispatch()
   const EMAIL = auth().currentUser.email
-  // let invited = useRequest(friendEmail)
 
   useFocusEffect(
     React.useCallback(() => {
