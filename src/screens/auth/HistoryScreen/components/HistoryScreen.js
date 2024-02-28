@@ -16,6 +16,13 @@ const HistoryScreen = ({route}) => {
 
             const database = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/');
             const usersRef = database.ref('users');
+            const userSnapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
+            const userData = userSnapshot.val();
+            const userId = Object.keys(userData)[0];
+            const USERNAME = userData[userId].username
+            
+
+
             const friendSnapshot = await usersRef.orderByChild('email').equalTo(friendEmail).once('value');
             const friendData = friendSnapshot.val();
             const friendId = Object.keys(friendData)[0];
@@ -23,16 +30,20 @@ const HistoryScreen = ({route}) => {
 
             let notes = []
 
-            friendNotes.forEach((note) => {
-                if(note.creator===EMAIL){
+            friendNotes?.forEach((note) => {
+                if(note.creator===EMAIL || note.creator===USERNAME){
                     notes.push(note)
                 }
             });
             
             setNotes(notes)
-        }
 
+            
+        }
+        
         getNotes()
+
+        
     }, [])
   );
 

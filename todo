@@ -9,5 +9,3 @@
 // TODO: When user sign in with apple and hide email, then invite somebody to friend without setting username, then he will be not visible in requests list
 //solutions:
 // - Ask for username when first time sign in with apple
-//TODO: I added note, then check is this note in "your notes" and it wasn't, find out why
-//TODO: Create note input, press enter to send note and hide keyboard (same in other textinputs)
