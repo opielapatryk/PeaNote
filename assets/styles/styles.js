@@ -191,7 +191,7 @@ export const styles = StyleSheet.create({
     shadowRadius: .5,
     zIndex:1000,
     width: Dimensions.get("window").width,
-    height:Dimensions.get("window").height / 18.4,
+    height:Dimensions.get("window").height / 15,
     justifyContent:'center',
     borderBottomWidth:.2,borderBottomColor:'lightgrey',
   },
@@ -204,7 +204,7 @@ export const styles = StyleSheet.create({
 
   friendsRequestList:{
     width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height / 18.4,
+    height: Dimensions.get("window").height / 15,
     flexDirection: 'row',
     backgroundColor:'#FFF',
     alignSelf:'center',
@@ -301,7 +301,7 @@ export const styles = StyleSheet.create({
   },
   switchRow:{
     width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height / 18.4,
+    height: Dimensions.get("window").height / 15,
     flexDirection: 'row',
     backgroundColor:'#FFF',
     alignItems:'center',

@@ -5,4 +5,3 @@
 // TODO: Better friend search mechanizm, using first name and last name
 // TODO: Notifications in new card
 // TODO: Improve rendering (real-time db and local db)
-// TODO: When user is trying to change username, keyboard hide textinput
