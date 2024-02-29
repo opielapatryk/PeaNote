@@ -57,9 +57,5 @@ import { firebase } from '@react-native-firebase/database';
     await dispatch(setUsername(newUsername))
 
     setNewUsername('')
-    dispatch(setMessage('USERNAME UPDATED'));
-    setTimeout(() => {
-      dispatch(setShowInputUsername(false))
-      dispatch(setMessage(''))
-    }, 2000);
+    dispatch(setShowInputUsername(false))
   };

@@ -3,10 +3,9 @@ import {View, Modal,Text,TextInput,Pressable,} from 'react-native';
 import { styles } from '../../../../../assets/styles/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { showAddNoteModal } from '../../../../store/notes/boardSlice';
-import addNoteToMyBoard from '../functions/addNoteToMyBoard';
-import { fetchNotes } from '../functions/fetchNotes';
+import { createNote } from './createNote';
 
-export default ({board}) => {
+export default ({friendEmail}) => {
     const [content,setContent] = useState("")
     const {addNoteModal} = useSelector((state)=>state.board)
     const dispatch = useDispatch()
@@ -20,20 +19,18 @@ export default ({board}) => {
         <Modal animationType="slide" transparent={true} visible={modall}>
             <View style={styles.modalPasswordResetView}>
             <View style={styles.modalSetPasswordChild}>
-                <Text style={styles.modalPasswordResetHeader}>Write whatever you want, it's your board</Text>
-                <TextInput style={styles.modalPasswordResetTextInput} placeholder={'Note'} value={content} onChangeText={text=>setContent(text)} onSubmitEditing={async ()=>{
-                    await addNoteToMyBoard(content,board)
-                    fetchNotes(dispatch);
+                <Text style={styles.modalPasswordResetHeader}>Note for your dear friend</Text>
+                <TextInput style={styles.modalPasswordResetTextInput} placeholder={'Note'} value={content} onChangeText={text=>setContent(text)} onSubmitEditing={()=>{
+                    createNote(content,setContent,friendEmail)
                     setContent('')
                     dispatch(showAddNoteModal(false))
                 }}/>
                 <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                    <Pressable onPress={async ()=>{
-                        await addNoteToMyBoard(content,board)
-                        fetchNotes(dispatch);
+                    <Pressable onPress={ ()=>{
+                        createNote(content,setContent,friendEmail)
                         setContent('')
                         dispatch(showAddNoteModal(false))
-                        }} style={styles.modalPasswordResetButtonNext}><Text style={styles.modalPasswordResetButtonNextText}>Add</Text></Pressable>
+                        }} style={styles.modalPasswordResetButtonNext}><Text style={styles.modalPasswordResetButtonNextText}>Create</Text></Pressable>
                     
                     <Pressable onPress={()=>{
                     dispatch(showAddNoteModal(false))

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Text, TextInput, View, Pressable, Keyboard,  TouchableWithoutFeedback,Image } from 'react-native';
-import {createNote} from '../functions/createNote'
 import {removeFriend} from '../functions/removeFriend'
 import {styles} from '../../../../../assets/styles/styles'
 import { useDispatch,useSelector } from 'react-redux';
@@ -11,16 +10,16 @@ import { useFocusEffect } from '@react-navigation/native';
 import { downloadImage } from '../../BoardScreen/functions/downloadImage';
 import { setNickname,cleanStoreFriends } from '../../../../store/friends/friendsSlice';
 import { loadUser } from '../../FriendsScreen/functions/loadUser';
-
+import CreateNoteModal from '../functions/CreateNoteModal';
+import { showAddNoteModal } from '../../../../store/notes/boardSlice';
 
 const FriendsBoard = ({ route, navigation }) => {
   const [description, newDescription] = useState(reduxdescription);
   const { friendEmail,name,oldnickname} = route.params;
-  const [content, setContent] = useState('');
-  const [message, setMessage] = useState('');
   const dispatch = useDispatch()
   const { friendimage } = useSelector((state) => state.settings);
   const { reduxdescription } = useSelector((state) => state.login);
+  const { addNoteModal } = useSelector((state) => state.board);
 
   const EMAIL = auth().currentUser.email
 
@@ -71,7 +70,6 @@ const FriendsBoard = ({ route, navigation }) => {
           const userId = Object.keys(userData)[0];
           const friendsRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref(`users/${userId}/friends`);
   
-          // Remove the 'child_added' listener when the component unmounts
           friendsRef.off('child_removed', onChildRemove);
         }
 
@@ -105,6 +103,7 @@ const FriendsBoard = ({ route, navigation }) => {
       await usersRef.child(`${userId}/friends`).set(friends).then(()=>{
         dispatch(setNickname({friendEmail,nickname}))
         navigation.navigate('FriendsScreen')
+        navigation.navigate('FriendsBoard', {name:name, friendEmail:friendEmail , oldnickname:nickname})
       }).catch(()=>setNewNickNameMessage('try different nickname'));
 
       setNewNickName('')
@@ -121,9 +120,12 @@ const FriendsBoard = ({ route, navigation }) => {
   return (
     <TouchableWithoutFeedback 
     onPress={() => Keyboard.dismiss()}>
+      
+
       <View style={{flex: 1,
     backgroundColor: '#FFF',
     justifyContent:"space-between",}}>
+      <CreateNoteModal modalVisible={addNoteModal} setModalVisible={showAddNoteModal} friendEmail={friendEmail}/>
       <View style={{alignItems:'center',backgroundColor:'white'}}>
 
         {friendimage && <Image source={{uri: friendimage}} style={styles.ProfilePic}/>}
@@ -133,10 +135,11 @@ const FriendsBoard = ({ route, navigation }) => {
         </View>
         
 
-        <TextInput style={[styles.friendsTextInput,{paddingTop:10}]} placeholder={message?message:"New note"} value={content} onChangeText={text=>setContent(text)} autoCapitalize="sentences"
-          autoCorrect={false} maxLength={100} multiline/>
+        {/* <TextInput style={[styles.friendsTextInput,{paddingTop:10}]} placeholder={message?message:"New note"} value={content} onChangeText={text=>setContent(text)} autoCapitalize="sentences" autoCorrect={false} maxLength={100} multiline/> */}
 
-          <Pressable style={styles.friendsHeaderRequest} onPress={()=>createNote(content,setContent,setMessage,friendEmail)}><Text style={styles.removeFriendText}>Create note</Text></Pressable>
+          <Pressable style={styles.friendsHeaderRequest} onPress={()=>{
+            dispatch(showAddNoteModal(true));
+          }}><Text style={styles.removeFriendText}>Create note</Text></Pressable>
 
 
           {showInput && (
@@ -146,6 +149,7 @@ const FriendsBoard = ({ route, navigation }) => {
             onChangeText={text=>setNewNickName(text)}
             value={nickname}
             maxLength={25}
+            onSubmitEditing={handleNickNameChange}
           />   
         )}
 

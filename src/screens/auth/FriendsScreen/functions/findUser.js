@@ -19,13 +19,29 @@ export const findUser = async (dispatch, friendEmailOrUsername,navigation) => {
   const emailSnapshot = await usersRef.orderByChild('email').equalTo(friendEmailOrUsernameToLowerCase).once('value');
 
   // Search by username
-  const usernameSnapshot = await usersRef.orderByChild('username').equalTo(friendEmailOrUsernameToLowerCase).once('value');
+  const usernameSnapshot = await usersRef.once('value').then((snapshot) => {
+    const allUsers = snapshot.val();
+    const matchingUsers = [];
+  
+    for (const userId in allUsers) {
+      const username = allUsers[userId].username;
+      if (username && username.toLowerCase() === friendEmailOrUsernameToLowerCase) {
+        matchingUsers.push({ userId, ...allUsers[userId] });
+      }
+    }
+    
+    return matchingUsers
+  }).catch((error) => {
+    console.error("Error fetching data:", error);
+  });
 
+  
   // Combine the results
   const combinedSnapshot = emailSnapshot.val() || {};
-  Object.assign(combinedSnapshot, usernameSnapshot.val() || {});
-
+  Object.assign(combinedSnapshot, usernameSnapshot || {});
+  console.log(combinedSnapshot);
   const friendId = Object.keys(combinedSnapshot)[0];
+
   const friendEmail = combinedSnapshot[friendId].email
   const friendUsername = combinedSnapshot[friendId].username
 
