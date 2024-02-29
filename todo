@@ -6,6 +6,3 @@
 // TODO: Notifications in new card
 // TODO: Improve rendering (real-time db and local db)
 // TODO: When user is trying to change username, keyboard hide textinput
-// TODO: When user sign in with apple and hide email, then invite somebody to friend without setting username, then he will be not visible in requests list
-//solutions:
-// - Ask for username when first time sign in with apple
