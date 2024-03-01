@@ -42,11 +42,16 @@ const FriendsBoard = ({ route, navigation }) => {
       })
 
 
-      const onChildRemove = () => {
-        navigation.navigate('FriendsScreen')
-        navigation.navigate('UserBoard', {name:name, friendEmail:friendEmail , oldnickname:oldnickname})
-        dispatch(cleanStoreFriends())
-        loadUser(dispatch);
+      const onChildRemove = (snapshot) => {
+        const removedFriend = snapshot.val();
+        
+        // Check if the removed friend matches the friend's information you are interested in
+        if (removedFriend.email === friendEmail) {
+          navigation.navigate('FriendsScreen');
+          navigation.navigate('UserBoard', { name, friendEmail, oldnickname });
+          dispatch(cleanStoreFriends());
+          loadUser(dispatch);
+        }
       };
 
       const listen = async ()=>{

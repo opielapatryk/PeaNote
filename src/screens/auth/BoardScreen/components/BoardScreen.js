@@ -15,73 +15,120 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { setDescription,setMessage,setEmail } from '../../../../store/login/loginSlice';
 import {getUserDocs} from '../functions/getUserDocs'
 import {downloadImage} from '../functions/downloadImage'
-import { showModal } from '../../../../store/login/loginSlice';
+import { showModal,showUsernameModal } from '../../../../store/login/loginSlice';
 import SetPasswordModal from './SetPasswordModal';
+import SetUsernameModal from './SetUsernameModal';
 import AddNoteModal from './AddNoteModal';
 import { AntDesign } from '@expo/vector-icons';
+import messaging from '@react-native-firebase/messaging';
 
 const BoardScreen = () => {
   const insets = useSafeAreaInsets();
   const { notes,addNoteModal } = useSelector((state) => state.board);
   const dispatch = useDispatch()
   const EMAIL = auth().currentUser.email
-  const {modal} = useSelector((state)=>state.login)
+  const {modal,usernameModal} = useSelector((state)=>state.login)
 
   useEffect(()=>{
-    downloadImage(EMAIL).then((fileUri)=>{
-      dispatch(setMyimage(fileUri));
-    })
+    async function requestUserPermission() {
+      const authStatus = await messaging().requestPermission();
+      const enabled =
+        authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+        authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
-    getUserDocs().then((user)=>{
-      const userId = Object.keys(user)[0];
-      const username = user[userId].username;
-      const description = user[userId].description;
+      if (enabled) {
+        console.log('Authorization status:', authStatus);
+      }
+    }
 
-      dispatch(setUsername(username))
-      dispatch(setDescription(description))
-    })
+    const checkIfNewUser = async () => {
+      const usersRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('users');
+      const snapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
+      const userData = snapshot.val();
 
-    fetchNotes(dispatch);
-    loadUser(dispatch)
-    dispatch(setMessage(''))
-    dispatch(setEmail(''))
+      if (!userData) {
+        const ref = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('/users').push();
+
+        await ref
+        .set({
+          email:EMAIL,
+          username:EMAIL,
+          description:'',
+          askBeforeStick:false,
+        })
+
+        dispatch(showUsernameModal(true));
+
+        
+        requestUserPermission()
+
+      }
+
+      downloadImage(EMAIL).then((fileUri)=>{
+        dispatch(setMyimage(fileUri));
+      })
+  
+      getUserDocs().then((user)=>{
+        const userId = Object.keys(user)[0];
+        const username = user[userId].username;
+        const description = user[userId].description;
+  
+        dispatch(setUsername(username))
+        dispatch(setDescription(description))
+      })
+  
+      fetchNotes(dispatch);
+      loadUser(dispatch)
+      dispatch(setMessage(''))
+      dispatch(setEmail(''))
+    };
+
+    checkIfNewUser();
   },[])
 
   useFocusEffect(
     React.useCallback(() => {
-      fetchNotes(dispatch);
-
-      const onChildAdd = () => fetchNotes(dispatch);
-
-      const listen = async ()=>{
-        const usersRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('users')
+      const checkIfNewUser = async () => {
+        const usersRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('users');
         const snapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
         const userData = snapshot.val();
-        const userId = Object.keys(userData)[0];
-        firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref(`users/${userId}/notes`).on('child_added', onChildAdd); 
-      }
+  
+        if (userData) {
+          fetchNotes(dispatch);
 
-      listen()
-      
-      return ()=>{
-        dispatch(clearBoardInfo());
-        
-        const listenOff = async () => {
-          const usersRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('users');
-          const snapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
-          const userData = snapshot.val();
-          const userId = Object.keys(userData)[0];
-          firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref(`users/${userId}/notes`).off('child_added', onChildAdd); 
-        }
-
-        listenOff()
-      }
+          const onChildAdd = () => fetchNotes(dispatch);
+    
+          const listen = async ()=>{
+            const usersRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('users')
+            const snapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
+            const userData = snapshot.val();
+            const userId = Object.keys(userData)[0];
+            firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref(`users/${userId}/notes`).on('child_added', onChildAdd); 
+          }
+          listen()
+          
+          return ()=>{
+            dispatch(clearBoardInfo());
+            
+            const listenOff = async () => {
+              const usersRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('users');
+              const snapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
+              const userData = snapshot.val();
+              const userId = Object.keys(userData)[0];
+              firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref(`users/${userId}/notes`).off('child_added', onChildAdd); 
+            }
+            listenOff()
+          }
+        } 
+      };
+      checkIfNewUser();
     }, [])
   );
   
   return (
     <View style={{paddingTop: insets.top,backgroundColor:'#FFFDF3',flex: 1}}>
       <SetPasswordModal modalVisible={modal} setModalVisible={showModal}/>
+      <SetUsernameModal modalVisible={usernameModal} setModalVisible={showUsernameModal}/>
       <AddNoteModal modalVisible={addNoteModal} setModalVisible={showAddNoteModal} board={"stickersOnBoard"}/>
 
       <Pressable onPress={() => {

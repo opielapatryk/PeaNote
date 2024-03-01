@@ -1,21 +1,20 @@
 import React,{useState} from 'react';
 import {View, Modal,Text,TextInput,Pressable,} from 'react-native';
-import auth from '@react-native-firebase/auth'
 import { styles } from '../../../../../assets/styles/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { showModal } from '../../../../store/login/loginSlice';
+import { showModal,showUsernameModal } from '../../../../store/login/loginSlice';
+import auth from '@react-native-firebase/auth';
+import {firebase} from '@react-native-firebase/database'
 
 const SetPasswordModal = () => {
     const [password,setPassword] = useState("")
     const {modal} = useSelector((state)=>state.login)
     const dispatch = useDispatch()
-    const [modall,setModal] = useState(modal)
     const [message,setMessage] = useState('')
     const updatePassword = () => {
         auth().currentUser.updatePassword(password)
         .then(() => {
             dispatch(showModal(false));
-            setModal(false);
         })
         .catch((error) => {
             if (error.code === 'auth/weak-password') {
@@ -28,7 +27,7 @@ const SetPasswordModal = () => {
     
 
     return (
-        <Modal animationType="slide" transparent={true} visible={modall}>
+        <Modal animationType="slide" transparent={true} visible={modal}>
             <View style={styles.modalSetPassword}>
             <View style={styles.modalSetPasswordChild}>
                 <Text style={styles.modalPasswordResetHeader}>Set new password</Text>

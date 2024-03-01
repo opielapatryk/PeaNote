@@ -16,7 +16,6 @@ const FriendRequests = ({navigation}) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      console.log(requests);
       
       loadUser(dispatch)
       const onChildAdd = () => loadUser(dispatch);

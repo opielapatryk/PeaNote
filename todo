@@ -1,11 +1,46 @@
-// TODO: PeaNote as widget
-// TODO: Sort notes
-// TODO: Invite friends via link
-// TODO: Accessibility
-// TODO: Better friend search mechanizm, using first name and last name
-// TODO: Notifications in new card
-// TODO: Improve rendering (real-time db and local db)
-// TODO: When user is trying to change username, keyboard hide textinput
-// TODO: When user sign in with apple and hide email, then invite somebody to friend without setting username, then he will be not visible in requests list
-//solutions:
-// - Ask for username when first time sign in with apple
+TODO: PeaNote as widget
+TODO: Sort notes
+TODO: Invite friends via link
+TODO: Accessibility
+TODO: Better friend search mechanizm, using first name and last name
+TODO: Notifications in new card
+
+TODO: Local db
+// AsyncStorage | SQLite | Realm
+<!-- When the user addNote to his board -->
+const addNote = async (message) => {
+  try {
+    // Check if the device is online
+    if (isOnline()) {
+      // Send note to the server
+      await sendToServer(note);
+    } else {
+      // Save the note locally
+      saveLocally(note);
+    }
+  } catch (error) {
+    // Handle errors (e.g., failed server request)
+    console.error("Error sending note:", error);
+    // Save the note locally for retry
+    saveLocally(message);
+  }
+};
+
+// When the device is back online
+const syncMessages = async () => {
+  try {
+    // Retrieve locally stored notes
+    const notes = getLocallyStoredNotes();
+
+    // Send notes to the server
+    for (const note of notes) {
+      await sendToServer(note);
+    }
+
+    // Clear local storage after successful synchronization
+    clearLocalStorage();
+  } catch (error) {
+    console.error("Error synchronizing notes:", error);
+    // Handle errors (e.g., failed server request)
+  }
+};

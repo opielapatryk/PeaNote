@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Switch, TextInput, Pressable,Keyboard,TouchableWithoutFeedback,Image, Linking,Modal } from 'react-native';
+import { View, Text, Switch, TextInput, Pressable,Keyboard,TouchableWithoutFeedback,Image, Linking,Modal,KeyboardAvoidingView,ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { styles } from '../../../../../assets/styles/styles';
 import {checkIsAskBeforeStickingNoteFlagOff} from '../functions/checkIsAskBeforeStickingNoteFlagOff';
@@ -151,13 +151,33 @@ const SettingsScreen = () => {
     <TouchableWithoutFeedback 
     onPress={() => Keyboard.dismiss()}>
       
-    <View style={[styles.friendsboard,{
+<ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+    <KeyboardAvoidingView style={[styles.friendsboard,{
       paddingTop: insets.top,
       flex: 1,
       backgroundColor:'white'
-    }]}>
+    }]} behavior='position'>
             <GivePasswordModal modalVisible={modal} setModalVisible={showModal}/>  
-      <View>
+
+            <Modal animationType="slide" transparent={true} visible={modalVisible}>
+          <View style={styles.modalPasswordResetView}>
+            <View style={styles.modalPasswordResetViewChild}>
+              <TextInput style={styles.modalPasswordResetTextInput} value={description} onChangeText={text=>newDescription(text)} maxLength={50} onSubmitEditing={()=>{
+                changeDescription()
+                setModalVisible(false)
+              }}/>
+              <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                <Pressable onPress={()=>{
+                  changeDescription()
+                  setModalVisible(false)
+                }} style={styles.editNote}><Text style={styles.editNoteText}>Edit</Text></Pressable>
+                <Pressable onPress={()=>{
+                  setModalVisible(false)
+                }} style={styles.editNoteBack}><Text style={styles.editNoteBackText}>Back</Text></Pressable>
+              </View> 
+            </View>
+          </View>
+        </Modal>
       
       <View style={styles.ProfilePicGrandparent}>
       <Text style={[styles.friendsHeaderRequestText,{marginTop:20}]}>{username}</Text>
@@ -177,25 +197,7 @@ const SettingsScreen = () => {
         </View>
 
         
-        <Modal animationType="slide" transparent={true} visible={modalVisible}>
-          <View style={styles.modalPasswordResetView}>
-            <View style={styles.modalPasswordResetViewChild}>
-              <TextInput style={styles.modalPasswordResetTextInput} value={description} onChangeText={text=>newDescription(text)} maxLength={50} onSubmitEditing={()=>{
-                changeDescription()
-                setModalVisible(false)
-              }}/>
-              <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                <Pressable onPress={()=>{
-                  changeDescription()
-                  setModalVisible(false)
-                }} style={styles.editNote}><Text style={styles.editNoteText}>Edit</Text></Pressable>
-                <Pressable onPress={()=>{
-                  setModalVisible(false)
-                }} style={styles.editNoteBack}><Text style={styles.editNoteBackText}>Back</Text></Pressable>
-              </View> 
-            </View>
-          </View>
-        </Modal>
+
 
         <Pressable style={styles.friendsHeaderRequest} onPress={()=>{
           newDescription(reduxdescription)
@@ -246,12 +248,13 @@ const SettingsScreen = () => {
       </Pressable>
 
         
-      </View>
+
 
       <Pressable style={styles.deleteAccountButton} onPress={()=>signOutAndClearReduxStore(dispatch)}>
           <Text style={[styles.settingsActionText,{alignSelf:'center'}]}>Logout</Text>
         </Pressable>
-    </View>
+    </KeyboardAvoidingView>
+    </ScrollView>
     </TouchableWithoutFeedback>
   );
 };
