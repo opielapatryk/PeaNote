@@ -22,6 +22,8 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { SafeAreaProvider,initialWindowMetrics} from 'react-native-safe-area-context';
 import { styles } from './assets/styles/styles';
+import messaging from '@react-native-firebase/messaging';
+import { Alert } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -44,9 +46,49 @@ export default function App(){
     setUser(user);
     if (initializing) setInitializing(false);
   }
+
+  const requestUserPermission = async () =>{
+    const authStatus = await messaging().requestPermission()
+    const enabled = authStatus ===messaging.AuthorizationStatus.AUTHORIZED || authStatus === messaging.AuthorizationStatus.PROVISIONAL
+
+    if(enabled){
+      console.log('status: ',authStatus);
+    }
+
+    const token = await messaging().getToken();
+    console.log('FCM token:', token);
+  }
+
   useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber
+    requestUserPermission()
+
+    messaging().getInitialNotification().then(async (remoteMessage)=>{
+      if(remoteMessage){
+        console.log('notif caused app to open from quit state: ',remoteMessage.notification);
+      }else{
+        console.log('else');
+        console.log(remoteMessage);
+      }
+    })
+
+    messaging().onNotificationOpenedApp(async (remoteMessage)=>{
+      console.log('notif caused app to open from background state: ',remoteMessage.notification);
+    })
+
+    messaging().setBackgroundMessageHandler(async (remoteMessage)=>{
+      console.log('message handled in background: ',remoteMessage);
+    })
+
+    const unsubscribeAuthState = auth().onAuthStateChanged(onAuthStateChanged);
+
+    const unsubscribeMessage = messaging().onMessage(async (remoteMessage) => {
+      Alert.alert('A new FCM message arrived', JSON.stringify(remoteMessage));
+    });
+  
+    return () => {
+      unsubscribeAuthState();
+      unsubscribeMessage();
+    };
   }, []);
 
   if (initializing) return null;

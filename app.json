@@ -27,6 +27,13 @@
     ],
     "plugins": [
       [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/app.png",
+          "color": "#ffffff"
+        }
+      ],
+      [
         "expo-apple-authentication"
       ],
       [
