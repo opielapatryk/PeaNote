@@ -20,6 +20,7 @@ import SetPasswordModal from './SetPasswordModal';
 import SetUsernameModal from './SetUsernameModal';
 import AddNoteModal from './AddNoteModal';
 import { AntDesign } from '@expo/vector-icons';
+import messaging from '@react-native-firebase/messaging';
 
 const BoardScreen = () => {
   const insets = useSafeAreaInsets();
@@ -29,6 +30,17 @@ const BoardScreen = () => {
   const {modal,usernameModal} = useSelector((state)=>state.login)
 
   useEffect(()=>{
+    async function requestUserPermission() {
+      const authStatus = await messaging().requestPermission();
+      const enabled =
+        authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+        authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+      if (enabled) {
+        console.log('Authorization status:', authStatus);
+      }
+    }
+
     const checkIfNewUser = async () => {
       const usersRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('users');
       const snapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
@@ -46,6 +58,10 @@ const BoardScreen = () => {
         })
 
         dispatch(showUsernameModal(true));
+
+        
+        requestUserPermission()
+
       }
 
       downloadImage(EMAIL).then((fileUri)=>{

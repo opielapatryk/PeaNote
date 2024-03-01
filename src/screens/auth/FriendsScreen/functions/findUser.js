@@ -39,7 +39,6 @@ export const findUser = async (dispatch, friendEmailOrUsername,navigation) => {
   // Combine the results
   const combinedSnapshot = emailSnapshot.val() || {};
   Object.assign(combinedSnapshot, usernameSnapshot || {});
-  console.log(combinedSnapshot);
   const friendId = Object.keys(combinedSnapshot)[0];
 
   const friendEmail = combinedSnapshot[friendId].email
