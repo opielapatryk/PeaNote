@@ -20,6 +20,7 @@ import SetPasswordModal from './SetPasswordModal';
 import SetUsernameModal from './SetUsernameModal';
 import AddNoteModal from './AddNoteModal';
 import { AntDesign } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const BoardScreen = () => {
   const insets = useSafeAreaInsets();
@@ -80,9 +81,30 @@ const BoardScreen = () => {
         const userData = snapshot.val();
   
         if (userData) {
+          try {
+            const pushToken = await AsyncStorage.getItem('PushToken');
+            if (pushToken !== null) {
+              const userId = Object.keys(userData)[0];
+              await usersRef.child(`${userId}/pushToken`).set(pushToken);
+              console.log('Push token set in db: ',pushToken);
+
+              //remove push token from async storage
+              try {
+                await AsyncStorage.removeItem('pushToken')
+                console.log('Push token removed from async storage');
+              } catch(e) {
+                console.log('error removing push token: ', e);
+              }
+            }
+          } catch (error) {
+            console.log('BoardScreen Error: ',error);
+          }
+
           fetchNotes(dispatch);
 
-          const onChildAdd = () => fetchNotes(dispatch);
+          const onChildAdd = () => {
+            fetchNotes(dispatch)
+          };
     
           const listen = async ()=>{
             const usersRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('users')

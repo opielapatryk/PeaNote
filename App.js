@@ -1,4 +1,4 @@
-import React, {useEffect,useState} from 'react'
+import React, {useEffect,useState,useRef} from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import store from './src/store/store'
@@ -22,13 +22,26 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { SafeAreaProvider,initialWindowMetrics} from 'react-native-safe-area-context';
 import { styles } from './assets/styles/styles';
-import messaging from '@react-native-firebase/messaging';
-import { Alert } from 'react-native';
+import * as Notifications from 'expo-notifications';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
 export default function App(){
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
+
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
@@ -47,49 +60,62 @@ export default function App(){
     if (initializing) setInitializing(false);
   }
 
-  const requestUserPermission = async () =>{
-    const authStatus = await messaging().requestPermission()
-    const enabled = authStatus ===messaging.AuthorizationStatus.AUTHORIZED || authStatus === messaging.AuthorizationStatus.PROVISIONAL
-
-    if(enabled){
-      console.log('status: ',authStatus);
-    }
-
-    const token = await messaging().getToken();
-    console.log('FCM token:', token);
-  }
-
   useEffect(() => {
-    requestUserPermission()
+    registerForPushNotificationsAsync()
+    
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      setNotification(notification);
+    });
 
-    messaging().getInitialNotification().then(async (remoteMessage)=>{
-      if(remoteMessage){
-        console.log('notif caused app to open from quit state: ',remoteMessage.notification);
-      }else{
-        console.log('else');
-        console.log(remoteMessage);
-      }
-    })
-
-    messaging().onNotificationOpenedApp(async (remoteMessage)=>{
-      console.log('notif caused app to open from background state: ',remoteMessage.notification);
-    })
-
-    messaging().setBackgroundMessageHandler(async (remoteMessage)=>{
-      console.log('message handled in background: ',remoteMessage);
-    })
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log(response);
+    });
 
     const unsubscribeAuthState = auth().onAuthStateChanged(onAuthStateChanged);
-
-    const unsubscribeMessage = messaging().onMessage(async (remoteMessage) => {
-      Alert.alert('A new FCM message arrived', JSON.stringify(remoteMessage));
-    });
   
+    // schedulePushNotification()
+
     return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
       unsubscribeAuthState();
-      unsubscribeMessage();
     };
   }, []);
+  
+
+  // async function schedulePushNotification() {
+  //   await Notifications.scheduleNotificationAsync({
+  //     content: {
+  //       title: "Fresh note delivery! 📬",
+  //       body: 'Somebody left note on your board, come check it out!',
+  //       data: { data: 'goes here' },
+  //     },
+  //     trigger: { seconds: 2 },
+  //   });
+  // }
+
+  async function registerForPushNotificationsAsync() {
+    let token;
+  
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      console.log('Failed to get push token for push notification!');
+      return;
+    }
+
+    token = (await Notifications.getExpoPushTokenAsync({ projectId:'d99ff50f-0885-4261-9450-58f9b727b214'})).data;
+
+    try {
+      await AsyncStorage.setItem('PushToken', token);
+    } catch (error) {
+      console.log('App.js error: ',error);
+    }
+  }
 
   if (initializing) return null;
 
