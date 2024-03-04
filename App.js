@@ -23,6 +23,8 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 import { SafeAreaProvider,initialWindowMetrics} from 'react-native-safe-area-context';
 import { styles } from './assets/styles/styles';
 import * as Notifications from 'expo-notifications';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -36,7 +38,6 @@ const Stack = createNativeStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
 export default function App(){
-  const [expoPushToken, setExpoPushToken] = useState('');
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
@@ -60,8 +61,8 @@ export default function App(){
   }
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
-
+    registerForPushNotificationsAsync()
+    
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
       setNotification(notification);
     });
@@ -72,7 +73,7 @@ export default function App(){
 
     const unsubscribeAuthState = auth().onAuthStateChanged(onAuthStateChanged);
   
-    schedulePushNotification()
+    // schedulePushNotification()
 
     return () => {
       Notifications.removeNotificationSubscription(notificationListener.current);
@@ -82,16 +83,16 @@ export default function App(){
   }, []);
   
 
-  async function schedulePushNotification() {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "Fresh note delivery! 📬",
-        body: 'Somebody left note on your board, come check it out!',
-        data: { data: 'goes here' },
-      },
-      trigger: { seconds: 2 },
-    });
-  }
+  // async function schedulePushNotification() {
+  //   await Notifications.scheduleNotificationAsync({
+  //     content: {
+  //       title: "Fresh note delivery! 📬",
+  //       body: 'Somebody left note on your board, come check it out!',
+  //       data: { data: 'goes here' },
+  //     },
+  //     trigger: { seconds: 2 },
+  //   });
+  // }
 
   async function registerForPushNotificationsAsync() {
     let token;
@@ -103,14 +104,17 @@ export default function App(){
       finalStatus = status;
     }
     if (finalStatus !== 'granted') {
-      alert('Failed to get push token for push notification!');
+      console.log('Failed to get push token for push notification!');
       return;
     }
 
     token = (await Notifications.getExpoPushTokenAsync({ projectId:'d99ff50f-0885-4261-9450-58f9b727b214'})).data;
-    console.log(token);
-  
-    return token;
+
+    try {
+      await AsyncStorage.setItem('PushToken', token);
+    } catch (error) {
+      console.log('App.js error: ',error);
+    }
   }
 
   if (initializing) return null;
