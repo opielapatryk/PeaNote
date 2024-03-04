@@ -20,7 +20,6 @@ import SetPasswordModal from './SetPasswordModal';
 import SetUsernameModal from './SetUsernameModal';
 import AddNoteModal from './AddNoteModal';
 import { AntDesign } from '@expo/vector-icons';
-import * as Notifications from 'expo-notifications';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const BoardScreen = () => {
@@ -73,22 +72,10 @@ const BoardScreen = () => {
 
     checkIfNewUser();
   },[])
-  async function schedulePushNotification() {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "Fresh note delivery! 📬",
-        body: 'Somebody left note on your board, come check it out!',
-        data: { data: 'goes here' },
-      },
-      trigger: { seconds: 2 },
-    });
-  }
+
   useFocusEffect(
     React.useCallback(() => {
       const checkIfNewUser = async () => {
-
-
-
         const usersRef = firebase.app().database('https://stickify-407810-default-rtdb.europe-west1.firebasedatabase.app/').ref('users');
         const snapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
         const userData = snapshot.val();
@@ -117,7 +104,6 @@ const BoardScreen = () => {
 
           const onChildAdd = () => {
             fetchNotes(dispatch)
-            schedulePushNotification()
           };
     
           const listen = async ()=>{
