@@ -4,9 +4,6 @@ TODO: Invite friends via link
 TODO: Accessibility
 TODO: Better friend search mechanizm, using first name and last name
 TODO: After account delete. Remove redux store friends and remove user from friends lists.
-TODO: Notifications in new card
-- friend request
-- new note 
 
 TODO: Local db
 // AsyncStorage | SQLite | Realm
