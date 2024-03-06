@@ -19,14 +19,14 @@
           "remote-notification"
         ]
      },
-      "buildNumber": "11"
+      "buildNumber": "12"
     },
     "extra": {
       "eas": {
         "projectId": "d99ff50f-0885-4261-9450-58f9b727b214"
       }
     },
-    "version": "1.1.1",
+    "version": "1.1.2",
     "sdkVersion": "49.0.0",
     "platforms": [
       "ios"
