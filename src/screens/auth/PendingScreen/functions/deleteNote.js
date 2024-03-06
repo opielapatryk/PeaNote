@@ -8,8 +8,11 @@ export async function deleteNote(content,creator){
     const userSnapshot = await usersRef.orderByChild('email').equalTo(EMAIL).once('value');
     const userData = userSnapshot.val();
     const userId = Object.keys(userData)[0];
-    const notes = userData[userId].notes.filter(
-      (n) => n.content !== content && n.creator !== creator && !n.pending
+    const notes = userData[userId].notes
+
+    const updatedNotes = notes.filter(
+      (n) => n.creator !== creator || n.content !== content
     );
-    await usersRef.child(`${userId}/notes`).set(notes);
+
+    await usersRef.child(`${userId}/notes`).set(updatedNotes);
 }

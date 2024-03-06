@@ -25,10 +25,9 @@ import { styles } from './assets/styles/styles';
 import * as Notifications from 'expo-notifications';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
-    shouldShowAlert: true,
+    shouldShowAlert: false,
     shouldPlaySound: false,
     shouldSetBadge: false,
   }),
@@ -40,7 +39,6 @@ const Tab = createMaterialTopTabNavigator();
 export default function App(){
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
-  const responseListener = useRef();
 
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
@@ -67,32 +65,15 @@ export default function App(){
       setNotification(notification);
     });
 
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
-    });
-
     const unsubscribeAuthState = auth().onAuthStateChanged(onAuthStateChanged);
-  
-    // schedulePushNotification()
 
     return () => {
       Notifications.removeNotificationSubscription(notificationListener.current);
-      Notifications.removeNotificationSubscription(responseListener.current);
       unsubscribeAuthState();
     };
   }, []);
-  
 
-  // async function schedulePushNotification() {
-  //   await Notifications.scheduleNotificationAsync({
-  //     content: {
-  //       title: "Fresh note delivery! 📬",
-  //       body: 'Somebody left note on your board, come check it out!',
-  //       data: { data: 'goes here' },
-  //     },
-  //     trigger: { seconds: 2 },
-  //   });
-  // }
+
 
   async function registerForPushNotificationsAsync() {
     let token;

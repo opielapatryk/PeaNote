@@ -45,7 +45,9 @@ export const createNote = async (content,setContent,friendEmail) => {
   const friendNotes = friendData[friendId].notes || [];
   await usersRef.child(`${friendId}/notes`).set([...friendNotes, { content: content, creator: USERNAME, pending:pending }]);
 
-  await sendPushNotification(friendEmail, 'Fresh note delivery! 📬', `${USERNAME} left note on your board, come check it out!`);
+  const capLetterUsername = USERNAME.charAt(0).toUpperCase() + USERNAME.slice(1);
+
+  await sendPushNotification(friendEmail, 'Fresh note delivery! 📬', `${capLetterUsername} left note on your board, come check it out!`);
 
   setContent('');
 };
